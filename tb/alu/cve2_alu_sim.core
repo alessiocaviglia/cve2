@@ -1,0 +1,32 @@
+CAPI=2:
+name: "openhwgroup:cve2:alu_sim:0.1"
+description: "Simulation with a simple testbench of multiplier of Ibex"
+
+filesets:
+  files_rtl:
+    depend:
+      - openhwgroup:cve2:cve2_pkg
+    files:
+      - ../../rtl/cve2_alu.sv
+    file_type: systemVerilogSource
+
+  tb-verilator:
+    files:
+      - tb_alu.cpp
+    file_type: cppSource
+    
+
+targets:
+  default: &default_target
+    filesets:
+      - files_rtl
+      - tb-verilator
+    toplevel: cve2_alu
+    tools:
+      verilator:
+        mode: cc
+        verilator_options:
+          - "-Wall"
+          - "-Wno-UNUSED"
+          - '--cc'
+          - '--trace'
