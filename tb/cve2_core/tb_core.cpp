@@ -18,18 +18,24 @@ int main(int argc, char **argv, char **env) {
   top->trace(tfp, 99);        // Trace 99 levels of hierarchy
   tfp->open("waveform.vcd");  // Open the VCD file
 
-  // Initialize all signals of the DUT
+  // I initialized clock and reset t 0 (reset is active low)
   top->clk_i = 0;
-  top->rst_ni = 0;
+  top->rst_ni = 1;
+
+  // weird signals
   top->test_en_i = 0;
   top->hart_id_i = 0;
   top->boot_addr_i = 0;
+
+  // Instruction memory interface
   top->instr_req_o = 0;
   top->instr_gnt_i = 0;
   top->instr_rvalid_i = 0;
   top->instr_addr_o = 0;
   top->instr_rdata_i = 0;
   top->instr_err_i = 0;
+
+  // Data memory interface
   top->data_req_o = 0;
   top->data_gnt_i = 0;
   top->data_rvalid_i = 0;
@@ -39,17 +45,27 @@ int main(int argc, char **argv, char **env) {
   top->data_wdata_o = 0;
   top->data_rdata_i = 0;
   top->data_err_i = 0;
+
+  // Interrupt inputs
   top->irq_software_i = 0;
   top->irq_timer_i = 0;
   top->irq_external_i = 0;
   top->irq_fast_i = 0;
   top->irq_nm_i = 0;
   top->irq_pending_o = 0;
+
+  // Debug Interface
   top->debug_req_i = 0;
+  // CPU Control Signals
   top->fetch_enable_i = 0;
   top->core_busy_o = 0;
 
   printf("Henlo fren! Starting simulation...\n");
+
+  // I force one instructions
+  top->instr_rdata_i = 0x05B9F0B7; // lui x1, 23455
+  top->instr_rvalid_i = 1;
+  top->fetch_enable_i = 1;
 
   while (sim_time<MAX_SIM_TIME) {
     top->clk_i = !top->clk_i;  // Toggle the clock
