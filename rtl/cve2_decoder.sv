@@ -630,6 +630,46 @@ module cve2_decoder #(
         end
 
       end
+
+      //////////////////////
+      // Vector Extension //
+      //////////////////////
+
+      OPCODE_LOAD_V: begin  // Vector Load
+        /* TODO */
+      end
+
+      OPCODE_STORE_V: begin  // Vector Store
+        /* TODO */
+      end
+
+      OPCODE_OP_V: begin  // Vector Operations
+
+        unique case ({instr[31:26], instr[14:12]})  // {funct6, funct3}
+          // Vector Integer Arithmetic Operations
+          {7'b00_0000, 3'b000}: begin    // vadd.vv
+          end
+          {7'b00_0000, 3'b100}: begin    // vadd.vx
+          end
+          {7'b00_0000, 3'b011}: begin    // vadd.vi
+          end
+          {7'b00_0010, 3'b000}: begin    // vsub.vv
+          end
+          {7'b00_0010, 3'b100}: begin    // vsub.vx
+          end
+          {7'b01_0111, 3'b000}: begin    // vmv.v.v/vmerge.vvm
+          end
+          {7'b01_0111, 3'b100}: begin    // vmv.v.x/vmerge.vxm
+          end
+          {7'b01_0111, 3'b011}: begin    // vmv.v.i/vmerge.vim
+          end
+          default: begin
+            illegal_insn = 1'b1;
+          end
+        endcase
+
+      end
+
       default: begin
         illegal_insn = 1'b1;
       end
@@ -1148,6 +1188,23 @@ module cve2_decoder #(
         end
 
       end
+
+      //////////////////////
+      // Vector Extension //
+      //////////////////////
+
+      OPCODE_LOAD_V: begin
+        /* TODO */
+      end
+
+      OPCODE_STORE_V: begin
+        /* TODO */
+      end
+
+      OPCODE_OP_V: begin
+        /* TODO */
+      end
+
       default: ;
     endcase
   end

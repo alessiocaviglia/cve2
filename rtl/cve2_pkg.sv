@@ -60,7 +60,11 @@ package cve2_pkg;
     OPCODE_BRANCH   = 7'h63,
     OPCODE_JALR     = 7'h67,
     OPCODE_JAL      = 7'h6f,
-    OPCODE_SYSTEM   = 7'h73
+    OPCODE_SYSTEM   = 7'h73,
+    // Vector extension
+    OPCODE_LOAD_V   = 7'h07,
+    OPCODE_STORE_V  = 7'h27,
+    OPCODE_OP_V     = 7'h57
   } opcode_e;
 
 
