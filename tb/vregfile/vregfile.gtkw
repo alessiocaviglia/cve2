@@ -1,0 +1,63 @@
+[*]
+[*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
+[*] Sat Mar 16 16:37:07 2024
+[*]
+[dumpfile] "/home/alessio99/tristan/cve2/tb/build/openhwgroup_cve2_vregfile_sim_0.1/default-verilator/waveform.vcd"
+[dumpfile_mtime] "Sat Mar 16 16:29:41 2024"
+[dumpfile_size] 10792
+[savefile] "/home/alessio99/tristan/cve2/tb/vregfile/vregfile.gtkw"
+[timestart] 0
+[size] 1848 1016
+[pos] -39 -39
+*-2.652901 11 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] TOP.
+[treeopen] TOP.vregfile_wrapper.
+[sst_width] 233
+[signals_width] 242
+[sst_expanded] 1
+[sst_vpaned_height] 289
+@28
+TOP.vregfile_wrapper.clk_i
+TOP.vregfile_wrapper.rst_ni
+@200
+-
+@22
+TOP.vregfile_wrapper.raddr_1_i[4:0]
+TOP.vregfile_wrapper.raddr_2_i[4:0]
+TOP.vregfile_wrapper.raddr_3_i[4:0]
+TOP.vregfile_wrapper.addr_s[4:0]
+@200
+-
+@28
+TOP.vregfile_wrapper.ram_inst.req_i
+TOP.vregfile_wrapper.ram_inst.we_i
+@22
+TOP.vregfile_wrapper.ram_inst.rdata_o[127:0]
+TOP.vregfile_wrapper.ram_inst.wdata_i[127:0]
+@200
+-
+@22
+TOP.vregfile_wrapper.rdata_s[127:0]
+@28
+TOP.vregfile_wrapper.rs1_en
+@22
+TOP.vregfile_wrapper.rs1_q[127:0]
+@28
+TOP.vregfile_wrapper.rs2_en
+@22
+TOP.vregfile_wrapper.rs2_q[127:0]
+@28
+TOP.vregfile_wrapper.rs3_en
+@22
+TOP.vregfile_wrapper.rs3_q[127:0]
+@200
+-
+@28
+TOP.vregfile_wrapper.rd_en
+@22
+TOP.vregfile_wrapper.wdata_i[127:0]
+TOP.vregfile_wrapper.rd_q[127:0]
+TOP.vregfile_wrapper.vrf_next_state[31:0]
+TOP.vregfile_wrapper.vrf_state[31:0]
+[pattern_trace] 1
+[pattern_trace] 0

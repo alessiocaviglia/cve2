@@ -1,0 +1,32 @@
+CAPI=2:
+name: "openhwgroup:cve2:vregfile_sim:0.1"
+description: "Simulation with a simple testbench of vregfile"
+
+filesets:
+  files_rtl:
+    files:
+      - ../../rtl/vregfile_wrapper.sv
+      - ../../rtl/ram_1p.sv
+    file_type: systemVerilogSource
+
+  tb-verilator:
+    files:
+      - tb_vregfile.cpp
+      - test.mem : {file_type: text}
+    file_type: cppSource
+    
+
+targets:
+  default: &default_target
+    filesets:
+      - files_rtl
+      - tb-verilator
+    toplevel: vregfile_wrapper
+    tools:
+      verilator:
+        mode: cc
+        verilator_options:
+          - "-Wall"
+          - "-Wno-UNUSED"
+          - '--cc'
+          - '--trace'

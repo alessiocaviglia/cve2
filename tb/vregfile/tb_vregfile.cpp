@@ -3,14 +3,14 @@
 
 #include <iostream>
 
-#include "Vvregfile.h"
+#include "Vvregfile_wrapper.h"
 
 #define MAX_SIM_TIME 20
 vluint64_t sim_time = 0;
 
 int main(int argc, char **argv, char **env) {
   // Instantiate DUT
-  Vvregfile *dut = new Vvregfile;
+  Vvregfile_wrapper *dut = new Vvregfile_wrapper;
 
   Verilated::traceEverOn(true);
   VerilatedVcdC *m_trace = new VerilatedVcdC;
@@ -21,24 +21,24 @@ int main(int argc, char **argv, char **env) {
   dut->clk_i = 0;
   dut->rst_ni = 0;
   dut->we_i = 0;
-  dut->addr_i = 0;
-  dut->wdata_i[0] = 0;
-  dut->wdata_i[1] = 0;
-  dut->wdata_i[2] = 0;
-  dut->wdata_i[3] = 0;
+  dut->req_i = 0;
+  dut->raddr_1_i = 0;
+  dut->raddr_2_i = 0;
+  dut->raddr_3_i = 0;
+  for (int i = 0; i < 4; i++) dut->wdata_i[i] = 0;
 
   while (sim_time < MAX_SIM_TIME) {
     dut->clk_i ^= 1;
     dut->we_i = 0;
+    dut->req_i = 0;
 
-    if (sim_time == 5) {
+    // read request
+    if (sim_time == 4) {
       dut->rst_ni = 1;
-      dut->we_i = 1;
-      dut->addr_i = 0;
-      dut->wdata_i[0] = 0x1234;
-      dut->wdata_i[1] = 0x1234;
-      dut->wdata_i[2] = 0x1234;
-      dut->wdata_i[3] = 0x1234;
+      dut->req_i = 1;
+      dut->raddr_1_i = 0;
+      dut->raddr_2_i = 1;
+      dut->raddr_3_i = 2;
     }
 
     dut->eval();
