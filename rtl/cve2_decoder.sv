@@ -89,7 +89,11 @@ module cve2_decoder #(
 
   // jump/branches
   output logic                 jump_in_dec_o,         // jump is being calculated in ALU
-  output logic                 branch_in_dec_o
+  output logic                 branch_in_dec_o,
+
+  // vector extension
+  output logic                 vrf_req_o,             // request to vector register file
+  output logic                 vrf_we_o              // write enable for vector register file
 );
 
   import cve2_pkg::*;
@@ -225,6 +229,9 @@ module cve2_decoder #(
     dret_insn_o           = 1'b0;
     ecall_insn_o          = 1'b0;
     wfi_insn_o            = 1'b0;
+
+    // vector extension
+    vrf_req_o             = 1'b0;
 
     opcode                = opcode_e'(instr[6:0]);
 
@@ -644,24 +651,25 @@ module cve2_decoder #(
       end
 
       OPCODE_OP_V: begin  // Vector Operations
-
+        vrf_req_o = 1'b1;
+        vrf_we_o = 1'b0;  // to remove later
         unique case ({instr[31:26], instr[14:12]})  // {funct6, funct3}
           // Vector Integer Arithmetic Operations
-          {7'b00_0000, 3'b000}: begin    // vadd.vv
+          {6'b00_0000, 3'b000}: begin    // vadd.vv
           end
-          {7'b00_0000, 3'b100}: begin    // vadd.vx
+          {6'b00_0000, 3'b100}: begin    // vadd.vx
           end
-          {7'b00_0000, 3'b011}: begin    // vadd.vi
+          {6'b00_0000, 3'b011}: begin    // vadd.vi
           end
-          {7'b00_0010, 3'b000}: begin    // vsub.vv
+          {6'b00_0010, 3'b000}: begin    // vsub.vv
           end
-          {7'b00_0010, 3'b100}: begin    // vsub.vx
+          {6'b00_0010, 3'b100}: begin    // vsub.vx
           end
-          {7'b01_0111, 3'b000}: begin    // vmv.v.v/vmerge.vvm
+          {6'b01_0111, 3'b000}: begin    // vmv.v.v/vmerge.vvm
           end
-          {7'b01_0111, 3'b100}: begin    // vmv.v.x/vmerge.vxm
+          {6'b01_0111, 3'b100}: begin    // vmv.v.x/vmerge.vxm
           end
-          {7'b01_0111, 3'b011}: begin    // vmv.v.i/vmerge.vim
+          {6'b01_0111, 3'b011}: begin    // vmv.v.i/vmerge.vim
           end
           default: begin
             illegal_insn = 1'b1;
@@ -1202,7 +1210,30 @@ module cve2_decoder #(
       end
 
       OPCODE_OP_V: begin
-        /* TODO */
+
+        unique case ({instr[31:26], instr[14:12]})  // {funct6, funct3}
+          // Vector Integer Arithmetic Operations
+          {6'b00_0000, 3'b000}: begin    // vadd.vv
+          end
+          {6'b00_0000, 3'b100}: begin    // vadd.vx
+          end
+          {6'b00_0000, 3'b011}: begin    // vadd.vi
+          end
+          {6'b00_0010, 3'b000}: begin    // vsub.vv
+          end
+          {6'b00_0010, 3'b100}: begin    // vsub.vx
+          end
+          {6'b01_0111, 3'b000}: begin    // vmv.v.v/vmerge.vvm
+          end
+          {6'b01_0111, 3'b100}: begin    // vmv.v.x/vmerge.vxm
+          end
+          {6'b01_0111, 3'b011}: begin    // vmv.v.i/vmerge.vim
+          end
+          default: begin
+            illegal_insn = 1'b1;
+          end
+        endcase
+
       end
 
       default: ;

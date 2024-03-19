@@ -3,21 +3,24 @@ module vregfile_wrapper #(
     parameter int unsigned AddrWidth = 5
 ) (
     // Clock and Reset
-    input logic clk_i,
-    input logic rst_ni,
+    input   logic                 clk_i,
+    input   logic                 rst_ni,
 
-    // Read and write port
-    input  logic                 req_i,     // maybe I could remove it and use num_operands_i instead (when != 0 request), also rigth now it's not needed fot it to stay high should I change?
-    input logic we_i,
-    input logic [AddrWidth-1:0] raddr_1_i, raddr_2_i, raddr_3_i,
-    input logic [DataWidth-1:0] wdata_i,
-    output logic [DataWidth-1:0] rdata_1_o, rdata_2_o, rdata_3_o
+    // Read ports
+    input   logic                 req_i,     // maybe I could remove it and use num_operands_i instead (when != 0 request), also rigth now it's not needed fot it to stay high should I change?
+    input   logic                 we_i,
+    input   logic [AddrWidth-1:0] raddr_a_i, raddr_b_i,
+    output  logic [DataWidth-1:0] rdata_a_o, rdata_b_o, rdata_c_o,
+
+    // Write port
+    input   logic [AddrWidth-1:0] waddr_i,
+    input   logic [DataWidth-1:0] wdata_i,
 
     // VRF related FSM signals
     // input logic [1:0] num_operands_i
 
     // Pipeline related FSM signals
-    /* Still nothing but probably I will need them */
+    output  logic                 vector_done_o              // signals the pipeline that the vector operation is finished (most likely with a write to the VRF)
 );
 
   typedef enum {
@@ -43,9 +46,9 @@ module vregfile_wrapper #(
   logic [DataWidth-1:0] rd_q;
 
   // Output signals
-  assign rdata_1_o = rs1_q;
-  assign rdata_2_o = rs2_q;
-  assign rdata_3_o = rs3_q;
+  assign rdata_a_o = rs1_q;
+  assign rdata_b_o = rs2_q;
+  assign rdata_c_o = rs3_q;
   assign rd_en = 0;
 
   /////////////
@@ -64,6 +67,8 @@ module vregfile_wrapper #(
     rs1_en = 0;
     rs2_en = 0;
     rs3_en = 0;
+    rd_en = 0;
+    vector_done_o = 0;
     case (vrf_state)
       VRF_IDLE: begin
         if (!req_i) begin
@@ -72,7 +77,7 @@ module vregfile_wrapper #(
           // RAM read request
           req_s = 1;
           we_s = 0;
-          addr_s = raddr_1_i;
+          addr_s = raddr_a_i;
           vrf_next_state = VRF_READ1;
         end
       end
@@ -80,7 +85,7 @@ module vregfile_wrapper #(
         // RAM read request
         req_s = 1;
         we_s = 0;
-        addr_s = raddr_2_i;
+        addr_s = raddr_b_i;
         rs1_en = 1;
         vrf_next_state = VRF_READ2;
       end
@@ -88,7 +93,7 @@ module vregfile_wrapper #(
         // RAM read request
         req_s = 1;
         we_s = 0;
-        addr_s = raddr_3_i;
+        addr_s = waddr_i;
         rs2_en = 1;
         vrf_next_state = VRF_READ3;
       end
@@ -101,6 +106,7 @@ module vregfile_wrapper #(
       end
       VRF_WRITE: begin
         vrf_next_state = VRF_IDLE;
+        vector_done_o = 1;
       end
       default: begin
         vrf_next_state = VRF_IDLE;

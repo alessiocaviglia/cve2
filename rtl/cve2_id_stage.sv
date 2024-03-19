@@ -150,8 +150,21 @@ module cve2_id_stage #(
                                                         // access to finish before proceeding
   output logic                      perf_wfi_wait_o,
   output logic                      perf_div_wait_o,
-  output logic                      instr_id_done_o
+  output logic                      instr_id_done_o,
+
+  // Vector register file
+  output logic                      vrf_req_o,
+  output logic                      vrf_we_o,
+  input  logic [127:0]              vrf_rdata_b_i,
+  input  logic [127:0]              vrf_rdata_a_i,
+  input  logic [127:0]              vrf_rdata_c_i,
+  output logic [127:0]              vrf_wdata_o,    // read port
+  input  logic                      vector_done_i
+
 );
+
+  // TODO: remove it
+  assign vrf_wdata_o = 128'h0;
 
   import cve2_pkg::*;
 
@@ -181,6 +194,7 @@ module cve2_id_stage #(
   logic        stall_jump;
   logic        stall_id;
   logic        flush_id;
+  logic        ex_multicycle_done;
   logic        multicycle_done;
 
   // Immediate decoding and sign extension
@@ -404,7 +418,12 @@ module cve2_id_stage #(
 
     // jump/branches
     .jump_in_dec_o  (jump_in_dec),
-    .branch_in_dec_o(branch_in_dec)
+    .branch_in_dec_o(branch_in_dec),
+
+    // Vector instructions
+    .vrf_req_o(vrf_req_o),  // used both for VRF and to signal vector instructions since all of those who needs to stall uses VRF
+    .vrf_we_o(vrf_we_o)
+    
   );
 
   /////////////////////////////////
@@ -673,6 +692,11 @@ module cve2_id_stage #(
               id_fsm_d      = MULTI_CYCLE;
               rf_we_raw     = 1'b0;
             end
+            vrf_req_o: begin
+              // All vector operations take more than one cycle
+              // <TODO>
+              id_fsm_d      = MULTI_CYCLE;
+            end
             default: begin
               id_fsm_d      = FIRST_CYCLE;
             end
@@ -723,7 +747,8 @@ module cve2_id_stage #(
   // Used by ALU to access RS3 if ternary instruction.
   assign instr_first_cycle_id_o = instr_first_cycle;
 
-    assign multicycle_done = lsu_req_dec ? lsu_resp_valid_i : ex_valid_i;
+    assign ex_multicycle_done = vrf_req_o ? vector_done_i : ex_valid_i;
+    assign multicycle_done = lsu_req_dec ? lsu_resp_valid_i : ex_multicycle_done;
 
     assign data_req_allowed = instr_first_cycle;
 

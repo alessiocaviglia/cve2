@@ -62,13 +62,14 @@ int main(int argc, char **argv, char **env) {
 
   printf("Henlo fren! Starting simulation...\n");
 
-  // I force one instructions
-  top->instr_rdata_i = 0x05B9F0B7; // lui x1, 23455
-  top->instr_rvalid_i = 1;
-  top->fetch_enable_i = 1;
-
   while (sim_time<MAX_SIM_TIME) {
     top->clk_i = !top->clk_i;  // Toggle the clock
+    if (sim_time==10) {
+      // I force one instructions
+      top->instr_rdata_i = 0x001101D7;
+      top->instr_rvalid_i = 1;
+      top->fetch_enable_i = 1;
+    }
     top->eval();
     tfp->dump(sim_time);
     sim_time++;

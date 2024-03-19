@@ -1,3 +1,6 @@
+compile_core:
+	fusesoc --cores-root ../ run --no-export --tool=verilator --setup --build openhwgroup:cve2:cve2_sim:0.1
+
 simulate_alu: clean_alu
 	fusesoc --cores-root ../ run --no-export --tool=verilator --setup --build --run openhwgroup:cve2:alu_sim:0.1 2>&1 | tee buildsim.log
 

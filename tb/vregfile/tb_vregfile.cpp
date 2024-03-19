@@ -22,9 +22,9 @@ int main(int argc, char **argv, char **env) {
   dut->rst_ni = 0;
   dut->we_i = 0;
   dut->req_i = 0;
-  dut->raddr_1_i = 0;
-  dut->raddr_2_i = 0;
-  dut->raddr_3_i = 0;
+  dut->raddr_a_i = 0;
+  dut->raddr_b_i = 0;
+  dut->raddr_c_i = 0;
   for (int i = 0; i < 4; i++) dut->wdata_i[i] = 0;
 
   while (sim_time < MAX_SIM_TIME) {
@@ -33,12 +33,12 @@ int main(int argc, char **argv, char **env) {
     dut->req_i = 0;
 
     // read request
-    if (sim_time == 4) {
+    if (sim_time == 5) {
       dut->rst_ni = 1;
       dut->req_i = 1;
-      dut->raddr_1_i = 0;
-      dut->raddr_2_i = 1;
-      dut->raddr_3_i = 2;
+      dut->raddr_a_i = 0;
+      dut->raddr_b_i = 1;
+      dut->raddr_c_i = 2;
     }
 
     dut->eval();

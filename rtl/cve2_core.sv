@@ -272,6 +272,15 @@ module cve2_core import cve2_pkg::*; #(
   // for RVFI
   logic        illegal_insn_id, unused_illegal_insn_id; // ID stage sees an illegal instruction
 
+  // Vector Register File
+  logic vrf_req; // Request signal for the vector register file
+  logic vrf_we; // Write enable signal for the vector register file
+  logic [127:0] vrf_wdata; // Write data for the vector register file
+  logic [127:0] vrf_rdata_a; // First read port of vector register file
+  logic [127:0] vrf_rdata_b; // Second read port of vector register file
+  logic [127:0] vrf_rdata_c; // Third read port of vector register file
+  logic vector_done; // Signal indicating that the vector operation is done
+
   //////////////////////
   // Clock management //
   //////////////////////
@@ -478,7 +487,16 @@ module cve2_core import cve2_pkg::*; #(
     .perf_dside_wait_o(perf_dside_wait),
     .perf_wfi_wait_o  (perf_wfi_wait),
     .perf_div_wait_o  (perf_div_wait),
-    .instr_id_done_o  (instr_id_done)
+    .instr_id_done_o  (instr_id_done),
+
+    // Vector register file
+    .vrf_req_o(vrf_req),
+    .vrf_we_o(vrf_we),
+    .vrf_rdata_a_i(vrf_rdata_a),
+    .vrf_rdata_b_i(vrf_rdata_b),
+    .vrf_rdata_c_i(vrf_rdata_c),
+    .vrf_wdata_o(vrf_wdata),
+    .vector_done_i(vector_done)
   );
 
   // for RVFI only
@@ -660,6 +678,31 @@ module cve2_core import cve2_pkg::*; #(
     .we_a_i   (rf_we_wb)
   );
 
+  ////////////////////////////////
+  // VRF (Vector Register File) //
+  ////////////////////////////////
+  vregfile_wrapper #(
+    .DataWidth(128),
+    .AddrWidth(5)
+  ) vregfile_wrapper_inst (
+    .clk_i(clk_i),
+    .rst_ni(rst_ni),
+
+    .req_i(vrf_req),
+    .we_i(vrf_we),
+
+    .raddr_a_i(rf_raddr_a),
+    .raddr_b_i(rf_raddr_b),
+    .rdata_a_o(vrf_rdata_a),
+    .rdata_b_o(vrf_rdata_b),
+    .rdata_c_o(vrf_rdata_c),
+
+    .waddr_i(rf_waddr_wb),
+    .wdata_i(vrf_wdata),
+
+    .vector_done_o(vector_done)
+  );
+  
 
   /////////////////////////////////////////
   // CSRs (Control and Status Registers) //
