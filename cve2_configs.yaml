@@ -9,9 +9,9 @@
 # (4 cycles for mulh), resulting in 2 stall cycles for mul (3 for mulh)
 small:
   RV32E                    : 0
-  RV32M                    : "cve2_pkg::RV32MFast"
-  RV32B                    : "cve2_pkg::RV32BNone"
-  RegFile                  : "cve2_pkg::RegFileFF"
+  RV32M                    : "vcve2_pkg::RV32MFast"
+  RV32B                    : "vcve2_pkg::RV32BNone"
+  RegFile                  : "vcve2_pkg::RegFileFF"
   WritebackStage           : 0
   PMPEnable                : 0
   PMPGranularity           : 0
@@ -20,9 +20,9 @@ small:
 # Configuration to match that used in the OpenTitan project
 opentitan:
   RV32E                    : 0
-  RV32M                    : "cve2_pkg::RV32MSingleCycle"
-  RV32B                    : "cve2_pkg::RV32BOTEarlGrey"
-  RegFile                  : "cve2_pkg::RegFileFF"
+  RV32M                    : "vcve2_pkg::RV32MSingleCycle"
+  RV32B                    : "vcve2_pkg::RV32BOTEarlGrey"
+  RegFile                  : "vcve2_pkg::RegFileFF"
   WritebackStage           : 1
   PMPEnable                : 1
   PMPGranularity           : 0
@@ -37,9 +37,9 @@ opentitan:
 # maximum performance configuration.
 experimental-maxperf:
   RV32E                    : 0
-  RV32M                    : "cve2_pkg::RV32MSingleCycle"
-  RV32B                    : "cve2_pkg::RV32BNone"
-  RegFile                  : "cve2_pkg::RegFileFF"
+  RV32M                    : "vcve2_pkg::RV32MSingleCycle"
+  RV32B                    : "vcve2_pkg::RV32BNone"
+  RegFile                  : "vcve2_pkg::RegFileFF"
   WritebackStage           : 1
   PMPEnable                : 0
   PMPGranularity           : 0
@@ -48,9 +48,9 @@ experimental-maxperf:
 # experimental-maxperf config above plus PMP enabled with 16 regions.
 experimental-maxperf-pmp:
   RV32E                    : 0
-  RV32M                    : "cve2_pkg::RV32MSingleCycle"
-  RV32B                    : "cve2_pkg::RV32BNone"
-  RegFile                  : "cve2_pkg::RegFileFF"
+  RV32M                    : "vcve2_pkg::RV32MSingleCycle"
+  RV32B                    : "vcve2_pkg::RV32BNone"
+  RegFile                  : "vcve2_pkg::RegFileFF"
   WritebackStage           : 1
   PMPEnable                : 1
   PMPGranularity           : 0
@@ -59,9 +59,9 @@ experimental-maxperf-pmp:
 # experimental-maxperf-pmp config above with balanced bitmanip extension
 experimental-maxperf-pmp-bmbalanced:
   RV32E                    : 0
-  RV32M                    : "cve2_pkg::RV32MSingleCycle"
-  RV32B                    : "cve2_pkg::RV32BBalanced"
-  RegFile                  : "cve2_pkg::RegFileFF"
+  RV32M                    : "vcve2_pkg::RV32MSingleCycle"
+  RV32B                    : "vcve2_pkg::RV32BBalanced"
+  RegFile                  : "vcve2_pkg::RegFileFF"
   WritebackStage           : 1
   PMPEnable                : 1
   PMPGranularity           : 0
@@ -70,9 +70,9 @@ experimental-maxperf-pmp-bmbalanced:
 # experimental-maxperf-pmp config above with full bitmanip extension
 experimental-maxperf-pmp-bmfull:
   RV32E                    : 0
-  RV32M                    : "cve2_pkg::RV32MSingleCycle"
-  RV32B                    : "cve2_pkg::RV32BFull"
-  RegFile                  : "cve2_pkg::RegFileFF"
+  RV32M                    : "vcve2_pkg::RV32MSingleCycle"
+  RV32B                    : "vcve2_pkg::RV32BFull"
+  RegFile                  : "vcve2_pkg::RegFileFF"
   WritebackStage           : 1
   PMPEnable                : 1
   PMPGranularity           : 0
@@ -84,9 +84,9 @@ experimental-maxperf-pmp-bmfull:
 # development.
 experimental-branch-predictor:
   RV32E                    : 0
-  RV32M                    : "cve2_pkg::RV32MSingleCycle"
-  RV32B                    : "cve2_pkg::RV32BNone"
-  RegFile                  : "cve2_pkg::RegFileFF"
+  RV32M                    : "vcve2_pkg::RV32MSingleCycle"
+  RV32B                    : "vcve2_pkg::RV32BNone"
+  RegFile                  : "vcve2_pkg::RegFileFF"
   WritebackStage           : 1
   PMPEnable                : 0
   PMPGranularity           : 0

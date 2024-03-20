@@ -22,7 +22,7 @@ module cve2_compressed_decoder (
   output logic        is_compressed_o,
   output logic        illegal_instr_o
 );
-  import cve2_pkg::*;
+  import vcve2_pkg::*;
 
   // valid_i indicates if instr_i is valid and is used for assertions only.
   // The following signal is used to avoid possible lint errors.

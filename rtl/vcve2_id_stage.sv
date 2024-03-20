@@ -17,10 +17,10 @@
 `include "prim_assert.sv"
 `include "dv_fcov_macros.svh"
 
-module cve2_id_stage #(
+module vcve2_id_stage #(
   parameter bit               RV32E           = 0,
-  parameter cve2_pkg::rv32m_e RV32M           = cve2_pkg::RV32MFast,
-  parameter cve2_pkg::rv32b_e RV32B           = cve2_pkg::RV32BNone
+  parameter vcve2_pkg::rv32m_e RV32M           = vcve2_pkg::RV32MFast,
+  parameter vcve2_pkg::rv32b_e RV32B           = vcve2_pkg::RV32BNone
 ) (
   input  logic                      clk_i,
   input  logic                      rst_ni,
@@ -45,9 +45,9 @@ module cve2_id_stage #(
 
   // IF and ID stage signals
   output logic                      pc_set_o,
-  output cve2_pkg::pc_sel_e         pc_mux_o,
-  output cve2_pkg::exc_pc_sel_e     exc_pc_mux_o,
-  output cve2_pkg::exc_cause_e      exc_cause_o,
+  output vcve2_pkg::pc_sel_e         pc_mux_o,
+  output vcve2_pkg::exc_pc_sel_e     exc_pc_mux_o,
+  output vcve2_pkg::exc_cause_e      exc_cause_o,
 
   input  logic                      illegal_c_insn_i,
   input  logic                      instr_fetch_err_i,
@@ -59,7 +59,7 @@ module cve2_id_stage #(
   input  logic                      ex_valid_i,       // EX stage has valid output
   input  logic                      lsu_resp_valid_i, // LSU has valid output, or is done
   // ALU
-  output cve2_pkg::alu_op_e         alu_operator_ex_o,
+  output vcve2_pkg::alu_op_e         alu_operator_ex_o,
   output logic [31:0]               alu_operand_a_ex_o,
   output logic [31:0]               alu_operand_b_ex_o,
 
@@ -73,14 +73,14 @@ module cve2_id_stage #(
   output logic                      div_en_ex_o,
   output logic                      mult_sel_ex_o,
   output logic                      div_sel_ex_o,
-  output cve2_pkg::md_op_e          multdiv_operator_ex_o,
+  output vcve2_pkg::md_op_e          multdiv_operator_ex_o,
   output logic  [1:0]               multdiv_signed_mode_ex_o,
   output logic [31:0]               multdiv_operand_a_ex_o,
   output logic [31:0]               multdiv_operand_b_ex_o,
 
   // CSR
   output logic                      csr_access_o,
-  output cve2_pkg::csr_op_e         csr_op_o,
+  output vcve2_pkg::csr_op_e         csr_op_o,
   output logic                      csr_op_en_o,
   output logic                      csr_save_if_o,
   output logic                      csr_save_id_o,
@@ -88,7 +88,7 @@ module cve2_id_stage #(
   output logic                      csr_restore_dret_id_o,
   output logic                      csr_save_cause_o,
   output logic [31:0]               csr_mtval_o,
-  input  cve2_pkg::priv_lvl_e       priv_mode_i,
+  input  vcve2_pkg::priv_lvl_e       priv_mode_i,
   input  logic                      csr_mstatus_tw_i,
   input  logic                      illegal_csr_insn_i,
 
@@ -105,7 +105,7 @@ module cve2_id_stage #(
   // Interrupt signals
   input  logic                      csr_mstatus_mie_i,
   input  logic                      irq_pending_i,
-  input  cve2_pkg::irqs_t           irqs_i,
+  input  vcve2_pkg::irqs_t           irqs_i,
   input  logic                      irq_nm_i,
   output logic                      nmi_mode_o,
 
@@ -114,7 +114,7 @@ module cve2_id_stage #(
 
   // Debug Signal
   output logic                      debug_mode_o,
-  output cve2_pkg::dbg_cause_e      debug_cause_o,
+  output vcve2_pkg::dbg_cause_e      debug_cause_o,
   output logic                      debug_csr_save_o,
   input  logic                      debug_req_i,
   input  logic                      debug_single_step_i,
@@ -166,7 +166,7 @@ module cve2_id_stage #(
   // TODO: remove it
   assign vrf_wdata_o = 128'h0;
 
-  import cve2_pkg::*;
+  import vcve2_pkg::*;
 
   // Decoder/Controller, ID stage internal signals
   logic        illegal_insn_dec;
@@ -348,7 +348,7 @@ module cve2_id_stage #(
   // Decoder //
   /////////////
 
-  cve2_decoder #(
+  vcve2_decoder #(
     .RV32E          (RV32E),
     .RV32M          (RV32M),
     .RV32B          (RV32B)

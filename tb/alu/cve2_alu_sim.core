@@ -5,7 +5,7 @@ description: "Simulation with a simple testbench of multiplier of Ibex"
 filesets:
   files_rtl:
     depend:
-      - openhwgroup:cve2:cve2_pkg
+      - openhwgroup:cve2:vcve2_pkg
     files:
       - ../../rtl/cve2_alu.sv
     file_type: systemVerilogSource

@@ -10,7 +10,7 @@ Identification CSRs
 
 The RISC-V Privileged Architecture specifies several read-only CSRs that identify the vendor and micro-architecture of a CPU.
 These are ``mvendorid``, ``marchid`` and ``mimpid``.
-The fixed, read-only values for these CSRs are defined in :file:`rtl/cve2_pkg.sv`.
+The fixed, read-only values for these CSRs are defined in :file:`rtl/vcve2_pkg.sv`.
 Implementers should carefully consider appropriate values for these registers.
 Ibex, as an open source implementation, has an assigned architecture ID (``marchid``) of 22.
 (Allocations are specified in `marchid.md of the riscv-isa-manual repository <https://github.com/riscv/riscv-isa-manual/blob/master/marchid.md>`_.)

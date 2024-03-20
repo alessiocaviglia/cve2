@@ -71,7 +71,7 @@ Build and run Simple System with the co-simulation enabled
 .. code-block:: bash
 
   # Build simulator
-  fusesoc --cores-root=. run --target=sim --setup --build lowrisc:cve2:cve2_simple_system_cosim --RV32E=0 --RV32M=cve2_pkg::RV32MFast
+  fusesoc --cores-root=. run --target=sim --setup --build lowrisc:cve2:cve2_simple_system_cosim --RV32E=0 --RV32M=vcve2_pkg::RV32MFast
 
   # Build coremark test binary, with performance counter dump disabled. The
   # co-simulator system doesn't produce matching performance counters in spike so
@@ -143,7 +143,7 @@ The DV environment is responsible for determining when to call ``set_mip``, ``se
 
 The state of the incoming interrupts and debug request is sampled when an instruction moves from IF to ID/EX.
 The sampled state is tracked with the rest of the RVFI pipeline and used to call ``set_mip``, ``set_debug_req`` and ``set_nmi`` when the instruction is output by the RVFI.
-See the comments in :file:`rtl/cve2_core.sv`, around the ``new_debug_req``, ``new_nmi`` and ``new_irq`` signals for further details.
+See the comments in :file:`rtl/vcve2_core.sv`, around the ``new_debug_req``, ``new_nmi`` and ``new_irq`` signals for further details.
 
 Memory Access Checking and Bus Errors
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

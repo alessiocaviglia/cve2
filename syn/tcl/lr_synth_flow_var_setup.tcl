@@ -15,9 +15,9 @@ set_flow_bool_var flatten 1 "flatten"
 set_flow_bool_var timing_run 0 "timing run"
 set_flow_bool_var cve2_branch_target_alu 0 "Enable branch target ALU in Ibex"
 set_flow_bool_var cve2_writeback_stage 0 "Enable writeback stage in Ibex"
-set_flow_var cve2_bitmanip 0 "Bitmanip extenion setting for Ibex (see cve2_pkg::rv32b_e for permitted values. Enum names are not supported in Yosys.)"
-set_flow_var cve2_multiplier 2 "Multiplier extension setting for Ibex (see cve2_pkg::rv32m_e for permitted values. Enum names are not supported in Yosys.)"
-set_flow_var cve2_regfile 2 "Register file implementation selection for Ibex (see cve2_pkg::regfile_e for permitted values. Enum names are not supported in Yosys.)"
+set_flow_var cve2_bitmanip 0 "Bitmanip extenion setting for Ibex (see vcve2_pkg::rv32b_e for permitted values. Enum names are not supported in Yosys.)"
+set_flow_var cve2_multiplier 2 "Multiplier extension setting for Ibex (see vcve2_pkg::rv32m_e for permitted values. Enum names are not supported in Yosys.)"
+set_flow_var cve2_regfile 2 "Register file implementation selection for Ibex (see vcve2_pkg::regfile_e for permitted values. Enum names are not supported in Yosys.)"
 
 source $lr_synth_config_file
 

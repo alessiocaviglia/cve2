@@ -30,7 +30,7 @@ module cve2_branch_predict (
   output logic        predict_branch_taken_o,
   output logic [31:0] predict_branch_pc_o
 );
-  import cve2_pkg::*;
+  import vcve2_pkg::*;
 
   logic [31:0] imm_j_type;
   logic [31:0] imm_b_type;

@@ -1,11 +1,11 @@
 CAPI=2:
-name: "openhwgroup:cve2:cve2_sim:0.1"
+name: "alessiocaviglia:vcve2:vcve2_sim:0.1"
 description: "Simulation with a simple testbench of Ibex, a small RV32 CPU core"
 
 filesets:
   files_rtl:
     depend:
-      - openhwgroup:cve2:cve2_core
+      - alessiocaviglia:vcve2:vcve2_core
     file_type: systemVerilogSource
 
   tb-verilator:
@@ -19,7 +19,7 @@ targets:
     filesets:
       - files_rtl
       - tb-verilator
-    toplevel: cve2_core
+    toplevel: vcve2_core
     tools:
       verilator:
         mode: cc
@@ -35,7 +35,7 @@ targets:
           #- '--trace-structs'
           #- '--trace-params'
           #- '--trace-max-array 1024'
-          #- '-CFLAGS "-std=c++11 -Wall -DVM_TRACE_FMT_FST -DTOPLEVEL_NAME=cve2_core -g"'
+          #- '-CFLAGS "-std=c++11 -Wall -DVM_TRACE_FMT_FST -DTOPLEVEL_NAME=vcve2_core -g"'
           #- '-LDFLAGS "-pthread -lutil -lelf"'
           #- "-Wwarn-IMPERFECTSCH"
           #- "--unroll-count 72"

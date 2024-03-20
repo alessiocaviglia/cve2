@@ -39,7 +39,7 @@ module cve2_wb #(
   input logic                      lsu_resp_err_i
 );
 
-  import cve2_pkg::*;
+  import vcve2_pkg::*;
 
   // 0 == RF write from ID
   // 1 == RF write from LSU

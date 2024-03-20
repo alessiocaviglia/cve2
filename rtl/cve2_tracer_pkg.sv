@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 package cve2_tracer_pkg;
-  import cve2_pkg::*;
+  import vcve2_pkg::*;
 
   parameter logic [1:0] OPCODE_C0 = 2'b00;
   parameter logic [1:0] OPCODE_C1 = 2'b01;

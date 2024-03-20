@@ -19,9 +19,9 @@ module cve2_riscv_compliance (
   parameter int unsigned PMPGranularity = 0;
   parameter int unsigned PMPNumRegions  = 4;
   parameter bit RV32E                   = 1'b0;
-  parameter cve2_pkg::rv32m_e RV32M     = cve2_pkg::RV32MFast;
-  parameter cve2_pkg::rv32b_e RV32B     = cve2_pkg::RV32BNone;
-  parameter cve2_pkg::regfile_e RegFile = cve2_pkg::RegFileFF;
+  parameter vcve2_pkg::rv32m_e RV32M     = vcve2_pkg::RV32MFast;
+  parameter vcve2_pkg::rv32b_e RV32B     = vcve2_pkg::RV32BNone;
+  parameter vcve2_pkg::regfile_e RegFile = vcve2_pkg::RegFileFF;
   parameter bit ICache                  = 1'b0;
   parameter bit ICacheECC               = 1'b0;
   parameter bit SecureIbex              = 1'b0;
@@ -171,7 +171,7 @@ module cve2_riscv_compliance (
       .crash_dump_o           (                       ),
       .double_fault_seen_o    (                       ),
 
-      .fetch_enable_i         (cve2_pkg::FetchEnableOn),
+      .fetch_enable_i         (vcve2_pkg::FetchEnableOn),
       .alert_minor_o          (                       ),
       .alert_major_internal_o (                       ),
       .alert_major_bus_o      (                       ),

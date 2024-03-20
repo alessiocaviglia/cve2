@@ -7,9 +7,9 @@
  * Arithmetic logic unit
  */
 module cve2_alu #(
-  parameter cve2_pkg::rv32b_e RV32B = cve2_pkg::RV32BNone
+  parameter vcve2_pkg::rv32b_e RV32B = vcve2_pkg::RV32BNone
 ) (
-  input  cve2_pkg::alu_op_e operator_i,
+  input  vcve2_pkg::alu_op_e operator_i,
   input  logic [31:0]       operand_a_i,
   input  logic [31:0]       operand_b_i,
 
@@ -31,7 +31,7 @@ module cve2_alu #(
   output logic              comparison_result_o,
   output logic              is_equal_result_o
 );
-  import cve2_pkg::*;
+  import vcve2_pkg::*;
 
   logic [31:0] operand_a_rev;
   logic [32:0] operand_b_neg;

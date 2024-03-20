@@ -12,7 +12,7 @@
 /**
  * Top level module of the ibex RISC-V core
  */
-module cve2_core import cve2_pkg::*; #(
+module vcve2_core import vcve2_pkg::*; #(
   parameter bit          PMPEnable         = 1'b0,
   parameter int unsigned PMPGranularity    = 0,
   parameter int unsigned PMPNumRegions     = 4,
@@ -359,7 +359,7 @@ module cve2_core import cve2_pkg::*; #(
   // ID stage //
   //////////////
 
-  cve2_id_stage #(
+  vcve2_id_stage #(
     .RV32E          (RV32E),
     .RV32M          (RV32M),
     .RV32B          (RV32B)
@@ -925,14 +925,14 @@ module cve2_core import cve2_pkg::*; #(
   logic            new_debug_req;
   logic            new_nmi;
   logic            new_irq;
-  cve2_pkg::irqs_t captured_mip;
+  vcve2_pkg::irqs_t captured_mip;
   logic            captured_nmi;
   logic            captured_debug_req;
   logic            captured_valid;
 
   // RVFI extension for co-simulation support
   // debug_req and MIP captured at IF -> ID transition so one extra stage
-  cve2_pkg::irqs_t rvfi_ext_stage_mip          [RVFI_STAGES+1];
+  vcve2_pkg::irqs_t rvfi_ext_stage_mip          [RVFI_STAGES+1];
   logic            rvfi_ext_stage_nmi          [RVFI_STAGES+1];
   logic            rvfi_ext_stage_debug_req    [RVFI_STAGES+1];
   logic [63:0]     rvfi_ext_stage_mcycle       [RVFI_STAGES];

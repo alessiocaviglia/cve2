@@ -32,10 +32,10 @@ SRCS_SV ?=                              \
   $(SRC_DIR)/cve2_counter.sv            \
   $(SRC_DIR)/cve2_csr.sv                \
   $(SRC_DIR)/cve2_cs_registers.sv       \
-  $(SRC_DIR)/cve2_decoder.sv            \
+  $(SRC_DIR)/vcve2_decoder.sv            \
   $(SRC_DIR)/cve2_ex_block.sv           \
   $(SRC_DIR)/cve2_fetch_fifo.sv         \
-  $(SRC_DIR)/cve2_id_stage.sv           \
+  $(SRC_DIR)/vcve2_id_stage.sv           \
   $(SRC_DIR)/cve2_if_stage.sv           \
   $(SRC_DIR)/cve2_load_store_unit.sv    \
   $(SRC_DIR)/cve2_multdiv_fast.sv       \
@@ -44,11 +44,11 @@ SRCS_SV ?=                              \
   $(SRC_DIR)/cve2_pmp.sv                \
   $(SRC_DIR)/cve2_register_file_ff.sv   \
   $(SRC_DIR)/cve2_wb.sv                 \
-  $(SRC_DIR)/cve2_core.sv               \
+  $(SRC_DIR)/vcve2_core.sv               \
   $(SRC_DIR)/cve2_top.sv
 
 PKGS ?=                                        \
-  $(SRC_DIR)/cve2_pkg.sv                       \
+  $(SRC_DIR)/vcve2_pkg.sv                       \
   $(LOWRISC_IP)/ip/prim/rtl/prim_ram_1p_pkg.sv
 
 PRIM_CLOCK ?= $(SYN_DIR)/rtl/prim_clock_gating.v

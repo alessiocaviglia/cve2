@@ -6,7 +6,7 @@
 /**
  * Package with constants used by Ibex
  */
-package cve2_pkg;
+package vcve2_pkg;
 
   ////////////////
   // IO Structs //

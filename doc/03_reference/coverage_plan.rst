@@ -44,7 +44,7 @@ Some categories are just a single instruction, which is named without further de
 
 
 * **ALU** - All of the reg/reg reg/imm instructions that use the ALU.
-  This is any RISC-V instruction with an opcode of ``7'b0010011`` or ``7'b0110011`` (``cve2_pkg::OPCODE_OP`` and ``cve2_pkg::OPCODE_OP_IMM``) other than the ``MUL*`` and ``DIV*`` family of instructions (from RV32M).
+  This is any RISC-V instruction with an opcode of ``7'b0010011`` or ``7'b0110011`` (``vcve2_pkg::OPCODE_OP`` and ``vcve2_pkg::OPCODE_OP_IMM``) other than the ``MUL*`` and ``DIV*`` family of instructions (from RV32M).
 * **Mul** - Any ``MUL*`` instruction (from RV32M).
 * **Div** - Any ``DIV*`` instruction (from RV32M).
 * **Branch** - Any ``B*`` family branch instruction.

@@ -45,10 +45,10 @@ module cve2_controller #(
   // to prefetcher
   output logic                  instr_req_o,             // start fetching instructions
   output logic                  pc_set_o,                // jump to address set by pc_mux
-  output cve2_pkg::pc_sel_e     pc_mux_o,                // IF stage fetch address selector
+  output vcve2_pkg::pc_sel_e     pc_mux_o,                // IF stage fetch address selector
                                                          // (boot, normal, exception...)
-  output cve2_pkg::exc_pc_sel_e exc_pc_mux_o,            // IF stage selector for exception PC
-  output cve2_pkg::exc_cause_e  exc_cause_o,             // for IF stage, CSRs
+  output vcve2_pkg::exc_pc_sel_e exc_pc_mux_o,            // IF stage selector for exception PC
+  output vcve2_pkg::exc_cause_e  exc_cause_o,             // for IF stage, CSRs
 
   // LSU
   input  logic [31:0]           lsu_addr_last_i,         // for mtval
@@ -63,14 +63,14 @@ module cve2_controller #(
   // interrupt signals
   input  logic                  csr_mstatus_mie_i,       // M-mode interrupt enable bit
   input  logic                  irq_pending_i,           // interrupt request pending
-  input  cve2_pkg::irqs_t       irqs_i,                  // interrupt requests qualified with
+  input  vcve2_pkg::irqs_t       irqs_i,                  // interrupt requests qualified with
                                                          // mie CSR
   input  logic                  irq_nm_i,                // non-maskeable interrupt
   output logic                  nmi_mode_o,              // core executing NMI handler
 
   // debug signals
   input  logic                  debug_req_i,
-  output cve2_pkg::dbg_cause_e  debug_cause_o,
+  output vcve2_pkg::dbg_cause_e  debug_cause_o,
   output logic                  debug_csr_save_o,
   output logic                  debug_mode_o,
   input  logic                  debug_single_step_i,
@@ -84,7 +84,7 @@ module cve2_controller #(
   output logic                  csr_restore_dret_id_o,
   output logic                  csr_save_cause_o,
   output logic [31:0]           csr_mtval_o,
-  input  cve2_pkg::priv_lvl_e   priv_mode_i,
+  input  vcve2_pkg::priv_lvl_e   priv_mode_i,
   input  logic                  csr_mstatus_tw_i,
 
   // stall & flush signals
@@ -97,7 +97,7 @@ module cve2_controller #(
   output logic                  perf_tbranch_o           // we are executing a taken branch
                                                          // instruction
 );
-  import cve2_pkg::*;
+  import vcve2_pkg::*;
 
   // FSM state encoding
   typedef enum logic [3:0] {
@@ -158,8 +158,8 @@ module cve2_controller #(
   always_ff @(negedge clk_i) begin
     // print warning in case of decoding errors
     if ((ctrl_fsm_cs == DECODE) && instr_valid_i && !instr_fetch_err_i && illegal_insn_d) begin
-     $display("%m @ %t: Illegal instruction (hart %0x) at PC 0x%h: 0x%h", $time, cve2_core.hart_id_i,
-               cve2_id_stage.pc_id_i, cve2_id_stage.instr_rdata_i);
+     $display("%m @ %t: Illegal instruction (hart %0x) at PC 0x%h: 0x%h", $time, vcve2_core.hart_id_i,
+               vcve2_id_stage.pc_id_i, vcve2_id_stage.instr_rdata_i);
     end
   end
   // synopsys translate_on
@@ -847,7 +847,7 @@ module cve2_controller #(
 
   `ifdef RVFI
     // Workaround for internal verilator error when using hierarchical refers to calcuate this
-    // directly in cve2_core
+    // directly in vcve2_core
     logic rvfi_flush_next;
 
     assign rvfi_flush_next = ctrl_fsm_ns == FLUSH;

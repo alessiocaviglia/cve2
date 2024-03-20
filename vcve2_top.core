@@ -2,14 +2,14 @@ CAPI=2:
 # Copyright lowRISC contributors.
 # Licensed under the Apache License, Version 2.0, see LICENSE for details.
 # SPDX-License-Identifier: Apache-2.0
-name: "alessiocaviglia:cve2:cve2_top:0.1"
+name: "alessiocaviglia:vcve2:vcve2_top:0.1"
 description: "Ibex, a small RV32 CPU core"
 
 filesets:
   files_rtl:
     depend:
-      - alessiocaviglia:cve2:cve2_pkg
-      - alessiocaviglia:cve2:cve2_core
+      - alessiocaviglia:vcve2:vcve2_pkg
+      - alessiocaviglia:vcve2:vcve2_core
       - lowrisc:prim:buf
       - lowrisc:prim:clock_mux2
       - lowrisc:prim:flop
@@ -58,15 +58,15 @@ parameters:
 
   RV32M:
     datatype: str
-    default: cve2_pkg::RV32MFast
+    default: vcve2_pkg::RV32MFast
     paramtype: vlogdefine
-    description: "RV32M implementation parameter enum. See the cve2_pkg::rv32m_e enum in cve2_pkg.sv for permitted values."
+    description: "RV32M implementation parameter enum. See the vcve2_pkg::rv32m_e enum in vcve2_pkg.sv for permitted values."
 
   RV32B:
     datatype: str
-    default: cve2_pkg::RV32BNone
+    default: vcve2_pkg::RV32BNone
     paramtype: vlogdefine
-    description: "Bitmanip implementation parameter enum. See the cve2_pkg::rv32b_e enum in cve2_pkg.sv for permitted values."
+    description: "Bitmanip implementation parameter enum. See the vcve2_pkg::rv32b_e enum in vcve2_pkg.sv for permitted values."
 
 targets:
   default: &default_target

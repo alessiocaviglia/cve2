@@ -7,15 +7,15 @@
 // default. Other simulators don't take the detour via `define and can override the corresponding
 // parameters directly.
 `ifndef RV32M
-  `define RV32M cve2_pkg::RV32MFast
+  `define RV32M vcve2_pkg::RV32MFast
 `endif
 
 `ifndef RV32B
-  `define RV32B cve2_pkg::RV32BNone
+  `define RV32B vcve2_pkg::RV32BNone
 `endif
 
 `ifndef RegFile
-  `define RegFile cve2_pkg::RegFileFF
+  `define RegFile vcve2_pkg::RegFileFF
 `endif
 
 /**
@@ -41,9 +41,9 @@ module cve2_simple_system (
   parameter int unsigned        PMPGranularity           = 0;
   parameter int unsigned        PMPNumRegions            = 4;
   parameter bit                 RV32E                    = 1'b0;
-  parameter cve2_pkg::rv32m_e   RV32M                    = `RV32M;
-  parameter cve2_pkg::rv32b_e   RV32B                    = `RV32B;
-  parameter cve2_pkg::regfile_e RegFile                  = `RegFile;
+  parameter vcve2_pkg::rv32m_e   RV32M                    = `RV32M;
+  parameter vcve2_pkg::rv32b_e   RV32B                    = `RV32B;
+  parameter vcve2_pkg::regfile_e RegFile                  = `RegFile;
   parameter bit                 ICache                   = 1'b0;
   parameter bit                 ICacheECC                = 1'b0;
   parameter                     SRAMInitFile             = "";
@@ -221,7 +221,7 @@ module cve2_simple_system (
       .crash_dump_o           (),
       .double_fault_seen_o    (),
 
-      .fetch_enable_i         (cve2_pkg::FetchEnableOn),
+      .fetch_enable_i         (vcve2_pkg::FetchEnableOn),
       .alert_minor_o          (),
       .alert_major_internal_o (),
       .alert_major_bus_o      (),

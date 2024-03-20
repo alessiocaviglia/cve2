@@ -1,6 +1,6 @@
 #include <verilated.h>
 
-#include "Vcve2_core.h"
+#include "Vvcve2_core.h"
 #include "verilated_vcd_c.h"  // Include the VCD tracing header
 
 #define MAX_SIM_TIME 100
@@ -10,7 +10,7 @@ int main(int argc, char **argv, char **env) {
   // Initialize Verilators variables
   Verilated::commandArgs(argc, argv);
   // Create an instance of our module under test
-  Vcve2_core *top = new Vcve2_core;
+  Vvcve2_core *top = new Vvcve2_core;
 
   // Initialize VCD tracing
   Verilated::traceEverOn(true);

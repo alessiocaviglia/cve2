@@ -9,20 +9,20 @@
  * Execution block: Hosts ALU and MUL/DIV unit
  */
 module cve2_ex_block #(
-  parameter cve2_pkg::rv32m_e RV32M           = cve2_pkg::RV32MFast,
-  parameter cve2_pkg::rv32b_e RV32B           = cve2_pkg::RV32BNone
+  parameter vcve2_pkg::rv32m_e RV32M           = vcve2_pkg::RV32MFast,
+  parameter vcve2_pkg::rv32b_e RV32B           = vcve2_pkg::RV32BNone
 ) (
   input  logic                  clk_i,
   input  logic                  rst_ni,
 
   // ALU
-  input  cve2_pkg::alu_op_e     alu_operator_i,
+  input  vcve2_pkg::alu_op_e     alu_operator_i,
   input  logic [31:0]           alu_operand_a_i,
   input  logic [31:0]           alu_operand_b_i,
   input  logic                  alu_instr_first_cycle_i,
 
   // Multiplier/Divider
-  input  cve2_pkg::md_op_e      multdiv_operator_i,
+  input  vcve2_pkg::md_op_e      multdiv_operator_i,
   input  logic                  mult_en_i,             // dynamic enable signal, for FSM control
   input  logic                  div_en_i,              // dynamic enable signal, for FSM control
   input  logic                  mult_sel_i,            // static decoder output, for data muxes
@@ -45,7 +45,7 @@ module cve2_ex_block #(
   output logic                  ex_valid_o             // EX has valid output
 );
 
-  import cve2_pkg::*;
+  import vcve2_pkg::*;
 
   logic [31:0] alu_result, multdiv_result;
 

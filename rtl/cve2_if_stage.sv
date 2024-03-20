@@ -12,7 +12,7 @@
 
 `include "prim_assert.sv"
 
-module cve2_if_stage import cve2_pkg::*; #(
+module cve2_if_stage import vcve2_pkg::*; #(
   parameter int unsigned DmHaltAddr        = 32'h1A110800,
   parameter int unsigned DmExceptionAddr   = 32'h1A110808
 ) (
@@ -106,7 +106,7 @@ module cve2_if_stage import cve2_pkg::*; #(
 
   logic              if_id_pipe_reg_we; // IF-ID pipeline reg write enable
 
-  cve2_pkg::pc_sel_e pc_mux_internal;
+  vcve2_pkg::pc_sel_e pc_mux_internal;
 
   logic        [7:0] unused_boot_addr;
   logic        [7:0] unused_csr_mtvec;

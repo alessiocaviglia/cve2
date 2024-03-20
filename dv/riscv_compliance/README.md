@@ -37,7 +37,7 @@ How to run RISC-V Compliance on Ibex
 
    ```sh
    cd $IBEX_REPO_BASE
-   fusesoc --cores-root=. run --target=sim --setup --build lowrisc:cve2:cve2_riscv_compliance --RV32E=0 --RV32M=cve2_pkg::RV32MNone
+   fusesoc --cores-root=. run --target=sim --setup --build lowrisc:cve2:cve2_riscv_compliance --RV32E=0 --RV32M=vcve2_pkg::RV32MNone
    ```
 
    You can use the two compile-time options `--RV32M` and `--RV32E` to

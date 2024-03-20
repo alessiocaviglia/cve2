@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-check_sec -setup -spec_top cve2_core -imp_top cve2_core \
+check_sec -setup -spec_top vcve2_core -imp_top vcve2_core \
         -spec_analyze  "-sv -f ./golden.src" \
         -imp_analyze "-sv -f ./revised.src"\
         -auto_map_reset_x_values

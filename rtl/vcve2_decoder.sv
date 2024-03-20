@@ -13,10 +13,10 @@
 
 `include "prim_assert.sv"
 
-module cve2_decoder #(
+module vcve2_decoder #(
   parameter bit RV32E               = 0,
-  parameter cve2_pkg::rv32m_e RV32M = cve2_pkg::RV32MFast,
-  parameter cve2_pkg::rv32b_e RV32B = cve2_pkg::RV32BNone
+  parameter vcve2_pkg::rv32m_e RV32M = vcve2_pkg::RV32MFast,
+  parameter vcve2_pkg::rv32b_e RV32B = vcve2_pkg::RV32BNone
 ) (
   input  logic                 clk_i,
   input  logic                 rst_ni,
@@ -40,8 +40,8 @@ module cve2_decoder #(
   input  logic                 illegal_c_insn_i,      // compressed instruction decode failed
 
   // immediates
-  output cve2_pkg::imm_a_sel_e  imm_a_mux_sel_o,       // immediate selection for operand a
-  output cve2_pkg::imm_b_sel_e  imm_b_mux_sel_o,       // immediate selection for operand b
+  output vcve2_pkg::imm_a_sel_e  imm_a_mux_sel_o,       // immediate selection for operand a
+  output vcve2_pkg::imm_b_sel_e  imm_b_mux_sel_o,       // immediate selection for operand b
   output logic [31:0]           imm_i_type_o,
   output logic [31:0]           imm_s_type_o,
   output logic [31:0]           imm_b_type_o,
@@ -50,7 +50,7 @@ module cve2_decoder #(
   output logic [31:0]           zimm_rs1_type_o,
 
   // register file
-  output cve2_pkg::rf_wd_sel_e rf_wdata_sel_o,   // RF write data selection
+  output vcve2_pkg::rf_wd_sel_e rf_wdata_sel_o,   // RF write data selection
   output logic                 rf_we_o,          // write enable for regfile
   output logic [4:0]           rf_raddr_a_o,
   output logic [4:0]           rf_raddr_b_o,
@@ -59,10 +59,10 @@ module cve2_decoder #(
   output logic                 rf_ren_b_o,          // Instruction reads from RF addr B
 
   // ALU
-  output cve2_pkg::alu_op_e    alu_operator_o,        // ALU operation selection
-  output cve2_pkg::op_a_sel_e  alu_op_a_mux_sel_o,    // operand a selection: reg value, PC,
+  output vcve2_pkg::alu_op_e    alu_operator_o,        // ALU operation selection
+  output vcve2_pkg::op_a_sel_e  alu_op_a_mux_sel_o,    // operand a selection: reg value, PC,
                                                       // immediate or zero
-  output cve2_pkg::op_b_sel_e  alu_op_b_mux_sel_o,    // operand b selection: reg value or
+  output vcve2_pkg::op_b_sel_e  alu_op_b_mux_sel_o,    // operand b selection: reg value or
                                                       // immediate
   output logic                 alu_multicycle_o,      // ternary bitmanip instruction
 
@@ -72,12 +72,12 @@ module cve2_decoder #(
   output logic                 mult_sel_o,            // as above but static, for data muxes
   output logic                 div_sel_o,             // as above but static, for data muxes
 
-  output cve2_pkg::md_op_e     multdiv_operator_o,
+  output vcve2_pkg::md_op_e     multdiv_operator_o,
   output logic [1:0]           multdiv_signed_mode_o,
 
   // CSRs
   output logic                 csr_access_o,          // access to CSR
-  output cve2_pkg::csr_op_e    csr_op_o,              // operation to perform on CSR
+  output vcve2_pkg::csr_op_e    csr_op_o,              // operation to perform on CSR
 
   // LSU
   output logic                 data_req_o,            // start transaction to data memory
@@ -96,7 +96,7 @@ module cve2_decoder #(
   output logic                 vrf_we_o              // write enable for vector register file
 );
 
-  import cve2_pkg::*;
+  import vcve2_pkg::*;
 
   logic        illegal_insn;
   logic        illegal_reg_rv32e;

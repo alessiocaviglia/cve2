@@ -17,9 +17,9 @@ Instantiation Template
       .MHPMCounterNum   ( 0                                ),
       .MHPMCounterWidth ( 40                               ),
       .RV32E            ( 0                                ),
-      .RV32M            ( cve2_pkg::RV32MFast              ),
-      .RndCnstLfsrSeed  ( cve2_pkg::RndCnstLfsrSeedDefault ),
-      .RndCnstLfsrPerm  ( cve2_pkg::RndCnstLfsrPermDefault ),
+      .RV32M            ( vcve2_pkg::RV32MFast              ),
+      .RndCnstLfsrSeed  ( vcve2_pkg::RndCnstLfsrSeedDefault ),
+      .RndCnstLfsrPerm  ( vcve2_pkg::RndCnstLfsrPermDefault ),
       .DmHaltAddr       ( 32'h1A110800                     ),
       .DmExceptionAddr  ( 32'h1A110808                     )
   ) u_top (
@@ -87,11 +87,11 @@ Parameters
 +------------------------------+---------------------+------------+-----------------------------------------------------------------------+
 | ``RV32E``                    | bit                 | 0          | RV32E mode enable (16 integer registers only)                         |
 +------------------------------+---------------------+------------+-----------------------------------------------------------------------+
-| ``RV32M``                    | cve2_pkg::rv32m_e   | RV32MFast  | M(ultiply) extension select:                                          |
-|                              |                     |            | "cve2_pkg::RV32MNone": No M-extension                                 |
-|                              |                     |            | "cve2_pkg::RV32MSlow": Slow multi-cycle multiplier, iterative divider |
-|                              |                     |            | "cve2_pkg::RV32MFast": 3-4 cycle multiplier, iterative divider        |
-|                              |                     |            | "cve2_pkg::RV32MSingleCycle": 1-2 cycle multiplier, iterative divider |
+| ``RV32M``                    | vcve2_pkg::rv32m_e   | RV32MFast  | M(ultiply) extension select:                                          |
+|                              |                     |            | "vcve2_pkg::RV32MNone": No M-extension                                 |
+|                              |                     |            | "vcve2_pkg::RV32MSlow": Slow multi-cycle multiplier, iterative divider |
+|                              |                     |            | "vcve2_pkg::RV32MFast": 3-4 cycle multiplier, iterative divider        |
+|                              |                     |            | "vcve2_pkg::RV32MSingleCycle": 1-2 cycle multiplier, iterative divider |
 +------------------------------+---------------------+------------+-----------------------------------------------------------------------+
 | ``DmHaltAddr``               | int                 | 0x1A110800 | Address to jump to when entering Debug Mode                           |
 +------------------------------+---------------------+------------+-----------------------------------------------------------------------+
@@ -150,7 +150,7 @@ Interfaces
 |                            |                         |     | pause fetching new instructions. A     |
 |                            |                         |     | multi-bit encoding scheme is used. See |
 |                            |                         |     | `FetchEnableOn` / `FetchEnableOff` in  |
-|                            |                         |     | :file:`rtl/cve2_pkg.sv`                |
+|                            |                         |     | :file:`rtl/vcve2_pkg.sv`                |
 +----------------------------+-------------------------+-----+----------------------------------------+
 | ``core_sleep_o``           | 1                       | out | Core in WFI with no outstanding data   |
 |                            |                         |     | or instruction accesses. Deasserts     |

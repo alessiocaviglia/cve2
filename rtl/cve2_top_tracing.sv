@@ -6,7 +6,7 @@
  * Top level module of the cve2 RISC-V core with tracing enabled
  */
 
-module cve2_top_tracing import cve2_pkg::*; #(
+module cve2_top_tracing import vcve2_pkg::*; #(
   parameter int unsigned MHPMCounterNum   = 0,
   parameter int unsigned MHPMCounterWidth = 40,
   parameter bit          RV32E            = 1'b0,

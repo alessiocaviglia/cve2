@@ -12,7 +12,7 @@
 /**
  * Top level module of the ibex RISC-V core
  */
-module cve2_top import cve2_pkg::*; #(
+module cve2_top import vcve2_pkg::*; #(
   parameter int unsigned MHPMCounterNum   = 0,
   parameter int unsigned MHPMCounterWidth = 40,
   parameter bit          RV32E            = 1'b0,
@@ -149,7 +149,7 @@ module cve2_top import cve2_pkg::*; #(
   // Core instantiation //
   ////////////////////////
 
-  cve2_core #(
+  vcve2_core #(
     .PMPEnable        (PMPEnable),
     .PMPGranularity   (PMPGranularity),
     .PMPNumRegions    (PMPNumRegions),
