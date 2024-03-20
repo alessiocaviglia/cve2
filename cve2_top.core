@@ -8,7 +8,7 @@ description: "Ibex, a small RV32 CPU core"
 filesets:
   files_rtl:
     depend:
-      - openhwgroup:cve2:cve2_pkg
+      - alessiocaviglia:cve2:cve2_pkg
       - alessiocaviglia:cve2:cve2_core
       - lowrisc:prim:buf
       - lowrisc:prim:clock_mux2
