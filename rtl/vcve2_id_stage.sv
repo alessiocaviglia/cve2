@@ -257,6 +257,9 @@ module vcve2_id_stage #(
   logic [31:0] alu_operand_a;
   logic [31:0] alu_operand_b;
 
+  // [VEC] Vector extension
+  logic        stall_vec;
+
   /////////////
   // LSU Mux //
   /////////////
@@ -648,6 +651,8 @@ module vcve2_id_stage #(
     branch_set_raw_d        = 1'b0;
     jump_set_raw            = 1'b0;
     perf_branch_o           = 1'b0;
+    // [VEC]
+    stall_vec               = 1'b0;
 
     if (instr_executing_spec) begin
       unique case (id_fsm_q)
@@ -692,9 +697,9 @@ module vcve2_id_stage #(
               id_fsm_d      = MULTI_CYCLE;
               rf_we_raw     = 1'b0;
             end
+            // [VEC] All vector operations take more than one cycle
             vrf_req_o: begin
-              // All vector operations take more than one cycle
-              // <TODO>
+              stall_vec     = 1'b1;
               id_fsm_d      = MULTI_CYCLE;
             end
             default: begin
@@ -730,13 +735,13 @@ module vcve2_id_stage #(
   // Stall ID/EX stage for reason that relates to instruction in ID/EX, update assertion below if
   // modifying this.
   assign stall_id = stall_mem | stall_multdiv | stall_jump | stall_branch |
-                      stall_alu;
+                      stall_alu | stall_vec;
 
   // Generally illegal instructions have no reason to stall, however they must still stall waiting
   // for outstanding memory requests so exceptions related to them take priority over the illegal
   // instruction exception.
   `ASSERT(IllegalInsnStallMustBeMemStall, illegal_insn_o & stall_id |-> stall_mem &
-    ~(stall_multdiv | stall_jump | stall_branch | stall_alu))
+    ~(stall_multdiv | stall_jump | stall_branch | stall_alu | stall_vec))
 
   assign instr_done = ~stall_id & ~flush_id & instr_executing;
 
