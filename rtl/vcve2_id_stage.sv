@@ -155,16 +155,17 @@ module vcve2_id_stage #(
   // Vector register file
   output logic                      vrf_req_o,
   output logic                      vrf_we_o,
-  input  logic [127:0]              vrf_rdata_b_i,
-  input  logic [127:0]              vrf_rdata_a_i,
-  input  logic [127:0]              vrf_rdata_c_i,
-  output logic [127:0]              vrf_wdata_o,    // read port
+  input  logic [31:0]               vrf_rdata_b_i,
+  input  logic [31:0]               vrf_rdata_a_i,
+  input  logic [31:0]               vrf_rdata_c_i,
+  output logic [31:0]               vrf_wdata_o,    // read port
+  output logic [1:0]                vrf_num_operands_o,
   input  logic                      vector_done_i
 
 );
 
   // TODO: remove it
-  assign vrf_wdata_o = 128'h0;
+  assign vrf_wdata_o = 32'hBEEF;
 
   import vcve2_pkg::*;
 
@@ -425,7 +426,8 @@ module vcve2_id_stage #(
 
     // Vector instructions
     .vrf_req_o(vrf_req_o),  // used both for VRF and to signal vector instructions since all of those who needs to stall uses VRF
-    .vrf_we_o(vrf_we_o)
+    .vrf_we_o(vrf_we_o),
+    .vrf_num_operands_o(vrf_num_operands_o)
     
   );
 

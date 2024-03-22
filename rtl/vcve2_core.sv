@@ -275,10 +275,11 @@ module vcve2_core import vcve2_pkg::*; #(
   // Vector Register File
   logic vrf_req; // Request signal for the vector register file
   logic vrf_we; // Write enable signal for the vector register file
-  logic [127:0] vrf_wdata; // Write data for the vector register file
-  logic [127:0] vrf_rdata_a; // First read port of vector register file
-  logic [127:0] vrf_rdata_b; // Second read port of vector register file
-  logic [127:0] vrf_rdata_c; // Third read port of vector register file
+  logic [31:0] vrf_wdata; // Write data for the vector register file
+  logic [31:0] vrf_rdata_a; // First read port of vector register file
+  logic [31:0] vrf_rdata_b; // Second read port of vector register file
+  logic [31:0] vrf_rdata_c; // Third read port of vector register file
+  logic [1:0] vrf_num_operands; // Number of operands needed for current vector operation
   logic vector_done; // Signal indicating that the vector operation is done
 
   //////////////////////
@@ -496,6 +497,7 @@ module vcve2_core import vcve2_pkg::*; #(
     .vrf_rdata_b_i(vrf_rdata_b),
     .vrf_rdata_c_i(vrf_rdata_c),
     .vrf_wdata_o(vrf_wdata),
+    .vrf_num_operands_o(vrf_num_operands),
     .vector_done_i(vector_done)
   );
 
@@ -682,7 +684,8 @@ module vcve2_core import vcve2_pkg::*; #(
   // VRF (Vector Register File) //
   ////////////////////////////////
   vregfile_wrapper #(
-    .DataWidth(128),
+    .VLEN(128),
+    .ELEN(32),
     .AddrWidth(5)
   ) vregfile_wrapper_inst (
     .clk_i(clk_i),
@@ -700,6 +703,7 @@ module vcve2_core import vcve2_pkg::*; #(
     .waddr_i(rf_waddr_wb),
     .wdata_i(vrf_wdata),
 
+    .num_operands_i(vrf_num_operands),
     .vector_done_o(vector_done)
   );
   
