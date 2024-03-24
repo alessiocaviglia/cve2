@@ -1230,6 +1230,7 @@ module vcve2_decoder #(
           {6'b01_0111, 3'b000}: begin    // vmv.v.v/vmerge.vvm
           end
           {6'b01_0111, 3'b100}: begin    // vmv.v.x/vmerge.vxm
+            alu_op_a_mux_sel_o = OP_A_REG_A;  // send to EX stage the content of x register
           end
           {6'b01_0111, 3'b011}: begin    // vmv.v.i/vmerge.vim
           end

@@ -1,19 +1,21 @@
 [*]
 [*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
-[*] Fri Mar 22 13:53:58 2024
+[*] Sun Mar 24 09:01:41 2024
 [*]
 [dumpfile] "/home/alessio99/tristan/cve2/tb/build/alessiocaviglia_vcve2_vcve2_sim_0.1/default-verilator/waveform.vcd"
-[dumpfile_mtime] "Fri Mar 22 13:22:34 2024"
-[dumpfile_size] 123164
+[dumpfile_mtime] "Sun Mar 24 08:57:39 2024"
+[dumpfile_size] 123328
 [savefile] "/home/alessio99/tristan/cve2/tb/cve2_core/vregfile.gtkw"
 [timestart] 0
 [size] 1848 1016
 [pos] -39 -39
-*-3.974829 12 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-4.974829 99 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] TOP.
 [treeopen] TOP.vcve2_core.
 [treeopen] TOP.vcve2_core.id_stage_i.
 [treeopen] TOP.vcve2_core.id_stage_i.decoder_i.
+[treeopen] TOP.vcve2_core.register_file_i.
+[treeopen] TOP.vcve2_core.vex_block_i.
 [treeopen] TOP.vcve2_core.vregfile_wrapper_inst.
 [treeopen] TOP.vcve2_core.vregfile_wrapper_inst.ram_inst.
 [sst_width] 256
@@ -29,7 +31,6 @@ TOP.vcve2_core.instr_rdata_i[31:0]
 @28
 TOP.vcve2_core.id_stage_i.decoder_i.vrf_req_o
 TOP.vcve2_core.id_stage_i.decoder_i.vrf_we_o
-@29
 TOP.vcve2_core.id_stage_i.decoder_i.vrf_num_operands_o[1:0]
 @22
 TOP.vcve2_core.id_stage_i.decoder_i.rf_raddr_a_o[4:0]
@@ -68,16 +69,20 @@ TOP.vcve2_core.id_stage_i.id_fsm_q
 TOP.vcve2_core.id_stage_i.instr_executing_spec
 TOP.vcve2_core.id_stage_i.instr_valid_i
 @200
--IF stage
-@28
-TOP.vcve2_core.if_stage_i.instr_valid_id_q
-TOP.vcve2_core.if_stage_i.instr_valid_id_d
-TOP.vcve2_core.if_stage_i.fetch_valid
-TOP.vcve2_core.if_stage_i.id_in_ready_i
-TOP.vcve2_core.if_stage_i.pc_set_i
-@200
--Controller
+-write data
 @22
-TOP.vcve2_core.id_stage_i.controller_i.ctrl_fsm_cs[3:0]
+TOP.vcve2_core.register_file_i.raddr_a_i[4:0]
+TOP.vcve2_core.register_file_i.rdata_a_o[31:0]
+@200
+-
+@23
+TOP.vcve2_core.id_stage_i.rf_rdata_a_i[31:0]
+@22
+TOP.vcve2_core.id_stage_i.alu_operand_a_ex_o[31:0]
+TOP.vcve2_core.vex_block_i.vec_result_ex_o[31:0]
+TOP.vcve2_core.id_stage_i.vec_result_ex_i[31:0]
+TOP.vcve2_core.vrf_wdata_id[31:0]
+TOP.vcve2_core.vrf_wdata_wb[31:0]
+TOP.vcve2_core.register_file_i.rf_reg[1023:0]
 [pattern_trace] 1
 [pattern_trace] 0

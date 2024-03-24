@@ -130,7 +130,7 @@ module vregfile_wrapper #(
       end
 
       V_OP: begin
-        rd_shift = 1;
+        if (we_i==1) rd_shift = 1;
         if (num_operands_i>0) rs1_shift = 1;
         if (num_operands_i>1) rs2_shift = 1;
         if (num_operands_i>2) rs3_shift = 1;
