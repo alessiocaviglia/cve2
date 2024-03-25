@@ -9,7 +9,7 @@ filesets:
     depend:
       - lowrisc:prim:secded
       - lowrisc:prim:assert
-      - lowrisc:cve2:vcve2_pkg
+      - alessiocaviglia:vcve2:vcve2_pkg
     files:
       - rtl/cve2_icache.sv
     file_type: systemVerilogSource

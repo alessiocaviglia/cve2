@@ -112,7 +112,6 @@ module cve2_top_tracing import vcve2_pkg::*; #(
     .MHPMCounterWidth ( MHPMCounterWidth ),
     .RV32E            ( RV32E            ),
     .RV32M            ( RV32M            ),
-    .BranchPredictor  ( BranchPredictor  ),
     .DmHaltAddr       ( DmHaltAddr       ),
     .DmExceptionAddr  ( DmExceptionAddr  )
   ) u_cve2_top (

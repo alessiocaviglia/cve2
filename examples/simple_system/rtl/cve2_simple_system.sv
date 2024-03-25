@@ -43,7 +43,6 @@ module cve2_simple_system (
   parameter bit                 RV32E                    = 1'b0;
   parameter vcve2_pkg::rv32m_e   RV32M                    = `RV32M;
   parameter vcve2_pkg::rv32b_e   RV32B                    = `RV32B;
-  parameter vcve2_pkg::regfile_e RegFile                  = `RegFile;
   parameter bit                 ICache                   = 1'b0;
   parameter bit                 ICacheECC                = 1'b0;
   parameter                     SRAMInitFile             = "";
@@ -160,18 +159,9 @@ module cve2_simple_system (
   );
 
   cve2_top_tracing #(
-      .SecureIbex      ( SecureIbex      ),
-      .ICacheScramble  ( ICacheScramble  ),
-      .PMPEnable       ( PMPEnable       ),
-      .PMPGranularity  ( PMPGranularity  ),
-      .PMPNumRegions   ( PMPNumRegions   ),
       .MHPMCounterNum  ( 29              ),
       .RV32E           ( RV32E           ),
       .RV32M           ( RV32M           ),
-      .RV32B           ( RV32B           ),
-      .RegFile         ( RegFile         ),
-      .ICache          ( ICache          ),
-      .ICacheECC       ( ICacheECC       ),
       .DmHaltAddr      ( 32'h00100000    ),
       .DmExceptionAddr ( 32'h00100000    )
     ) u_top (
@@ -179,7 +169,6 @@ module cve2_simple_system (
       .rst_ni                 (rst_sys_n),
 
       .test_en_i              ('b0),
-      .scan_rst_ni            (1'b1),
       .ram_cfg_i              ('b0),
 
       .hart_id_i              (32'b0),
@@ -191,7 +180,6 @@ module cve2_simple_system (
       .instr_rvalid_i         (instr_rvalid),
       .instr_addr_o           (instr_addr),
       .instr_rdata_i          (instr_rdata),
-      .instr_rdata_intg_i     ('0),
       .instr_err_i            (instr_err),
 
       .data_req_o             (host_req[CoreD]),
@@ -201,9 +189,7 @@ module cve2_simple_system (
       .data_be_o              (host_be[CoreD]),
       .data_addr_o            (host_addr[CoreD]),
       .data_wdata_o           (host_wdata[CoreD]),
-      .data_wdata_intg_o      (),
       .data_rdata_i           (host_rdata[CoreD]),
-      .data_rdata_intg_i      ('0),
       .data_err_i             (host_err[CoreD]),
 
       .irq_software_i         (1'b0),
@@ -212,19 +198,9 @@ module cve2_simple_system (
       .irq_fast_i             (15'b0),
       .irq_nm_i               (1'b0),
 
-      .scramble_key_valid_i   ('0),
-      .scramble_key_i         ('0),
-      .scramble_nonce_i       ('0),
-      .scramble_req_o         (),
-
       .debug_req_i            ('b0),
       .crash_dump_o           (),
-      .double_fault_seen_o    (),
 
-      .fetch_enable_i         (vcve2_pkg::FetchEnableOn),
-      .alert_minor_o          (),
-      .alert_major_internal_o (),
-      .alert_major_bus_o      (),
       .core_sleep_o           ()
     );
 

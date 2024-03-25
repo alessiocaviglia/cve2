@@ -29,9 +29,10 @@ build-riscv-compliance:
 # - "run-simple-system"
 .PHONY: build-simple-system
 build-simple-system:
-	fusesoc --cores-root=. run --target=sim --setup --build \
-		lowrisc:cve2:cve2_simple_system \
-		$(FUSESOC_CONFIG_OPTS)
+	fusesoc --cores-root=. run --target=sim --setup --build lowrisc:cve2:cve2_simple_system --RV32E=0 --RV32M=vcve2_pkg::RV32MFast
+	# fusesoc --cores-root=. run --target=sim --setup --build \
+	# 	lowrisc:cve2:cve2_simple_system \
+	#	$(FUSESOC_CONFIG_OPTS)
 
 simple-system-program = examples/sw/simple_system/hello_test/hello_test.vmem
 sw-simple-hello: $(simple-system-program)

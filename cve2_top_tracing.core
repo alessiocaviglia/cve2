@@ -7,7 +7,7 @@ description: "Ibex, a small RV32 CPU core with tracing enabled"
 filesets:
   files_rtl:
     depend:
-      - lowrisc:cve2:cve2_top
+      - alessiocaviglia:vcve2:vcve2_top
       - lowrisc:cve2:cve2_tracer
     files:
       - rtl/cve2_top_tracing.sv

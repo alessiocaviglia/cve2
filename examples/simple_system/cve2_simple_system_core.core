@@ -17,7 +17,7 @@ filesets:
     depend:
       - lowrisc:dv_verilator:memutil_verilator
       - lowrisc:dv_verilator:simutil_verilator
-      - lowrisc:dv_verilator:cve2_pcounts
+      #- lowrisc:dv_verilator:cve2_pcounts
     files:
       - cve2_simple_system.cc: { file_type: cppSource }
       - cve2_simple_system.h:  { file_type: cppSource, is_include_file: true}

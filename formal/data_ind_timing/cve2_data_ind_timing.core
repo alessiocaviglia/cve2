@@ -9,7 +9,7 @@ description: "Formal test for data independent timing"
 filesets:
   testbench:
     depend:
-      - lowrisc:cve2:vcve2_pkg
+      - alessiocaviglia:vcve2:vcve2_pkg
       - lowrisc:cve2:cve2_multdiv
       - lowrisc:util:sv2v
     files:

@@ -8,7 +8,7 @@ filesets:
   files_rtl:
     depend:
       - lowrisc:prim:assert
-      - lowrisc:cve2:vcve2_pkg
+      - alessiocaviglia:vcve2:vcve2_pkg
     files:
       - rtl/cve2_tracer_pkg.sv
       - rtl/cve2_tracer.sv
