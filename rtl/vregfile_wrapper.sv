@@ -24,14 +24,7 @@ module vregfile_wrapper #(
     output  logic                 vector_done_o              // signals the pipeline that the vector operation is finished (most likely with a write to the VRF)
 );
 
-  typedef enum {
-    VRF_IDLE,
-    VRF_READ1,
-    VRF_READ2,
-    VRF_READ3,
-    V_OP,
-    VRF_WRITE
-  } vrf_state_t;
+  import vcve2_pkg::*;
 
   parameter COUNT = VLEN/ELEN;
 
@@ -41,7 +34,7 @@ module vregfile_wrapper #(
   logic [VLEN-1:0] rdata_s;
 
   // VRF FSM signals
-  vrf_state_t vrf_state, vrf_next_state;
+  vcve2_pkg::vrf_state_t vrf_state, vrf_next_state;
   int count_d, count_q;       // I could need it to be bigger
 
   // Internal registers signals

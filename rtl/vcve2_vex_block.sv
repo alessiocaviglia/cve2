@@ -10,13 +10,30 @@ module vcve2_vex_block #(
 ) (
     input  logic                      clk_i,
     input  logic                      rst_ni,
-    // Register file input
-    input  logic [XLEN-1:0]           rf_rdata_a_i,
+    // Input operands
+    input  logic [ELEN-1:0]           valu_operand_a,
+    input  logic [ELEN-1:0]           valu_operand_b,
+    input  logic [ELEN-1:0]           valu_operand_c,
+    input  vcve2_pkg::valu_op_e       valu_operator,
     // Output wb value
     output logic [ELEN-1:0]           vec_result_ex_o
 );
 
-    // Right now it only forwards this signal for move instructions
-    assign vec_result_ex_o = rf_rdata_a_i;
+  import vcve2_pkg::*;
+
+    // case to select the correct operation
+    always_comb begin 
+        unique case (valu_operator)
+            VALU_MOVE: begin
+                vec_result_ex_o = valu_operand_a;
+            end
+            VALU_ADD: begin
+                vec_result_ex_o = valu_operand_a + valu_operand_b;
+            end
+            default: begin
+                vec_result_ex_o = 0;
+            end
+        endcase
+    end
 
 endmodule

@@ -59,7 +59,7 @@ module vcve2_id_stage #(
   input  logic                      ex_valid_i,       // EX stage has valid output
   input  logic                      lsu_resp_valid_i, // LSU has valid output, or is done
   // ALU
-  output vcve2_pkg::alu_op_e         alu_operator_ex_o,
+  output vcve2_pkg::alu_op_e        alu_operator_ex_o,
   output logic [31:0]               alu_operand_a_ex_o,
   output logic [31:0]               alu_operand_b_ex_o,
 
@@ -152,6 +152,7 @@ module vcve2_id_stage #(
   output logic                      perf_div_wait_o,
   output logic                      instr_id_done_o,
 
+  // VECTOR EXTENSION
   // Vector writeback signals
   input  logic [31:0]               vec_result_ex_i,
   // Vector register file
@@ -162,7 +163,12 @@ module vcve2_id_stage #(
   input  logic [31:0]               vrf_rdata_c_i,
   output logic [31:0]               vrf_wdata_o,
   output logic [1:0]                vrf_num_operands_o,
-  input  logic                      vector_done_i
+  input  logic                      vector_done_i,
+  // Vector alu operands
+  output logic [31:0]               valu_operand_a_ex_o,
+  output logic [31:0]               valu_operand_b_ex_o,
+  output logic [31:0]               valu_operand_c_ex_o,
+  output vcve2_pkg::valu_op_e       valu_operator_o
 
 );
 
@@ -261,7 +267,9 @@ module vcve2_id_stage #(
   logic [31:0] alu_operand_b;
 
   // [VEC] Vector extension
-  logic        stall_vec;
+  logic                   stall_vec;
+  vcve2_pkg::vop_a_sel_e  vop_a_mux_sel;
+  logic [31:0]            imm_v_type;
 
   /////////////
   // LSU Mux //
@@ -317,6 +325,23 @@ module vcve2_id_stage #(
 
   // ALU MUX for Operand B
   assign alu_operand_b = (alu_op_b_mux_sel == OP_B_IMM) ? imm_b : rf_rdata_b_fwd;
+
+  /////////////////////////
+  // Vector Operands MUX //
+  /////////////////////////
+
+  // MUX for vop a
+  always_comb begin : vop_a_mux
+    unique case (vop_a_mux_sel)
+      VOP_A_VREG_A: valu_operand_a_ex_o = vrf_rdata_a_i;
+      VOP_A_REG_A:  valu_operand_a_ex_o = rf_rdata_a_fwd;
+      VOP_A_IMM:    valu_operand_a_ex_o = imm_v_type;
+      default:      valu_operand_a_ex_o = '0;
+    endcase
+  end
+  // others operadns, not yet implemented
+  assign valu_operand_b_ex_o = vrf_rdata_b_i;
+  assign valu_operand_c_ex_o = vrf_rdata_c_i;
 
   /////////////////////////////////////////
   // Multicycle Operation Stage Register //
@@ -426,10 +451,16 @@ module vcve2_id_stage #(
     .jump_in_dec_o  (jump_in_dec),
     .branch_in_dec_o(branch_in_dec),
 
-    // Vector instructions
+    // VECTOR EXTENSION
+    // vector register file
     .vrf_req_o(vrf_req_o),  // used both for VRF and to signal vector instructions since all of those who needs to stall uses VRF
     .vrf_we_o(vrf_we_id_o),
-    .vrf_num_operands_o(vrf_num_operands_o)
+    .vrf_num_operands_o(vrf_num_operands_o),
+    // vector immediates
+    .imm_v_type_o(imm_v_type),
+    .vop_a_mux_sel_o(vop_a_mux_sel),  // add dec at the end if it's not the only select we have (look at opb to understand)
+    // vector alu
+    .valu_operator_o(valu_operator_o)
     
   );
 

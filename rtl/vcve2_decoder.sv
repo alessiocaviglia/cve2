@@ -18,30 +18,30 @@ module vcve2_decoder #(
   parameter vcve2_pkg::rv32m_e RV32M = vcve2_pkg::RV32MFast,
   parameter vcve2_pkg::rv32b_e RV32B = vcve2_pkg::RV32BNone
 ) (
-  input  logic                 clk_i,
-  input  logic                 rst_ni,
+  input  logic                  clk_i,
+  input  logic                  rst_ni,
 
   // to/from controller
-  output logic                 illegal_insn_o,        // illegal instr encountered
-  output logic                 ebrk_insn_o,           // trap instr encountered
-  output logic                 mret_insn_o,           // return from exception instr
+  output logic                  illegal_insn_o,        // illegal instr encountered
+  output logic                  ebrk_insn_o,           // trap instr encountered
+  output logic                  mret_insn_o,           // return from exception instr
                                                       // encountered
-  output logic                 dret_insn_o,           // return from debug instr encountered
-  output logic                 ecall_insn_o,          // syscall instr encountered
-  output logic                 wfi_insn_o,            // wait for interrupt instr encountered
-  output logic                 jump_set_o,            // jump taken set signal
+  output logic                  dret_insn_o,           // return from debug instr encountered
+  output logic                  ecall_insn_o,          // syscall instr encountered
+  output logic                  wfi_insn_o,            // wait for interrupt instr encountered
+  output logic                  jump_set_o,            // jump taken set signal
 
   // from IF-ID pipeline register
-  input  logic                 instr_first_cycle_i,   // instruction read is in its first cycle
-  input  logic [31:0]          instr_rdata_i,         // instruction read from memory/cache
-  input  logic [31:0]          instr_rdata_alu_i,     // instruction read from memory/cache
+  input  logic                  instr_first_cycle_i,   // instruction read is in its first cycle
+  input  logic [31:0]           instr_rdata_i,         // instruction read from memory/cache
+  input  logic [31:0]           instr_rdata_alu_i,     // instruction read from memory/cache
                                                       // replicated to ease fan-out)
 
-  input  logic                 illegal_c_insn_i,      // compressed instruction decode failed
+  input  logic                  illegal_c_insn_i,      // compressed instruction decode failed
 
   // immediates
-  output vcve2_pkg::imm_a_sel_e  imm_a_mux_sel_o,       // immediate selection for operand a
-  output vcve2_pkg::imm_b_sel_e  imm_b_mux_sel_o,       // immediate selection for operand b
+  output vcve2_pkg::imm_a_sel_e imm_a_mux_sel_o,       // immediate selection for operand a
+  output vcve2_pkg::imm_b_sel_e imm_b_mux_sel_o,       // immediate selection for operand b
   output logic [31:0]           imm_i_type_o,
   output logic [31:0]           imm_s_type_o,
   output logic [31:0]           imm_b_type_o,
@@ -51,12 +51,12 @@ module vcve2_decoder #(
 
   // register file
   output vcve2_pkg::rf_wd_sel_e rf_wdata_sel_o,   // RF write data selection
-  output logic                 rf_we_o,          // write enable for regfile
-  output logic [4:0]           rf_raddr_a_o,
-  output logic [4:0]           rf_raddr_b_o,
-  output logic [4:0]           rf_waddr_o,
-  output logic                 rf_ren_a_o,          // Instruction reads from RF addr A
-  output logic                 rf_ren_b_o,          // Instruction reads from RF addr B
+  output logic                  rf_we_o,          // write enable for regfile
+  output logic [4:0]            rf_raddr_a_o,
+  output logic [4:0]            rf_raddr_b_o,
+  output logic [4:0]            rf_waddr_o,
+  output logic                  rf_ren_a_o,          // Instruction reads from RF addr A
+  output logic                  rf_ren_b_o,          // Instruction reads from RF addr B
 
   // ALU
   output vcve2_pkg::alu_op_e    alu_operator_o,        // ALU operation selection
@@ -64,37 +64,43 @@ module vcve2_decoder #(
                                                       // immediate or zero
   output vcve2_pkg::op_b_sel_e  alu_op_b_mux_sel_o,    // operand b selection: reg value or
                                                       // immediate
-  output logic                 alu_multicycle_o,      // ternary bitmanip instruction
+  output logic                  alu_multicycle_o,      // ternary bitmanip instruction
 
   // MULT & DIV
-  output logic                 mult_en_o,             // perform integer multiplication
-  output logic                 div_en_o,              // perform integer division or remainder
-  output logic                 mult_sel_o,            // as above but static, for data muxes
-  output logic                 div_sel_o,             // as above but static, for data muxes
+  output logic                  mult_en_o,             // perform integer multiplication
+  output logic                  div_en_o,              // perform integer division or remainder
+  output logic                  mult_sel_o,            // as above but static, for data muxes
+  output logic                  div_sel_o,             // as above but static, for data muxes
 
   output vcve2_pkg::md_op_e     multdiv_operator_o,
-  output logic [1:0]           multdiv_signed_mode_o,
+  output logic [1:0]            multdiv_signed_mode_o,
 
   // CSRs
-  output logic                 csr_access_o,          // access to CSR
+  output logic                  csr_access_o,          // access to CSR
   output vcve2_pkg::csr_op_e    csr_op_o,              // operation to perform on CSR
 
   // LSU
-  output logic                 data_req_o,            // start transaction to data memory
-  output logic                 data_we_o,             // write enable
-  output logic [1:0]           data_type_o,           // size of transaction: byte, half
+  output logic                  data_req_o,            // start transaction to data memory
+  output logic                  data_we_o,             // write enable
+  output logic [1:0]            data_type_o,           // size of transaction: byte, half
                                                       // word or word
-  output logic                 data_sign_extension_o, // sign extension for data read from
+  output logic                  data_sign_extension_o, // sign extension for data read from
                                                       // memory
 
   // jump/branches
-  output logic                 jump_in_dec_o,         // jump is being calculated in ALU
-  output logic                 branch_in_dec_o,
+  output logic                  jump_in_dec_o,         // jump is being calculated in ALU
+  output logic                  branch_in_dec_o,
 
-  // vector extension
-  output logic                 vrf_req_o,             // request to vector register file
-  output logic                 vrf_we_o,              // write enable for vector register file
-  output logic[1:0]            vrf_num_operands_o
+  // VECTOR EXTENSION
+  // vector register file
+  output logic                  vrf_req_o,             // request to vector register file
+  output logic                  vrf_we_o,              // write enable for vector register file
+  output logic[1:0]             vrf_num_operands_o,
+  // immediate
+  output logic [31:0]           imm_v_type_o,          // immediate for vector instructions
+  output vcve2_pkg::vop_a_sel_e vop_a_mux_sel_o,       // operand a selection: vreg, reg or immediate
+  // vector alu
+  output vcve2_pkg::valu_op_e   valu_operator_o        // vector ALU operation selection
 );
 
   import vcve2_pkg::*;
@@ -137,6 +143,8 @@ module vcve2_decoder #(
   assign imm_b_type_o = { {19{instr[31]}}, instr[31], instr[7], instr[30:25], instr[11:8], 1'b0 };
   assign imm_u_type_o = { instr[31:12], 12'b0 };
   assign imm_j_type_o = { {12{instr[31]}}, instr[19:12], instr[20], instr[30:21], 1'b0 };
+  // Vector immediate extraction
+  assign imm_v_type_o = { {27{instr[19]}}, instr_rs1 };
 
   // immediate for CSR manipulation (zero extended)
   assign zimm_rs1_type_o = { 27'b0, instr_rs1 }; // rs1
@@ -658,6 +666,8 @@ module vcve2_decoder #(
         unique case ({instr[31:26], instr[14:12]})  // {funct6, funct3}
           // Vector Integer Arithmetic Operations
           {6'b00_0000, 3'b000}: begin    // vadd.vv
+            vrf_we_o = 1'b1;
+            vrf_num_operands_o = 2'b10;
           end
           {6'b00_0000, 3'b100}: begin    // vadd.vx
           end
@@ -668,12 +678,16 @@ module vcve2_decoder #(
           {6'b00_0010, 3'b100}: begin    // vsub.vx
           end
           {6'b01_0111, 3'b000}: begin    // vmv.v.v/vmerge.vvm
+            vrf_we_o = 1'b1;
+            vrf_num_operands_o = 2'b01;
           end
           {6'b01_0111, 3'b100}: begin    // vmv.v.x/vmerge.vxm
             vrf_we_o = 1'b1;
             vrf_num_operands_o = 2'b00;
           end
           {6'b01_0111, 3'b011}: begin    // vmv.v.i/vmerge.vim
+            vrf_we_o = 1'b1;
+            vrf_num_operands_o = 2'b00;
           end
           default: begin
             illegal_insn = 1'b1;
@@ -1218,6 +1232,8 @@ module vcve2_decoder #(
         unique case ({instr[31:26], instr[14:12]})  // {funct6, funct3}
           // Vector Integer Arithmetic Operations
           {6'b00_0000, 3'b000}: begin    // vadd.vv
+            vop_a_mux_sel_o = VOP_A_VREG_A;
+            valu_operator_o = VALU_ADD;
           end
           {6'b00_0000, 3'b100}: begin    // vadd.vx
           end
@@ -1228,11 +1244,16 @@ module vcve2_decoder #(
           {6'b00_0010, 3'b100}: begin    // vsub.vx
           end
           {6'b01_0111, 3'b000}: begin    // vmv.v.v/vmerge.vvm
+            vop_a_mux_sel_o = VOP_A_VREG_A;
+            valu_operator_o = VALU_MOVE;
           end
           {6'b01_0111, 3'b100}: begin    // vmv.v.x/vmerge.vxm
-            alu_op_a_mux_sel_o = OP_A_REG_A;  // send to EX stage the content of x register
+            vop_a_mux_sel_o = VOP_A_REG_A;
+            valu_operator_o = VALU_MOVE;
           end
           {6'b01_0111, 3'b011}: begin    // vmv.v.i/vmerge.vim
+            vop_a_mux_sel_o = VOP_A_IMM;
+            valu_operator_o = VALU_MOVE;
           end
           default: begin
             illegal_insn = 1'b1;

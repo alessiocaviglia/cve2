@@ -274,6 +274,10 @@ module vcve2_core import vcve2_pkg::*; #(
 
   // Vector EX Block
   logic [31:0] vec_result_ex;
+  logic [31:0] valu_operand_a_ex;
+  logic [31:0] valu_operand_b_ex;
+  logic [31:0] valu_operand_c_ex;
+  vcve2_pkg::valu_op_e valu_operator_ex;
   // Vector Register File
   logic vrf_req; // Request signal for the vector register file
   logic [31:0] vrf_rdata_a; // First read port of vector register file
@@ -496,9 +500,9 @@ module vcve2_core import vcve2_pkg::*; #(
     .perf_div_wait_o  (perf_div_wait),
     .instr_id_done_o  (instr_id_done),
 
+    // VECTOR EXTENSION
     // vector write data to commit in the vector register file
     .vec_result_ex_i(vec_result_ex),
-
     // Vector register file
     .vrf_req_o(vrf_req),
     .vrf_we_id_o(vrf_we_id),
@@ -507,7 +511,12 @@ module vcve2_core import vcve2_pkg::*; #(
     .vrf_rdata_c_i(vrf_rdata_c),
     .vrf_wdata_o(vrf_wdata_id),
     .vrf_num_operands_o(vrf_num_operands),
-    .vector_done_i(vector_done)
+    .vector_done_i(vector_done),
+    // Vector alu operands
+    .valu_operand_a_ex_o(valu_operand_a_ex),
+    .valu_operand_b_ex_o(valu_operand_b_ex),
+    .valu_operand_c_ex_o(valu_operand_c_ex),
+    .valu_operator_o(valu_operator_ex)
   );
 
   // for RVFI only
@@ -561,7 +570,10 @@ module vcve2_core import vcve2_pkg::*; #(
     .rst_ni(rst_ni),
 
     // Register file input
-    .rf_rdata_a_i(alu_operand_a_ex),
+    .valu_operand_a(valu_operand_a_ex),
+    .valu_operand_b(valu_operand_b_ex),
+    .valu_operand_c(valu_operand_c_ex),
+    .valu_operator(valu_operator_ex),
     // Output wb value
     .vec_result_ex_o(vec_result_ex)
   );

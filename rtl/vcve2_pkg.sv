@@ -8,6 +8,33 @@
  */
 package vcve2_pkg;
 
+  //////////////////////
+  // Vector Extension //
+  //////////////////////
+
+  // Vector register file states
+  typedef enum {
+    VRF_IDLE,
+    VRF_READ1,
+    VRF_READ2,
+    VRF_READ3,
+    V_OP,
+    VRF_WRITE
+  } vrf_state_t;
+
+  // Vector operand a selection
+  typedef enum logic[1:0] {
+    VOP_A_VREG_A,
+    VOP_A_REG_A,
+    VOP_A_IMM
+  } vop_a_sel_e;
+
+  // Vector ALU operatos - to be etended with all operations
+  typedef enum {
+    VALU_MOVE,
+    VALU_ADD
+  } valu_op_e;
+
   ////////////////
   // IO Structs //
   ////////////////
