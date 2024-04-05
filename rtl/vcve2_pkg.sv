@@ -35,6 +35,23 @@ package vcve2_pkg;
     VALU_ADD
   } valu_op_e;
 
+  // Vector CSR data types - vsew
+  typedef enum logic[2:0] {
+    VSEW_8,
+    VSEW_16,
+    VSEW_32
+  } vsew_e;
+   // Vector CSR data types - vlmul
+  typedef enum logic[2:0] {
+    VLMUL_F8,
+    VLMUL_F4,
+    VLMUL_F2,
+    VLMUL_1,
+    VLMUL_2,
+    VLMUL_4,
+    VLMUL_8
+  } vlmul_e;
+
   ////////////////
   // IO Structs //
   ////////////////

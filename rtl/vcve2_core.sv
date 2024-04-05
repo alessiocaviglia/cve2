@@ -272,6 +272,18 @@ module vcve2_core import vcve2_pkg::*; #(
   // for RVFI
   logic        illegal_insn_id, unused_illegal_insn_id; // ID stage sees an illegal instruction
 
+  //////////////////////////////
+  // Vector Extension Signals //
+  //////////////////////////////
+
+  // Vector CSRs
+  vsew_e vsew_q, vsew_d;
+  vlmul_e vlmul_q, vlmul_d;
+  logic [1:0] vta_vma_q, vta_vma_d;
+  logic [31:0] vl_q, vl_d;
+  logic [31:0] vstart_q, vstart_d;
+  logic [31:0] vxrm_q, vxrm_d;
+  logic [31:0] vxsat_q, vxsat_d;
   // Vector EX Block
   logic [31:0] vec_result_ex;
   logic [31:0] valu_operand_a_ex;
@@ -842,6 +854,28 @@ module vcve2_core import vcve2_pkg::*; #(
     .wfi_wait_i                 (perf_wfi_wait),
     .div_wait_i                 (perf_div_wait)
   );
+
+  // Vector extension CSRs
+  always_ff @(posedge clk_i or negedge rst_ni) begin
+    if (!rst_ni) begin
+      vsew_q     <= VSEW_32;
+      vlmul_q    <= VLMUL_1;
+      vta_vma_q  <= '0;
+      vl_q       <= '0; 
+      vstart_q   <= '0;
+      vxrm_q     <= '0;
+      vxsat_q    <= '0;
+    end else begin
+      vsew_q     <= VSEW_32;
+      vlmul_q    <= VLMUL_1;
+      vta_vma_q  <= '0;
+      vl_q       <= '0; 
+      vstart_q   <= '0;
+      vxrm_q     <= '0;
+      vxsat_q    <= '0;
+    end
+  end
+
 
   // These assertions are in top-level as instr_valid_id required as the enable term
   `ASSERT(IbexCsrOpValid, instr_valid_id |-> csr_op inside {
