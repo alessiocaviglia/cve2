@@ -277,9 +277,10 @@ module vcve2_core import vcve2_pkg::*; #(
   //////////////////////////////
 
   // Vector CSRs
+  logic vcfg_write;
   vsew_e vsew_q, vsew_d;
   vlmul_e vlmul_q, vlmul_d;
-  logic [1:0] vta_vma_q, vta_vma_d;
+  logic [1:0] vma_vta_q, vma_vta_d;
   logic [31:0] vl_q, vl_d;
   logic [31:0] vstart_q, vstart_d;
   logic [31:0] vxrm_q, vxrm_d;
@@ -528,7 +529,9 @@ module vcve2_core import vcve2_pkg::*; #(
     .valu_operand_a_ex_o(valu_operand_a_ex),
     .valu_operand_b_ex_o(valu_operand_b_ex),
     .valu_operand_c_ex_o(valu_operand_c_ex),
-    .valu_operator_o(valu_operator_ex)
+    .valu_operator_o(valu_operator_ex),
+    // vcfg
+    .vcfg_write_o(vcfg_write)
   );
 
   // for RVFI only
@@ -860,19 +863,35 @@ module vcve2_core import vcve2_pkg::*; #(
     if (!rst_ni) begin
       vsew_q     <= VSEW_32;
       vlmul_q    <= VLMUL_1;
-      vta_vma_q  <= '0;
+      vma_vta_q  <= '0;
       vl_q       <= '0; 
       vstart_q   <= '0;
       vxrm_q     <= '0;
       vxsat_q    <= '0;
     end else begin
-      vsew_q     <= VSEW_32;
-      vlmul_q    <= VLMUL_1;
-      vta_vma_q  <= '0;
-      vl_q       <= '0; 
-      vstart_q   <= '0;
-      vxrm_q     <= '0;
-      vxsat_q    <= '0;
+      vsew_q     <= vsew_d;
+      vlmul_q    <= vlmul_d;
+      vma_vta_q  <= vma_vta_d;
+      vl_q       <= vl_d;
+      vstart_q   <= vstart_d;
+      vxrm_q     <= vxrm_d;
+      vxsat_q    <= vxsat_d;
+    end
+  end
+
+  // I need to add AVL support
+  always_comb begin
+    vsew_d     = vsew_q;
+    vlmul_d    = vlmul_q;
+    vma_vta_d  = vma_vta_q;
+    vl_d       = vl_q;
+    vstart_d   = vstart_q;
+    vxrm_d     = vxrm_q;
+    vxsat_d    = vxsat_q;
+    if (vcfg_write) begin
+      vsew_d     = valu_operand_b_ex[5:3];
+      vlmul_d    = valu_operand_b_ex[2:0];
+      vma_vta_d  = valu_operand_b_ex[7:6];
     end
   end
 

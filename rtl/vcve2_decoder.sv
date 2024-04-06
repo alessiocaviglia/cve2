@@ -100,7 +100,10 @@ module vcve2_decoder #(
   output logic [31:0]           imm_v_type_o,          // immediate for vector instructions
   output vcve2_pkg::vop_a_sel_e vop_a_mux_sel_o,       // operand a selection: vreg, reg or immediate
   // vector alu
-  output vcve2_pkg::valu_op_e   valu_operator_o        // vector ALU operation selection
+  output vcve2_pkg::valu_op_e   valu_operator_o,       // vector ALU operation selection
+  // vector cfg setting instructions
+  output logic                  vcfg_write_o,          // write enable for vector configuration
+  output logic [31:0]           imm_vcfg_o             // immediate for vector configuration
 );
 
   import vcve2_pkg::*;
@@ -145,6 +148,7 @@ module vcve2_decoder #(
   assign imm_j_type_o = { {12{instr[31]}}, instr[19:12], instr[20], instr[30:21], 1'b0 };
   // Vector immediate extraction
   assign imm_v_type_o = { {27{instr[19]}}, instr_rs1 };
+  assign imm_vcfg_o = {{21{1'b0}}, instr[30] & ~instr[31], instr[29:20]}; // same as they do in Vicuna
 
   // immediate for CSR manipulation (zero extended)
   assign zimm_rs1_type_o = { 27'b0, instr_rs1 }; // rs1
@@ -662,37 +666,45 @@ module vcve2_decoder #(
       end
 
       OPCODE_OP_V: begin  // Vector Operations
-        vrf_req_o = 1'b1;
-        unique case ({instr[31:26], instr[14:12]})  // {funct6, funct3}
-          // Vector Integer Arithmetic Operations
-          {6'b00_0000, 3'b000}: begin    // vadd.vv
-            vrf_we_o = 1'b1;
-            vrf_num_operands_o = 2'b10;
-          end
-          {6'b00_0000, 3'b100}: begin    // vadd.vx
-          end
-          {6'b00_0000, 3'b011}: begin    // vadd.vi
-          end
-          {6'b00_0010, 3'b000}: begin    // vsub.vv
-          end
-          {6'b00_0010, 3'b100}: begin    // vsub.vx
-          end
-          {6'b01_0111, 3'b000}: begin    // vmv.v.v/vmerge.vvm
-            vrf_we_o = 1'b1;
-            vrf_num_operands_o = 2'b01;
-          end
-          {6'b01_0111, 3'b100}: begin    // vmv.v.x/vmerge.vxm
-            vrf_we_o = 1'b1;
-            vrf_num_operands_o = 2'b00;
-          end
-          {6'b01_0111, 3'b011}: begin    // vmv.v.i/vmerge.vim
-            vrf_we_o = 1'b1;
-            vrf_num_operands_o = 2'b00;
-          end
-          default: begin
-            illegal_insn = 1'b1;
-          end
-        endcase
+
+        // Configuration-Setting Instructions
+        if (instr[14:12]==3'b111) begin
+          vcfg_write_o = 1'b1;
+        end
+        // Vector Arithmetic Instructions
+        else begin
+          vrf_req_o = 1'b1;
+          unique case ({instr[31:26], instr[14:12]})  // {funct6, funct3}
+            // Vector Integer Arithmetic Operations
+            {6'b00_0000, 3'b000}: begin    // vadd.vv
+              vrf_we_o = 1'b1;
+              vrf_num_operands_o = 2'b10;
+            end
+            {6'b00_0000, 3'b100}: begin    // vadd.vx
+            end
+            {6'b00_0000, 3'b011}: begin    // vadd.vi
+            end
+            {6'b00_0010, 3'b000}: begin    // vsub.vv
+            end
+            {6'b00_0010, 3'b100}: begin    // vsub.vx
+            end
+            {6'b01_0111, 3'b000}: begin    // vmv.v.v/vmerge.vvm
+              vrf_we_o = 1'b1;
+              vrf_num_operands_o = 2'b01;
+            end
+            {6'b01_0111, 3'b100}: begin    // vmv.v.x/vmerge.vxm
+              vrf_we_o = 1'b1;
+              vrf_num_operands_o = 2'b00;
+            end
+            {6'b01_0111, 3'b011}: begin    // vmv.v.i/vmerge.vim
+              vrf_we_o = 1'b1;
+              vrf_num_operands_o = 2'b00;
+            end
+            default: begin
+              illegal_insn = 1'b1;
+            end
+          endcase
+        end
 
       end
 
@@ -1229,36 +1241,60 @@ module vcve2_decoder #(
 
       OPCODE_OP_V: begin
 
-        unique case ({instr[31:26], instr[14:12]})  // {funct6, funct3}
-          // Vector Integer Arithmetic Operations
-          {6'b00_0000, 3'b000}: begin    // vadd.vv
-            vop_a_mux_sel_o = VOP_A_VREG_A;
-            valu_operator_o = VALU_ADD;
-          end
-          {6'b00_0000, 3'b100}: begin    // vadd.vx
-          end
-          {6'b00_0000, 3'b011}: begin    // vadd.vi
-          end
-          {6'b00_0010, 3'b000}: begin    // vsub.vv
-          end
-          {6'b00_0010, 3'b100}: begin    // vsub.vx
-          end
-          {6'b01_0111, 3'b000}: begin    // vmv.v.v/vmerge.vvm
-            vop_a_mux_sel_o = VOP_A_VREG_A;
-            valu_operator_o = VALU_MOVE;
-          end
-          {6'b01_0111, 3'b100}: begin    // vmv.v.x/vmerge.vxm
-            vop_a_mux_sel_o = VOP_A_REG_A;
-            valu_operator_o = VALU_MOVE;
-          end
-          {6'b01_0111, 3'b011}: begin    // vmv.v.i/vmerge.vim
-            vop_a_mux_sel_o = VOP_A_IMM;
-            valu_operator_o = VALU_MOVE;
-          end
-          default: begin
+        // Configuration-Setting Instructions
+        if (instr_alu[14:12]==3'b111) begin
+          if (instr_alu[31]==1'b0) begin
+            // vsetvli
+            alu_op_a_mux_sel_o = OP_A_REG_A;
+            alu_op_b_mux_sel_o = OP_B_IMM;
+            imm_b_mux_sel_o    = IMM_B_VCFG;
+          end else if (instr_alu[31:30]==2'b11) begin
+            // vsetivli
+            alu_op_a_mux_sel_o = OP_A_IMM;
+            alu_op_b_mux_sel_o = OP_B_IMM;
+            imm_a_mux_sel_o    = IMM_A_Z;
+            imm_b_mux_sel_o    = IMM_B_VCFG;
+          end else if (instr_alu[31:25]==7'b1000000) begin
+            // vsetvl
+            alu_op_a_mux_sel_o = OP_A_REG_A;
+            alu_op_b_mux_sel_o = OP_B_REG_B;
+          end else begin
             illegal_insn = 1'b1;
           end
-        endcase
+        end
+        // Vector Arithmetic Instructions
+        else begin
+          unique case ({instr_alu[31:26], instr_alu[14:12]})  // {funct6, funct3}
+            // Vector Integer Arithmetic Operations
+            {6'b00_0000, 3'b000}: begin    // vadd.vv
+              vop_a_mux_sel_o = VOP_A_VREG_A;
+              valu_operator_o = VALU_ADD;
+            end
+            {6'b00_0000, 3'b100}: begin    // vadd.vx
+            end
+            {6'b00_0000, 3'b011}: begin    // vadd.vi
+            end
+            {6'b00_0010, 3'b000}: begin    // vsub.vv
+            end
+            {6'b00_0010, 3'b100}: begin    // vsub.vx
+            end
+            {6'b01_0111, 3'b000}: begin    // vmv.v.v/vmerge.vvm
+              vop_a_mux_sel_o = VOP_A_VREG_A;
+              valu_operator_o = VALU_MOVE;
+            end
+            {6'b01_0111, 3'b100}: begin    // vmv.v.x/vmerge.vxm
+              vop_a_mux_sel_o = VOP_A_REG_A;
+              valu_operator_o = VALU_MOVE;
+            end
+            {6'b01_0111, 3'b011}: begin    // vmv.v.i/vmerge.vim
+              vop_a_mux_sel_o = VOP_A_IMM;
+              valu_operator_o = VALU_MOVE;
+            end
+            default: begin
+              illegal_insn = 1'b1;
+            end
+          endcase
+        end
 
       end
 

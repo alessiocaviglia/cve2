@@ -168,7 +168,9 @@ module vcve2_id_stage #(
   output logic [31:0]               valu_operand_a_ex_o,
   output logic [31:0]               valu_operand_b_ex_o,
   output logic [31:0]               valu_operand_c_ex_o,
-  output vcve2_pkg::valu_op_e       valu_operator_o
+  output vcve2_pkg::valu_op_e       valu_operator_o,
+  // Vector cfg
+  output logic                      vcfg_write_o
 
 );
 
@@ -270,6 +272,8 @@ module vcve2_id_stage #(
   logic                   stall_vec;
   vcve2_pkg::vop_a_sel_e  vop_a_mux_sel;
   logic [31:0]            imm_v_type;
+  // vcfg
+  logic [31:0]            imm_vcfg;
 
   /////////////
   // LSU Mux //
@@ -311,6 +315,8 @@ module vcve2_id_stage #(
       IMM_B_J:         imm_b = imm_j_type;
       IMM_B_INCR_PC:   imm_b = instr_is_compressed_i ? 32'h2 : 32'h4;
       IMM_B_INCR_ADDR: imm_b = 32'h4;
+      // [VEC] Vector extension
+      IMM_B_VCFG:      imm_b = imm_vcfg;
       default:         imm_b = 32'h4;
     endcase
   end
@@ -460,7 +466,10 @@ module vcve2_id_stage #(
     .imm_v_type_o(imm_v_type),
     .vop_a_mux_sel_o(vop_a_mux_sel),  // add dec at the end if it's not the only select we have (look at opb to understand)
     // vector alu
-    .valu_operator_o(valu_operator_o)
+    .valu_operator_o(valu_operator_o),
+    // vector cfg setting instructions
+    .vcfg_write_o(vcfg_write_o),          // write enable for vector configuration
+    .imm_vcfg_o(imm_vcfg)             // immediate for vector configuration
     
   );
 

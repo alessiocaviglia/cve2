@@ -304,7 +304,9 @@ package vcve2_pkg;
     IMM_B_U,
     IMM_B_J,
     IMM_B_INCR_PC,
-    IMM_B_INCR_ADDR
+    IMM_B_INCR_ADDR,
+    // Vector extension - vsetivl{i} immediate
+    IMM_B_VCFG
   } imm_b_sel_e;
 
   // Regfile write data selection
