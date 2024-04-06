@@ -888,10 +888,10 @@ module vcve2_core import vcve2_pkg::*; #(
     vstart_d   = vstart_q;
     vxrm_d     = vxrm_q;
     vxsat_d    = vxsat_q;
-    if (vcfg_write) begin
-      vsew_d     = valu_operand_b_ex[5:3];
-      vlmul_d    = valu_operand_b_ex[2:0];
-      vma_vta_d  = valu_operand_b_ex[7:6];
+    if (vcfg_write==1'b1) begin
+      vsew_d     = alu_operand_b_ex[5:3];
+      vlmul_d    = alu_operand_b_ex[2:0];
+      vma_vta_d  = alu_operand_b_ex[7:6];
     end
   end
 
