@@ -17,11 +17,10 @@ module vregfile_wrapper #(
     input   logic [AddrWidth-1:0] waddr_i,
     input   logic [ELEN-1:0]      wdata_i,
 
-    // VRF related FSM signals
+    // Control signals and values
     input logic [1:0]             num_operands_i,
-
-    // Pipeline related FSM signals
-    output  logic                 vector_done_o              // signals the pipeline that the vector operation is finished (most likely with a write to the VRF)
+    output  logic                 vector_done_o,              // signals the pipeline that the vector operation is finished (most likely with a write to the VRF)
+    input vcve2_pkg::vlmul_e      lmul_i
 );
 
   import vcve2_pkg::*;
@@ -35,14 +34,16 @@ module vregfile_wrapper #(
 
   // VRF FSM signals
   vcve2_pkg::vrf_state_t vrf_state, vrf_next_state;
-  int count_d, count_q;       // I could need it to be bigger
+  logic [9:0] count_d, count_q;         // number of shift to do (changes with fractional LMUL)
+  logic [2:0] num_regs_d, num_regs_q;   // number of regs in the register group
+  logic [AddrWidth-1:0] incr_d, incr_q;
 
   // Internal registers signals
   logic rs1_en, rs2_en, rs3_en, rs1_shift, rs2_shift, rs3_shift, rd_shift;
   logic [VLEN-1:0] rs1_q, rs2_q, rs3_q;
   logic [VLEN-1:0] rd_q;
 
-  // Output signals
+  // Output signals - first positions first to support propery fractional LMUL/EMUL
   assign rdata_a_o = rs1_q[VLEN-1:VLEN-ELEN];
   assign rdata_b_o = rs2_q[VLEN-1:VLEN-ELEN];
   assign rdata_c_o = rs3_q[VLEN-1:VLEN-ELEN];
@@ -55,9 +56,13 @@ module vregfile_wrapper #(
     if (!rst_ni) begin
       vrf_state <= VRF_IDLE;
       count_q <= 0;
+      num_regs_q <= 0;
+      incr_q <= 0;
     end else begin
       vrf_state <= vrf_next_state;
       count_q <= count_d;
+      num_regs_q <= num_regs_d;
+      incr_q <= incr_d;
     end
   end
 
@@ -75,17 +80,55 @@ module vregfile_wrapper #(
     case (vrf_state)
 
       VRF_IDLE: begin
-        count_d = COUNT;
-        if (!req_i) begin
+        if (!req_i) begin   // VRF stays idle until a request is made
           vrf_next_state = VRF_IDLE;
-        end else begin
-          if (num_operands_i==2'b00) begin
+          incr_d = '0;
+        end else begin      // when there's a request sample count and num_regs
+
+          if (incr_q=='0) begin // if it's the first time I sample the LMUL
+            case (lmul_i)
+              VLMUL_F8: begin
+                count_d = COUNT[9:0]>>3;
+                num_regs_d = 3'b000;
+              end
+              VLMUL_F4: begin
+                count_d = COUNT[9:0]>>2;
+                num_regs_d = 3'b000;
+              end
+              VLMUL_F2: begin
+                count_d = COUNT[9:0]>>1;
+                num_regs_d = 3'b000;
+              end
+              VLMUL_1: begin
+                count_d = COUNT[9:0];
+                num_regs_d = 3'b000;
+              end
+              VLMUL_2: begin
+                count_d = COUNT[9:0];
+                num_regs_d = 3'b001;
+              end
+              VLMUL_4: begin
+                count_d = COUNT[9:0];
+                num_regs_d = 3'b011;
+              end
+              VLMUL_8: begin
+                count_d = COUNT[9:0];
+                num_regs_d = 3'b111;
+              end
+              default: begin
+                count_d = '0;
+                num_regs_d = '0;
+              end
+            endcase
+          end 
+
+          if (num_operands_i==2'b00) begin  // if I have no operands don't need to read
             vrf_next_state = V_OP;
-          end else begin
+          end else begin                    // if I have operands read them
             // RAM read request
             req_s = 1;
             we_s = 0;
-            addr_s = raddr_a_i;
+            addr_s = raddr_a_i+incr_q;
             vrf_next_state = VRF_READ1;
           end
         end
@@ -99,7 +142,7 @@ module vregfile_wrapper #(
           // RAM read request
           req_s = 1;
           we_s = 0;
-          addr_s = raddr_b_i;
+          addr_s = raddr_b_i+incr_q;
           vrf_next_state = VRF_READ2;
         end
       end
@@ -112,7 +155,7 @@ module vregfile_wrapper #(
           // RAM read request
           req_s = 1;
           we_s = 0;
-          addr_s = waddr_i;
+          addr_s = waddr_i+incr_q;
           vrf_next_state = VRF_READ3;
         end
       end
@@ -127,21 +170,28 @@ module vregfile_wrapper #(
         if (num_operands_i>0) rs1_shift = 1;
         if (num_operands_i>1) rs2_shift = 1;
         if (num_operands_i>2) rs3_shift = 1;
-        count_d = count_d-1;
-        if (count_d==0)
+        count_d = count_q-1;
+        if (count_q==1)
           vrf_next_state = VRF_WRITE;
         else
           vrf_next_state = V_OP;
       end
 
       VRF_WRITE: begin
+        vrf_next_state = VRF_IDLE;
         if (we_i==1) begin
           // RAM write request
           req_s = 1;
           we_s = 1;
-          addr_s = waddr_i;
+          addr_s = waddr_i+incr_q;
         end
-        vrf_next_state = VRF_IDLE;
+        if (num_regs_q==3'b000) begin
+          vector_done_o = 1;
+          incr_d = '0;
+        end else begin
+          num_regs_d = num_regs_q-1;
+          incr_d = incr_q+1;
+        end
         vector_done_o = 1;
       end
 
