@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
-[*] Tue Apr  2 10:07:33 2024
+[*] Mon Apr  8 12:55:15 2024
 [*]
 [dumpfile] "/home/alessio99/tristan/cve2/tb/build/alessiocaviglia_vcve2_vcve2_sim_0.1/default-verilator/waveform.vcd"
-[dumpfile_mtime] "Tue Apr  2 10:06:00 2024"
-[dumpfile_size] 133505
+[dumpfile_mtime] "Mon Apr  8 12:53:08 2024"
+[dumpfile_size] 121150
 [savefile] "/home/alessio99/tristan/cve2/tb/cve2_core/core_vregfile.gtkw"
 [timestart] 0
 [size] 1848 1016
 [pos] -39 -39
-*-4.974829 19 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-4.974829 36 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] TOP.
 [treeopen] TOP.vcve2_core.
 [treeopen] TOP.vcve2_core.id_stage_i.decoder_i.
@@ -21,6 +21,9 @@
 [signals_width] 331
 [sst_expanded] 1
 [sst_vpaned_height] 289
+@200
+-ID stage
+-VRF
 @28
 TOP.vcve2_core.clk_i
 @22
@@ -45,30 +48,38 @@ TOP.vcve2_core.id_stage_i.decoder_i.vop_a_mux_sel_o[1:0]
 -VRF
 @22
 TOP.vcve2_core.vregfile_wrapper_inst.vrf_state[31:0]
-TOP.vcve2_core.vregfile_wrapper_inst.raddr_a_i[4:0]
-TOP.vcve2_core.vregfile_wrapper_inst.raddr_b_i[4:0]
-TOP.vcve2_core.vregfile_wrapper_inst.waddr_i[4:0]
+TOP.vcve2_core.vregfile_wrapper_inst.count_q[9:0]
+@28
+TOP.vcve2_core.vregfile_wrapper_inst.num_regs_q[2:0]
+@22
+TOP.vcve2_core.vregfile_wrapper_inst.incr_q[4:0]
+@28
+TOP.vcve2_core.vregfile_wrapper_inst.vector_done_o
 @200
 -
 @22
+TOP.vcve2_core.vregfile_wrapper_inst.raddr_a_i[4:0]
 TOP.vcve2_core.vregfile_wrapper_inst.rs1_q[127:0]
 TOP.vcve2_core.vregfile_wrapper_inst.rdata_a_o[31:0]
+TOP.vcve2_core.vregfile_wrapper_inst.raddr_b_i[4:0]
 TOP.vcve2_core.vregfile_wrapper_inst.rs2_q[127:0]
 TOP.vcve2_core.vregfile_wrapper_inst.rdata_b_o[31:0]
+TOP.vcve2_core.vregfile_wrapper_inst.waddr_i[4:0]
 TOP.vcve2_core.vregfile_wrapper_inst.rs3_q[127:0]
 TOP.vcve2_core.vregfile_wrapper_inst.rdata_c_o[31:0]
 @200
 -
-@23
+@22
 TOP.vcve2_core.vregfile_wrapper_inst.rd_q[127:0]
 @200
 -RAM
 @22
 TOP.vcve2_core.vregfile_wrapper_inst.ram_inst.addr_i[4:0]
-TOP.vcve2_core.vregfile_wrapper_inst.ram_inst.rdata_o[127:0]
 @28
 TOP.vcve2_core.vregfile_wrapper_inst.ram_inst.req_i
 TOP.vcve2_core.vregfile_wrapper_inst.ram_inst.we_i
+@23
+TOP.vcve2_core.vregfile_wrapper_inst.ram_inst.rdata_o[127:0]
 @22
 TOP.vcve2_core.vregfile_wrapper_inst.ram_inst.wdata_i[127:0]
 @200
@@ -79,19 +90,5 @@ TOP.vcve2_core.id_stage_i.id_fsm_d
 TOP.vcve2_core.id_stage_i.id_fsm_q
 TOP.vcve2_core.id_stage_i.instr_executing_spec
 TOP.vcve2_core.id_stage_i.instr_valid_i
-@200
--write data
-@22
-TOP.vcve2_core.register_file_i.raddr_a_i[4:0]
-TOP.vcve2_core.register_file_i.rdata_a_o[31:0]
-TOP.vcve2_core.id_stage_i.rf_rdata_a_i[31:0]
-@200
--EX stage
-@22
-TOP.vcve2_core.vex_block_i.valu_operator[31:0]
-TOP.vcve2_core.vex_block_i.valu_operand_a[31:0]
-TOP.vcve2_core.vex_block_i.valu_operand_b[31:0]
-TOP.vcve2_core.vex_block_i.valu_operand_c[31:0]
-TOP.vcve2_core.vex_block_i.vec_result_ex_o[31:0]
 [pattern_trace] 1
 [pattern_trace] 0

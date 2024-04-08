@@ -191,8 +191,8 @@ module vregfile_wrapper #(
         end else begin
           num_regs_d = num_regs_q-1;
           incr_d = incr_q+1;
+          count_d = COUNT[9:0];
         end
-        vector_done_o = 1;
       end
 
       default: begin

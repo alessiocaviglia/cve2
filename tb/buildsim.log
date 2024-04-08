@@ -5,18 +5,10 @@ INFO: Preparing lowrisc:lint:common:0.1
 INFO: Preparing lowrisc:prim:assert:0.1
 INFO: Preparing alessiocaviglia:vcve2:vcve2_core:0.1
 INFO: Preparing alessiocaviglia:vcve2:vcve2_sim:0.1
-INFO: Wrote dependency graph to /home/thesis/alessio.caviglia/repo/cve2/tb/build/alessiocaviglia_vcve2_vcve2_sim_0.1/default-verilator/alessiocaviglia_vcve2_vcve2_sim_0.1.deps-after-generators.dot
-INFO: Wrote Makefile fragment to /home/thesis/alessio.caviglia/repo/cve2/tb/build/alessiocaviglia_vcve2_vcve2_sim_0.1/default-verilator/core-deps.mk
+INFO: Wrote dependency graph to /home/alessio99/tristan/cve2/tb/build/alessiocaviglia_vcve2_vcve2_sim_0.1/default-verilator/alessiocaviglia_vcve2_vcve2_sim_0.1.deps-after-generators.dot
+INFO: Wrote Makefile fragment to /home/alessio99/tristan/cve2/tb/build/alessiocaviglia_vcve2_vcve2_sim_0.1/default-verilator/core-deps.mk
 INFO: Setting up project
 INFO: Running pre_build script check_tool_requirements
-util/check_tool_requirements.py:159: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
-  min_sv = StrictVersion(min_semver)
-util/check_tool_requirements.py:177: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
-  actual_sv = StrictVersion(actual_semver)
-INFO: Tool verilator present: Sufficiently recent version (found 4.210; needed 4.028)
-util/check_tool_requirements.py:177: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
-  actual_sv = StrictVersion(actual_semver)
-INFO: Tool edalize present: Sufficiently recent version (found 0.5.1; needed 0.2.0)
 INFO: Building simulation model
 INFO: Running
 INFO: Running simulation

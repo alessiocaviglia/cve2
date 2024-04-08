@@ -762,8 +762,7 @@ module vcve2_core import vcve2_pkg::*; #(
 
     .num_operands_i(vrf_num_operands),
     .vector_done_o(vector_done),
-    // .lmul_i(vlmul_q)
-    .lmul_i(VLMUL_1)
+    .lmul_i(vlmul_q)
   );
   
 
