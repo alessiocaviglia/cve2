@@ -246,7 +246,8 @@ module vcve2_decoder #(
     // vector extension
     vrf_req_o             = 1'b0;
     vrf_we_o              = 1'b0;
-    vrf_num_operands_o = 2'b00;
+    vrf_num_operands_o    = 2'b00;
+    vcfg_write_o          = 1'b0;
 
     opcode                = opcode_e'(instr[6:0]);
 
