@@ -45,9 +45,9 @@ module vregfile_wrapper #(
   logic stop_shift;
 
   // Output signals - first positions first to support propery fractional LMUL/EMUL
-  assign rdata_a_o = stop_shift ? '0 : rs1_q[VLEN-1:VLEN-ELEN];
-  assign rdata_b_o = stop_shift ? '0 : rs2_q[VLEN-1:VLEN-ELEN];
-  assign rdata_c_o = stop_shift ? '0 : rs3_q[VLEN-1:VLEN-ELEN];
+  assign rdata_a_o = stop_shift ? '0 : rs1_q[ELEN-1:0];
+  assign rdata_b_o = stop_shift ? '0 : rs2_q[ELEN-1:0];
+  assign rdata_c_o = stop_shift ? '0 : rs3_q[ELEN-1:0];
 
   /////////////
   // VRF FSM //
@@ -224,13 +224,13 @@ module vregfile_wrapper #(
     end else begin
       // source registers can be loaded in parallel and shifted left by 32
       if (rs1_en) rs1_q <= rdata_s;
-      else if (rs1_shift) rs1_q <= {rs1_q[VLEN-1-ELEN:0], 32'h00000000};
+      else if (rs1_shift) rs1_q <= {32'h00000000, rs1_q[VLEN-1:ELEN]};
       if (rs2_en) rs2_q <= rdata_s;
-      else if (rs2_shift) rs2_q <= {rs2_q[VLEN-1-ELEN:0], 32'h00000000};
+      else if (rs2_shift) rs2_q <= {32'h00000000, rs2_q[VLEN-1:ELEN]};
       if (rs3_en) rs3_q <= rdata_s;
-      else if (rs3_shift) rs3_q <= {rs3_q[VLEN-1-ELEN:0], 32'h00000000};
+      else if (rs3_shift) rs3_q <= {32'h00000000, rs3_q[VLEN-1:ELEN]};
       // destination register can be shifted left to load new data sequentially
-      if (rd_shift) rd_q <= {rd_q[VLEN-1-ELEN:0], wdata_i};
+      if (rd_shift) rd_q <= {wdata_i, rd_q[VLEN-1:ELEN]};
     end
   end
 
