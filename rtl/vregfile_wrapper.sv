@@ -45,9 +45,9 @@ module vregfile_wrapper #(
   logic stop_shift;
 
   // Output signals - first positions first to support propery fractional LMUL/EMUL
-  assign rdata_a_o = stop_shift ? rs1_q[VLEN-1:VLEN-ELEN] : '0;
-  assign rdata_b_o = stop_shift ? rs2_q[VLEN-1:VLEN-ELEN] : '0;
-  assign rdata_c_o = stop_shift ? rs3_q[VLEN-1:VLEN-ELEN] : '0;
+  assign rdata_a_o = stop_shift ? '0 : rs1_q[VLEN-1:VLEN-ELEN];
+  assign rdata_b_o = stop_shift ? '0 : rs2_q[VLEN-1:VLEN-ELEN];
+  assign rdata_c_o = stop_shift ? '0 : rs3_q[VLEN-1:VLEN-ELEN];
 
   /////////////
   // VRF FSM //
@@ -173,13 +173,14 @@ module vregfile_wrapper #(
 
       V_OP: begin
         count_d = count_q-1;                    // counter for overall number of shifts
-        count_valid_d = count_valid_q-1;        // counter for valid number of shifts (the difference with the former is to aligned rd_q)
         if (we_i==1) rd_shift = 1;              // I shift the destination register regardless
         if (count_valid_q==0) begin             // I shift the source registers only when I have to
           stop_shift = 1;
           if (num_operands_i>0) rs1_shift = 1;
           if (num_operands_i>1) rs2_shift = 1;
           if (num_operands_i>2) rs3_shift = 1;
+        end else begin                          // decrement in else to avoid useless decrements
+          count_valid_d = count_valid_q-1;      // counter for valid number of shifts (the difference with the former is to aligned rd_q)
         end
         if (count_q==1)                         // next state selection
           vrf_next_state = VRF_WRITE;
