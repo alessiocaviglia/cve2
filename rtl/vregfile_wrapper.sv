@@ -34,7 +34,7 @@ module vregfile_wrapper #(
 
   // VRF FSM signals
   vcve2_pkg::vrf_state_t vrf_state, vrf_next_state;
-  logic [9:0] count_d, count_q;         // number of shift to do (changes with fractional LMUL)
+  logic [9:0] count_valid_d, count_valid_q, count_d, count_q;         // number of shift to do (changes with fractional LMUL)
   logic [2:0] num_regs_d, num_regs_q;   // number of regs in the register group
   logic [AddrWidth-1:0] incr_d, incr_q;
 
@@ -42,11 +42,12 @@ module vregfile_wrapper #(
   logic rs1_en, rs2_en, rs3_en, rs1_shift, rs2_shift, rs3_shift, rd_shift;
   logic [VLEN-1:0] rs1_q, rs2_q, rs3_q;
   logic [VLEN-1:0] rd_q;
+  logic stop_shift;
 
   // Output signals - first positions first to support propery fractional LMUL/EMUL
-  assign rdata_a_o = rs1_q[VLEN-1:VLEN-ELEN];
-  assign rdata_b_o = rs2_q[VLEN-1:VLEN-ELEN];
-  assign rdata_c_o = rs3_q[VLEN-1:VLEN-ELEN];
+  assign rdata_a_o = stop_shift ? rs1_q[VLEN-1:VLEN-ELEN] : '0;
+  assign rdata_b_o = stop_shift ? rs2_q[VLEN-1:VLEN-ELEN] : '0;
+  assign rdata_c_o = stop_shift ? rs3_q[VLEN-1:VLEN-ELEN] : '0;
 
   /////////////
   // VRF FSM //
@@ -55,11 +56,13 @@ module vregfile_wrapper #(
   always_ff @(posedge clk_i or negedge rst_ni) begin
     if (!rst_ni) begin
       vrf_state <= VRF_IDLE;
+      count_valid_q <= 0;
       count_q <= 0;
       num_regs_q <= 0;
       incr_q <= 0;
     end else begin
       vrf_state <= vrf_next_state;
+      count_valid_q <= count_valid_d;
       count_q <= count_d;
       num_regs_q <= num_regs_d;
       incr_q <= incr_d;
@@ -77,6 +80,7 @@ module vregfile_wrapper #(
     vector_done_o = 0;
     req_s = 0;
     we_s = 0;
+    stop_shift = 0;
     case (vrf_state)
 
       VRF_IDLE: begin
@@ -85,38 +89,40 @@ module vregfile_wrapper #(
           incr_d = '0;
         end else begin      // when there's a request sample count and num_regs
 
+          count_d = COUNT[9:0];
+          count_valid_d = COUNT[9:0];
           if (incr_q=='0) begin // if it's the first time I sample the LMUL
             case (lmul_i)
               VLMUL_F8: begin
-                count_d = COUNT[9:0]>>3;
+                count_valid_d = COUNT[9:0]>>3;
                 num_regs_d = 3'b000;
               end
               VLMUL_F4: begin
-                count_d = COUNT[9:0]>>2;
+                count_valid_d = COUNT[9:0]>>2;
                 num_regs_d = 3'b000;
               end
               VLMUL_F2: begin
-                count_d = COUNT[9:0]>>1;
+                count_valid_d = COUNT[9:0]>>1;
                 num_regs_d = 3'b000;
               end
               VLMUL_1: begin
-                count_d = COUNT[9:0];
+                count_valid_d = COUNT[9:0];
                 num_regs_d = 3'b000;
               end
               VLMUL_2: begin
-                count_d = COUNT[9:0];
+                count_valid_d = COUNT[9:0];
                 num_regs_d = 3'b001;
               end
               VLMUL_4: begin
-                count_d = COUNT[9:0];
+                count_valid_d = COUNT[9:0];
                 num_regs_d = 3'b011;
               end
               VLMUL_8: begin
-                count_d = COUNT[9:0];
+                count_valid_d = COUNT[9:0];
                 num_regs_d = 3'b111;
               end
               default: begin
-                count_d = '0;
+                count_valid_d = '0;
                 num_regs_d = '0;
               end
             endcase
@@ -166,12 +172,16 @@ module vregfile_wrapper #(
       end
 
       V_OP: begin
-        if (we_i==1) rd_shift = 1;
-        if (num_operands_i>0) rs1_shift = 1;
-        if (num_operands_i>1) rs2_shift = 1;
-        if (num_operands_i>2) rs3_shift = 1;
-        count_d = count_q-1;
-        if (count_q==1)
+        count_d = count_q-1;                    // counter for overall number of shifts
+        count_valid_d = count_valid_q-1;        // counter for valid number of shifts (the difference with the former is to aligned rd_q)
+        if (we_i==1) rd_shift = 1;              // I shift the destination register regardless
+        if (count_valid_q==0) begin             // I shift the source registers only when I have to
+          stop_shift = 1;
+          if (num_operands_i>0) rs1_shift = 1;
+          if (num_operands_i>1) rs2_shift = 1;
+          if (num_operands_i>2) rs3_shift = 1;
+        end
+        if (count_q==1)                         // next state selection
           vrf_next_state = VRF_WRITE;
         else
           vrf_next_state = V_OP;
@@ -191,7 +201,6 @@ module vregfile_wrapper #(
         end else begin
           num_regs_d = num_regs_q-1;
           incr_d = incr_q+1;
-          count_d = COUNT[9:0];
         end
       end
 

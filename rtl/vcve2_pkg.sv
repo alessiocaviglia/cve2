@@ -43,13 +43,13 @@ package vcve2_pkg;
   } vsew_e;
    // Vector CSR data types - vlmul
   typedef enum logic[2:0] {
-    VLMUL_F8,
-    VLMUL_F4,
-    VLMUL_F2,
-    VLMUL_1,
-    VLMUL_2,
-    VLMUL_4,
-    VLMUL_8
+    VLMUL_F8 = 3'b101,
+    VLMUL_F4 = 3'b110,
+    VLMUL_F2 = 3'b111,
+    VLMUL_1  = 3'b000,
+    VLMUL_2  = 3'b001,
+    VLMUL_4  = 3'b010,
+    VLMUL_8  = 3'b011
   } vlmul_e;
 
   ////////////////
