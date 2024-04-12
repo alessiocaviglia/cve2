@@ -170,7 +170,9 @@ module vcve2_id_stage #(
   output logic [31:0]               valu_operand_c_ex_o,
   output vcve2_pkg::valu_op_e       valu_operator_o,
   // Vector cfg
-  output logic                      vcfg_write_o
+  output logic                      vcfg_write_o,
+  output logic                      vl_max_o,
+  output logic                      vl_keep_o
 
 );
 
@@ -468,8 +470,10 @@ module vcve2_id_stage #(
     // vector alu
     .valu_operator_o(valu_operator_o),
     // vector cfg setting instructions
-    .vcfg_write_o(vcfg_write_o),          // write enable for vector configuration
-    .imm_vcfg_o(imm_vcfg)             // immediate for vector configuration
+    .vcfg_write_o(vcfg_write_o),        // write enable for vector configuration
+    .imm_vcfg_o(imm_vcfg),              // immediate for vector configuration
+    .vl_max_o(vl_max_o),                // set vl to VLMAX
+    .vl_keep_o(vl_keep_o)               // keep current value of vl
     
   );
 

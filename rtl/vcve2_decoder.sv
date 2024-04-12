@@ -103,7 +103,9 @@ module vcve2_decoder #(
   output vcve2_pkg::valu_op_e   valu_operator_o,       // vector ALU operation selection
   // vector cfg setting instructions
   output logic                  vcfg_write_o,          // write enable for vector configuration
-  output logic [31:0]           imm_vcfg_o             // immediate for vector configuration
+  output logic [31:0]           imm_vcfg_o,            // immediate for vector configuration
+  output logic                  vl_max_o,              // set vl to VLMAX
+  output logic                  vl_keep_o              // keep current value of vl
 );
 
   import vcve2_pkg::*;
@@ -248,6 +250,8 @@ module vcve2_decoder #(
     vrf_we_o              = 1'b0;
     vrf_num_operands_o    = 2'b00;
     vcfg_write_o          = 1'b0;
+    vl_max_o              = 1'b0;
+    vl_keep_o             = 1'b0;
 
     opcode                = opcode_e'(instr[6:0]);
 
@@ -671,6 +675,13 @@ module vcve2_decoder #(
         // Configuration-Setting Instructions
         if (instr[14:12]==3'b111) begin
           vcfg_write_o = 1'b1;
+          if (instr_alu[31:30]!=2'b11) begin        // AVL encoding for vsetvl and vsetvli
+            if (instr_rs1 == '0 && instr_rd != '0) begin
+              vl_max_o = 1'b1;
+            end else if (instr_rs1 == '0 && instr_rd == '0) begin
+              vl_keep_o = 1'b1;
+            end
+          end
         end
         // Vector Arithmetic Instructions
         else begin

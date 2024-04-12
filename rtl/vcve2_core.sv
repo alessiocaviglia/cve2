@@ -278,10 +278,11 @@ module vcve2_core import vcve2_pkg::*; #(
 
   // Vector CSRs
   logic vcfg_write;
+  logic vl_max, vl_keep;
   vsew_e vsew_q, vsew_d;
   vlmul_e vlmul_q, vlmul_d;
   logic [1:0] vma_vta_q, vma_vta_d;
-  logic [31:0] vl_q, vl_d;
+  logic [31:0] vl_q, vl_d;          // number of bits depends on implementation (VLEN), probably need to change
   logic [31:0] vstart_q, vstart_d;
   logic [31:0] vxrm_q, vxrm_d;
   logic [31:0] vxsat_q, vxsat_d;
@@ -531,7 +532,9 @@ module vcve2_core import vcve2_pkg::*; #(
     .valu_operand_c_ex_o(valu_operand_c_ex),
     .valu_operator_o(valu_operator_ex),
     // vcfg
-    .vcfg_write_o(vcfg_write)
+    .vcfg_write_o(vcfg_write),
+    .vl_max_o(vl_max),
+    .vl_keep_o(vl_keep)
   );
 
   // for RVFI only
@@ -859,6 +862,10 @@ module vcve2_core import vcve2_pkg::*; #(
     .div_wait_i                 (perf_div_wait)
   );
 
+  /////////////////
+  // Vector CSRs //
+  /////////////////
+
   // Vector extension CSRs
   always_ff @(posedge clk_i or negedge rst_ni) begin
     if (!rst_ni) begin
@@ -890,9 +897,96 @@ module vcve2_core import vcve2_pkg::*; #(
     vxrm_d     = vxrm_q;
     vxsat_d    = vxsat_q;
     if (vcfg_write==1'b1) begin
+      // sample the values coming from the instruction
       vsew_d     = alu_operand_b_ex[5:3];
       vlmul_d    = alu_operand_b_ex[2:0];
       vma_vta_d  = alu_operand_b_ex[7:6];
+
+      if (vl_keep==1'b1) begin    // check validity if the goal is to mantain vl value
+        vl_d = vl_q;
+        unique case ({vsew_q, vsew_d})
+          // vsew not changed
+          {VSEW_32, VSEW_32},
+          {VSEW_16, VSEW_16},
+          {VSEW_8, VSEW_8} : begin
+            if (vlmul_q != vlmul_d) begin
+              vsew_d = VSEW_INVALID;
+            end
+          end
+          // vsew multiplied by two
+          {VSEW_16, VSEW_32},
+          {VSEW_8, VSEW_16} : begin
+            unique case ({vlmul_q, vlmul_d})
+              {VLMUL_F8, VLMUL_F4},
+              {VLMUL_F4, VLMUL_F2},
+              {VLMUL_F2, VLMUL_1},
+              {VLMUL_1, VLMUL_2},
+              {VLMUL_2, VLMUL_4},
+              {VLMUL_4, VLMUL_8}: ;
+              default: vsew_d = VSEW_INVALID;
+            endcase
+          end
+          //vsew multiplied by four
+          {VSEW_8, VSEW_32} : begin
+            unique case ({vlmul_q, vlmul_d})
+              {VLMUL_F8, VLMUL_F2},
+              {VLMUL_F4, VLMUL_1},
+              {VLMUL_F2, VLMUL_2},
+              {VLMUL_1, VLMUL_4},
+              {VLMUL_2, VLMUL_8}: ;
+              default: vsew_d = VSEW_INVALID;
+            endcase
+          end
+          // vsew divided by two
+          {VSEW_32, VSEW_16},
+          {VSEW_16, VSEW_8} : begin
+            unique case ({vlmul_q, vlmul_d})
+              {VLMUL_F4, VLMUL_F8},
+              {VLMUL_F2, VLMUL_F4},
+              {VLMUL_1, VLMUL_F2},
+              {VLMUL_2, VLMUL_1},
+              {VLMUL_4, VLMUL_2},
+              {VLMUL_8, VLMUL_4}: ;
+              default: vsew_d = VSEW_INVALID;
+            endcase
+          end
+          // vsew divided by four
+          {VSEW_32, VSEW_8} : begin
+            unique case ({vlmul_q, vlmul_d})
+              {VLMUL_F2, VLMUL_F8},
+              {VLMUL_1, VLMUL_F4},
+              {VLMUL_2, VLMUL_F2},
+              {VLMUL_4, VLMUL_1},
+              {VLMUL_8, VLMUL_2}: ;
+              default: vsew_d = VSEW_INVALID;
+            endcase
+          end
+          default: vsew_d = VSEW_INVALID;
+        endcase
+
+      end else begin  // TODO: I think that to do this I should define what my VLEN is, otherwise it's not possible
+        unique case ({vsew_d, vlmul_d})
+          {VSEW_8, VLMUL_F8},
+          {VSEW_8, VLMUL_F4},
+          {VSEW_8, VLMUL_F2},
+          {VSEW_8, VLMUL_1},
+          {VSEW_8, VLMUL_2},
+          {VSEW_8, VLMUL_4},
+          {VSEW_8, VLMUL_8}: vl_d = '0;
+          {VSEW_16, VLMUL_F4},
+          {VSEW_16, VLMUL_F2},
+          {VSEW_16, VLMUL_1},
+          {VSEW_16, VLMUL_2},
+          {VSEW_16, VLMUL_4},
+          {VSEW_16, VLMUL_8}: vl_d = '0;
+          {VSEW_32, VLMUL_F2},
+          {VSEW_32, VLMUL_1},
+          {VSEW_32, VLMUL_2},
+          {VSEW_32, VLMUL_4},
+          {VSEW_32, VLMUL_8}: vl_d = '0;
+          default: vl_d = '0; 
+        endcase
+      end
     end
   end
 

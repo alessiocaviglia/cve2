@@ -37,9 +37,10 @@ package vcve2_pkg;
 
   // Vector CSR data types - vsew
   typedef enum logic[2:0] {
-    VSEW_8,
-    VSEW_16,
-    VSEW_32
+    VSEW_8 = 3'b000,
+    VSEW_16 = 3'b001,
+    VSEW_32 = 3'b010,
+    VSEW_INVALID = 3'b111
   } vsew_e;
    // Vector CSR data types - vlmul
   typedef enum logic[2:0] {
