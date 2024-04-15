@@ -195,12 +195,13 @@ module cve2_simple_system (
       .irq_software_i         (1'b0),
       .irq_timer_i            (timer_irq),
       .irq_external_i         (1'b0),
-      .irq_fast_i             (15'b0),
+      .irq_fast_i             (16'b0),
       .irq_nm_i               (1'b0),
 
       .debug_req_i            ('b0),
       .crash_dump_o           (),
 
+      .fetch_enable_i         (1'b1),
       .core_sleep_o           ()
     );
 

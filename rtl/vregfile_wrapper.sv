@@ -239,7 +239,7 @@ module vregfile_wrapper #(
   /////////
 
   // Instantiate prim_generic_ram_1p
-  ram_1p #(
+  ram_1pc #(
       .Width(VLEN),
       .Depth(2 ** AddrWidth)
   ) ram_inst (

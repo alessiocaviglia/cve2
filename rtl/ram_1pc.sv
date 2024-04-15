@@ -1,4 +1,4 @@
-module ram_1p #(
+module ram_1pc #(
     parameter int unsigned Width = 32,
     parameter int unsigned Depth = 256
 ) (
