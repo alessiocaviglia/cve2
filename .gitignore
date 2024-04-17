@@ -1,6 +1,7 @@
 # Build output
 build
 **/buildsim.log
+obj_dir
 
 # Common editor/IDE config and temporary files
 .project

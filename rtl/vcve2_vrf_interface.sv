@@ -23,12 +23,17 @@ module vcve2_vrf_interface #(
     input  logic         data_rvalid_i,
     input  logic         data_err_i,
     input  logic         data_pmp_err_i,
-
-    output logic [31:0]  data_addr_o,
     output logic         data_we_o,
     output logic [3:0]   data_be_o,
     output logic [31:0]  data_wdata_o,
     input  logic [31:0]  data_rdata_i,
+
+    // AGU
+    output logic         agu_load_o,
+    output logic         agu_get_rs1_o,
+    output logic         agu_get_rs2_o,
+    output logic         agu_get_rd_o,
+    input  logic         agu_ready_i, 
 
     // Control signals and values
     input logic [1:0]             num_operands_i,             // I was thinking of changing it to 3 bits, each one of them representing a source register
@@ -39,7 +44,7 @@ module vcve2_vrf_interface #(
   import vcve2_pkg::*;
 
   // TODO - find a better way to do this
-  parameter COUNT = VLEN >> ($clog2(PIPE_WIDTH)); // VLEN/PIPE_WIDTH
+  parameter NUM_MEM_OPS = VLEN >> ($clog2(PIPE_WIDTH)); // VLEN/PIPE_WIDTH
 
   // VRF FSM signals
   vcve2_pkg::vrf_state_t vrf_state, vrf_next_state;
@@ -64,22 +69,23 @@ module vcve2_vrf_interface #(
   end
 
   always_comb begin
-    rs1_en = 0;
-    rs2_en = 0;
-    rs3_en = 0;
-    data_req_o = 0;
-    data_we_o = 0;
+    rs1_en = 1'b0;
+    rs2_en = 1'b0;
+    rs3_en = 1'b0;
+    data_req_o = 1'b0;
+    data_we_o = 1'b0;
+    agu_load_o = 1'b0;
 
     case (vrf_state)
 
       VRF_IDLE: begin
-        if (!req_i) begin   // VRF stays idle until a request is made
+        if (!req_i) begin             // VRF stays idle until a request is made
           vrf_next_state = VRF_IDLE;
           num_iterations_d = '0;
-
-        end else begin      // when we have a request
+        end else begin                // when we have a request
           vrf_next_state = VRF_START;
-
+          // load addresses in the AGU
+          agu_load_o = 1'b1;
           // we sample the correct value of num_iterations
           case (lmul_i)
             VLMUL_F8: begin
@@ -112,87 +118,39 @@ module vcve2_vrf_interface #(
       end
 
       VRF_START: begin
-        if (num_operands_i==2'b00) begin
+        if (agu_ready_i) begin
           vrf_next_state = VRF_OP;
+          /* RAM READ REQUEST */
+          vrf_next_state = VRF_READ1;
         end else begin
-          // RAM read request
-          data_req_o = 1;
-          data_addr_o = raddr_a_i;
-          if (data_gnt_i) begin
-            vrf_next_state = VRF_READ1;
-          end else begin
-            vrf_next_state = VRF_START;
-          end
+          vrf_next_state = VRF_START;    
         end
       end
 
       VRF_READ1: begin
-        if (num_operands_i==2'b01) begin
-          vrf_next_state = V_OP;
-        end else begin
-          // RAM read request
-          data_req_o = 1;
-          data_addr_o = raddr_b_i;
-          if (data_gnt_i) begin
-            vrf_next_state = VRF_READ2;
-          end else begin
-            vrf_next_state = VRF_READ1;
-          end
-        end
-        if (data_rvalid_i) begin
-          rs1_en = 1;
-        end
+        rs1_en = 1;
+        /* RAM READ REQUEST */
+        vrf_next_state = VRF_READ2;
       end
 
       VRF_READ2: begin
         rs2_en = 1;
-        if (num_operands_i==2'b10) begin
-          vrf_next_state = V_OP;
-        end else begin
-          // RAM read request
-          req_s = 1;
-          we_s = 0;
-          addr_s = waddr_i+incr_q;
-          vrf_next_state = VRF_READ3;
-        end
+        /* RAM READ REQUEST */
+        vrf_next_state = VRF_READ3;
       end
       
       VRF_READ3: begin
         rs3_en = 1;
-        vrf_next_state = V_OP;
+        vrf_next_state = VRF_LOOP;
       end
 
-      V_OP: begin
-        count_d = count_q-1;                    // counter for overall number of shifts
-        if (we_i==1) rd_shift = 1;              // I shift the destination register regardless
-        if (count_valid_q==0) begin             // I shift the source registers only when I have to
-          stop_shift = 1;
-          if (num_operands_i>0) rs1_shift = 1;
-          if (num_operands_i>1) rs2_shift = 1;
-          if (num_operands_i>2) rs3_shift = 1;
-        end else begin                          // decrement in else to avoid useless decrements
-          count_valid_d = count_valid_q-1;      // counter for valid number of shifts (the difference with the former is to aligned rd_q)
-        end
-        if (count_q==1)                         // next state selection
-          vrf_next_state = VRF_WRITE;
-        else
-          vrf_next_state = V_OP;
-      end
-
-      VRF_WRITE: begin
-        vrf_next_state = VRF_IDLE;
-        if (we_i==1) begin
-          // RAM write request
-          req_s = 1;
-          we_s = 1;
-          addr_s = waddr_i+incr_q;
-        end
-        if (num_regs_q==3'b000) begin
-          vector_done_o = 1;
-          incr_d = '0;
+      VRF_LOOP: begin
+        if (num_iterations_q == '0) begin
+          vrf_next_state = VRF_IDLE;
         end else begin
-          num_regs_d = num_regs_q-1;
-          incr_d = incr_q+1;
+          num_iterations_d = num_iterations_q - 1;
+          /* RAM READ REQUEST */
+          vrf_next_state = VRF_READ1;
         end
       end
 
@@ -211,17 +169,11 @@ module vcve2_vrf_interface #(
       rs1_q <= '0;
       rs2_q <= '0;
       rs3_q <= '0;
-      rd_q  <= '0;
     end else begin
       // source registers can be loaded in parallel and shifted left by 32
-      if (rs1_en) rs1_q <= rdata_s;
-      else if (rs1_shift) rs1_q <= {32'h00000000, rs1_q[VLEN-1:PIPE_WIDTH]};
-      if (rs2_en) rs2_q <= rdata_s;
-      else if (rs2_shift) rs2_q <= {32'h00000000, rs2_q[VLEN-1:PIPE_WIDTH]};
-      if (rs3_en) rs3_q <= rdata_s;
-      else if (rs3_shift) rs3_q <= {32'h00000000, rs3_q[VLEN-1:PIPE_WIDTH]};
-      // destination register can be shifted left to load new data sequentially
-      if (rd_shift) rd_q <= {wdata_i, rd_q[VLEN-1:PIPE_WIDTH]};
+      if (rs1_en) rs1_q <= data_rdata_i;
+      if (rs2_en) rs2_q <= data_rdata_i;
+      if (rs3_en) rs3_q <= data_rdata_i;
     end
   end
 
