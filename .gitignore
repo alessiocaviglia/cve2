@@ -2,6 +2,7 @@
 build
 **/buildsim.log
 obj_dir
+**/wave.vcd
 
 # Common editor/IDE config and temporary files
 .project
