@@ -5,7 +5,7 @@ description: "Simulation with a simple testbench of vregfile"
 filesets:
   files_rtl:
     files:
-      - ../../rtl/vregfile_wrapper.sv
+      - ../../rtl/vcve2_vrf_interface.sv
       - ../../rtl/ram_1p.sv
     file_type: systemVerilogSource
 
@@ -21,7 +21,7 @@ targets:
     filesets:
       - files_rtl
       - tb-verilator
-    toplevel: vregfile_wrapper
+    toplevel: vcve2_vrf_interface
     tools:
       verilator:
         mode: cc

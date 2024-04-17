@@ -743,7 +743,9 @@ module vcve2_core import vcve2_pkg::*; #(
   ////////////////////////////////
   // VRF (Vector Register File) //
   ////////////////////////////////
-  vregfile_wrapper #(
+
+  // VRF interface, containing the logic for the vector register file
+  vcve2_vrf_interface #(
     .VLEN(128),
     .ELEN(32),
     .AddrWidth(5)
@@ -767,7 +769,23 @@ module vcve2_core import vcve2_pkg::*; #(
     .vector_done_o(vector_done),
     .lmul_i(vlmul_q)
   );
-  
+
+  // AGU, translates the VR numbero to a memory address
+  vce2_agu #(
+    .AddrWidth(32)
+) agu_inst (
+    .clk_i(clk_i),  // Connect to your clock signal
+    .rst_ni(rst_ni),  // Connect to your reset signal
+    .addr_rs1_i(addr_rs1),  // Connect to your addr_rs1 signal
+    .addr_rs2_i(addr_rs2),  // Connect to your addr_rs2 signal
+    .addr_rd_i(addr_rd),  // Connect to your addr_rd signal
+    .load(load),  // Connect to your load signal
+    .get_rs1(get_rs1),  // Connect to your get_rs1 signal
+    .get_rs2(get_rs2),  // Connect to your get_rs2 signal
+    .get_rd_noincr(get_rd_noincr),  // Connect to your get_rd_noincr signal
+    .get_rd(get_rd),  // Connect to your get_rd signal
+    .addr_o(addr_o)  // Connect to your addr_o signal
+);
 
   /////////////////////////////////////////
   // CSRs (Control and Status Registers) //

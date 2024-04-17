@@ -17,15 +17,13 @@ int main(int argc, char **argv, char **env) {
   tfp->open("wave.vcd");  // Open the waveform file
 
   top->clk_i = 0;
-  top->rst_ni = 0;
+  top->rst_ni = 1;
+  top->addr_i = 0;
   top->load = 0;
   top->get_rs1 = 0;
   top->get_rs2 = 0;
   top->get_rd_noincr = 0;
   top->get_rd = 0;
-  top->addr_rs1_i = 0;
-  top->addr_rs2_i = 0;
-  top->addr_rd_i = 0;
 
   while (sim_time < MAX_SIM_TIME) {
     top->clk_i ^= 1;
@@ -34,17 +32,17 @@ int main(int argc, char **argv, char **env) {
     top->get_rs2 = 0;
     top->get_rd_noincr = 0;
     top->get_rd = 0;
-    top->addr_rs1_i = 0;
-    top->addr_rs2_i = 0;
-    top->addr_rd_i = 0;
+    if (sim_time == 0 || sim_time == 1) {
+      top->load = 1;
+      top->addr_i = 10;
+    }
     if (sim_time == 2 || sim_time == 3) {
-      top->rst_ni = 1;
+      top->load = 1;
+      top->addr_i = 20;
     }
     if (sim_time == 4 || sim_time == 5) {
       top->load = 1;
-      top->addr_rs1_i = 10;
-      top->addr_rs2_i = 20;
-      top->addr_rd_i = 30;
+      top->addr_i = 40;
     }
     if (sim_time == 6 || sim_time == 7) {
         top->get_rs1 = 1;

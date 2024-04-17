@@ -1,4 +1,4 @@
-module vregfile_wrapper #(
+module vcve2_vrf_interface #(
     parameter int unsigned VLEN = 128,
     parameter int unsigned ELEN = 32,
     parameter int unsigned AddrWidth = 5
