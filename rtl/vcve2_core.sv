@@ -327,6 +327,12 @@ module vcve2_core import vcve2_pkg::*; #(
   // WB/VRF
   logic vrf_we_wb; // Write enable signal for the vector register file
   logic [31:0] vrf_wdata_wb; // Write data for the vector register file
+  // LSU modified signals
+  logic lsu_data_req_out;
+  logic [31:0] lsu_data_addr_o;
+  logic lsu_data_we_o;
+  logic [3:0] lsu_data_be_o;
+  logic [31:0] lsu_data_wdata_o;
 
   //////////////////////
   // Clock management //
@@ -629,17 +635,17 @@ module vcve2_core import vcve2_pkg::*; #(
     .clk_i (clk_i),
     .rst_ni(rst_ni),
 
-    // data interface
-    .data_req_o    (data_req_out),
+    // data interface - signal names modified to add vector extension
+    .data_req_o    (lsu_data_req_out),
     .data_gnt_i    (data_gnt_i),
     .data_rvalid_i (data_rvalid_i),
     .data_err_i    (data_err_i),
     .data_pmp_err_i(pmp_req_err[PMP_D]),
 
-    .data_addr_o (data_addr_o),
-    .data_we_o   (data_we_o),
-    .data_be_o   (data_be_o),
-    .data_wdata_o(data_wdata_o),
+    .data_addr_o (lsu_data_addr_o),
+    .data_we_o   (lsu_data_we_o),
+    .data_be_o   (lsu_data_be_o),
+    .data_wdata_o(lsu_data_wdata_o),
     .data_rdata_i(data_rdata_i),
 
     // signals to/from ID/EX stage
@@ -669,6 +675,13 @@ module vcve2_core import vcve2_pkg::*; #(
     .perf_load_o (perf_load),
     .perf_store_o(perf_store)
   );
+
+  // Vector Extension - Data memory multiplexer between LSU and VRF
+  assign data_req_out = vrf_req ? vrf_data_req : lsu_data_req_out;
+  assign data_addr_o = vrf_req ? agu_addr_o : lsu_data_addr_o;
+  assign data_we_o = vrf_req ? vrf_data_we : lsu_data_we_o;
+  assign data_be_o = vrf_req ? vrf_data_be : lsu_data_be_o;
+  assign data_wdata_o = vrf_req ? vrf_data_wdata : lsu_data_wdata_o;
 
   vcve2_wb #(
   ) wb_i (
