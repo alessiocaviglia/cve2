@@ -307,7 +307,6 @@ module vcve2_core import vcve2_pkg::*; #(
   logic vrf_data_pmp_err;
   logic vrf_data_we;
   logic [3:0] vrf_data_be;
-  logic [31:0] vrf_data_rdata;
   logic [31:0] vrf_data_wdata;
   // agu signals
   logic [4:0] rf_raddr_a_agu;
@@ -812,7 +811,7 @@ module vcve2_core import vcve2_pkg::*; #(
     .data_we_o(vrf_data_we),
     .data_be_o(vrf_data_be),
     .data_wdata_o(vrf_data_wdata),
-    .data_rdata_i(vrf_data_rdata),
+    .data_rdata_i(data_rdata_i),
 
     // AGU signals
     .agu_load_o(agu_load),
@@ -852,7 +851,6 @@ module vcve2_core import vcve2_pkg::*; #(
   assign vrf_data_rvalid = 1'b0;
   assign vrf_data_err = 1'b0;
   assign vrf_data_pmp_err = 1'b0;
-  assign vrf_data_rdata = 32'h0;
 
   /////////////////////////////////////////
   // CSRs (Control and Status Registers) //
