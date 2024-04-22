@@ -332,6 +332,8 @@ module vcve2_core import vcve2_pkg::*; #(
   logic lsu_data_we_o;
   logic [3:0] lsu_data_be_o;
   logic [31:0] lsu_data_wdata_o;
+  // Misc
+  logic rf_we_wb_temp;
 
   //////////////////////
   // Clock management //
@@ -774,8 +776,10 @@ module vcve2_core import vcve2_pkg::*; #(
     .rdata_b_o(rf_rdata_b),
     .waddr_a_i(rf_waddr_wb),
     .wdata_a_i(rf_wdata_wb),
-    .we_a_i   (rf_we_wb)
+    .we_a_i   (rf_we_wb_temp)       // as a temporary solution I assigned it to zero when using vrf
   );
+
+  assign rf_we_wb_temp = vrf_req ? 1'b0 : rf_we_wb;
 
   ////////////////////////////////
   // VRF (Vector Register File) //
