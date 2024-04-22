@@ -36,8 +36,8 @@ module vcve2_vrf_interface #(
     input  logic         agu_ready_i, 
 
     // Control signals and values
-    input logic [1:0]             num_operands_i,             // I was thinking of changing it to 3 bits, each one of them representing a source register
-    output  logic                 vector_done_o,              // signals the pipeline that the vector operation is finished (most likely with a write to the VRF)
+    input  logic [3:0]            sel_operation_i,    // each bit enables a different operation, 0 - R RS1, 1 - R RS2, 2 - R RS3, 3 - W RD        
+    output  logic                 vector_done_o,      // signals the pipeline that the vector operation is finished (most likely with a write to the VRF)
     input vcve2_pkg::vlmul_e      lmul_i
 );
 
@@ -52,7 +52,14 @@ module vcve2_vrf_interface #(
 
   // Internal registers signals
   logic rs1_en, rs2_en, rs3_en;
-  logic [VLEN-1:0] rs1_q, rs2_q, rs3_q;
+  logic [PIPE_WIDTH-1:0] rs1_q, rs2_q, rs3_q;
+
+  ////////////////
+  // Temporary  //
+  ////////////////
+
+  assign data_be_o = 4'b1111;
+  assign data_wdata_o = wdata_i;
 
   /////////////
   // VRF FSM //
@@ -75,6 +82,11 @@ module vcve2_vrf_interface #(
     data_req_o = 1'b0;
     data_we_o = 1'b0;
     agu_load_o = 1'b0;
+    agu_get_rs1_o = 1'b0;
+    agu_get_rs2_o = 1'b0;
+    agu_get_rd_o = 1'b0;
+    vector_done_o = 1'b0;
+    num_iterations_d = num_iterations_q;
 
     case (vrf_state)
 
@@ -83,74 +95,141 @@ module vcve2_vrf_interface #(
           vrf_next_state = VRF_IDLE;
           num_iterations_d = '0;
         end else begin                // when we have a request
-          vrf_next_state = VRF_START;
           // load addresses in the AGU
           agu_load_o = 1'b1;
           // we sample the correct value of num_iterations
-          case (lmul_i)
-            VLMUL_F8: begin
-              num_iterations_d = COUNT>>3;
-            end
-            VLMUL_F4: begin
-              num_iterations_d = COUNT>>2;
-            end
-            VLMUL_F2: begin
-              num_iterations_d = COUNT>>1;
-            end
-            VLMUL_1: begin
-              num_iterations_d = COUNT;
-            end
-            VLMUL_2: begin
-              num_iterations_d = COUNT<<1;
-            end
-            VLMUL_4: begin
-              num_iterations_d = COUNT<<2;
-            end
-            VLMUL_8: begin
-              num_iterations_d = COUNT<<3;
-            end
-            default: begin
-              num_iterations_d = '0;
-            end
-          endcase
-
+          if ($signed(lmul_i) < 0) begin
+            num_iterations_d = NUM_MEM_OPS >> -$signed(lmul_i);
+          end else begin
+            num_iterations_d = NUM_MEM_OPS << $signed(lmul_i);
+          end
+          vrf_next_state = VRF_START;
         end
       end
 
       VRF_START: begin
-        if (agu_ready_i) begin
-          vrf_next_state = VRF_OP;
-          /* RAM READ REQUEST */
-          vrf_next_state = VRF_READ1;
+        if (!agu_ready_i) begin
+          vrf_next_state = VRF_START;  
         end else begin
-          vrf_next_state = VRF_START;    
+          // chose the right operation
+          if (sel_operation_i[0]) begin
+            data_req_o = 1'b1;
+            agu_get_rs1_o = 1'b1;
+            vrf_next_state = VRF_READ1;
+          end else if (sel_operation_i[1]) begin
+            data_req_o = 1'b1;
+            agu_get_rs2_o = 1'b1;
+            vrf_next_state = VRF_READ2;
+          end else if (sel_operation_i[2]) begin
+            data_req_o = 1'b1;
+            agu_get_rd_o = 1'b1;
+            vrf_next_state = VRF_READ3;
+          end else if (sel_operation_i[3]) begin
+            data_we_o = 1'b1;
+            data_req_o = 1'b1;
+            agu_get_rd_o = 1'b1;
+            vrf_next_state = VRF_WRITE;
+          end else begin
+            vrf_next_state = VRF_IDLE;
+          end
         end
       end
 
       VRF_READ1: begin
         rs1_en = 1;
-        /* RAM READ REQUEST */
-        vrf_next_state = VRF_READ2;
+        if (sel_operation_i[1]) begin
+          data_req_o = 1'b1;
+          agu_get_rs2_o = 1'b1;
+          vrf_next_state = VRF_READ2;
+        end else begin
+          vrf_next_state = VRF_IDLE;
+        end
       end
 
       VRF_READ2: begin
         rs2_en = 1;
-        /* RAM READ REQUEST */
-        vrf_next_state = VRF_READ3;
+        // chose the right operation
+        if (sel_operation_i[2]) begin   // read third operand
+          data_req_o = 1'b1;
+          agu_get_rd_o = 1'b1;
+          vrf_next_state = VRF_READ3;
+        end else if (sel_operation_i[3]) begin  // write result
+          data_we_o = 1'b1;
+          data_req_o = 1'b1;
+          agu_get_rd_o = 1'b1;
+          vrf_next_state = VRF_WRITE;
+        end else begin     // if we move to the next element
+          if (num_iterations_q == '0) begin
+            vector_done_o = 1'b1;
+            num_iterations_d = '0;
+            vrf_next_state = VRF_IDLE;
+          end else begin
+            num_iterations_d = num_iterations_q - 1;
+            if (sel_operation_i[0]) begin
+              data_req_o = 1'b1;
+              agu_get_rs1_o = 1'b1;
+              vrf_next_state = VRF_READ1;
+            end else begin
+              vrf_next_state = VRF_IDLE;
+            end
+          end
+        end
       end
       
       VRF_READ3: begin
         rs3_en = 1;
-        vrf_next_state = VRF_LOOP;
+        // chose the right operation
+        if (sel_operation_i[3]) begin
+          data_we_o = 1'b1;
+          data_req_o = 1'b1;
+          agu_get_rd_o = 1'b1;
+          vrf_next_state = VRF_WRITE;
+        end else begin     // if we move to the next element
+          if (num_iterations_q == '0) begin
+            vector_done_o = 1'b1;
+            num_iterations_d = '0;
+            vrf_next_state = VRF_IDLE;
+          end else begin
+            num_iterations_d = num_iterations_q - 1;
+            if (sel_operation_i[0]) begin
+              data_req_o = 1'b1;
+              agu_get_rs1_o = 1'b1;
+              vrf_next_state = VRF_READ1;
+            end else if (sel_operation_i[2]) begin
+              data_req_o = 1'b1;
+              agu_get_rd_o = 1'b1;
+              vrf_next_state = VRF_READ3;
+            end else begin
+              vrf_next_state = VRF_IDLE;
+            end
+          end
+        end
       end
 
-      VRF_LOOP: begin
+      VRF_WRITE: begin
         if (num_iterations_q == '0) begin
+          vector_done_o = 1'b1;
+          num_iterations_d = '0;
           vrf_next_state = VRF_IDLE;
         end else begin
           num_iterations_d = num_iterations_q - 1;
-          /* RAM READ REQUEST */
-          vrf_next_state = VRF_READ1;
+          // chose the right operation
+          if (sel_operation_i[0]) begin
+            data_req_o = 1'b1;
+            agu_get_rs1_o = 1'b1;
+            vrf_next_state = VRF_READ1;
+          end else if (sel_operation_i[2]) begin
+            data_req_o = 1'b1;
+            agu_get_rd_o = 1'b1;
+            vrf_next_state = VRF_READ3;
+          end else if (sel_operation_i[3]) begin
+            data_we_o = 1'b1;
+            data_req_o = 1'b1;
+            agu_get_rd_o = 1'b1;
+            vrf_next_state = VRF_WRITE;
+          end else begin
+            vrf_next_state = VRF_IDLE;
+          end
         end
       end
 
@@ -176,5 +255,9 @@ module vcve2_vrf_interface #(
       if (rs3_en) rs3_q <= data_rdata_i;
     end
   end
+
+  assign rdata_a_o = rs1_q;
+  assign rdata_b_o = rs2_q;
+  assign rdata_c_o = rs3_q;
 
 endmodule

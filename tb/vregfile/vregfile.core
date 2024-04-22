@@ -5,8 +5,8 @@ description: "Simulation with a simple testbench of vregfile"
 filesets:
   files_rtl:
     files:
+      - ../../rtl/vcve2_pkg.sv
       - ../../rtl/vcve2_vrf_interface.sv
-      - ../../rtl/ram_1p.sv
     file_type: systemVerilogSource
 
   tb-verilator:

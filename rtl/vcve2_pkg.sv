@@ -13,12 +13,12 @@ package vcve2_pkg;
   //////////////////////
 
   // Vector register file states
-  typedef enum {
+  typedef enum logic [2:0]{
     VRF_IDLE,
+    VRF_START,
     VRF_READ1,
     VRF_READ2,
     VRF_READ3,
-    V_OP,
     VRF_WRITE
   } vrf_state_t;
 

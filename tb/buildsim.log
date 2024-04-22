@@ -1,16 +1,8 @@
-INFO: Preparing alessiocaviglia:vcve2:vcve2_pkg:0.1
-INFO: Preparing lowrisc:dv:dv_fcov_macros:0
-INFO: Preparing lowrisc:tool:check_tool_requirements:0.1
-INFO: Preparing lowrisc:lint:common:0.1
-INFO: Preparing lowrisc:prim:assert:0.1
-INFO: Preparing alessiocaviglia:vcve2:vcve2_core:0.1
-INFO: Preparing alessiocaviglia:vcve2:vcve2_sim:0.1
-INFO: Wrote dependency graph to /home/alessio99/tristan/cve2/tb/build/alessiocaviglia_vcve2_vcve2_sim_0.1/default-verilator/alessiocaviglia_vcve2_vcve2_sim_0.1.deps-after-generators.dot
-INFO: Wrote Makefile fragment to /home/alessio99/tristan/cve2/tb/build/alessiocaviglia_vcve2_vcve2_sim_0.1/default-verilator/core-deps.mk
+INFO: Preparing openhwgroup:cve2:vregfile_sim:0.1
+INFO: Wrote dependency graph to /home/alessio99/tristan/cve2/tb/build/openhwgroup_cve2_vregfile_sim_0.1/default-verilator/openhwgroup_cve2_vregfile_sim_0.1.deps-after-generators.dot
+INFO: Wrote Makefile fragment to /home/alessio99/tristan/cve2/tb/build/openhwgroup_cve2_vregfile_sim_0.1/default-verilator/core-deps.mk
 INFO: Setting up project
-INFO: Running pre_build script check_tool_requirements
 INFO: Building simulation model
 INFO: Running
 INFO: Running simulation
-Henlo fren! Starting simulation...
 
