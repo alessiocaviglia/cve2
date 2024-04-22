@@ -92,9 +92,9 @@ module vce2_agu #(
 
     // Combinational logic for the counters
     always_comb begin
-        addr_rs1_d = ld_rs1 ? addr_i : incr_rs1 ? addr_rs1_q + 1 : addr_rs1_q;
-        addr_rs2_d = ld_rs2 ? addr_i : incr_rs2 ? addr_rs2_q + 1 : addr_rs2_q;
-        addr_rd_d = ld_rd ? addr_i : incr_rd ? addr_rd_q + 1 : addr_rd_q;
+        addr_rs1_d = ld_rs1 ? addr_i : get_rs1 ? addr_rs1_q + 1 : addr_rs1_q;
+        addr_rs2_d = ld_rs2 ? addr_i : get_rs2 ? addr_rs2_q + 1 : addr_rs2_q;
+        addr_rd_d = ld_rd ? addr_i : get_rd ? addr_rd_q + 1 : addr_rd_q;
     end
 
     // Delayed increment for the read/write signals
