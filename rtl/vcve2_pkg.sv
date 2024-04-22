@@ -19,6 +19,7 @@ package vcve2_pkg;
     VRF_READ1,
     VRF_READ2,
     VRF_READ3,
+    VRF_WAITBUS,
     VRF_WRITE
   } vrf_state_t;
 

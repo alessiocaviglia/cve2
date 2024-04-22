@@ -156,10 +156,7 @@ module vcve2_vrf_interface #(
           agu_get_rd_noincr_o = 1'b1;
           vrf_next_state = VRF_READ3;
         end else if (sel_operation_i[3]) begin  // write result
-          data_we_o = 1'b1;
-          data_req_o = 1'b1;
-          agu_get_rd_o = 1'b1;
-          vrf_next_state = VRF_WRITE;
+          vrf_next_state = VRF_WAITBUS;
         end else begin     // if we move to the next element
           if (num_iterations_q == '0) begin
             vector_done_o = 1'b1;
@@ -182,10 +179,7 @@ module vcve2_vrf_interface #(
         rs3_en = 1;
         // chose the right operation
         if (sel_operation_i[3]) begin
-          data_we_o = 1'b1;
-          data_req_o = 1'b1;
-          agu_get_rd_o = 1'b1;
-          vrf_next_state = VRF_WRITE;
+          vrf_next_state = VRF_WAITBUS;
         end else begin     // if we move to the next element
           if (num_iterations_q == '0) begin
             vector_done_o = 1'b1;
@@ -206,6 +200,13 @@ module vcve2_vrf_interface #(
             end
           end
         end
+      end
+
+      VRF_WAITBUS: begin
+        data_we_o = 1'b1;
+        data_req_o = 1'b1;
+        agu_get_rd_o = 1'b1;
+        vrf_next_state = VRF_WRITE;
       end
 
       VRF_WRITE: begin
