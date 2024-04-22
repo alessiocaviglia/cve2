@@ -95,7 +95,7 @@ module vcve2_decoder #(
   // vector register file
   output logic                  vrf_req_o,             // request to vector register file
   output logic                  vrf_we_o,              // write enable for vector register file
-  output logic[1:0]             vrf_num_operands_o,
+  output logic[3:0]             vrf_sel_operation_o,
   // immediate
   output logic [31:0]           imm_v_type_o,          // immediate for vector instructions
   output vcve2_pkg::vop_a_sel_e vop_a_mux_sel_o,       // operand a selection: vreg, reg or immediate
@@ -248,7 +248,7 @@ module vcve2_decoder #(
     // vector extension
     vrf_req_o             = 1'b0;
     vrf_we_o              = 1'b0;
-    vrf_num_operands_o    = 2'b00;
+    vrf_sel_operation_o    = 4'b0000;
     vcfg_write_o          = 1'b0;
     vl_max_o              = 1'b0;
     vl_keep_o             = 1'b0;
@@ -690,7 +690,7 @@ module vcve2_decoder #(
             // Vector Integer Arithmetic Operations
             {6'b00_0000, 3'b000}: begin    // vadd.vv
               vrf_we_o = 1'b1;
-              vrf_num_operands_o = 2'b10;
+              vrf_sel_operation_o = 4'b1011;
             end
             {6'b00_0000, 3'b100}: begin    // vadd.vx
             end
@@ -702,15 +702,15 @@ module vcve2_decoder #(
             end
             {6'b01_0111, 3'b000}: begin    // vmv.v.v/vmerge.vvm
               vrf_we_o = 1'b1;
-              vrf_num_operands_o = 2'b01;
+              vrf_sel_operation_o = 4'b1010;
             end
             {6'b01_0111, 3'b100}: begin    // vmv.v.x/vmerge.vxm
               vrf_we_o = 1'b1;
-              vrf_num_operands_o = 2'b00;
+              vrf_sel_operation_o = 4'b1000;
             end
             {6'b01_0111, 3'b011}: begin    // vmv.v.i/vmerge.vim
               vrf_we_o = 1'b1;
-              vrf_num_operands_o = 2'b00;
+              vrf_sel_operation_o = 4'b1000;
             end
             default: begin
               illegal_insn = 1'b1;

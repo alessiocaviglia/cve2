@@ -162,7 +162,7 @@ module vcve2_id_stage #(
   input  logic [31:0]               vrf_rdata_a_i,
   input  logic [31:0]               vrf_rdata_c_i,
   output logic [31:0]               vrf_wdata_o,
-  output logic [1:0]                vrf_num_operands_o,
+  output logic [3:0]                vrf_sel_operation_o,
   input  logic                      vector_done_i,
   // Vector alu operands
   output logic [31:0]               valu_operand_a_ex_o,
@@ -463,7 +463,7 @@ module vcve2_id_stage #(
     // vector register file
     .vrf_req_o(vrf_req_o),  // used both for VRF and to signal vector instructions since all of those who needs to stall uses VRF
     .vrf_we_o(vrf_we_id_o),
-    .vrf_num_operands_o(vrf_num_operands_o),
+    .vrf_sel_operation_o(vrf_sel_operation_o),
     // vector immediates
     .imm_v_type_o(imm_v_type),
     .vop_a_mux_sel_o(vop_a_mux_sel),  // add dec at the end if it's not the only select we have (look at opb to understand)

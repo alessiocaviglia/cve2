@@ -32,6 +32,7 @@ module vcve2_vrf_interface #(
     output logic         agu_load_o,
     output logic         agu_get_rs1_o,
     output logic         agu_get_rs2_o,
+    output logic         agu_get_rd_noincr_o,
     output logic         agu_get_rd_o,
     input  logic         agu_ready_i, 
 
@@ -84,6 +85,7 @@ module vcve2_vrf_interface #(
     agu_load_o = 1'b0;
     agu_get_rs1_o = 1'b0;
     agu_get_rs2_o = 1'b0;
+    agu_get_rd_noincr_o = 1'b0;
     agu_get_rd_o = 1'b0;
     vector_done_o = 1'b0;
     num_iterations_d = num_iterations_q;
@@ -122,7 +124,7 @@ module vcve2_vrf_interface #(
             vrf_next_state = VRF_READ2;
           end else if (sel_operation_i[2]) begin
             data_req_o = 1'b1;
-            agu_get_rd_o = 1'b1;
+            agu_get_rd_noincr_o = 1'b1;
             vrf_next_state = VRF_READ3;
           end else if (sel_operation_i[3]) begin
             data_we_o = 1'b1;
@@ -151,7 +153,7 @@ module vcve2_vrf_interface #(
         // chose the right operation
         if (sel_operation_i[2]) begin   // read third operand
           data_req_o = 1'b1;
-          agu_get_rd_o = 1'b1;
+          agu_get_rd_noincr_o = 1'b1;
           vrf_next_state = VRF_READ3;
         end else if (sel_operation_i[3]) begin  // write result
           data_we_o = 1'b1;
@@ -197,7 +199,7 @@ module vcve2_vrf_interface #(
               vrf_next_state = VRF_READ1;
             end else if (sel_operation_i[2]) begin
               data_req_o = 1'b1;
-              agu_get_rd_o = 1'b1;
+              agu_get_rd_noincr_o = 1'b1;
               vrf_next_state = VRF_READ3;
             end else begin
               vrf_next_state = VRF_IDLE;
@@ -220,7 +222,7 @@ module vcve2_vrf_interface #(
             vrf_next_state = VRF_READ1;
           end else if (sel_operation_i[2]) begin
             data_req_o = 1'b1;
-            agu_get_rd_o = 1'b1;
+            agu_get_rd_noincr_o = 1'b1;
             vrf_next_state = VRF_READ3;
           end else if (sel_operation_i[3]) begin
             data_we_o = 1'b1;

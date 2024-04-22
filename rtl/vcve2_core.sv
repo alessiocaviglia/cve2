@@ -297,8 +297,30 @@ module vcve2_core import vcve2_pkg::*; #(
   logic [31:0] vrf_rdata_a; // First read port of vector register file
   logic [31:0] vrf_rdata_b; // Second read port of vector register file
   logic [31:0] vrf_rdata_c; // Third read port of vector register file
-  logic [1:0] vrf_num_operands; // Number of operands needed for current vector operation
+  logic [3:0] vrf_sel_operation; // Number of operands needed for current vector operation
   logic vector_done; // Signal indicating that the vector operation is done
+  // data memory interface
+  logic vrf_data_req;
+  logic vrf_data_gnt;
+  logic vrf_data_rvalid;
+  logic vrf_data_err;
+  logic vrf_data_pmp_err;
+  logic vrf_data_we;
+  logic [3:0] vrf_data_be;
+  logic [31:0] vrf_data_rdata;
+  logic [31:0] vrf_data_wdata;
+  // agu signals
+  logic [4:0] rf_raddr_a_agu;
+  logic [29:0] agu_addr_i;
+  logic agu_raddr_a_sel;
+  logic agu_addr_sel;
+  logic agu_load;
+  logic agu_get_rs1;
+  logic agu_get_rs2;
+  logic agu_get_rd_noincr;
+  logic agu_get_rd;
+  logic agu_ready;
+  logic [31:0] agu_addr_o;
   // ID/WB
   logic vrf_we_id; // Write enable signal for the vector register file
   logic [31:0] vrf_wdata_id; // Write data for the vector register file
@@ -524,7 +546,7 @@ module vcve2_core import vcve2_pkg::*; #(
     .vrf_rdata_b_i(vrf_rdata_b),
     .vrf_rdata_c_i(vrf_rdata_c),
     .vrf_wdata_o(vrf_wdata_id),
-    .vrf_num_operands_o(vrf_num_operands),
+    .vrf_sel_operation_o(vrf_sel_operation),
     .vector_done_i(vector_done),
     // Vector alu operands
     .valu_operand_a_ex_o(valu_operand_a_ex),
@@ -718,6 +740,9 @@ module vcve2_core import vcve2_pkg::*; #(
     data_rvalid_i |-> outstanding_load_resp | outstanding_store_resp, clk_i, !rst_ni)
   `endif
 
+  // Vector extension - multiplexer to support AGU load
+  assign rf_raddr_a_agu = agu_raddr_a_sel ? rf_waddr_wb : rf_raddr_a;
+
   ////////////////////////
   // RF (Register File) //
   ////////////////////////
@@ -731,7 +756,7 @@ module vcve2_core import vcve2_pkg::*; #(
 
     .test_en_i(test_en_i),
 
-    .raddr_a_i(rf_raddr_a),
+    .raddr_a_i(rf_raddr_a_agu),     // modified signal for vector extension
     .rdata_a_o(rf_rdata_a),
     .raddr_b_i(rf_raddr_b),
     .rdata_b_o(rf_rdata_b),
@@ -747,9 +772,9 @@ module vcve2_core import vcve2_pkg::*; #(
   // VRF interface, containing the logic for the vector register file
   vcve2_vrf_interface #(
     .VLEN(128),
-    .ELEN(32),
+    .PIPE_WIDTH(32),
     .AddrWidth(5)
-  ) vregfile_wrapper_inst (
+  ) vcve2_vrf_interface_inst (
     .clk_i(clk_i),
     .rst_ni(rst_ni),
 
@@ -765,27 +790,56 @@ module vcve2_core import vcve2_pkg::*; #(
     .waddr_i(rf_waddr_wb),
     .wdata_i(vrf_wdata_wb),
 
-    .num_operands_i(vrf_num_operands),
+    // Data memory interface
+    .data_req_o(vrf_data_req),
+    .data_gnt_i(vrf_data_gnt),
+    .data_rvalid_i(vrf_data_rvalid),
+    .data_err_i(vrf_data_err),
+    .data_pmp_err_i(vrf_data_pmp_err),
+    .data_we_o(vrf_data_we),
+    .data_be_o(vrf_data_be),
+    .data_wdata_o(vrf_data_wdata),
+    .data_rdata_i(vrf_data_rdata),
+
+    // AGU signals
+    .agu_load_o(agu_load),
+    .agu_get_rs1_o(agu_get_rs1),
+    .agu_get_rs2_o(agu_get_rs2),
+    .agu_get_rd_noincr_o(agu_get_rd_noincr),
+    .agu_get_rd_o(agu_get_rd),
+    .agu_ready_i(agu_ready),
+
+    .sel_operation_i(vrf_sel_operation),
     .vector_done_o(vector_done),
     .lmul_i(vlmul_q)
   );
+
+  assign agu_addr_i = agu_addr_sel ? rf_rdata_b[31:2] : rf_rdata_a[31:2];
 
   // AGU, translates the VR numbero to a memory address
   vce2_agu #(
     .AddrWidth(32)
 ) agu_inst (
-    .clk_i(clk_i),  // Connect to your clock signal
-    .rst_ni(rst_ni),  // Connect to your reset signal
-    .addr_rs1_i(addr_rs1),  // Connect to your addr_rs1 signal
-    .addr_rs2_i(addr_rs2),  // Connect to your addr_rs2 signal
-    .addr_rd_i(addr_rd),  // Connect to your addr_rd signal
-    .load(load),  // Connect to your load signal
-    .get_rs1(get_rs1),  // Connect to your get_rs1 signal
-    .get_rs2(get_rs2),  // Connect to your get_rs2 signal
-    .get_rd_noincr(get_rd_noincr),  // Connect to your get_rd_noincr signal
-    .get_rd(get_rd),  // Connect to your get_rd signal
-    .addr_o(addr_o)  // Connect to your addr_o signal
-);
+    .clk_i(clk_i),
+    .rst_ni(rst_ni),
+    .addr_i(agu_addr_i),                // Address value coming from register file
+    .raddr_a_sel_o(agu_raddr_a_sel),  // Select signal for multiplexer in front of RF port a address
+    .agu_addr_sel_o(agu_addr_sel),    // Select signal for multiplexer in front of AGU address port
+    .load(agu_load),    
+    .get_rs1(agu_get_rs1),  
+    .get_rs2(agu_get_rs2),  
+    .get_rd_noincr(agu_get_rd_noincr),  
+    .get_rd(agu_get_rd),  
+    .ready_o(agu_ready),
+    .addr_o(agu_addr_o) 
+  );
+
+  // temporty assignments for unused signals
+  assign vrf_data_gnt = 1'b0;
+  assign vrf_data_rvalid = 1'b0;
+  assign vrf_data_err = 1'b0;
+  assign vrf_data_pmp_err = 1'b0;
+  assign vrf_data_rdata = 32'h0;
 
   /////////////////////////////////////////
   // CSRs (Control and Status Registers) //
