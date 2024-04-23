@@ -32,8 +32,8 @@ module vcve2_vrf_interface #(
     output logic         agu_load_o,
     output logic         agu_get_rs1_o,
     output logic         agu_get_rs2_o,
-    output logic         agu_get_rd_noincr_o,
     output logic         agu_get_rd_o,
+    output logic         agu_incr_o,
     input  logic         agu_ready_i, 
 
     // Control signals and values
@@ -85,8 +85,8 @@ module vcve2_vrf_interface #(
     agu_load_o = 1'b0;
     agu_get_rs1_o = 1'b0;
     agu_get_rs2_o = 1'b0;
-    agu_get_rd_noincr_o = 1'b0;
     agu_get_rd_o = 1'b0;
+    agu_incr_o = 1'b0;
     vector_done_o = 1'b0;
     num_iterations_d = num_iterations_q;
 
@@ -105,56 +105,86 @@ module vcve2_vrf_interface #(
           end else begin
             num_iterations_d = NUM_MEM_OPS << $signed(lmul_i);
           end
+          vrf_next_state = VRF_WAITAGU;
+        end
+      end
+
+      VRF_WAITAGU: begin
+        if (!agu_ready_i) begin
+          vrf_next_state = VRF_WAITAGU;
+        end else begin
           vrf_next_state = VRF_START;
         end
       end
 
       VRF_START: begin
-        if (!agu_ready_i) begin
-          vrf_next_state = VRF_START;  
-        end else begin
-          // chose the right operation
-          if (sel_operation_i[0]) begin
-            data_req_o = 1'b1;
-            agu_get_rs1_o = 1'b1;
+        // chose the right operation
+        // if the first operation is READ RS1
+        if (sel_operation_i[0]) begin
+          data_req_o = 1'b1;
+          agu_get_rs1_o = 1'b1;
+          if (data_gnt_i) begin
+            agu_incr_o = 1'b1;
             vrf_next_state = VRF_READ1;
-          end else if (sel_operation_i[1]) begin
-            data_req_o = 1'b1;
-            agu_get_rs2_o = 1'b1;
+          end else vrf_next_state = VRF_START;
+        // if the first operation is READ RS2
+        end else if (sel_operation_i[1]) begin
+          data_req_o = 1'b1;
+          agu_get_rs2_o = 1'b1;
+          if (data_gnt_i) begin
+            agu_incr_o = 1'b1;
             vrf_next_state = VRF_READ2;
-          end else if (sel_operation_i[2]) begin
-            data_req_o = 1'b1;
-            agu_get_rd_noincr_o = 1'b1;
+          end else vrf_next_state = VRF_START;
+        // if the first operation is READ RS3
+        end else if (sel_operation_i[2]) begin
+          data_req_o = 1'b1;
+          agu_get_rd_o = 1'b1;
+          if (data_gnt_i) begin
+            agu_incr_o = 1'b1;
             vrf_next_state = VRF_READ3;
-          end else if (sel_operation_i[3]) begin
-            data_we_o = 1'b1;
-            data_req_o = 1'b1;
-            agu_get_rd_o = 1'b1;
+          end else vrf_next_state = VRF_START;
+        // if the first operation is WRITE RD
+        end else if (sel_operation_i[3]) begin
+          data_we_o = 1'b1;
+          data_req_o = 1'b1;
+          agu_get_rd_o = 1'b1;
+          if (data_gnt_i) begin
+            agu_incr_o = 1'b1;
             vrf_next_state = VRF_WRITE;
-          end else begin
-            vrf_next_state = VRF_IDLE;
-          end
+          end else vrf_next_state = VRF_START;
+        end else begin
+          vrf_next_state = VRF_IDLE;
         end
       end
 
+      // In the following states the exit condition is the gnt signal since: gnt=1 => data_rvalid of the previous operation=1
       VRF_READ1: begin
-        rs1_en = 1;
+        if (data_rvalid_i) rs1_en = 1;
+        // from here we can only move to READ RS2
         if (sel_operation_i[1]) begin
           data_req_o = 1'b1;
           agu_get_rs2_o = 1'b1;
-          vrf_next_state = VRF_READ2;
+          if (data_gnt_i) begin
+            agu_incr_o = 1'b1;
+            vrf_next_state = VRF_READ2;
+          end else vrf_next_state = VRF_READ1;
         end else begin
           vrf_next_state = VRF_IDLE;
         end
       end
 
       VRF_READ2: begin
-        rs2_en = 1;
+        if (data_rvalid_i) rs2_en = 1;
         // chose the right operation
+        // if next operation is READ RD
         if (sel_operation_i[2]) begin   // read third operand
           data_req_o = 1'b1;
-          agu_get_rd_noincr_o = 1'b1;
-          vrf_next_state = VRF_READ3;
+          agu_get_rd_o = 1'b1;
+          if (data_gnt_i) begin
+            agu_incr_o = 1'b1;
+            vrf_next_state = VRF_READ3;
+          end else vrf_next_state = VRF_READ2;
+        // if next operation is WRITE RD
         end else if (sel_operation_i[3]) begin  // write result
           vrf_next_state = VRF_WAITBUS;
         end else begin     // if we move to the next element
@@ -164,10 +194,17 @@ module vcve2_vrf_interface #(
             vrf_next_state = VRF_IDLE;
           end else begin
             num_iterations_d = num_iterations_q - 1;
+            // if next operation is READ RS1
             if (sel_operation_i[0]) begin
               data_req_o = 1'b1;
               agu_get_rs1_o = 1'b1;
-              vrf_next_state = VRF_READ1;
+              if (data_gnt_i) begin
+                agu_incr_o = 1'b1;
+                vrf_next_state = VRF_READ1;
+              end else begin
+                num_iterations_d = num_iterations_q;   // if the operation wasn't accepted we need to repeat it
+                vrf_next_state = VRF_READ2;
+              end
             end else begin
               vrf_next_state = VRF_IDLE;
             end
@@ -176,7 +213,7 @@ module vcve2_vrf_interface #(
       end
       
       VRF_READ3: begin
-        rs3_en = 1;
+        if (data_rvalid_i) rs3_en = 1;
         // chose the right operation
         if (sel_operation_i[3]) begin
           vrf_next_state = VRF_WAITBUS;
@@ -187,13 +224,26 @@ module vcve2_vrf_interface #(
             vrf_next_state = VRF_IDLE;
           end else begin
             num_iterations_d = num_iterations_q - 1;
+            // if next operation is READ RS1
             if (sel_operation_i[0]) begin
               data_req_o = 1'b1;
               agu_get_rs1_o = 1'b1;
-              vrf_next_state = VRF_READ1;
+              if (data_gnt_i) begin
+                agu_incr_o = 1'b1;
+                vrf_next_state = VRF_READ1;
+              end else begin
+                num_iterations_d = num_iterations_q;   // if the operation wasn't accepted we need to repeat it
+                vrf_next_state = VRF_READ3;
+              end
+            // if next operation is READ RD
             end else if (sel_operation_i[2]) begin
               data_req_o = 1'b1;
-              agu_get_rd_noincr_o = 1'b1;
+              agu_get_rd_o = 1'b1;
+              if (data_gnt_i) begin
+                agu_incr_o = 1'b1;
+              end else begin
+                num_iterations_d = num_iterations_q;   // if the operation wasn't accepted we need to repeat it
+              end
               vrf_next_state = VRF_READ3;
             end else begin
               vrf_next_state = VRF_IDLE;
@@ -206,7 +256,12 @@ module vcve2_vrf_interface #(
         data_we_o = 1'b1;
         data_req_o = 1'b1;
         agu_get_rd_o = 1'b1;
-        vrf_next_state = VRF_WRITE;
+        if (data_gnt_i) begin
+          agu_incr_o = 1'b1;
+          vrf_next_state = VRF_WRITE;
+        end else begin
+          vrf_next_state = VRF_WAITBUS;
+        end
       end
 
       VRF_WRITE: begin
@@ -216,26 +271,47 @@ module vcve2_vrf_interface #(
           vrf_next_state = VRF_IDLE;
         end else begin
           num_iterations_d = num_iterations_q - 1;
-          // chose the right operation
+          // if next operation is READ RS1
           if (sel_operation_i[0]) begin
             data_req_o = 1'b1;
             agu_get_rs1_o = 1'b1;
-            vrf_next_state = VRF_READ1;
+            if (data_gnt_i) begin
+              agu_incr_o = 1'b1;
+              vrf_next_state = VRF_READ1;
+            end else begin
+              num_iterations_d = num_iterations_q;   // if the operation wasn't accepted we need to repeat it
+              vrf_next_state = VRF_WRITE;
+            end
+          // if next operation is READ RD
           end else if (sel_operation_i[2]) begin
             data_req_o = 1'b1;
-            agu_get_rd_noincr_o = 1'b1;
-            vrf_next_state = VRF_READ3;
+            agu_get_rd_o = 1'b1;
+            if (data_gnt_i) begin
+              agu_incr_o = 1'b1;
+              vrf_next_state = VRF_READ3;
+            end else begin
+              num_iterations_d = num_iterations_q;   // if the operation wasn't accepted we need to repeat it
+              vrf_next_state = VRF_WRITE;
+            end
+          // if next operation is WRITE RD
           end else if (sel_operation_i[3]) begin
             data_we_o = 1'b1;
             data_req_o = 1'b1;
             agu_get_rd_o = 1'b1;
+            if (data_gnt_i) begin
+              agu_incr_o = 1'b1;
+            end else begin
+              num_iterations_d = num_iterations_q;   // if the operation wasn't accepted we need to repeat it
+            end
             vrf_next_state = VRF_WRITE;
+          // illegal operation, go back to idle
           end else begin
             vrf_next_state = VRF_IDLE;
           end
         end
       end
 
+      // illegal state go back to idle
       default: begin
         vrf_next_state = VRF_IDLE;
       end

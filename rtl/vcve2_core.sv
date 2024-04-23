@@ -301,10 +301,6 @@ module vcve2_core import vcve2_pkg::*; #(
   logic vector_done; // Signal indicating that the vector operation is done
   // data memory interface
   logic vrf_data_req;
-  logic vrf_data_gnt;
-  logic vrf_data_rvalid;
-  logic vrf_data_err;
-  logic vrf_data_pmp_err;
   logic vrf_data_we;
   logic [3:0] vrf_data_be;
   logic [31:0] vrf_data_wdata;
@@ -316,8 +312,8 @@ module vcve2_core import vcve2_pkg::*; #(
   logic agu_load;
   logic agu_get_rs1;
   logic agu_get_rs2;
-  logic agu_get_rd_noincr;
   logic agu_get_rd;
+  logic agu_incr;
   logic agu_ready;
   logic [31:0] agu_addr_o;
   // ID/WB
@@ -808,10 +804,10 @@ module vcve2_core import vcve2_pkg::*; #(
 
     // Data memory interface
     .data_req_o(vrf_data_req),
-    .data_gnt_i(vrf_data_gnt),
-    .data_rvalid_i(vrf_data_rvalid),
-    .data_err_i(vrf_data_err),
-    .data_pmp_err_i(vrf_data_pmp_err),
+    .data_gnt_i(data_gnt_i),
+    .data_rvalid_i(data_rvalid_i),
+    .data_err_i(data_err_i),
+    .data_pmp_err_i(pmp_req_err[PMP_D]),
     .data_we_o(vrf_data_we),
     .data_be_o(vrf_data_be),
     .data_wdata_o(vrf_data_wdata),
@@ -821,8 +817,8 @@ module vcve2_core import vcve2_pkg::*; #(
     .agu_load_o(agu_load),
     .agu_get_rs1_o(agu_get_rs1),
     .agu_get_rs2_o(agu_get_rs2),
-    .agu_get_rd_noincr_o(agu_get_rd_noincr),
     .agu_get_rd_o(agu_get_rd),
+    .agu_incr_o(agu_incr),
     .agu_ready_i(agu_ready),
 
     .sel_operation_i(vrf_sel_operation),
@@ -841,20 +837,14 @@ module vcve2_core import vcve2_pkg::*; #(
     .addr_i(agu_addr_i),                // Address value coming from register file
     .raddr_a_sel_o(agu_raddr_a_sel),  // Select signal for multiplexer in front of RF port a address
     .agu_addr_sel_o(agu_addr_sel),    // Select signal for multiplexer in front of AGU address port
-    .load(agu_load),    
-    .get_rs1(agu_get_rs1),  
-    .get_rs2(agu_get_rs2),  
-    .get_rd_noincr(agu_get_rd_noincr),  
-    .get_rd(agu_get_rd),  
+    .load_i(agu_load),    
+    .get_rs1_i(agu_get_rs1),  
+    .get_rs2_i(agu_get_rs2),
+    .get_rd_i(agu_get_rd),  
+    .incr_i(agu_incr),
     .ready_o(agu_ready),
     .addr_o(agu_addr_o) 
   );
-
-  // temporty assignments for unused signals
-  assign vrf_data_gnt = 1'b0;
-  assign vrf_data_rvalid = 1'b0;
-  assign vrf_data_err = 1'b0;
-  assign vrf_data_pmp_err = 1'b0;
 
   /////////////////////////////////////////
   // CSRs (Control and Status Registers) //

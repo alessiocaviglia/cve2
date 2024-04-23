@@ -64,11 +64,22 @@ int main(int argc, char **argv, char **env) {
 
   while (sim_time<MAX_SIM_TIME) {
     top->clk_i = !top->clk_i;  // Toggle the clock
+    top->data_gnt_i = 0;
+
     if (sim_time==10) {
       // I force one instructions
       top->instr_rdata_i = 0x5C05B0D7;
       top->instr_rvalid_i = 1;
       top->fetch_enable_i = 1;
+    }
+    if (sim_time == 30 || sim_time == 31) {
+      top->data_gnt_i = 1;
+    }
+    if (sim_time == 40 || sim_time == 41) {
+      top->data_gnt_i = 1;
+    }
+    if (sim_time == 50 || sim_time == 51) {
+      top->data_gnt_i = 1;
     }
     top->eval();
     tfp->dump(sim_time);

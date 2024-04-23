@@ -10,19 +10,19 @@ module vce2_agu #(
     output logic agu_addr_sel_o,                // select signal for multiplexer on agu's input, selects between rdata a and b
 
     // from/to VRF
-    input logic load,           // parallel load for the counters
-    input logic get_rs1,        // generate rs1
-    input logic get_rs2,        // generate rs2
-    input logic get_rd_noincr,  // generate rd without increment after
-    input logic get_rd,         // generate rd
-    output logic ready_o,       // load of addresses complete
+    input logic load_i,           // parallel load_i for the counters
+    input logic get_rs1_i,        // generate rs1
+    input logic get_rs2_i,        // generate rs2
+    input logic get_rd_i,         // generate rd
+    input logic incr_i,
+    output logic ready_o,       // load_i of addresses complete
 
     // to MEMORY interface
     output logic [AddrWidth-1:0] addr_o
 );
 
     // counter signals
-    logic incr_rs1, incr_rs2, incr_rd, ld_rs1, ld_rs2, ld_rd;
+    logic ld_rs1, ld_rs2, ld_rd;
     logic [AddrWidth-3:0] addr_rs1_q, addr_rs2_q, addr_rd_q, addr_rs1_d, addr_rs2_d, addr_rd_d;
     // FSM signals
     logic [1:0] state, next_state;
@@ -48,7 +48,7 @@ module vce2_agu #(
         ready_o = 1'b0;
         case (state)
             2'b00: begin
-                if (load==1'b1) begin
+                if (load_i==1'b1) begin
                     next_state = 2'b01;
                     ld_rs1 = 1'b1;
                 end else begin
@@ -67,7 +67,7 @@ module vce2_agu #(
             end
             2'b11: begin
                 next_state = 2'b00;
-                ready_o = 1;
+                ready_o = 1'b1;
             end
             default: next_state = 2'b00;
         endcase
@@ -92,22 +92,9 @@ module vce2_agu #(
 
     // Combinational logic for the counters
     always_comb begin
-        addr_rs1_d = ld_rs1 ? addr_i : get_rs1 ? addr_rs1_q + 1 : addr_rs1_q;
-        addr_rs2_d = ld_rs2 ? addr_i : get_rs2 ? addr_rs2_q + 1 : addr_rs2_q;
-        addr_rd_d = ld_rd ? addr_i : get_rd ? addr_rd_q + 1 : addr_rd_q;
-    end
-
-    // Delayed increment for the read/write signals
-    always_ff @(posedge clk_i or negedge rst_ni) begin
-        if (!rst_ni) begin
-            incr_rs1 <= 0;
-            incr_rs2 <= 0;
-            incr_rd <= 0;
-        end else begin
-            incr_rs1 <= get_rs1;
-            incr_rs2 <= get_rs2;
-            incr_rd <= get_rd;
-        end
+        addr_rs1_d = ld_rs1 ? addr_i : (get_rs1_i && incr_i) ? addr_rs1_q + 1 : addr_rs1_q;
+        addr_rs2_d = ld_rs2 ? addr_i : (get_rs2_i && incr_i) ? addr_rs2_q + 1 : addr_rs2_q;
+        addr_rd_d = ld_rd ? addr_i : (get_rd_i && incr_i) ? addr_rd_q + 1 : addr_rd_q;
     end
 
     ////////////
@@ -116,9 +103,9 @@ module vce2_agu #(
 
     // Multiplexer for the output address
     always_comb begin
-        addr_o = get_rs1 ? {addr_rs1_q, 2'b00} :
-                 get_rs2 ? {addr_rs2_q, 2'b00} :
-                 get_rd || get_rd_noincr ? {addr_rd_q, 2'b00} : '0;
+        addr_o = get_rs1_i ? {addr_rs1_q, 2'b00} :
+                 get_rs2_i ? {addr_rs2_q, 2'b00} :
+                 get_rd_i ? {addr_rd_q, 2'b00} : '0;
     end
 
     
