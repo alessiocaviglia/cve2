@@ -33,7 +33,7 @@ SRCS_SV ?=                              \
   $(SRC_DIR)/cve2_csr.sv                \
   $(SRC_DIR)/cve2_cs_registers.sv       \
   $(SRC_DIR)/vcve2_decoder.sv            \
-  $(SRC_DIR)/cve2_ex_block.sv           \
+  $(SRC_DIR)/vcve2_ex_block.sv           \
   $(SRC_DIR)/cve2_fetch_fifo.sv         \
   $(SRC_DIR)/vcve2_id_stage.sv           \
   $(SRC_DIR)/cve2_if_stage.sv           \

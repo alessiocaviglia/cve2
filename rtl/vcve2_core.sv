@@ -554,7 +554,7 @@ module vcve2_core import vcve2_pkg::*; #(
   // for RVFI only
   assign unused_illegal_insn_id = illegal_insn_id;
 
-  cve2_ex_block #(
+  vcve2_ex_block #(
     .RV32M          (RV32M),
     .RV32B          (RV32B)
   ) ex_block_i (

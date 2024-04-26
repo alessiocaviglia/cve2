@@ -5,7 +5,7 @@ cve2_controller.sv
 cve2_counter.sv
 cve2_cs_registers.sv
 vcve2_decoder.sv
-cve2_ex_block.sv
+vcve2_ex_block.sv
 vcve2_id_stage.sv
 cve2_if_stage.sv
 cve2_load_store_unit.sv

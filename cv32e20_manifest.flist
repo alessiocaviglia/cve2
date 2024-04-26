@@ -44,7 +44,7 @@ ${DESIGN_RTL_DIR}/cve2_cs_registers.sv
 ${DESIGN_RTL_DIR}/cve2_csr.sv
 ${DESIGN_RTL_DIR}/cve2_counter.sv
 ${DESIGN_RTL_DIR}/vcve2_decoder.sv
-${DESIGN_RTL_DIR}/cve2_ex_block.sv
+${DESIGN_RTL_DIR}/vcve2_ex_block.sv
 ${DESIGN_RTL_DIR}/cve2_fetch_fifo.sv
 ${DESIGN_RTL_DIR}/vcve2_id_stage.sv
 ${DESIGN_RTL_DIR}/cve2_if_stage.sv

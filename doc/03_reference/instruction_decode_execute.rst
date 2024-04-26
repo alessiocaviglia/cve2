@@ -48,7 +48,7 @@ See :ref:`register-file` for more details.
 
 Execute Block
 -------------
-Source File: :file:`rtl/cve2_ex_block.sv`
+Source File: :file:`rtl/vcve2_ex_block.sv`
 
 The execute block contains the ALU and the multiplier/divider blocks, it does little beyond wiring and instantiating these blocks.
 
