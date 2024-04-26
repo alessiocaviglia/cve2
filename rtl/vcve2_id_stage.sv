@@ -62,6 +62,7 @@ module vcve2_id_stage #(
   output vcve2_pkg::alu_op_e        alu_operator_ex_o,
   output logic [31:0]               alu_operand_a_ex_o,
   output logic [31:0]               alu_operand_b_ex_o,
+  output logic [31:0]               alu_operand_c_ex_o,    // added third operand for vector MAC
 
   // Multicycle Operation Stage Register
   input  logic [1:0]                imd_val_we_ex_i,
@@ -153,8 +154,6 @@ module vcve2_id_stage #(
   output logic                      instr_id_done_o,
 
   // VECTOR EXTENSION
-  // Vector writeback signals
-  input  logic [31:0]               vec_result_ex_i,
   // Vector register file
   output logic                      vrf_req_o,
   output logic                      vrf_we_id_o,
@@ -164,11 +163,6 @@ module vcve2_id_stage #(
   output logic [31:0]               vrf_wdata_o,
   output logic [3:0]                vrf_sel_operation_o,
   input  logic                      vector_done_i,
-  // Vector alu operands
-  output logic [31:0]               valu_operand_a_ex_o,
-  output logic [31:0]               valu_operand_b_ex_o,
-  output logic [31:0]               valu_operand_c_ex_o,
-  output vcve2_pkg::valu_op_e       valu_operator_o,
   // Vector cfg
   output logic                      vcfg_write_o,
   output logic                      vl_max_o,
@@ -177,7 +171,7 @@ module vcve2_id_stage #(
 );
 
   // TODO: now it's only this but I will add things probably while adding supported instructions
-  assign vrf_wdata_o = vec_result_ex_i;
+  assign vrf_wdata_o = result_ex_i;
 
   import vcve2_pkg::*;
 
@@ -272,7 +266,6 @@ module vcve2_id_stage #(
 
   // [VEC] Vector extension
   logic                   stall_vec;
-  vcve2_pkg::vop_a_sel_e  vop_a_mux_sel;
   logic [31:0]            imm_v_type;
   // vcfg
   logic [31:0]            imm_vcfg;
@@ -290,13 +283,21 @@ module vcve2_id_stage #(
   // Operand MUXES //
   ///////////////////
 
-  // Main ALU immediate MUX for Operand A
-  assign imm_a = (imm_a_mux_sel == IMM_A_Z) ? zimm_rs1_type : '0;
+  // Main ALU immediate MUX for Operand A - Modified to include vector immediate
+  always_comb begin : immediate_a_mux
+    unique case (imm_a_mux_sel)
+      IMM_A_Z:         imm_a = zimm_rs1_type;
+      IMM_A_ZERO:      imm_a = '0;
+      IMM_A_V:         imm_a = imm_v_type;
+      default:         imm_a = '0;
+    endcase
+  end
 
   // Main ALU MUX for Operand A
   always_comb begin : alu_operand_a_mux
     unique case (alu_op_a_mux_sel)
       OP_A_REG_A:  alu_operand_a = rf_rdata_a_fwd;
+      OP_A_VREG:   alu_operand_a = vrf_rdata_a_i;     // [VEC] Vector extension
       OP_A_FWD:    alu_operand_a = lsu_addr_last_i;
       OP_A_CURRPC: alu_operand_a = pc_id_i;
       OP_A_IMM:    alu_operand_a = imm_a;
@@ -331,25 +332,18 @@ module vcve2_id_stage #(
       IMM_B_INCR_PC,
       IMM_B_INCR_ADDR})
 
-  // ALU MUX for Operand B
-  assign alu_operand_b = (alu_op_b_mux_sel == OP_B_IMM) ? imm_b : rf_rdata_b_fwd;
-
-  /////////////////////////
-  // Vector Operands MUX //
-  /////////////////////////
-
-  // MUX for vop a
-  always_comb begin : vop_a_mux
-    unique case (vop_a_mux_sel)
-      VOP_A_VREG_A: valu_operand_a_ex_o = vrf_rdata_a_i;
-      VOP_A_REG_A:  valu_operand_a_ex_o = rf_rdata_a_fwd;
-      VOP_A_IMM:    valu_operand_a_ex_o = imm_v_type;
-      default:      valu_operand_a_ex_o = '0;
+  // ALU MUX for Operand B - Modified to include vector register
+  always_comb begin : alu_operand_b_mux
+    unique case (alu_op_b_mux_sel)
+      OP_B_REG_B:  alu_operand_b = rf_rdata_b_fwd;
+      OP_B_VREG: alu_operand_b = vrf_rdata_b_i;     // [VEC] Vector extension
+      OP_B_IMM:    alu_operand_b = imm_b;
+      default:     alu_operand_b = '0;
     endcase
   end
-  // others operadns, not yet implemented
-  assign valu_operand_b_ex_o = vrf_rdata_b_i;
-  assign valu_operand_c_ex_o = vrf_rdata_c_i;
+
+  // Vector ALU MUX for Operand C - now it can take just one value
+  assign alu_operand_c_ex_o = vrf_rdata_c_i;
 
   /////////////////////////////////////////
   // Multicycle Operation Stage Register //
@@ -466,9 +460,6 @@ module vcve2_id_stage #(
     .vrf_sel_operation_o(vrf_sel_operation_o),
     // vector immediates
     .imm_v_type_o(imm_v_type),
-    .vop_a_mux_sel_o(vop_a_mux_sel),  // add dec at the end if it's not the only select we have (look at opb to understand)
-    // vector alu
-    .valu_operator_o(valu_operator_o),
     // vector cfg setting instructions
     .vcfg_write_o(vcfg_write_o),        // write enable for vector configuration
     .imm_vcfg_o(imm_vcfg),              // immediate for vector configuration

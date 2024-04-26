@@ -22,7 +22,6 @@ filesets:
       - rtl/vcve2_decoder.sv
       - rtl/cve2_ex_block.sv
       - rtl/cve2_fetch_fifo.sv
-      - rtl/vcve2_vex_block.sv
       - rtl/vcve2_id_stage.sv
       - rtl/cve2_if_stage.sv
       - rtl/cve2_load_store_unit.sv

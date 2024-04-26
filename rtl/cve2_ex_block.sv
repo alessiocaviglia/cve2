@@ -19,6 +19,7 @@ module cve2_ex_block #(
   input  vcve2_pkg::alu_op_e     alu_operator_i,
   input  logic [31:0]           alu_operand_a_i,
   input  logic [31:0]           alu_operand_b_i,
+  input  logic [31:0]           alu_operand_c_i,
   input  logic                  alu_instr_first_cycle_i,
 
   // Multiplier/Divider

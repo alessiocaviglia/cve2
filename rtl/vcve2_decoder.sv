@@ -98,9 +98,6 @@ module vcve2_decoder #(
   output logic[3:0]             vrf_sel_operation_o,
   // immediate
   output logic [31:0]           imm_v_type_o,          // immediate for vector instructions
-  output vcve2_pkg::vop_a_sel_e vop_a_mux_sel_o,       // operand a selection: vreg, reg or immediate
-  // vector alu
-  output vcve2_pkg::valu_op_e   valu_operator_o,       // vector ALU operation selection
   // vector cfg setting instructions
   output logic                  vcfg_write_o,          // write enable for vector configuration
   output logic [31:0]           imm_vcfg_o,            // immediate for vector configuration
@@ -1279,8 +1276,9 @@ module vcve2_decoder #(
           unique case ({instr_alu[31:26], instr_alu[14:12]})  // {funct6, funct3}
             // Vector Integer Arithmetic Operations
             {6'b00_0000, 3'b000}: begin    // vadd.vv
-              vop_a_mux_sel_o = VOP_A_VREG_A;
-              valu_operator_o = VALU_ADD;
+              alu_op_a_mux_sel_o = OP_A_VREG;
+              alu_op_b_mux_sel_o = OP_B_VREG;
+              alu_operator_o = ALU_ADD;
             end
             {6'b00_0000, 3'b100}: begin    // vadd.vx
             end
@@ -1291,16 +1289,13 @@ module vcve2_decoder #(
             {6'b00_0010, 3'b100}: begin    // vsub.vx
             end
             {6'b01_0111, 3'b000}: begin    // vmv.v.v/vmerge.vvm
-              vop_a_mux_sel_o = VOP_A_VREG_A;
-              valu_operator_o = VALU_MOVE;
+              alu_op_a_mux_sel_o = OP_A_VREG;
             end
             {6'b01_0111, 3'b100}: begin    // vmv.v.x/vmerge.vxm
-              vop_a_mux_sel_o = VOP_A_REG_A;
-              valu_operator_o = VALU_MOVE;
+              alu_op_a_mux_sel_o = OP_A_REG_A;
             end
             {6'b01_0111, 3'b011}: begin    // vmv.v.i/vmerge.vim
-              vop_a_mux_sel_o = VOP_A_IMM;
-              valu_operator_o = VALU_MOVE;
+              alu_op_a_mux_sel_o = OP_A_IMM;
             end
             default: begin
               illegal_insn = 1'b1;

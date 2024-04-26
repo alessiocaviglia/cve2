@@ -286,12 +286,6 @@ module vcve2_core import vcve2_pkg::*; #(
   logic [31:0] vstart_q, vstart_d;
   logic [31:0] vxrm_q, vxrm_d;
   logic [31:0] vxsat_q, vxsat_d;
-  // Vector EX Block
-  logic [31:0] vec_result_ex;
-  logic [31:0] valu_operand_a_ex;
-  logic [31:0] valu_operand_b_ex;
-  logic [31:0] valu_operand_c_ex;
-  vcve2_pkg::valu_op_e valu_operator_ex;
   // Vector Register File
   logic vrf_req; // Request signal for the vector register file
   logic [31:0] vrf_rdata_a; // First read port of vector register file
@@ -319,6 +313,7 @@ module vcve2_core import vcve2_pkg::*; #(
   // ID/WB
   logic vrf_we_id; // Write enable signal for the vector register file
   logic [31:0] vrf_wdata_id; // Write data for the vector register file
+  logic [31:0] alu_operand_c_ex; // Operand C for the ALU
   // WB/VRF
   logic vrf_we_wb; // Write enable signal for the vector register file
   logic [31:0] vrf_wdata_wb; // Write data for the vector register file
@@ -455,6 +450,7 @@ module vcve2_core import vcve2_pkg::*; #(
     .alu_operator_ex_o (alu_operator_ex),
     .alu_operand_a_ex_o(alu_operand_a_ex),
     .alu_operand_b_ex_o(alu_operand_b_ex),
+    .alu_operand_c_ex_o(alu_operand_c_ex),      // for vector extension
 
     .imd_val_q_ex_o (imd_val_q_ex),
     .imd_val_d_ex_i (imd_val_d_ex),
@@ -540,8 +536,6 @@ module vcve2_core import vcve2_pkg::*; #(
     .instr_id_done_o  (instr_id_done),
 
     // VECTOR EXTENSION
-    // vector write data to commit in the vector register file
-    .vec_result_ex_i(vec_result_ex),
     // Vector register file
     .vrf_req_o(vrf_req),
     .vrf_we_id_o(vrf_we_id),
@@ -551,11 +545,6 @@ module vcve2_core import vcve2_pkg::*; #(
     .vrf_wdata_o(vrf_wdata_id),
     .vrf_sel_operation_o(vrf_sel_operation),
     .vector_done_i(vector_done),
-    // Vector alu operands
-    .valu_operand_a_ex_o(valu_operand_a_ex),
-    .valu_operand_b_ex_o(valu_operand_b_ex),
-    .valu_operand_c_ex_o(valu_operand_c_ex),
-    .valu_operator_o(valu_operator_ex),
     // vcfg
     .vcfg_write_o(vcfg_write),
     .vl_max_o(vl_max),
@@ -576,6 +565,7 @@ module vcve2_core import vcve2_pkg::*; #(
     .alu_operator_i         (alu_operator_ex),
     .alu_operand_a_i        (alu_operand_a_ex),
     .alu_operand_b_i        (alu_operand_b_ex),
+    .alu_operand_c_i        (alu_operand_c_ex),  // for vector extension
     .alu_instr_first_cycle_i(instr_first_cycle_id),
 
     // Multipler/Divider signal from ID stage
@@ -601,24 +591,6 @@ module vcve2_core import vcve2_pkg::*; #(
     .branch_decision_o(branch_decision),  // to ID
 
     .ex_valid_o(ex_valid)
-  );
-
-  /////////////////////
-  // Vector EX Block //
-  /////////////////////
-
-  vcve2_vex_block #(
-  ) vex_block_i (
-    .clk_i (clk_i),
-    .rst_ni(rst_ni),
-
-    // Register file input
-    .valu_operand_a(valu_operand_a_ex),
-    .valu_operand_b(valu_operand_b_ex),
-    .valu_operand_c(valu_operand_c_ex),
-    .valu_operator(valu_operator_ex),
-    // Output wb value
-    .vec_result_ex_o(vec_result_ex)
   );
 
   /////////////////////

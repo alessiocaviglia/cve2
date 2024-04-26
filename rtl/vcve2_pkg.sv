@@ -24,19 +24,6 @@ package vcve2_pkg;
     VRF_WRITE
   } vrf_state_t;
 
-  // Vector operand a selection
-  typedef enum logic[1:0] {
-    VOP_A_VREG_A,
-    VOP_A_REG_A,
-    VOP_A_IMM
-  } vop_a_sel_e;
-
-  // Vector ALU operatos - to be etended with all operations
-  typedef enum {
-    VALU_MOVE,
-    VALU_ADD
-  } valu_op_e;
-
   // Vector CSR data types - vsew
   typedef enum logic[2:0] {
     VSEW_8 = 3'b000,
@@ -280,22 +267,25 @@ package vcve2_pkg;
   //////////////
 
   // Operand a selection
-  typedef enum logic[1:0] {
+  typedef enum logic[2:0] {   // added a bit to support vector extension
     OP_A_REG_A,
+    OP_A_VREG,              // Vector extension
     OP_A_FWD,
     OP_A_CURRPC,
     OP_A_IMM
   } op_a_sel_e;
 
   // Immediate a selection
-  typedef enum logic {
+  typedef enum logic [1:0] {  // added a bit to support vector extension
     IMM_A_Z,
-    IMM_A_ZERO
+    IMM_A_ZERO,
+    IMM_A_V                   // Vector extension
   } imm_a_sel_e;
 
   // Operand b selection
-  typedef enum logic {
+  typedef enum logic[1:0] {      // added a bit to support vector extension
     OP_B_REG_B,
+    OP_B_VREG,                // Vector extension
     OP_B_IMM
   } op_b_sel_e;
 
