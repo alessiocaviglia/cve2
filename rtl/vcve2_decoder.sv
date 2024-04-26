@@ -1290,12 +1290,15 @@ module vcve2_decoder #(
             end
             {6'b01_0111, 3'b000}: begin    // vmv.v.v/vmerge.vvm
               alu_op_a_mux_sel_o = OP_A_VREG;
+              alu_operator_o = ALU_MOVE;
             end
             {6'b01_0111, 3'b100}: begin    // vmv.v.x/vmerge.vxm
               alu_op_a_mux_sel_o = OP_A_REG_A;
+              alu_operator_o = ALU_MOVE;
             end
             {6'b01_0111, 3'b011}: begin    // vmv.v.i/vmerge.vim
               alu_op_a_mux_sel_o = OP_A_IMM;
+              alu_operator_o = ALU_MOVE;
             end
             default: begin
               illegal_insn = 1'b1;
