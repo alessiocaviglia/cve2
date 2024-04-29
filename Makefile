@@ -118,3 +118,24 @@ test-cfg:
 .PHONY: python-lint
 python-lint:
 	$(MAKE) -C util lint
+
+.PHONY: compile_core
+compile_core:
+	make -C tb compile_core
+
+simulate_core: clean_core
+	make -C tb simulate_core
+
+view_core:
+	make -C tb view_core
+
+simulate_vregfile: clean_vregfile
+	make -C tb simulate_vregfile
+
+.PHONY: clean_core
+clean_core:
+	make -C tb clean_core
+
+.PHONY: clean_vregfile
+clean_vregfile:
+	make -C tb clean_vregfile
