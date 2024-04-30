@@ -61,12 +61,9 @@ module vce2_agu #(
                 ld_rd = 1'b1;
             end
             2'b10: begin
-                next_state = 2'b11;
+                next_state = 2'b00;
                 agu_addr_sel_o = 1'b1;  // select the second RF port
                 ld_rs2 = 1'b1;
-            end
-            2'b11: begin
-                next_state = 2'b00;
                 ready_o = 1'b1;
             end
             default: next_state = 2'b00;

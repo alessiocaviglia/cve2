@@ -162,11 +162,13 @@ module vcve2_id_stage #(
   input  logic [31:0]               vrf_rdata_c_i,
   output logic [31:0]               vrf_wdata_o,
   output logic [3:0]                vrf_sel_operation_o,
+  output logic                      vrf_memory_op_o,
   input  logic                      vector_done_i,
   // Vector cfg
   output logic                      vcfg_write_o,
   output logic                      vl_max_o,
-  output logic                      vl_keep_o
+  output logic                      vl_keep_o,
+  output logic                      unit_stride_o
 
 );
 
@@ -336,7 +338,7 @@ module vcve2_id_stage #(
   always_comb begin : alu_operand_b_mux
     unique case (alu_op_b_mux_sel)
       OP_B_REG_B:  alu_operand_b = rf_rdata_b_fwd;
-      OP_B_VREG: alu_operand_b = vrf_rdata_b_i;     // [VEC] Vector extension
+      OP_B_VREG:   alu_operand_b = vrf_rdata_b_i;     // [VEC] Vector extension
       OP_B_IMM:    alu_operand_b = imm_b;
       default:     alu_operand_b = '0;
     endcase
@@ -458,13 +460,16 @@ module vcve2_id_stage #(
     .vrf_req_o(vrf_req_o),  // used both for VRF and to signal vector instructions since all of those who needs to stall uses VRF
     .vrf_we_o(vrf_we_id_o),
     .vrf_sel_operation_o(vrf_sel_operation_o),
+    .vrf_memory_op_o(vrf_memory_op_o),
     // vector immediates
     .imm_v_type_o(imm_v_type),
     // vector cfg setting instructions
     .vcfg_write_o(vcfg_write_o),        // write enable for vector configuration
     .imm_vcfg_o(imm_vcfg),              // immediate for vector configuration
     .vl_max_o(vl_max_o),                // set vl to VLMAX
-    .vl_keep_o(vl_keep_o)               // keep current value of vl
+    .vl_keep_o(vl_keep_o),              // keep current value of vl
+    // LSU
+    .unit_stride_o(unit_stride_o)
     
   );
 

@@ -292,7 +292,9 @@ module vcve2_core import vcve2_pkg::*; #(
   logic [31:0] vrf_rdata_b; // Second read port of vector register file
   logic [31:0] vrf_rdata_c; // Third read port of vector register file
   logic [3:0] vrf_sel_operation; // Number of operands needed for current vector operation
+  logic vrf_memory_op; // Signal indicating that the vector operation is a memory operation
   logic vector_done; // Signal indicating that the vector operation is done
+  logic vrf_lsu_req; // Signal from the VRF that tells the LSU to start the memory operation
   // data memory interface
   logic vrf_data_req;
   logic vrf_data_we;
@@ -323,6 +325,13 @@ module vcve2_core import vcve2_pkg::*; #(
   logic lsu_data_we_o;
   logic [3:0] lsu_data_be_o;
   logic [31:0] lsu_data_wdata_o;
+  // LSU if added signals
+  logic lsu_if_req;
+  logic [31:0] lsu_if_wdata;
+  logic [31:0] lsu_if_addr;
+  logic mux_data_if;
+  logic lsu_if_load_addr;
+  logic unit_stride;
   // Misc
   logic rf_we_wb_temp;
 
@@ -544,11 +553,14 @@ module vcve2_core import vcve2_pkg::*; #(
     .vrf_rdata_c_i(vrf_rdata_c),
     .vrf_wdata_o(vrf_wdata_id),
     .vrf_sel_operation_o(vrf_sel_operation),
+    .vrf_memory_op_o(vrf_memory_op),
     .vector_done_i(vector_done),
     // vcfg
     .vcfg_write_o(vcfg_write),
     .vl_max_o(vl_max),
-    .vl_keep_o(vl_keep)
+    .vl_keep_o(vl_keep),
+    // LSU
+    .unit_stride_o(unit_stride)
   );
 
   // for RVFI only
@@ -620,14 +632,14 @@ module vcve2_core import vcve2_pkg::*; #(
     // signals to/from ID/EX stage
     .lsu_we_i      (lsu_we),
     .lsu_type_i    (lsu_type),
-    .lsu_wdata_i   (lsu_wdata),
+    .lsu_wdata_i   (lsu_if_wdata),
     .lsu_sign_ext_i(lsu_sign_ext),
 
     .lsu_rdata_o      (rf_wdata_lsu),
     .lsu_rdata_valid_o(rf_we_lsu),
-    .lsu_req_i        (lsu_req),
+    .lsu_req_i        (lsu_if_req),
 
-    .adder_result_ex_i(alu_adder_result_ex),
+    .adder_result_ex_i(lsu_if_addr),
 
     .addr_incr_req_o(lsu_addr_incr_req),
     .addr_last_o    (lsu_addr_last),
@@ -645,12 +657,38 @@ module vcve2_core import vcve2_pkg::*; #(
     .perf_store_o(perf_store)
   );
 
+  //////////////////////////
+  // LSU vector interface //
+  //////////////////////////
+
+  vcve2_lsu_interface lsu_interface_i (
+  .clk_i(clk_i),
+  .rst_ni(rst_ni),
+  // signals LSU
+  .lsu_addr_o(lsu_if_addr),
+  .lsu_wdata_o(lsu_if_wdata),
+  .lsu_req_o(lsu_if_req),
+  .lsu_resp_valid_i(lsu_resp_valid),
+  // signals from ID/EX
+  .start_addr_i(rf_rdata_a),
+  .load_start_i(lsu_if_load_addr),
+  .unit_stride_i(unit_stride),
+  .vec_op_i(vrf_req),
+  // VRF signals
+  .vrf_req_i(vrf_lsu_req),
+  .vrf_data_i(vrf_rdata_c),
+  // scalar signals
+  .scalar_req_i(lsu_req),
+  .scalar_addr_i(alu_adder_result_ex),
+  .scalar_wdata_i(lsu_wdata)
+  );
+
   // Vector Extension - Data memory multiplexer between LSU and VRF
-  assign data_req_out = vrf_req ? vrf_data_req : lsu_data_req_out;
-  assign data_addr_o = vrf_req ? agu_addr_o : lsu_data_addr_o;
-  assign data_we_o = vrf_req ? vrf_data_we : lsu_data_we_o;
-  assign data_be_o = vrf_req ? vrf_data_be : lsu_data_be_o;
-  assign data_wdata_o = vrf_req ? vrf_data_wdata : lsu_data_wdata_o;
+  assign data_req_out = mux_data_if ? vrf_data_req : lsu_data_req_out;
+  assign data_addr_o = mux_data_if ? agu_addr_o : lsu_data_addr_o;
+  assign data_we_o = mux_data_if ? vrf_data_we : lsu_data_we_o;
+  assign data_be_o = mux_data_if ? vrf_data_be : lsu_data_be_o;
+  assign data_wdata_o = mux_data_if ? vrf_data_wdata : lsu_data_wdata_o;
 
   vcve2_wb #(
   ) wb_i (
@@ -784,6 +822,8 @@ module vcve2_core import vcve2_pkg::*; #(
     .data_be_o(vrf_data_be),
     .data_wdata_o(vrf_data_wdata),
     .data_rdata_i(data_rdata_i),
+    .mux_data_if_o(mux_data_if),
+    .data_load_addr_o(lsu_if_load_addr),
 
     // AGU signals
     .agu_load_o(agu_load),
@@ -793,8 +833,12 @@ module vcve2_core import vcve2_pkg::*; #(
     .agu_incr_o(agu_incr),
     .agu_ready_i(agu_ready),
 
+    // control signals
     .sel_operation_i(vrf_sel_operation),
+    .memory_op_i(vrf_memory_op),
     .vector_done_o(vector_done),
+    .lsu_req_o(vrf_lsu_req),
+    .lsu_done_i(lsu_resp_valid),
     .lmul_i(vlmul_q)
   );
 

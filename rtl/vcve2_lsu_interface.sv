@@ -1,0 +1,54 @@
+module vcve2_lsu_interface (
+  input  logic        clk_i,
+  input  logic        rst_ni,
+  // signals to LSU
+  output logic [31:0] lsu_addr_o,
+  output logic [31:0] lsu_wdata_o,
+  output logic        lsu_req_o,
+  // signals from LSU
+  input  logic        lsu_resp_valid_i,
+  // signals from ID/EX
+  input  logic [31:0] start_addr_i,
+  input  logic        load_start_i,
+  input  logic        unit_stride_i,
+  input  logic        vec_op_i,
+  // signals from VRF
+  input  logic        vrf_req_i,
+  input  logic [31:0] vrf_data_i,
+  // scalar pipeline signals
+  input  logic        scalar_req_i,
+  input  logic [31:0] scalar_addr_i,
+  input  logic [31:0] scalar_wdata_i
+);
+
+  // Address counter with parallel load
+  logic [31:0] addr_q, addr_d;
+
+  always_ff @(posedge clk_i or negedge rst_ni) begin
+    if (!rst_ni) begin
+      addr_q <= 0;
+    end else begin
+      addr_q <= addr_d;
+    end
+  end
+
+  always_comb begin
+    addr_d = addr_q;
+    // when we start a vector memory op load the start address
+    if (load_start_i) begin
+      addr_d = start_addr_i;
+    // when the previous mem op is finished we increment the address
+    end else if(lsu_resp_valid_i) begin
+      addr_d = unit_stride_i ? addr_q + 4 : scalar_addr_i;    // verify that this line would be synth in a counter
+    end
+  end
+
+  ////////////
+  // Output //
+  ////////////
+
+  assign lsu_addr_o = vec_op_i ? addr_q : scalar_addr_i;
+  assign lsu_wdata_o = vec_op_i ? vrf_data_i : scalar_wdata_i;
+  assign lsu_req_o = vec_op_i ? vrf_req_i : scalar_req_i;
+
+endmodule

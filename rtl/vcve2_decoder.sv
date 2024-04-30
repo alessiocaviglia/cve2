@@ -96,13 +96,16 @@ module vcve2_decoder #(
   output logic                  vrf_req_o,             // request to vector register file
   output logic                  vrf_we_o,              // write enable for vector register file
   output logic[3:0]             vrf_sel_operation_o,
+  output logic                  vrf_memory_op_o,
   // immediate
   output logic [31:0]           imm_v_type_o,          // immediate for vector instructions
   // vector cfg setting instructions
   output logic                  vcfg_write_o,          // write enable for vector configuration
   output logic [31:0]           imm_vcfg_o,            // immediate for vector configuration
   output logic                  vl_max_o,              // set vl to VLMAX
-  output logic                  vl_keep_o              // keep current value of vl
+  output logic                  vl_keep_o,             // keep current value of vl
+  // LSU
+  output logic                  unit_stride_o          // 1 - unit strided, 0 - constant strided
 );
 
   import vcve2_pkg::*;
@@ -249,6 +252,7 @@ module vcve2_decoder #(
     vcfg_write_o          = 1'b0;
     vl_max_o              = 1'b0;
     vl_keep_o             = 1'b0;
+    vrf_memory_op_o       = 1'b0;
 
     opcode                = opcode_e'(instr[6:0]);
 
@@ -660,11 +664,23 @@ module vcve2_decoder #(
       //////////////////////
 
       OPCODE_LOAD_V: begin  // Vector Load
-        /* TODO */
+        vrf_memory_op_o = 1'b1;
+        vrf_sel_operation_o = 4'b0001;
+        rf_ren_a_o          = 1'b1;
+        data_req_o          = 1'b1;
+        data_type_o         = 2'b00;
+        unit_stride_o       = 1'b1;       // now I only implement this
       end
 
       OPCODE_STORE_V: begin  // Vector Store
-        /* TODO */
+        vrf_memory_op_o = 1'b1;
+        vrf_sel_operation_o = 4'b0010;
+        rf_ren_a_o         = 1'b1;
+        rf_ren_b_o         = 1'b1;
+        data_req_o         = 1'b1;
+        data_we_o          = 1'b1;
+        data_type_o         = 2'b00;
+        unit_stride_o       = 1'b1;       // now I only implement this
       end
 
       OPCODE_OP_V: begin  // Vector Operations
@@ -1241,11 +1257,13 @@ module vcve2_decoder #(
       //////////////////////
 
       OPCODE_LOAD_V: begin
-        /* TODO */
+        alu_op_b_mux_sel_o = OP_B_REG_B;
+        alu_op_a_mux_sel_o = OP_A_MEMADDR;
       end
 
       OPCODE_STORE_V: begin
-        /* TODO */
+        alu_op_b_mux_sel_o = OP_B_REG_B;
+        alu_op_a_mux_sel_o = OP_A_MEMADDR;
       end
 
       OPCODE_OP_V: begin

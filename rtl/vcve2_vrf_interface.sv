@@ -27,6 +27,8 @@ module vcve2_vrf_interface #(
     output logic [3:0]   data_be_o,
     output logic [31:0]  data_wdata_o,
     input  logic [31:0]  data_rdata_i,
+    output logic         mux_data_if_o,     // 1 - driven by VRF, 0 - driven by LSU
+    output logic         data_load_addr_o,
 
     // AGU
     output logic         agu_load_o,
@@ -37,8 +39,11 @@ module vcve2_vrf_interface #(
     input  logic         agu_ready_i, 
 
     // Control signals and values
-    input  logic [3:0]            sel_operation_i,    // each bit enables a different operation, 0 - R RS1, 1 - R RS2, 2 - R RS3, 3 - W RD        
-    output  logic                 vector_done_o,      // signals the pipeline that the vector operation is finished (most likely with a write to the VRF)
+    input  logic [3:0]            sel_operation_i,    // each bit enables a different operation, 0 - R RS1, 1 - R RS2, 2 - R RS3, 3 - W RD
+    input  logic                  memory_op_i,        // 0 - arithmetic operation, 1 - load/store operation
+    output logic                  vector_done_o,      // signals the pipeline that the vector operation is finished (most likely with a write to the VRF)
+    output logic                  lsu_req_o,          // signals the LSU that it can start the memory operation
+    input  logic                  lsu_done_i,
     input vcve2_pkg::vlmul_e      lmul_i
 );
 
@@ -89,17 +94,24 @@ module vcve2_vrf_interface #(
     agu_incr_o = 1'b0;
     vector_done_o = 1'b0;
     num_iterations_d = num_iterations_q;
+    lsu_req_o = 1'b0;
+    mux_data_if_o = 1'b0;
+    data_load_addr_o = 1'b0;
 
     case (vrf_state)
 
       VRF_IDLE: begin
-        if (!req_i) begin             // VRF stays idle until a request is made
+        // VRF stays idle until a request is made
+        if (!req_i) begin
           vrf_next_state = VRF_IDLE;
           num_iterations_d = '0;
-        end else begin                // when we have a request
-          // load addresses in the AGU
+        // VRF receive a request
+        end else begin
+          // AGU - load addresses in the AGU
           agu_load_o = 1'b1;
-          // we sample the correct value of num_iterations
+          // Data memory if - load the start address
+          data_load_addr_o = 1'b1;
+          // ITERATIONS COUNTER - we sample the correct value of num_iterations
           if ($signed(lmul_i) < 0) begin
             num_iterations_d = NUM_MEM_OPS >> -$signed(lmul_i);
           end else begin
@@ -118,48 +130,78 @@ module vcve2_vrf_interface #(
       end
 
       VRF_START: begin
-        // chose the right operation
-        // if the first operation is READ RS1
-        if (sel_operation_i[0]) begin
-          data_req_o = 1'b1;
-          agu_get_rs1_o = 1'b1;
-          if (data_gnt_i) begin
-            agu_incr_o = 1'b1;
-            vrf_next_state = VRF_READ1;
-          end else vrf_next_state = VRF_START;
-        // if the first operation is READ RS2
-        end else if (sel_operation_i[1]) begin
-          data_req_o = 1'b1;
-          agu_get_rs2_o = 1'b1;
-          if (data_gnt_i) begin
-            agu_incr_o = 1'b1;
-            vrf_next_state = VRF_READ2;
-          end else vrf_next_state = VRF_START;
-        // if the first operation is READ RS3
-        end else if (sel_operation_i[2]) begin
-          data_req_o = 1'b1;
-          agu_get_rd_o = 1'b1;
-          if (data_gnt_i) begin
-            agu_incr_o = 1'b1;
-            vrf_next_state = VRF_READ3;
-          end else vrf_next_state = VRF_START;
-        // if the first operation is WRITE RD
-        end else if (sel_operation_i[3]) begin
-          data_we_o = 1'b1;
-          data_req_o = 1'b1;
-          agu_get_rd_o = 1'b1;
-          if (data_gnt_i) begin
-            agu_incr_o = 1'b1;
-            vrf_next_state = VRF_WRITE;
-          end else vrf_next_state = VRF_START;
+        // NEXT STATE SELECTION
+        // ARITHMETIC OPERATION
+        if (memory_op_i == 0) begin
+          // if the first operation is READ RS1
+          if (sel_operation_i[0]) begin
+            data_req_o = 1'b1;
+            agu_get_rs1_o = 1'b1;
+            if (data_gnt_i) begin
+              agu_incr_o = 1'b1;
+              vrf_next_state = VRF_READ1;
+            end else vrf_next_state = VRF_START;
+          // if the first operation is READ RS2
+          end else if (sel_operation_i[1]) begin
+            data_req_o = 1'b1;
+            agu_get_rs2_o = 1'b1;
+            if (data_gnt_i) begin
+              agu_incr_o = 1'b1;
+              vrf_next_state = VRF_READ2;
+            end else vrf_next_state = VRF_START;
+          // if the first operation is READ RS3
+          end else if (sel_operation_i[2]) begin
+            data_req_o = 1'b1;
+            agu_get_rd_o = 1'b1;
+            if (data_gnt_i) begin
+              agu_incr_o = 1'b1;
+              vrf_next_state = VRF_READ3;
+            end else vrf_next_state = VRF_START;
+          // if the first operation is WRITE RD
+          end else if (sel_operation_i[3]) begin
+            data_we_o = 1'b1;
+            data_req_o = 1'b1;
+            agu_get_rd_o = 1'b1;
+            if (data_gnt_i) begin
+              agu_incr_o = 1'b1;
+              vrf_next_state = VRF_WRITE;
+            end else vrf_next_state = VRF_START;
+          end else begin
+            vrf_next_state = VRF_IDLE;
+          end
+
+        // MEMORY OPERATION
         end else begin
-          vrf_next_state = VRF_IDLE;
+          // if it's a STORE
+          if (sel_operation_i[2]==1'b1) begin
+            data_req_o = 1'b1;
+            agu_get_rd_o = 1'b1;
+            if (data_gnt_i) begin
+              agu_incr_o = 1'b1;
+              vrf_next_state = VRF_STORE1;
+            end else vrf_next_state = VRF_START;
+          // if it's a LOAD
+          end else if (sel_operation_i[3]==1'b1) begin
+            lsu_req_o = 1'b1;
+            mux_data_if_o = 1'b1;
+            vrf_next_state = VRF_LOAD1;
+          // invalid
+          end else begin
+            vrf_next_state = VRF_IDLE;
+          end
         end
+        
       end
+
+      ///////////////////////////
+      // Arithmetic operations //
+      ///////////////////////////
 
       // In the following states the exit condition is the gnt signal since: gnt=1 => data_rvalid of the previous operation=1
       VRF_READ1: begin
+        // SAMPLE
         if (data_rvalid_i) rs1_en = 1;
+        // NEXT STATE SELECTION
         // from here we can only move to READ RS2
         if (sel_operation_i[1]) begin
           data_req_o = 1'b1;
@@ -174,8 +216,9 @@ module vcve2_vrf_interface #(
       end
 
       VRF_READ2: begin
+        // SAMPLE
         if (data_rvalid_i) rs2_en = 1;
-        // chose the right operation
+        // NEXT STATE SELECTION
         // if next operation is READ RD
         if (sel_operation_i[2]) begin   // read third operand
           data_req_o = 1'b1;
@@ -188,7 +231,8 @@ module vcve2_vrf_interface #(
         end else if (sel_operation_i[3]) begin  // write result
           vrf_next_state = VRF_WAITBUS;
         end else begin     // if we move to the next element
-          if (num_iterations_q == '0) begin
+          // NEXT STATE SELECTION - moving to the next iteration
+          if (num_iterations_q == 1) begin
             vector_done_o = 1'b1;
             num_iterations_d = '0;
             vrf_next_state = VRF_IDLE;
@@ -213,12 +257,14 @@ module vcve2_vrf_interface #(
       end
       
       VRF_READ3: begin
+        // SAMPLE
         if (data_rvalid_i) rs3_en = 1;
-        // chose the right operation
+        // NEXT STATE SELECTION
         if (sel_operation_i[3]) begin
           vrf_next_state = VRF_WAITBUS;
-        end else begin     // if we move to the next element
-          if (num_iterations_q == '0) begin
+        end else begin
+          // NEXT STATE SELECTION - moving to the next iteration
+          if (num_iterations_q == 1) begin
             vector_done_o = 1'b1;
             num_iterations_d = '0;
             vrf_next_state = VRF_IDLE;
@@ -252,6 +298,7 @@ module vcve2_vrf_interface #(
         end
       end
 
+      // state needed to wait for the bus to be ready to write
       VRF_WAITBUS: begin
         data_we_o = 1'b1;
         data_req_o = 1'b1;
@@ -265,7 +312,8 @@ module vcve2_vrf_interface #(
       end
 
       VRF_WRITE: begin
-        if (num_iterations_q == '0) begin
+        // NEXT STATE SELECTION - moving to the next iteration
+        if (num_iterations_q == 1) begin
           vector_done_o = 1'b1;
           num_iterations_d = '0;
           vrf_next_state = VRF_IDLE;
@@ -308,6 +356,99 @@ module vcve2_vrf_interface #(
           end else begin
             vrf_next_state = VRF_IDLE;
           end
+        end
+      end
+
+      ////////////////
+      // Load/Store //
+      ////////////////
+
+      VRF_LOAD1: begin
+        if (lsu_done_i) begin
+          data_we_o = 1'b1;
+          data_req_o = 1'b1;
+          agu_get_rd_o = 1'b1;
+          if (data_gnt_i) begin
+            agu_incr_o = 1'b1;
+            vrf_next_state = VRF_LOAD3;
+          end else begin
+            vrf_next_state = VRF_LOAD2;
+          end
+        end else begin
+          mux_data_if_o = 1'b1;
+          vrf_next_state = VRF_LOAD1;
+        end
+      end
+
+      VRF_LOAD2: begin
+        data_we_o = 1'b1;
+        data_req_o = 1'b1;
+        agu_get_rd_o = 1'b1;
+        if (data_gnt_i) begin
+          agu_incr_o = 1'b1;
+          vrf_next_state = VRF_LOAD3;
+        end else begin
+          vrf_next_state = VRF_LOAD2;
+        end
+      end
+
+      VRF_LOAD3: begin
+        if (num_iterations_q == 1) begin
+          vector_done_o = 1'b1;
+          num_iterations_d = '0;
+          vrf_next_state = VRF_IDLE;
+        end else begin
+          num_iterations_d = num_iterations_q - 1;
+          lsu_req_o = 1'b1;
+          mux_data_if_o = 1'b1;
+          vrf_next_state = VRF_LOAD1;
+        end
+      end
+
+      VRF_STORE1: begin
+        // as soon as we see the value on the bus we sample it and tell the lsu it can proceed
+        if (data_rvalid_i) begin
+          rs3_en = 1;
+          lsu_req_o = 1;
+          mux_data_if_o = 1'b1;
+          vrf_next_state = VRF_STORE2;
+        end else begin
+          vrf_next_state = VRF_STORE1;
+        end
+      end
+
+      // I could save one cycle by anticipating the memory request in this stage
+      VRF_STORE2: begin
+        if (lsu_done_i) begin
+          if (num_iterations_q == 1) begin
+            vector_done_o = 1'b1;
+            num_iterations_d = '0;
+            vrf_next_state = VRF_IDLE;
+          end else begin
+            num_iterations_d = num_iterations_q - 1;
+            data_req_o = 1'b1;
+            agu_get_rd_o = 1'b1;
+            if (data_gnt_i) begin
+              agu_incr_o = 1'b1;
+              vrf_next_state = VRF_STORE1;
+            end else begin
+              vrf_next_state = VRF_STORE3;
+            end
+          end
+        end else begin
+          mux_data_if_o = 1'b1;
+          vrf_next_state = VRF_STORE2;
+        end
+      end
+
+      VRF_STORE3: begin
+        data_req_o = 1'b1;
+        agu_get_rd_o = 1'b1;
+        if (data_gnt_i) begin
+          agu_incr_o = 1'b1;
+          vrf_next_state = VRF_STORE1;
+        end else begin
+          vrf_next_state = VRF_STORE2;
         end
       end
 

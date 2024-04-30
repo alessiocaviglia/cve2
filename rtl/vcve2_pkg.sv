@@ -13,7 +13,7 @@ package vcve2_pkg;
   //////////////////////
 
   // Vector register file states
-  typedef enum logic [2:0]{
+  typedef enum logic [3:0]{
     VRF_IDLE,
     VRF_WAITAGU,
     VRF_START,
@@ -21,7 +21,13 @@ package vcve2_pkg;
     VRF_READ2,
     VRF_READ3,
     VRF_WAITBUS,
-    VRF_WRITE
+    VRF_WRITE,
+    VRF_LOAD1,
+    VRF_LOAD2,
+    VRF_LOAD3,
+    VRF_STORE1,
+    VRF_STORE2,
+    VRF_STORE3
   } vrf_state_t;
 
   // Vector CSR data types - vsew
@@ -275,7 +281,8 @@ package vcve2_pkg;
     OP_A_VREG,              // Vector extension
     OP_A_FWD,
     OP_A_CURRPC,
-    OP_A_IMM
+    OP_A_IMM,
+    OP_A_MEMADDR            // Vector extension
   } op_a_sel_e;
 
   // Immediate a selection
