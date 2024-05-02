@@ -797,8 +797,10 @@ module vcve2_id_stage #(
   // Used by ALU to access RS3 if ternary instruction.
   assign instr_first_cycle_id_o = instr_first_cycle;
 
-    assign ex_multicycle_done = vrf_req_o ? vector_done_i : ex_valid_i;
-    assign multicycle_done = lsu_req_dec ? lsu_resp_valid_i : ex_multicycle_done;
+    assign ex_multicycle_done = lsu_req_dec ? lsu_resp_valid_i : ex_valid_i;
+    assign multicycle_done = vrf_req_o ? vector_done_i : ex_multicycle_done;
+    //assign ex_multicycle_done = vrf_req_o ? vector_done_i : ex_valid_i;
+    //assign multicycle_done = lsu_req_dec ? lsu_resp_valid_i : ex_multicycle_done;
 
     assign data_req_allowed = instr_first_cycle;
 

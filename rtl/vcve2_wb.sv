@@ -41,6 +41,8 @@ module vcve2_wb #(
   // Vector extension
   input logic                      vrf_we_id_i,
   input logic [31:0]               vrf_wdata_id_i,
+  input logic [31:0]               vrf_wdata_lsu_i,
+  input logic                      vrf_is_mem_i,
   output logic                     vrf_we_wb_o,
   output logic [31:0]              vrf_wdata_wb_o
 );
@@ -74,7 +76,7 @@ module vcve2_wb #(
   // Vector extension
   // later I will extend it with a multiplexer for load data (similar to the RF one above)
   assign vrf_we_wb_o    = vrf_we_id_i;
-  assign vrf_wdata_wb_o = vrf_wdata_id_i;
+  assign vrf_wdata_wb_o = vrf_is_mem_i ? vrf_wdata_lsu_i : vrf_wdata_id_i;
 
   `ASSERT(RFWriteFromOneSourceOnly, $onehot0(rf_wdata_wb_mux_we))
 endmodule

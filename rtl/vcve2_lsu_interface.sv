@@ -5,6 +5,7 @@ module vcve2_lsu_interface (
   output logic [31:0] lsu_addr_o,
   output logic [31:0] lsu_wdata_o,
   output logic        lsu_req_o,
+  output logic        en_rvalid_o,
   // signals from LSU
   input  logic        lsu_resp_valid_i,
   // signals from ID/EX
@@ -23,13 +24,35 @@ module vcve2_lsu_interface (
 
   // Address counter with parallel load
   logic [31:0] addr_q, addr_d;
+  logic curr_state, next_state; 
+
 
   always_ff @(posedge clk_i or negedge rst_ni) begin
     if (!rst_ni) begin
       addr_q <= 0;
+      curr_state <= 0;
     end else begin
       addr_q <= addr_d;
+      curr_state <= next_state;
     end
+  end
+
+  always_comb begin
+    next_state = curr_state;
+    en_rvalid_o = 0;
+    case(curr_state)
+      0: begin
+        if (vrf_req_i) begin
+          next_state = 1;
+        end
+      end
+      1: begin
+        en_rvalid_o = 1;
+        if (lsu_resp_valid_i) begin
+          next_state = 0;
+        end
+      end
+    endcase
   end
 
   always_comb begin

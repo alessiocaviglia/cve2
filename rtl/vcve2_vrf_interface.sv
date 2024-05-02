@@ -95,7 +95,7 @@ module vcve2_vrf_interface #(
     vector_done_o = 1'b0;
     num_iterations_d = num_iterations_q;
     lsu_req_o = 1'b0;
-    mux_data_if_o = 1'b0;
+    mux_data_if_o = req_i;
     data_load_addr_o = 1'b0;
 
     case (vrf_state)
@@ -183,7 +183,7 @@ module vcve2_vrf_interface #(
           // if it's a LOAD
           end else if (sel_operation_i[3]==1'b1) begin
             lsu_req_o = 1'b1;
-            mux_data_if_o = 1'b1;
+            mux_data_if_o = 1'b0;
             vrf_next_state = VRF_LOAD1;
           // invalid
           end else begin
@@ -365,17 +365,9 @@ module vcve2_vrf_interface #(
 
       VRF_LOAD1: begin
         if (lsu_done_i) begin
-          data_we_o = 1'b1;
-          data_req_o = 1'b1;
-          agu_get_rd_o = 1'b1;
-          if (data_gnt_i) begin
-            agu_incr_o = 1'b1;
-            vrf_next_state = VRF_LOAD3;
-          end else begin
-            vrf_next_state = VRF_LOAD2;
-          end
+          vrf_next_state = VRF_LOAD2;
         end else begin
-          mux_data_if_o = 1'b1;
+          mux_data_if_o = 1'b0;
           vrf_next_state = VRF_LOAD1;
         end
       end
@@ -400,7 +392,7 @@ module vcve2_vrf_interface #(
         end else begin
           num_iterations_d = num_iterations_q - 1;
           lsu_req_o = 1'b1;
-          mux_data_if_o = 1'b1;
+          mux_data_if_o = 1'b0;
           vrf_next_state = VRF_LOAD1;
         end
       end
@@ -409,12 +401,16 @@ module vcve2_vrf_interface #(
         // as soon as we see the value on the bus we sample it and tell the lsu it can proceed
         if (data_rvalid_i) begin
           rs3_en = 1;
-          lsu_req_o = 1;
-          mux_data_if_o = 1'b1;
-          vrf_next_state = VRF_STORE2;
+          vrf_next_state = VRF_STOREW;
         end else begin
           vrf_next_state = VRF_STORE1;
         end
+      end
+
+      VRF_STOREW: begin
+        lsu_req_o = 1;
+        mux_data_if_o = 1'b0;
+        vrf_next_state = VRF_STORE2;
       end
 
       // I could save one cycle by anticipating the memory request in this stage
@@ -436,7 +432,7 @@ module vcve2_vrf_interface #(
             end
           end
         end else begin
-          mux_data_if_o = 1'b1;
+          mux_data_if_o = 1'b0;
           vrf_next_state = VRF_STORE2;
         end
       end

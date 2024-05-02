@@ -664,20 +664,21 @@ module vcve2_decoder #(
       //////////////////////
 
       OPCODE_LOAD_V: begin  // Vector Load
+        vrf_req_o = 1'b1;
+        vrf_we_o = 1'b1;
         vrf_memory_op_o = 1'b1;
-        vrf_sel_operation_o = 4'b0001;
+        vrf_sel_operation_o = 4'b1000;
         rf_ren_a_o          = 1'b1;
-        data_req_o          = 1'b1;
         data_type_o         = 2'b00;
         unit_stride_o       = 1'b1;       // now I only implement this
       end
 
       OPCODE_STORE_V: begin  // Vector Store
+        vrf_req_o = 1'b1;
         vrf_memory_op_o = 1'b1;
-        vrf_sel_operation_o = 4'b0010;
+        vrf_sel_operation_o = 4'b0100;
         rf_ren_a_o         = 1'b1;
         rf_ren_b_o         = 1'b1;
-        data_req_o         = 1'b1;
         data_we_o          = 1'b1;
         data_type_o         = 2'b00;
         unit_stride_o       = 1'b1;       // now I only implement this
@@ -1316,6 +1317,7 @@ module vcve2_decoder #(
             end
             {6'b01_0111, 3'b011}: begin    // vmv.v.i/vmerge.vim
               alu_op_a_mux_sel_o = OP_A_IMM;
+              imm_a_mux_sel_o    = IMM_A_V;
               alu_operator_o = ALU_MOVE;
             end
             default: begin

@@ -26,6 +26,7 @@ package vcve2_pkg;
     VRF_LOAD2,
     VRF_LOAD3,
     VRF_STORE1,
+    VRF_STOREW,
     VRF_STORE2,
     VRF_STORE3
   } vrf_state_t;

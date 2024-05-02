@@ -332,6 +332,8 @@ module vcve2_core import vcve2_pkg::*; #(
   logic mux_data_if;
   logic lsu_if_load_addr;
   logic unit_stride;
+  logic lsu_rvalid;
+  logic en_lsu_rvalid;
   // Misc
   logic rf_we_wb_temp;
 
@@ -611,6 +613,8 @@ module vcve2_core import vcve2_pkg::*; #(
 
   assign data_req_o   = data_req_out & ~pmp_req_err[PMP_D];
   assign lsu_resp_err = lsu_load_err | lsu_store_err;
+  // vector extension, valid signal with VRF rvalid filtered out
+  assign lsu_rvalid = (vrf_req && !en_lsu_rvalid) ? 0 : data_rvalid_i;
 
   cve2_load_store_unit load_store_unit_i (
     .clk_i (clk_i),
@@ -619,7 +623,7 @@ module vcve2_core import vcve2_pkg::*; #(
     // data interface - signal names modified to add vector extension
     .data_req_o    (lsu_data_req_out),
     .data_gnt_i    (data_gnt_i),
-    .data_rvalid_i (data_rvalid_i),
+    .data_rvalid_i (lsu_rvalid),          // modified for vector extension
     .data_err_i    (data_err_i),
     .data_pmp_err_i(pmp_req_err[PMP_D]),
 
@@ -668,6 +672,7 @@ module vcve2_core import vcve2_pkg::*; #(
   .lsu_addr_o(lsu_if_addr),
   .lsu_wdata_o(lsu_if_wdata),
   .lsu_req_o(lsu_if_req),
+  .en_rvalid_o(en_lsu_rvalid),
   .lsu_resp_valid_i(lsu_resp_valid),
   // signals from ID/EX
   .start_addr_i(rf_rdata_a),
@@ -719,6 +724,8 @@ module vcve2_core import vcve2_pkg::*; #(
     // VRF signals
     .vrf_we_id_i   (vrf_we_id),
     .vrf_wdata_id_i(vrf_wdata_id),
+    .vrf_wdata_lsu_i(rf_wdata_lsu),
+    .vrf_is_mem_i(vrf_memory_op),
     .vrf_we_wb_o   (vrf_we_wb),
     .vrf_wdata_wb_o(vrf_wdata_wb)
   );
