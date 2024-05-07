@@ -40,10 +40,9 @@ package vcve2_pkg;
     VRF_LOAD,
     VRF_LOAD_WAITGNT,
     VRF_LOAD_WRITE,
-    VRF_STORE1,
-    VRF_STOREW,
-    VRF_STORE2,
-    VRF_STORE3
+    VRF_STORE_READ,
+    VRF_STORE_WAITLSU,
+    VRF_STORE_WAITGNT
   } vrf_state_t;
 
   // Vector CSR data types - vsew

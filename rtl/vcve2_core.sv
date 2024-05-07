@@ -298,9 +298,13 @@ module vcve2_core import vcve2_pkg::*; #(
   logic vrf_lsu_req; // Signal from the VRF that tells the LSU to start the memory operation
   // data memory interface
   logic vrf_data_req;
+  logic vrf_data_gnt;
+  logic vrf_data_rvalid;
   logic vrf_data_we;
   logic [3:0] vrf_data_be;
   logic [31:0] vrf_data_wdata;
+  logic [31:0] vrf_data_rdata;
+  logic vrf_data_err;
   // agu signals
   logic agu_load;
   logic agu_get_rs1;
@@ -316,11 +320,14 @@ module vcve2_core import vcve2_pkg::*; #(
   logic vrf_we_wb; // Write enable signal for the vector register file
   logic [31:0] vrf_wdata_wb; // Write data for the vector register file
   // LSU modified signals
-  logic lsu_data_req_out;
-  logic [31:0] lsu_data_addr_o;
-  logic lsu_data_we_o;
-  logic [3:0] lsu_data_be_o;
-  logic [31:0] lsu_data_wdata_o;
+  logic lsu_data_req;
+  logic lsu_data_gnt;
+  logic [31:0] lsu_data_addr;
+  logic lsu_data_we;
+  logic [3:0] lsu_data_be;
+  logic [31:0] lsu_data_wdata;
+  logic [31:0] lsu_data_rdata;
+  logic lsu_data_err;
   // LSU if added signals
   logic lsu_if_req;
   logic [31:0] lsu_if_wdata;
@@ -610,25 +617,23 @@ module vcve2_core import vcve2_pkg::*; #(
 
   assign data_req_o   = data_req_out & ~pmp_req_err[PMP_D];
   assign lsu_resp_err = lsu_load_err | lsu_store_err;
-  // vector extension, valid signal with VRF rvalid filtered out
-  assign lsu_rvalid = (vrf_req && !en_lsu_rvalid) ? 0 : data_rvalid_i;
 
   cve2_load_store_unit load_store_unit_i (
     .clk_i (clk_i),
     .rst_ni(rst_ni),
 
     // data interface - signal names modified to add vector extension
-    .data_req_o    (lsu_data_req_out),
-    .data_gnt_i    (data_gnt_i),
+    .data_req_o    (lsu_data_req),
+    .data_gnt_i    (lsu_data_gnt),
     .data_rvalid_i (lsu_rvalid),          // modified for vector extension
-    .data_err_i    (data_err_i),
+    .data_err_i    (lsu_data_err),
     .data_pmp_err_i(pmp_req_err[PMP_D]),
 
-    .data_addr_o (lsu_data_addr_o),
-    .data_we_o   (lsu_data_we_o),
-    .data_be_o   (lsu_data_be_o),
-    .data_wdata_o(lsu_data_wdata_o),
-    .data_rdata_i(data_rdata_i),
+    .data_addr_o (lsu_data_addr),
+    .data_we_o   (lsu_data_we),
+    .data_be_o   (lsu_data_be),
+    .data_wdata_o(lsu_data_wdata),
+    .data_rdata_i(lsu_data_rdata),
 
     // signals to/from ID/EX stage
     .lsu_we_i      (lsu_we),
@@ -662,35 +667,71 @@ module vcve2_core import vcve2_pkg::*; #(
   // LSU vector interface //
   //////////////////////////
 
-  vcve2_lsu_interface lsu_interface_i (
-  .clk_i(clk_i),
-  .rst_ni(rst_ni),
-  // signals LSU
-  .lsu_addr_o(lsu_if_addr),
-  .lsu_wdata_o(lsu_if_wdata),
-  .lsu_req_o(lsu_if_req),
-  .en_rvalid_o(en_lsu_rvalid),
-  .lsu_resp_valid_i(lsu_resp_valid),
-  // signals from ID/EX
-  .start_addr_i(rf_rdata_a),
-  .load_start_i(lsu_if_load_addr),
-  .unit_stride_i(unit_stride),
-  .vec_op_i(vrf_req),
-  // VRF signals
-  .vrf_req_i(vrf_lsu_req),
-  .vrf_data_i(vrf_rdata_c),
-  // scalar signals
-  .scalar_req_i(lsu_req),
-  .scalar_addr_i(alu_adder_result_ex),
-  .scalar_wdata_i(lsu_wdata)
+  vcve2_lsu_interface #(
+  ) lsu_interface_i (
+    .clk_i(clk_i),
+    .rst_ni(rst_ni),
+    // signals LSU
+    .lsu_addr_o(lsu_if_addr),
+    .lsu_wdata_o(lsu_if_wdata),
+    .lsu_req_o(lsu_if_req),
+    .en_rvalid_o(en_lsu_rvalid),
+    .lsu_resp_valid_i(lsu_resp_valid),
+    // signals from ID/EX
+    .start_addr_i(rf_rdata_a),
+    .load_start_i(lsu_if_load_addr),
+    .unit_stride_i(unit_stride),
+    .vec_op_i(vrf_req),
+    // VRF signals
+    .vrf_req_i(vrf_lsu_req),
+    .vrf_data_i(vrf_rdata_c),
+    // scalar signals
+    .scalar_req_i(lsu_req),
+    .scalar_addr_i(alu_adder_result_ex),
+    .scalar_wdata_i(lsu_wdata)
   );
 
-  // Vector Extension - Data memory multiplexer between LSU and VRF
-  assign data_req_out = mux_data_if ? vrf_data_req : lsu_data_req_out;
-  assign data_addr_o = mux_data_if ? agu_addr_o : lsu_data_addr_o;
-  assign data_we_o = mux_data_if ? vrf_data_we : lsu_data_we_o;
-  assign data_be_o = mux_data_if ? vrf_data_be : lsu_data_be_o;
-  assign data_wdata_o = mux_data_if ? vrf_data_wdata : lsu_data_wdata_o;
+  /////////////////////////
+  // Data memory arbiter //
+  /////////////////////////
+  vcve2_dmem_arbiter #(
+  ) dmem_arbiter_i (
+    .clk_i(clk_i),
+    .rst_ni(rst_ni),
+	  // Data memory interface
+    .data_req_o(data_req_out),
+    .data_gnt_i(data_gnt_i),
+    .data_rvalid_i(data_rvalid_i),
+    .data_we_o(data_we_o),
+    .data_be_o(data_be_o),
+    .data_addr_o(data_addr_o),
+    .data_wdata_o(data_wdata_o),
+    .data_rdata_i(data_rdata_i),
+    .data_err_i(data_err_i),
+	  // VRF signals
+    .vrf_data_req_i(vrf_data_req),
+    .vrf_data_gnt_o(vrf_data_gnt),
+    .vrf_data_rvalid_o(vrf_data_rvalid),
+    .vrf_data_we_i(vrf_data_we),
+    .vrf_data_be_i(vrf_data_be),
+    .vrf_data_addr_i(agu_addr_o),
+    .vrf_data_wdata_i(vrf_data_wdata),
+    .vrf_data_rdata_o(vrf_data_rdata),
+    .vrf_data_err_o(vrf_data_err),
+    // LSU signals
+    .lsu_data_req_i(lsu_data_req),
+    .lsu_data_gnt_o(lsu_data_gnt),
+    .lsu_data_rvalid_o(lsu_rvalid),
+    .lsu_data_we_i(lsu_data_we),
+    .lsu_data_be_i(lsu_data_be),
+    .lsu_data_addr_i(lsu_data_addr),
+    .lsu_data_wdata_i(lsu_data_wdata),
+    .lsu_data_rdata_o(lsu_data_rdata),
+    .lsu_data_err_o(lsu_data_err),
+    // Control signals
+    .vector_op_i(vrf_req),
+    .vector_mem_op_i(vrf_lsu_req)
+  );
 
   vcve2_wb #(
   ) wb_i (
@@ -815,15 +856,15 @@ module vcve2_core import vcve2_pkg::*; #(
 
     // Data memory interface
     .data_req_o(vrf_data_req),
-    .data_gnt_i(data_gnt_i),
-    .data_rvalid_i(data_rvalid_i),
-    .data_err_i(data_err_i),
-    .data_pmp_err_i(pmp_req_err[PMP_D]),
+    .data_gnt_i(vrf_data_gnt),
+    .data_rvalid_i(vrf_data_rvalid),
+    .data_err_i(vrf_data_err),
+    .data_pmp_err_i(pmp_req_err[PMP_D]),        // do I need this?
     .data_we_o(vrf_data_we),
     .data_be_o(vrf_data_be),
     .data_wdata_o(vrf_data_wdata),
-    .data_rdata_i(data_rdata_i),
-    .mux_data_if_o(mux_data_if),
+    .data_rdata_i(vrf_data_rdata),
+    // LSU control signals
     .data_load_addr_o(lsu_if_load_addr),
 
     // AGU signals

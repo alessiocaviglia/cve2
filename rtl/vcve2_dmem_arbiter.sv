@@ -1,5 +1,4 @@
 module vcve2_dmem_arbiter #(
-  parameter DATA_WIDTH = 32
 ) (
 	input  logic                  clk_i,
 	input  logic                  rst_ni,
@@ -79,6 +78,5 @@ assign data_we_o = vrf_has_mem ? vrf_data_we_i : lsu_data_we_i;
 assign data_be_o = vrf_has_mem ? vrf_data_be_i : lsu_data_be_i;
 assign data_addr_o = vrf_has_mem ? vrf_data_addr_i : lsu_data_addr_i;
 assign data_wdata_o = vrf_has_mem ? vrf_data_wdata_i : lsu_data_wdata_i;
-
 
 endmodule
