@@ -293,6 +293,7 @@ module vcve2_core import vcve2_pkg::*; #(
   logic [31:0] vrf_rdata_c; // Third read port of vector register file
   logic [3:0] vrf_sel_operation; // Number of operands needed for current vector operation
   logic vrf_memory_op; // Signal indicating that the vector operation is a memory operation
+  logic vrf_interleaved; // Signal indicating that the VRF memory accesses will be interleaved
   logic vector_done; // Signal indicating that the vector operation is done
   logic vrf_lsu_req; // Signal from the VRF that tells the LSU to start the memory operation
   // data memory interface
@@ -301,16 +302,11 @@ module vcve2_core import vcve2_pkg::*; #(
   logic [3:0] vrf_data_be;
   logic [31:0] vrf_data_wdata;
   // agu signals
-  logic [4:0] rf_raddr_a_agu;
-  logic [29:0] agu_addr_i;
-  logic agu_raddr_a_sel;
-  logic agu_addr_sel;
   logic agu_load;
   logic agu_get_rs1;
   logic agu_get_rs2;
   logic agu_get_rd;
   logic agu_incr;
-  logic agu_ready;
   logic [31:0] agu_addr_o;
   // ID/WB
   logic vrf_we_id; // Write enable signal for the vector register file
@@ -556,6 +552,7 @@ module vcve2_core import vcve2_pkg::*; #(
     .vrf_wdata_o(vrf_wdata_id),
     .vrf_sel_operation_o(vrf_sel_operation),
     .vrf_memory_op_o(vrf_memory_op),
+    .vrf_interleaved_o(vrf_interleaved),
     .vector_done_i(vector_done),
     // vcfg
     .vcfg_write_o(vcfg_write),
@@ -767,9 +764,6 @@ module vcve2_core import vcve2_pkg::*; #(
     data_rvalid_i |-> outstanding_load_resp | outstanding_store_resp, clk_i, !rst_ni)
   `endif
 
-  // Vector extension - multiplexer to support AGU load
-  assign rf_raddr_a_agu = agu_raddr_a_sel ? rf_waddr_wb : rf_raddr_a;
-
   ////////////////////////
   // RF (Register File) //
   ////////////////////////
@@ -783,7 +777,7 @@ module vcve2_core import vcve2_pkg::*; #(
 
     .test_en_i(test_en_i),
 
-    .raddr_a_i(rf_raddr_a_agu),     // modified signal for vector extension
+    .raddr_a_i(rf_raddr_a),
     .rdata_a_o(rf_rdata_a),
     .raddr_b_i(rf_raddr_b),
     .rdata_b_o(rf_rdata_b),
@@ -838,18 +832,16 @@ module vcve2_core import vcve2_pkg::*; #(
     .agu_get_rs2_o(agu_get_rs2),
     .agu_get_rd_o(agu_get_rd),
     .agu_incr_o(agu_incr),
-    .agu_ready_i(agu_ready),
 
     // control signals
     .sel_operation_i(vrf_sel_operation),
     .memory_op_i(vrf_memory_op),
+    .interleaved_i(vrf_interleaved),
     .vector_done_o(vector_done),
     .lsu_req_o(vrf_lsu_req),
     .lsu_done_i(lsu_resp_valid),
     .lmul_i(vlmul_q)
   );
-
-  assign agu_addr_i = agu_addr_sel ? rf_rdata_b[31:2] : rf_rdata_a[31:2];
 
   // AGU, translates the VR numbero to a memory address
   vce2_agu #(
@@ -857,15 +849,17 @@ module vcve2_core import vcve2_pkg::*; #(
 ) agu_inst (
     .clk_i(clk_i),
     .rst_ni(rst_ni),
-    .addr_i(agu_addr_i),                // Address value coming from register file
-    .raddr_a_sel_o(agu_raddr_a_sel),  // Select signal for multiplexer in front of RF port a address
-    .agu_addr_sel_o(agu_addr_sel),    // Select signal for multiplexer in front of AGU address port
+    // register addresses
+    .rs1_i(rf_raddr_a),
+    .rs2_i(rf_raddr_b),
+    .rd_i(rf_waddr_wb),
+    // control signals from VRF
     .load_i(agu_load),    
     .get_rs1_i(agu_get_rs1),  
     .get_rs2_i(agu_get_rs2),
     .get_rd_i(agu_get_rd),  
     .incr_i(agu_incr),
-    .ready_o(agu_ready),
+    // memory address output
     .addr_o(agu_addr_o) 
   );
 

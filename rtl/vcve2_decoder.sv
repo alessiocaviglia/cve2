@@ -97,6 +97,7 @@ module vcve2_decoder #(
   output logic                  vrf_we_o,              // write enable for vector register file
   output logic[3:0]             vrf_sel_operation_o,
   output logic                  vrf_memory_op_o,
+  output logic                  vrf_interleaved_o,
   // immediate
   output logic [31:0]           imm_v_type_o,          // immediate for vector instructions
   // vector cfg setting instructions
@@ -253,6 +254,7 @@ module vcve2_decoder #(
     vl_max_o              = 1'b0;
     vl_keep_o             = 1'b0;
     vrf_memory_op_o       = 1'b0;
+    vrf_interleaved_o    = 1'b0;
 
     opcode                = opcode_e'(instr[6:0]);
 
@@ -705,6 +707,7 @@ module vcve2_decoder #(
             {6'b00_0000, 3'b000}: begin    // vadd.vv
               vrf_we_o = 1'b1;
               vrf_sel_operation_o = 4'b1011;
+              vrf_interleaved_o = 1'b1;
             end
             {6'b00_0000, 3'b100}: begin    // vadd.vx
             end

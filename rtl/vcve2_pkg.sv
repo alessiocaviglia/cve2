@@ -12,19 +12,34 @@ package vcve2_pkg;
   // Vector Extension //
   //////////////////////
 
+  // Vector register starting addresses
+  /* verilator lint_off LITENDIAN */
+  parameter logic[0:31][31:0] VREG_START_ADDR = {
+    32'h0000_0000, 32'h0000_0080, 32'h0000_0100, 32'h0000_0180,
+    32'h0000_0200, 32'h0000_0280, 32'h0000_0300, 32'h0000_0380,
+    32'h0000_0400, 32'h0000_0480, 32'h0000_0500, 32'h0000_0580,
+    32'h0000_0600, 32'h0000_0680, 32'h0000_0700, 32'h0000_0780,
+    32'h0000_0800, 32'h0000_0880, 32'h0000_0900, 32'h0000_0980,
+    32'h0000_0A00, 32'h0000_0A80, 32'h0000_0B00, 32'h0000_0B80,
+    32'h0000_0C00, 32'h0000_0C80, 32'h0000_0D00, 32'h0000_0D80,
+    32'h0000_0E00, 32'h0000_0E80, 32'h0000_0F00, 32'h0000_0F80
+  };
+  /* verilator lint_on LITENDIAN */
+
   // Vector register file states
   typedef enum logic [3:0]{
     VRF_IDLE,
-    VRF_WAITAGU,
     VRF_START,
+    VRF_INT_READ1,
+    VRF_INT_READ2,
+    VRF_INT_READ3,
+    VRF_INT_WRITE,
     VRF_READ1,
     VRF_READ2,
-    VRF_READ3,
-    VRF_WAITBUS,
     VRF_WRITE,
-    VRF_LOAD1,
-    VRF_LOAD2,
-    VRF_LOAD3,
+    VRF_LOAD,
+    VRF_LOAD_WAITGNT,
+    VRF_LOAD_WRITE,
     VRF_STORE1,
     VRF_STOREW,
     VRF_STORE2,
