@@ -60,6 +60,7 @@ module vcve2_vrf_interface #(
   vcve2_pkg::vrf_state_t vrf_state, vrf_next_state;
   logic [PIPE_WIDTH-1:0] num_iterations_q, num_iterations_d;
   logic first_iteration_d, first_iteration_q;
+  logic last_iteration_d, last_iteration_q;
 
   // Internal registers signals
   logic rs1_en, rs2_en, rs3_en, rd_en;
@@ -82,10 +83,12 @@ module vcve2_vrf_interface #(
       vrf_state <= VRF_IDLE;
       num_iterations_q <= '0;
       first_iteration_q <= 1'b0;
+      last_iteration_q <= 1'b0;
     end else begin
       vrf_state <= vrf_next_state;
       num_iterations_q <= num_iterations_d;
       first_iteration_q <= first_iteration_d;
+      last_iteration_q <= last_iteration_d;
     end
   end
 
@@ -108,6 +111,7 @@ module vcve2_vrf_interface #(
     vector_done_o = 1'b0;
     num_iterations_d = num_iterations_q;
     first_iteration_d = first_iteration_q;
+    last_iteration_d = last_iteration_q;
     // LSU signals
     lsu_req_o = 1'b0;
     data_load_addr_o = 1'b0;
@@ -140,6 +144,7 @@ module vcve2_vrf_interface #(
         if (memory_op_i == 0) begin                   // ARITHMETIC OPERATION
           if (interleaved_i) begin                 // OPTIMIZED INTERLEAVED OPS
             first_iteration_d = 1'b1;
+            last_iteration_d = 1'b0;
             data_req_o = 1'b1;                          // read RS1         
             agu_get_rs1_o = 1'b1;
             if (data_gnt_i) begin
@@ -176,6 +181,7 @@ module vcve2_vrf_interface #(
 
         end else begin                                // MEMORY OPERATION
           first_iteration_d = 1'b1;
+          last_iteration_d = 1'b0;
           if (sel_operation_i[2]==1'b1) begin           // store
             data_req_o = 1'b1;
             agu_get_rd_o = 1'b1;
@@ -200,7 +206,7 @@ module vcve2_vrf_interface #(
       // In the following states the exit condition is the gnt signal since: gnt=1 => data_rvalid of the previous operation=1
       VRF_INT_READ1: begin
         // SAMPLE
-        if (data_rvalid_i) rs1_en = 1;
+        if (data_rvalid_i && !last_iteration_q) rs1_en = 1;
         // NEXT STATE SELECTION
         if (!first_iteration_q) begin
           data_we_o = 1'b1;
@@ -232,7 +238,7 @@ module vcve2_vrf_interface #(
           end else vrf_next_state = VRF_INT_READ2;
         // if next operation is WRITE RD
         end else if (sel_operation_i[3]) begin
-          if (num_iterations_q == 0) begin
+          if (last_iteration_q) begin
             vrf_next_state = VRF_INT_READ1;
           end else begin
             data_req_o = 1'b1;
@@ -271,7 +277,7 @@ module vcve2_vrf_interface #(
 
       VRF_INT_WRITE: begin
         // NEXT STATE SELECTION - moving to the next iteration
-        if (num_iterations_q == 0) begin            // it's equal zero to take into account the first iteration
+        if (last_iteration_q) begin            // it's equal zero to take into account the first iteration
           vector_done_o = 1'b1;
           num_iterations_d = '0;
           vrf_next_state = VRF_IDLE;
@@ -283,6 +289,7 @@ module vcve2_vrf_interface #(
             agu_get_rs2_o = 1'b1;
             if (data_gnt_i) begin
               agu_incr_o = 1'b1;
+              if (num_iterations_q == 1) last_iteration_d = 1'b1;
               vrf_next_state = VRF_INT_READ2;
             end else begin
               num_iterations_d = num_iterations_q;   // if the operation wasn't accepted we need to repeat it
@@ -399,20 +406,30 @@ module vcve2_vrf_interface #(
       ////////////////
 
       VRF_LOAD: begin
-        if (lsu_done_i) begin
-          rd_en = 1'b1;                     // is this necessary?
-          data_we_o = 1'b1;
-          data_req_o = 1'b1;
-          agu_get_rd_o = 1'b1;
-          if (data_gnt_i) begin
-            agu_incr_o = 1'b1;
-            vrf_next_state = VRF_LOAD_WRITE;
-          end else vrf_next_state = VRF_LOAD_WAITGNT;
+        if (lsu_done_i || last_iteration_q) begin
+          // we sample only if it's not the last iteration
+          if (lsu_done_i) rd_en = 1'b1;
+          // we send a write request only if it's not the first iteration
+          if (!first_iteration_q) begin
+            data_we_o = 1'b1;
+            data_req_o = 1'b1;
+            agu_get_rd_o = 1'b1;
+            if (data_gnt_i) begin
+              agu_incr_o = 1'b1;
+              vrf_next_state = VRF_LOAD_WRITE;
+            end else vrf_next_state = VRF_LOAD_WAITGNT;
+          // if it's the first iteration we don't need to write the result
+          end else begin
+              first_iteration_d = 1'b0;
+              vrf_next_state = VRF_LOAD_WRITE;
+          end
+        // we wait here for lsu to finish
         end else begin
           vrf_next_state = VRF_LOAD;
         end
       end
 
+      // state where we wait for the grant from memory
       VRF_LOAD_WAITGNT: begin
         data_we_o = 1'b1;
         data_req_o = 1'b1;
@@ -426,10 +443,16 @@ module vcve2_vrf_interface #(
       end
 
       VRF_LOAD_WRITE: begin
-        if (num_iterations_q == 1) begin
+        // if this is the last iteration we finish
+        if (last_iteration_q) begin
           vector_done_o = 1'b1;
           num_iterations_d = '0;
           vrf_next_state = VRF_IDLE;
+        // if the next iteration will be the last we don't need to read the operand
+        end else if (num_iterations_q == 1) begin
+          last_iteration_d = 1'b1;
+          vrf_next_state = VRF_LOAD;
+        // normal operation
         end else begin
           num_iterations_d = num_iterations_q - 1;
           lsu_req_o = 1'b1;
@@ -439,7 +462,7 @@ module vcve2_vrf_interface #(
 
       VRF_STORE_READ: begin
         // as soon as we see the value on the bus we sample it and tell the lsu it can proceed
-        if (data_rvalid_i || num_iterations_q==0) begin
+        if (data_rvalid_i || last_iteration_q) begin
           if (data_rvalid_i) rs3_en = 1;
           if (!first_iteration_q) lsu_req_o = 1;
           vrf_next_state = VRF_STORE_WAITLSU;
@@ -451,13 +474,13 @@ module vcve2_vrf_interface #(
       VRF_STORE_WAITLSU: begin
         if (lsu_done_i || first_iteration_q) begin
           // Exit condition
-          if (num_iterations_q == 0) begin
+          if (last_iteration_q) begin
             vector_done_o = 1'b1;
             num_iterations_d = '0;
             vrf_next_state = VRF_IDLE;
           // In the last cycle we don't read the operand
           end else if (num_iterations_q == 1) begin
-            num_iterations_d = num_iterations_q - 1;
+            last_iteration_d = 1'b1;
             vrf_next_state = VRF_STORE_READ;
           // Send read request to memory
           end else begin
