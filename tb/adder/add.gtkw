@@ -1,0 +1,41 @@
+[*]
+[*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
+[*] Mon May 20 08:52:08 2024
+[*]
+[dumpfile] "/home/alessio99/tristan/thesis/hw/cve2/tb/adder/wave.vcd"
+[dumpfile_mtime] "Mon May 20 08:45:56 2024"
+[dumpfile_size] 1691
+[savefile] "/home/alessio99/tristan/thesis/hw/cve2/tb/adder/add.gtkw"
+[timestart] 0
+[size] 1848 1016
+[pos] -51 -51
+*-0.054606 1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] TOP.
+[sst_width] 233
+[signals_width] 601
+[sst_expanded] 1
+[sst_vpaned_height] 289
+@24
+TOP.vcve2_fracturable_adder.FRACTURABLE_WIDTH[31:0]
+TOP.vcve2_fracturable_adder.PIPE_WIDTH[31:0]
+@200
+-
+@28
+TOP.vcve2_fracturable_adder.op_a[35:0]
+TOP.vcve2_fracturable_adder.op_b[35:0]
+TOP.vcve2_fracturable_adder.operand_a_i[31:0]
+TOP.vcve2_fracturable_adder.operand_b_i[31:0]
+@200
+-
+@29
+TOP.vcve2_fracturable_adder.res[35:0]
+@28
+TOP.vcve2_fracturable_adder.result_o[31:0]
+@200
+-
+@28
+TOP.vcve2_fracturable_adder.sew_i[1:0]
+@22
+TOP.vcve2_fracturable_adder.unused_bits[3:0]
+[pattern_trace] 1
+[pattern_trace] 0
