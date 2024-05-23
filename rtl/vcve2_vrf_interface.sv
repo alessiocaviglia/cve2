@@ -53,7 +53,6 @@ module vcve2_vrf_interface #(
 
   import vcve2_pkg::*;
 
-  // TODO - find a better way to do this
   parameter NUM_MEM_OPS = VLEN >> ($clog2(PIPE_WIDTH)); // VLEN/PIPE_WIDTH
 
   // VRF FSM signals
@@ -63,9 +62,16 @@ module vcve2_vrf_interface #(
   logic last_iteration_d, last_iteration_q;
 
   // Internal registers signals
-  logic rs1_en, rs2_en, rs3_en, rd_en;
+  logic rs1_en, rs2_en, rs3_en, rd_en;    // rd is used only for load operations
   logic [PIPE_WIDTH-1:0] rs1_q, rs2_q, rs3_q, rd_q;
   logic [PIPE_WIDTH-1:0] rs1_d, rs2_d, rs3_d, rd_d;
+
+  // Delayed grant for write operations in interleaved
+  logic write_delayed;
+  logic curr_state_wdelay, next_state_wdelay;
+  logic [1:0] wdata_mux;
+  logic wbuffer_en, rd_buf_en;
+  logic [PIPE_WIDTH-1:0] wbuffer_q, wbuffer_d;
 
   ////////////////
   // Temporary  //
@@ -98,6 +104,7 @@ module vcve2_vrf_interface #(
     rs2_en = 1'b0;
     rs3_en = 1'b0;
     rd_en = 1'b0;
+    write_delayed = 1'b0;
     // data memory interface
     data_req_o = 1'b0;
     data_we_o = 1'b0;
@@ -213,9 +220,11 @@ module vcve2_vrf_interface #(
           data_req_o = 1'b1;
           agu_get_rd_o = 1'b1;
           if (data_gnt_i) begin
+            write_delayed = 1'b0;
             agu_incr_o = 1'b1;
             vrf_next_state = VRF_INT_WRITE;
           end else begin
+            write_delayed = 1'b1;
             vrf_next_state = VRF_INT_READ1;
           end
         end else begin
@@ -417,7 +426,10 @@ module vcve2_vrf_interface #(
             if (data_gnt_i) begin
               agu_incr_o = 1'b1;
               vrf_next_state = VRF_LOAD_WRITE;
-            end else vrf_next_state = VRF_LOAD_WAITGNT;
+            end else begin
+              write_delayed = 1'b1;
+              vrf_next_state = VRF_LOAD_WAITGNT;
+            end
           // if it's the first iteration we don't need to write the result
           end else begin
               first_iteration_d = 1'b0;
@@ -435,6 +447,7 @@ module vcve2_vrf_interface #(
         data_req_o = 1'b1;
         agu_get_rd_o = 1'b1;
         if (data_gnt_i) begin
+          write_delayed = 1'b0;
           agu_incr_o = 1'b1;
           vrf_next_state = VRF_LOAD_WRITE;
         end else begin
@@ -519,6 +532,45 @@ module vcve2_vrf_interface #(
     endcase
   end
 
+  ///////////////////////////
+  // Delayed grant support //
+  ///////////////////////////
+
+  assign wbuffer_d = rd_q;
+  always_ff @(posedge clk_i or negedge rst_ni) begin
+    if (!rst_ni) begin
+      curr_state_wdelay <= 1'b0;
+      wbuffer_q <= '0;
+    end else begin
+      curr_state_wdelay <= next_state_wdelay;
+      if (wbuffer_en) wbuffer_q <= wbuffer_d;
+    end
+  end
+  always_comb begin
+    rd_buf_en = 1'b0;
+    wbuffer_en = 1'b0;
+    case (curr_state_wdelay)
+      1'b0: begin
+        wdata_mux = memory_op_i ? 2'b01 : 2'b00;
+        if (write_delayed) begin
+          if (!memory_op_i) rd_buf_en = 1'b1;
+          else wbuffer_en = 1'b1;
+          next_state_wdelay = 1'b1;
+        end else begin
+          next_state_wdelay = 1'b0;
+        end
+      end
+      1'b1: begin
+        wdata_mux = memory_op_i ? 2'b10 : 2'b01;
+        if (write_delayed) begin
+          next_state_wdelay = 1'b1;
+        end else begin
+          next_state_wdelay = 1'b0;
+        end
+      end
+    endcase
+  end
+
   ////////////////////////
   // Internal registers //
   ////////////////////////
@@ -533,21 +585,31 @@ module vcve2_vrf_interface #(
       if (rs1_en) rs1_q <= rs1_d;
       if (rs2_en) rs2_q <= rs2_d;
       if (rs3_en) rs3_q <= rs3_d;
-      if (rd_en) rd_q <= rd_d;
+      if (rd_en || rd_buf_en) rd_q <= rd_d;
     end
   end
-  always_comb begin
+  always_comb begin   // TODO: probably this condition is redundant and I should remove it
     rs1_d = rs1_en ? data_rdata_i : rs1_q;
     rs2_d = rs2_en ? data_rdata_i : rs2_q;
     rs3_d = rs3_en ? data_rdata_i : rs3_q;
-    rd_d = rd_en ? wdata_i : rd_q;
+    rd_d = wdata_i;
   end
+
+  /////////////
+  // Outputs //
+  /////////////
 
   assign rdata_a_o = rs1_q;
   assign rdata_b_o = rs2_q;
   assign rdata_c_o = rs3_q;
-  // if the grant is not immediately given after the read we need to use the sampled result
-  // assign data_wdata_o = (!data_rvalid_i && data_we_o) ? rs3_q : wdata_i;
-  assign data_wdata_o = wdata_i;
+  // mux for the write data
+  always_comb begin
+    case (wdata_mux)
+      2'b00: data_wdata_o = wdata_i;
+      2'b01: data_wdata_o = rd_q;
+      2'b10: data_wdata_o = wbuffer_q;
+      default: data_wdata_o = '0;
+    endcase
+  end
 
 endmodule
