@@ -8,6 +8,7 @@ module vcve2_lsu_interface (
   output logic        en_rvalid_o,
   // signals from LSU
   input  logic        lsu_resp_valid_i,
+  input  logic        lsu_gnt_i,
   // signals from ID/EX
   input  logic [31:0] start_addr_i,
   input  logic        load_start_i,
@@ -16,6 +17,7 @@ module vcve2_lsu_interface (
   // signals from VRF
   input  logic        vrf_req_i,
   input  logic [31:0] vrf_data_i,
+  output logic        vrf_lsu_gnt_o,
   // scalar pipeline signals
   input  logic        scalar_req_i,
   input  logic [31:0] scalar_addr_i,
@@ -26,6 +28,7 @@ module vcve2_lsu_interface (
   logic [31:0] addr_q, addr_d;
   logic curr_state, next_state; 
 
+  assign vrf_lsu_gnt_o = vec_op_i ? lsu_gnt_i : 1'b0;
 
   always_ff @(posedge clk_i or negedge rst_ni) begin
     if (!rst_ni) begin

@@ -337,6 +337,7 @@ module vcve2_core import vcve2_pkg::*; #(
   logic unit_stride;
   logic lsu_rvalid;
   logic en_lsu_rvalid;
+  logic vrf_lsu_gnt;
   // Misc
   logic rf_we_wb_temp;
 
@@ -676,7 +677,9 @@ module vcve2_core import vcve2_pkg::*; #(
     .lsu_wdata_o(lsu_if_wdata),
     .lsu_req_o(lsu_if_req),
     .en_rvalid_o(en_lsu_rvalid),
+    // signals from LSU
     .lsu_resp_valid_i(lsu_resp_valid),
+    .lsu_gnt_i(lsu_data_gnt),
     // signals from ID/EX
     .start_addr_i(rf_rdata_a),
     .load_start_i(lsu_if_load_addr),
@@ -685,6 +688,7 @@ module vcve2_core import vcve2_pkg::*; #(
     // VRF signals
     .vrf_req_i(vrf_lsu_req),
     .vrf_data_i(vrf_rdata_c),
+    .vrf_lsu_gnt_o(vrf_lsu_gnt),
     // scalar signals
     .scalar_req_i(lsu_req),
     .scalar_addr_i(alu_adder_result_ex),
@@ -866,6 +870,7 @@ module vcve2_core import vcve2_pkg::*; #(
     .data_rdata_i(vrf_data_rdata),
     // LSU control signals
     .data_load_addr_o(lsu_if_load_addr),
+    .lsu_gnt_i(vrf_lsu_gnt),
 
     // AGU signals
     .agu_load_o(agu_load),

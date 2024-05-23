@@ -1,100 +1,45 @@
 [*]
 [*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
-[*] Tue Apr 23 08:57:42 2024
+[*] Thu May 23 12:36:54 2024
 [*]
-[dumpfile] "/home/alessio99/tristan/cve2/tb/build/alessiocaviglia_vcve2_vcve2_sim_0.1/default-verilator/waveform.vcd"
-[dumpfile_mtime] "Tue Apr 23 08:53:49 2024"
-[dumpfile_size] 110567
-[savefile] "/home/alessio99/tristan/cve2/tb/cve2_core/core_vregfile.gtkw"
+[dumpfile] "/home/alessio99/tristan/thesis/hw/cve2/tb/build/alessiocaviglia_vcve2_vcve2_sim_0.1/default-verilator/waveform.vcd"
+[dumpfile_mtime] "Thu May 23 12:34:11 2024"
+[dumpfile_size] 114721
+[savefile] "/home/alessio99/tristan/thesis/hw/cve2/tb/cve2_core/core_vregfile.gtkw"
 [timestart] 0
 [size] 1848 1016
 [pos] -39 -39
-*-4.974829 69 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-4.974829 32 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] TOP.
 [treeopen] TOP.vcve2_core.
 [treeopen] TOP.vcve2_core.id_stage_i.decoder_i.
 [treeopen] TOP.vcve2_core.register_file_i.
 [treeopen] TOP.vcve2_core.vcve2_vrf_interface_inst.
-[treeopen] TOP.vcve2_core.vex_block_i.
 [sst_width] 256
 [signals_width] 331
 [sst_expanded] 1
-[sst_vpaned_height] 289
+[sst_vpaned_height] 522
 @28
 TOP.vcve2_core.clk_i
 @22
 TOP.vcve2_core.instr_rdata_i[31:0]
 @200
+-
 -VRF
 @28
 TOP.vcve2_core.vcve2_vrf_interface_inst.req_i
-TOP.vcve2_core.vcve2_vrf_interface_inst.vrf_state[2:0]
-TOP.vcve2_core.vcve2_vrf_interface_inst.sel_operation_i[3:0]
-@24
-TOP.vcve2_core.vcve2_vrf_interface_inst.num_iterations_q[31:0]
+@22
+TOP.vcve2_core.vcve2_vrf_interface_inst.vrf_state[3:0]
 @200
 -
+-LSU signals
 @28
-TOP.vcve2_core.vcve2_vrf_interface_inst.agu_get_rs1_o
-@22
-TOP.vcve2_core.vcve2_vrf_interface_inst.rdata_a_o[31:0]
-@28
-TOP.vcve2_core.vcve2_vrf_interface_inst.agu_get_rs2_o
-@22
-TOP.vcve2_core.vcve2_vrf_interface_inst.rdata_b_o[31:0]
-@28
-TOP.vcve2_core.vcve2_vrf_interface_inst.agu_get_rd_o
-@22
-TOP.vcve2_core.vcve2_vrf_interface_inst.wdata_i[31:0]
-@200
--AGU
-@28
-TOP.vcve2_core.agu_inst.load
-TOP.vcve2_core.agu_inst.ready_o
-@22
-TOP.vcve2_core.agu_inst.addr_rs1_q[29:0]
-TOP.vcve2_core.agu_inst.addr_rs2_q[29:0]
-@c00022
-TOP.vcve2_core.agu_inst.addr_rd_q[29:0]
-@28
-(0)TOP.vcve2_core.agu_inst.addr_rd_q[29:0]
-(1)TOP.vcve2_core.agu_inst.addr_rd_q[29:0]
-(2)TOP.vcve2_core.agu_inst.addr_rd_q[29:0]
-(3)TOP.vcve2_core.agu_inst.addr_rd_q[29:0]
-(4)TOP.vcve2_core.agu_inst.addr_rd_q[29:0]
-(5)TOP.vcve2_core.agu_inst.addr_rd_q[29:0]
-(6)TOP.vcve2_core.agu_inst.addr_rd_q[29:0]
-(7)TOP.vcve2_core.agu_inst.addr_rd_q[29:0]
-(8)TOP.vcve2_core.agu_inst.addr_rd_q[29:0]
-(9)TOP.vcve2_core.agu_inst.addr_rd_q[29:0]
-(10)TOP.vcve2_core.agu_inst.addr_rd_q[29:0]
-(11)TOP.vcve2_core.agu_inst.addr_rd_q[29:0]
-(12)TOP.vcve2_core.agu_inst.addr_rd_q[29:0]
-(13)TOP.vcve2_core.agu_inst.addr_rd_q[29:0]
-(14)TOP.vcve2_core.agu_inst.addr_rd_q[29:0]
-(15)TOP.vcve2_core.agu_inst.addr_rd_q[29:0]
-(16)TOP.vcve2_core.agu_inst.addr_rd_q[29:0]
-(17)TOP.vcve2_core.agu_inst.addr_rd_q[29:0]
-(18)TOP.vcve2_core.agu_inst.addr_rd_q[29:0]
-(19)TOP.vcve2_core.agu_inst.addr_rd_q[29:0]
-(20)TOP.vcve2_core.agu_inst.addr_rd_q[29:0]
-(21)TOP.vcve2_core.agu_inst.addr_rd_q[29:0]
-(22)TOP.vcve2_core.agu_inst.addr_rd_q[29:0]
-(23)TOP.vcve2_core.agu_inst.addr_rd_q[29:0]
-(24)TOP.vcve2_core.agu_inst.addr_rd_q[29:0]
-(25)TOP.vcve2_core.agu_inst.addr_rd_q[29:0]
-(26)TOP.vcve2_core.agu_inst.addr_rd_q[29:0]
-(27)TOP.vcve2_core.agu_inst.addr_rd_q[29:0]
-(28)TOP.vcve2_core.agu_inst.addr_rd_q[29:0]
-(29)TOP.vcve2_core.agu_inst.addr_rd_q[29:0]
-@1401200
--group_end
+TOP.vcve2_core.vcve2_vrf_interface_inst.lsu_req_o
+TOP.vcve2_core.vcve2_vrf_interface_inst.lsu_gnt_i
+@29
+TOP.vcve2_core.vcve2_vrf_interface_inst.lsu_done_i
 @200
 -
-@22
-TOP.vcve2_core.agu_inst.addr_i[29:0]
-TOP.vcve2_core.agu_inst.addr_o[31:0]
-@200
 -DATA memory
 @28
 TOP.vcve2_core.data_req_o

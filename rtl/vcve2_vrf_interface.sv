@@ -27,8 +27,9 @@ module vcve2_vrf_interface #(
     output logic [3:0]   data_be_o,
     output logic [31:0]  data_wdata_o,
     input  logic [31:0]  data_rdata_i,
-    // control signals
+    // LSU control signals
     output logic         data_load_addr_o,
+    input  logic         lsu_gnt_i,
 
     // AGU
     output logic         agu_load_o,
@@ -66,6 +67,12 @@ module vcve2_vrf_interface #(
   logic [PIPE_WIDTH-1:0] rs1_q, rs2_q, rs3_q, rd_q;
   logic [PIPE_WIDTH-1:0] rs1_d, rs2_d, rs3_d, rd_d;
 
+  // Delayed grant for read operations in store
+  logic read_delayed;
+  logic curr_state_rdelay, next_state_rdelay;
+  logic rdata_mux;
+  logic rbuffer_en;
+  logic [PIPE_WIDTH-1:0] rbuffer_q, rbuffer_d;
   // Delayed grant for write operations in interleaved
   logic write_delayed;
   logic curr_state_wdelay, next_state_wdelay;
@@ -105,6 +112,7 @@ module vcve2_vrf_interface #(
     rs3_en = 1'b0;
     rd_en = 1'b0;
     write_delayed = 1'b0;
+    read_delayed = 1'b0;
     // data memory interface
     data_req_o = 1'b0;
     data_we_o = 1'b0;
@@ -477,7 +485,10 @@ module vcve2_vrf_interface #(
         // as soon as we see the value on the bus we sample it and tell the lsu it can proceed
         if (data_rvalid_i || last_iteration_q) begin
           if (data_rvalid_i) rs3_en = 1;
-          if (!first_iteration_q) lsu_req_o = 1;
+          if (!first_iteration_q) begin
+            lsu_req_o = 1;
+            if (!lsu_gnt_i) read_delayed = 1'b1;
+          end
           vrf_next_state = VRF_STORE_WAITLSU;
         end else begin
           vrf_next_state = VRF_STORE_READ;
@@ -486,6 +497,7 @@ module vcve2_vrf_interface #(
 
       VRF_STORE_WAITLSU: begin
         if (lsu_done_i || first_iteration_q) begin
+          read_delayed = 1'b0;
           // Exit condition
           if (last_iteration_q) begin
             vector_done_o = 1'b1;
@@ -536,6 +548,41 @@ module vcve2_vrf_interface #(
   // Delayed grant support //
   ///////////////////////////
 
+  // Delayed read buffer
+  assign rbuffer_d = rs1_d;
+  always_ff @(posedge clk_i or negedge rst_ni) begin
+    if (!rst_ni) begin
+      curr_state_rdelay <= 1'b0;
+      rbuffer_q <= '0;
+    end else begin
+      curr_state_rdelay <= next_state_rdelay;
+      if (rbuffer_en) rbuffer_q <= rbuffer_d;
+    end
+  end
+  always_comb begin
+    rbuffer_en = 1'b0;
+    case (curr_state_rdelay)
+      1'b0: begin
+        rdata_mux = 1'b0;
+        if (read_delayed) begin
+          rbuffer_en = 1'b1;
+          next_state_rdelay = 1'b1;
+        end else begin
+          next_state_rdelay = 1'b0;
+        end
+      end
+      1'b1: begin
+        rdata_mux = 1'b1;
+        if (read_delayed) begin
+          next_state_rdelay = 1'b1;
+        end else begin
+          next_state_rdelay = 1'b0;
+        end
+      end
+    endcase
+  end
+
+  // Delayed write buffer
   assign wbuffer_d = rd_q;
   always_ff @(posedge clk_i or negedge rst_ni) begin
     if (!rst_ni) begin
@@ -599,7 +646,7 @@ module vcve2_vrf_interface #(
   // Outputs //
   /////////////
 
-  assign rdata_a_o = rs1_q;
+  assign rdata_a_o = rdata_mux ? rbuffer_q : rs1_q;
   assign rdata_b_o = rs2_q;
   assign rdata_c_o = rs3_q;
   // mux for the write data
