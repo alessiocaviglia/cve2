@@ -19,7 +19,7 @@ module vcve2_core import vcve2_pkg::*; #(
   parameter int unsigned MHPMCounterNum    = 0,
   parameter int unsigned MHPMCounterWidth  = 40,
   parameter bit          RV32E             = 1'b0,
-  parameter rv32m_e      RV32M             = RV32MFast,
+  parameter rv32m_e      RV32M             = RV32MSingleCycle,
   parameter rv32b_e      RV32B             = RV32BNone,
   parameter bit          DbgTriggerEn      = 1'b0,
   parameter int unsigned DbgHwBreakNum     = 1,
@@ -609,7 +609,11 @@ module vcve2_core import vcve2_pkg::*; #(
     .branch_target_o  (branch_target_ex),  // to IF
     .branch_decision_o(branch_decision),  // to ID
 
-    .ex_valid_o(ex_valid)
+    .ex_valid_o(ex_valid),
+
+    // Vecto extension
+    .vec_instr_i(vrf_req),
+    .vsew_i(vsew_q)
   );
 
   /////////////////////

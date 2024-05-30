@@ -16,7 +16,7 @@ module cve2_top import vcve2_pkg::*; #(
   parameter int unsigned MHPMCounterNum   = 0,
   parameter int unsigned MHPMCounterWidth = 40,
   parameter bit          RV32E            = 1'b0,
-  parameter rv32m_e      RV32M            = RV32MFast,
+  parameter rv32m_e      RV32M            = RV32MSingleCycle,
   parameter int unsigned DmHaltAddr       = 32'h1A110800,
   parameter int unsigned DmExceptionAddr  = 32'h1A110808
 ) (

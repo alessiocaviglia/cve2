@@ -36,18 +36,18 @@ int main(int argc, char **argv, char **env) {
             top->sew_i = 0;
         }
         if (sim_time == 6 || sim_time == 7) {
-            top->operand_a_i = 2155905152;
-            top->operand_b_i = 2155905152;
+            top->operand_a_i = 4311810304;
+            top->operand_b_i = 4311810304;
             top->sew_i = 2;
         }
         if (sim_time == 8 || sim_time == 9) {
-            top->operand_a_i = 2155905152;
-            top->operand_b_i = 2155905152;
+            top->operand_a_i = 4311810304;
+            top->operand_b_i = 4311810304;
             top->sew_i = 1;
         }
         if (sim_time == 10 || sim_time == 11) {
-            top->operand_a_i = 2155905152;
-            top->operand_b_i = 2155905152;
+            top->operand_a_i = 4311810304;
+            top->operand_b_i = 4311810304;
             top->sew_i = 0;
         }
         top->eval();

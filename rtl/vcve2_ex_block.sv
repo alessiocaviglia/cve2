@@ -19,7 +19,7 @@ module vcve2_ex_block #(
   input  vcve2_pkg::alu_op_e     alu_operator_i,
   input  logic [31:0]           alu_operand_a_i,
   input  logic [31:0]           alu_operand_b_i,
-  input  logic [31:0]           alu_operand_c_i,
+  input  logic [31:0]           alu_operand_c_i,            // Vector extension        
   input  logic                  alu_instr_first_cycle_i,
 
   // Multiplier/Divider
@@ -43,7 +43,11 @@ module vcve2_ex_block #(
   output logic [31:0]           branch_target_o,       // to IF
   output logic                  branch_decision_o,     // to ID
 
-  output logic                  ex_valid_o             // EX has valid output
+  output logic                  ex_valid_o,            // EX has valid output
+
+  // Vector extension
+  input  logic                  vec_instr_i,
+  input  logic [2:0]            vsew_i
 );
 
   import vcve2_pkg::*;
@@ -111,7 +115,8 @@ module vcve2_ex_block #(
     .adder_result_ext_o (alu_adder_result_ext),
     .result_o           (alu_result),
     .comparison_result_o(alu_cmp_result),
-    .is_equal_result_o  (alu_is_equal_result)
+    .is_equal_result_o  (alu_is_equal_result),
+    .vsew_i             (vsew_i)
   );
 
   ////////////////
@@ -165,7 +170,9 @@ module vcve2_ex_block #(
       .imd_val_d_o       (multdiv_imd_val_d),
       .imd_val_we_o      (multdiv_imd_val_we),
       .valid_o           (multdiv_valid),
-      .multdiv_result_o  (multdiv_result)
+      .multdiv_result_o  (multdiv_result),
+      .vec_instr_i       (vec_instr_i),
+      .vsew_i            (vsew_i)
     );
   end
 

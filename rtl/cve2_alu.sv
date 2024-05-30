@@ -29,7 +29,8 @@ module cve2_alu #(
 
   output logic [31:0]       result_o,
   output logic              comparison_result_o,
-  output logic              is_equal_result_o
+  output logic              is_equal_result_o,
+  input  logic [2:0]        vsew_i
 );
   import vcve2_pkg::*;
 
@@ -101,12 +102,18 @@ module cve2_alu #(
     endcase
   end
 
-  // actual adder
-  assign adder_result_ext_o = $unsigned(adder_in_a) + $unsigned(adder_in_b);
-
-  assign adder_result       = adder_result_ext_o[32:1];
-
-  assign adder_result_o     = adder_result;
+  // Vector extension: fracturable adder to support 8-bit and 16-bit ops, will be used also for scalar instruction
+  vcve2_fracturable_adder #(
+    .PIPE_WIDTH(32)
+  ) adder_inst (
+    .operand_a_i(adder_in_a),
+    .operand_b_i(adder_in_b),
+    .result_o(adder_result_ext_o),
+    .sew_i(vsew_i[1:0])
+  );
+  // Extract the 32-bit result from the 34-bit result
+  assign adder_result = adder_result_ext_o[32:1];
+  assign adder_result_o = adder_result;
 
   ////////////////
   // Comparison //

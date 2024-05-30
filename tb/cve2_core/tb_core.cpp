@@ -68,7 +68,7 @@ int main(int argc, char **argv, char **env) {
 
     if (sim_time==10) {
       // I force one instructions
-      top->instr_rdata_i = 0x5C05B0D7;
+      top->instr_rdata_i = 0x027302b3;
       top->instr_rvalid_i = 1;
       top->fetch_enable_i = 1;
     }
