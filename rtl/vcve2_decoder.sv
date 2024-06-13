@@ -691,7 +691,7 @@ module vcve2_decoder #(
         // Configuration-Setting Instructions
         if (instr[14:12]==3'b111) begin
           vcfg_write_o = 1'b1;
-          if (instr_alu[31:30]!=2'b11) begin        // AVL encoding for vsetvl and vsetvli
+          if (instr[31:30]!=2'b11) begin        // AVL encoding for vsetvl and vsetvli
             if (instr_rs1 == '0 && instr_rd != '0) begin
               vl_max_o = 1'b1;
             end else if (instr_rs1 == '0 && instr_rd == '0) begin

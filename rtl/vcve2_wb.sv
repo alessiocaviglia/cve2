@@ -44,15 +44,18 @@ module vcve2_wb #(
   input logic [31:0]               vrf_wdata_lsu_i,
   input logic                      vrf_is_mem_i,
   output logic                     vrf_we_wb_o,
-  output logic [31:0]              vrf_wdata_wb_o
+  output logic [31:0]              vrf_wdata_wb_o,
+  // write data for vset{i}vl{i}
+  input logic [31:0]               vl_wdata_i,
+  input logic                      vl_we_i
 );
 
   import vcve2_pkg::*;
 
   // 0 == RF write from ID
   // 1 == RF write from LSU
-  logic [31:0] rf_wdata_wb_mux    [2];
-  logic [1:0]  rf_wdata_wb_mux_we;
+  logic [31:0] rf_wdata_wb_mux    [3];
+  logic [2:0]  rf_wdata_wb_mux_we;
 
     // without writeback stage just pass through register write signals
     assign rf_waddr_wb_o         = rf_waddr_id_i;
@@ -67,10 +70,15 @@ module vcve2_wb #(
   assign rf_wdata_wb_mux[1]    = rf_wdata_lsu_i;
   assign rf_wdata_wb_mux_we[1] = rf_we_lsu_i;
 
+  // Write data for vset{i}vl{i}
+  assign rf_wdata_wb_mux[2]    = vl_wdata_i;
+  assign rf_wdata_wb_mux_we[2] = vl_we_i;
+
   // RF write data can come from ID results (all RF writes that aren't because of loads will come
   // from here) or the LSU (RF writes for load data)
   assign rf_wdata_wb_o = ({32{rf_wdata_wb_mux_we[0]}} & rf_wdata_wb_mux[0]) |
-                         ({32{rf_wdata_wb_mux_we[1]}} & rf_wdata_wb_mux[1]);
+                         ({32{rf_wdata_wb_mux_we[1]}} & rf_wdata_wb_mux[1]) |
+                         ({32{rf_wdata_wb_mux_we[2]}} & rf_wdata_wb_mux[2]);
   assign rf_we_wb_o    = |rf_wdata_wb_mux_we;
 
   // Vector extension

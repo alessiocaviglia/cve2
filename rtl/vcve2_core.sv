@@ -279,10 +279,11 @@ module vcve2_core import vcve2_pkg::*; #(
   // Vector CSRs
   logic vcfg_write;
   logic vl_max, vl_keep;
+  logic vill_q, vill_d;
   vsew_e vsew_q, vsew_d;
   vlmul_e vlmul_q, vlmul_d;
   logic [1:0] vma_vta_q, vma_vta_d;
-  logic [31:0] vl_q, vl_d;          // number of bits depends on implementation (VLEN), probably need to change
+  logic [31:0] vl_q, vl_d;
   logic [31:0] vstart_q, vstart_d;
   logic [31:0] vxrm_q, vxrm_d;
   logic [31:0] vxsat_q, vxsat_d;
@@ -773,7 +774,10 @@ module vcve2_core import vcve2_pkg::*; #(
     .vrf_wdata_lsu_i(rf_wdata_lsu),
     .vrf_is_mem_i(vrf_memory_op),
     .vrf_we_wb_o   (vrf_we_wb),
-    .vrf_wdata_wb_o(vrf_wdata_wb)
+    .vrf_wdata_wb_o(vrf_wdata_wb),
+    // write data for vset{i}vl{i}
+    .vl_wdata_i(vl_d),
+    .vl_we_i(vcfg_write)
   );
 
   ///////////////////////
@@ -1020,6 +1024,7 @@ module vcve2_core import vcve2_pkg::*; #(
       vstart_q   <= '0;
       vxrm_q     <= '0;
       vxsat_q    <= '0;
+      vill_q     <= '0;
     end else begin
       vsew_q     <= vsew_d;
       vlmul_q    <= vlmul_d;
@@ -1028,10 +1033,16 @@ module vcve2_core import vcve2_pkg::*; #(
       vstart_q   <= vstart_d;
       vxrm_q     <= vxrm_d;
       vxsat_q    <= vxsat_d;
+      vill_q     <= vill_d;
     end
   end
 
   // I need to add AVL support
+  // ALU operand a - AVL
+  // ALU operand b - new vtype setting
+  logic [31:0] new_vlmax;
+  logic avl_lt, avl_lt_double;
+
   always_comb begin
     vsew_d     = vsew_q;
     vlmul_d    = vlmul_q;
@@ -1040,11 +1051,23 @@ module vcve2_core import vcve2_pkg::*; #(
     vstart_d   = vstart_q;
     vxrm_d     = vxrm_q;
     vxsat_d    = vxsat_q;
+    vill_d     = vill_q;
+    new_vlmax  = '0;
+    avl_lt     = 1'b0;
+    avl_lt_double = 1'b0;
     if (vcfg_write==1'b1) begin
       // sample the values coming from the instruction
       vsew_d     = alu_operand_b_ex[5:3];
       vlmul_d    = alu_operand_b_ex[2:0];
       vma_vta_d  = alu_operand_b_ex[7:6];
+      // VLMAX = ( (VLEN/8) /SEW)*LMUL
+      new_vlmax = ($signed(vlmul_d)>0) ? ((VLEN>>3)>>$unsigned(vsew_d)) << $signed(vlmul_d) :
+                                         ((VLEN>>3)>>$unsigned(vsew_d)) >> -$signed(vlmul_d);
+      // configuration is valid unless later found otherwise
+      vill_d     = 1'b0;
+      // compute the VLMAX for the new configuration
+      avl_lt = (alu_operand_a_ex <= new_vlmax);
+      avl_lt_double = (alu_operand_a_ex <= (new_vlmax << 1));
 
       if (vl_keep==1'b1) begin    // check validity if the goal is to mantain vl value
         vl_d = vl_q;
@@ -1054,7 +1077,7 @@ module vcve2_core import vcve2_pkg::*; #(
           {VSEW_16, VSEW_16},
           {VSEW_8, VSEW_8} : begin
             if (vlmul_q != vlmul_d) begin
-              vsew_d = VSEW_INVALID;
+              vill_d = 1'b1;
             end
           end
           // vsew multiplied by two
@@ -1067,7 +1090,7 @@ module vcve2_core import vcve2_pkg::*; #(
               {VLMUL_1, VLMUL_2},
               {VLMUL_2, VLMUL_4},
               {VLMUL_4, VLMUL_8}: ;
-              default: vsew_d = VSEW_INVALID;
+              default: vill_d = 1'b1;
             endcase
           end
           //vsew multiplied by four
@@ -1078,7 +1101,7 @@ module vcve2_core import vcve2_pkg::*; #(
               {VLMUL_F2, VLMUL_2},
               {VLMUL_1, VLMUL_4},
               {VLMUL_2, VLMUL_8}: ;
-              default: vsew_d = VSEW_INVALID;
+              default: vill_d = 1'b1;
             endcase
           end
           // vsew divided by two
@@ -1091,7 +1114,7 @@ module vcve2_core import vcve2_pkg::*; #(
               {VLMUL_2, VLMUL_1},
               {VLMUL_4, VLMUL_2},
               {VLMUL_8, VLMUL_4}: ;
-              default: vsew_d = VSEW_INVALID;
+              default: vill_d = 1'b1;
             endcase
           end
           // vsew divided by four
@@ -1102,33 +1125,37 @@ module vcve2_core import vcve2_pkg::*; #(
               {VLMUL_2, VLMUL_F2},
               {VLMUL_4, VLMUL_1},
               {VLMUL_8, VLMUL_2}: ;
-              default: vsew_d = VSEW_INVALID;
+              default: vill_d = 1'b1;
             endcase
           end
-          default: vsew_d = VSEW_INVALID;
+          default: vill_d = 1'b1;
         endcase
 
-      end else begin  // TODO: I think that to do this I should define what my VLEN is, otherwise it's not possible
+      // if we don't have the constraint on vl we just need to verify that SEW and LMUL are valid in itself and not one of the few illegal combinations
+      // with fractional LMUL
+      end else begin
         unique case ({vsew_d, vlmul_d})
-          {VSEW_8, VLMUL_F8},
           {VSEW_8, VLMUL_F4},
           {VSEW_8, VLMUL_F2},
           {VSEW_8, VLMUL_1},
           {VSEW_8, VLMUL_2},
           {VSEW_8, VLMUL_4},
-          {VSEW_8, VLMUL_8}: vl_d = '0;
-          {VSEW_16, VLMUL_F4},
+          {VSEW_8, VLMUL_8},
           {VSEW_16, VLMUL_F2},
           {VSEW_16, VLMUL_1},
           {VSEW_16, VLMUL_2},
           {VSEW_16, VLMUL_4},
-          {VSEW_16, VLMUL_8}: vl_d = '0;
-          {VSEW_32, VLMUL_F2},
+          {VSEW_16, VLMUL_8},
           {VSEW_32, VLMUL_1},
           {VSEW_32, VLMUL_2},
           {VSEW_32, VLMUL_4},
-          {VSEW_32, VLMUL_8}: vl_d = '0;
-          default: vl_d = '0; 
+          {VSEW_32, VLMUL_8}: begin
+            vl_d = avl_lt ? alu_operand_a_ex : avl_lt_double ? (alu_operand_a_ex >> 1) + (alu_operand_a_ex & 1) : new_vlmax;
+          end
+          default: begin
+            vill_d = 1'b1;
+            vl_d = '0;
+          end
         endcase
       end
     end

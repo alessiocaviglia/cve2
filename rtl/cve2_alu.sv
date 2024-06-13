@@ -30,6 +30,7 @@ module cve2_alu #(
   output logic [31:0]       result_o,
   output logic              comparison_result_o,
   output logic              is_equal_result_o,
+  input  logic              vec_instr_i,
   input  logic [2:0]        vsew_i
 );
   import vcve2_pkg::*;
@@ -52,12 +53,14 @@ module cve2_alu #(
   logic        adder_op_b_negate;
   logic [32:0] adder_in_a, adder_in_b;
   logic [31:0] adder_result;
+  logic [1:0]  adder_ew;
 
   always_comb begin
     adder_op_a_shift1 = 1'b0;
     adder_op_a_shift2 = 1'b0;
     adder_op_a_shift3 = 1'b0;
     adder_op_b_negate = 1'b0;
+    adder_ew = vec_instr_i ? vsew_i[1:0] : 2'b10;  // default to 32-bit
     unique case (operator_i)
       // Adder OPs
       ALU_SUB,
@@ -109,7 +112,7 @@ module cve2_alu #(
     .operand_a_i(adder_in_a),
     .operand_b_i(adder_in_b),
     .result_o(adder_result_ext_o),
-    .sew_i(vsew_i[1:0])
+    .sew_i(adder_ew)
   );
   // Extract the 32-bit result from the 34-bit result
   assign adder_result = adder_result_ext_o[32:1];

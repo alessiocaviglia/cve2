@@ -116,7 +116,8 @@ module vcve2_ex_block #(
     .result_o           (alu_result),
     .comparison_result_o(alu_cmp_result),
     .is_equal_result_o  (alu_is_equal_result),
-    .vsew_i             (vsew_i)
+    .vec_instr_i        (vec_instr_i),            // Vector extension
+    .vsew_i             (vsew_i)                  // Vector extension
   );
 
   ////////////////

@@ -12,6 +12,8 @@ package vcve2_pkg;
   // Vector Extension //
   //////////////////////
 
+  parameter int unsigned VLEN = 128; // Vector length
+
   // Vector register starting addresses
   /* verilator lint_off LITENDIAN */
   parameter logic[0:31][31:0] VREG_START_ADDR = {
