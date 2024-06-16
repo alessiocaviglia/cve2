@@ -32,16 +32,18 @@ module vcve2_dmem_arbiter #(
   input  logic [31:0]           lsu_data_wdata_i,
   output logic [31:0]           lsu_data_rdata_o,
   output logic                  lsu_data_err_o,
+  input  logic                  lsu_resp_valid_i,
+  input  logic                  lsu_busy_i,
   // Control signals
   input  logic                  vector_op_i,
   input  logic                  vector_mem_op_i
 );
 
-typedef enum logic {VRF, LSU} dmem_op_t;
+typedef enum logic {LSU, VRF} dmem_op_t;
 dmem_op_t prev_op_q, prev_op_d;
 logic vrf_has_mem;
 
-assign vrf_has_mem = vector_op_i && !vector_mem_op_i;
+assign vrf_has_mem = vector_op_i && (!vector_mem_op_i && !lsu_busy_i);
 
 ////////////
 // Inputs //
@@ -56,18 +58,23 @@ assign lsu_data_gnt_o = !vrf_has_mem && data_gnt_i;
 
 // second cycle responses
 always_ff @(posedge clk_i or negedge rst_ni) begin
-  if (!rst_ni) begin
-    prev_op_q <= LSU;
+  if (!rst_ni || !vector_op_i) begin
+    prev_op_q <= VRF;
   end else begin
     prev_op_q <= prev_op_d;
   end
 end
-assign prev_op_d = vrf_has_mem ? VRF : LSU;
+always_comb begin
+  case (prev_op_q)
+    VRF: prev_op_d = vrf_has_mem;
+    LSU: prev_op_d = (vector_op_i && lsu_resp_valid_i) ? vrf_has_mem : LSU;
+  endcase
+end
 
-assign vrf_data_rvalid_o = (prev_op_q == VRF) && data_rvalid_i;
-assign lsu_data_rvalid_o = (prev_op_q == LSU) && data_rvalid_i;
-assign vrf_data_err_o = (prev_op_q == VRF) && data_err_i;
-assign lsu_data_err_o = (prev_op_q == LSU) && data_err_i;
+assign vrf_data_rvalid_o = ((prev_op_q == VRF) && vector_op_i) && data_rvalid_i;
+assign lsu_data_rvalid_o = ((prev_op_q == LSU) || !vector_op_i) && data_rvalid_i;
+assign vrf_data_err_o = ((prev_op_q == VRF) && vector_op_i) && data_err_i;
+assign lsu_data_err_o = ((prev_op_q == LSU) || !vector_op_i) && data_err_i;
 
 ////////////////////////
 // Output multiplexer //

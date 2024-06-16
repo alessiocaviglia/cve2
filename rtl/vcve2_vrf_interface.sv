@@ -49,7 +49,9 @@ module vcve2_vrf_interface #(
     input  logic                  lsu_done_i,
 
     // CSR signals
-    input vcve2_pkg::vlmul_e      lmul_i
+    input vcve2_pkg::vlmul_e      lmul_i,
+    input vcve2_pkg::vsew_e       sew_i,
+    input logic [31:0]            vl_i
 );
 
   import vcve2_pkg::*;

@@ -287,6 +287,8 @@ module vcve2_core import vcve2_pkg::*; #(
   logic [31:0] vstart_q, vstart_d;
   logic [31:0] vxrm_q, vxrm_d;
   logic [31:0] vxsat_q, vxsat_d;
+  // EEW/EMUL
+  logic [2:0] vmem_ops_eew;
   // Vector Register File
   logic vrf_req; // Request signal for the vector register file
   logic [31:0] vrf_rdata_a; // First read port of vector register file
@@ -297,7 +299,9 @@ module vcve2_core import vcve2_pkg::*; #(
   logic vrf_interleaved; // Signal indicating that the VRF memory accesses will be interleaved
   logic vector_done; // Signal indicating that the vector operation is done
   logic vrf_lsu_req; // Signal from the VRF that tells the LSU to start the memory operation
-  // data memory interface
+  vsew_e vrf_vsew;
+  vlmul_e vrf_vlmul;
+  // Data memory interface
   logic vrf_data_req;
   logic vrf_data_gnt;
   logic vrf_data_rvalid;
@@ -306,7 +310,7 @@ module vcve2_core import vcve2_pkg::*; #(
   logic [31:0] vrf_data_wdata;
   logic [31:0] vrf_data_rdata;
   logic vrf_data_err;
-  // agu signals
+  // AGU signals
   logic agu_load;
   logic agu_get_rs1;
   logic agu_get_rs2;
@@ -568,7 +572,8 @@ module vcve2_core import vcve2_pkg::*; #(
     .vl_max_o(vl_max),
     .vl_keep_o(vl_keep),
     // LSU
-    .unit_stride_o(unit_stride)
+    .unit_stride_o(unit_stride),
+    .vmem_ops_eew_o(vmem_ops_eew)
   );
 
   // for RVFI only
@@ -737,6 +742,8 @@ module vcve2_core import vcve2_pkg::*; #(
     .lsu_data_wdata_i(lsu_data_wdata),
     .lsu_data_rdata_o(lsu_data_rdata),
     .lsu_data_err_o(lsu_data_err),
+    .lsu_resp_valid_i(lsu_resp_valid),
+    .lsu_busy_i(lsu_busy),
     // Control signals
     .vector_op_i(vrf_req),
     .vector_mem_op_i(vrf_lsu_req)
@@ -894,7 +901,11 @@ module vcve2_core import vcve2_pkg::*; #(
     .vector_done_o(vector_done),
     .lsu_req_o(vrf_lsu_req),
     .lsu_done_i(lsu_resp_valid),
-    .lmul_i(vlmul_q)
+
+    // CSR
+    .lmul_i(vrf_vlmul),
+    .sew_i(vrf_vsew),
+    .vl_i(vl_q)
   );
 
   // AGU, translates the VR numbero to a memory address
@@ -1037,7 +1048,6 @@ module vcve2_core import vcve2_pkg::*; #(
     end
   end
 
-  // I need to add AVL support
   // ALU operand a - AVL
   // ALU operand b - new vtype setting
   logic [31:0] new_vlmax;
@@ -1160,6 +1170,46 @@ module vcve2_core import vcve2_pkg::*; #(
       end
     end
   end
+
+  vsew_e mem_eew;
+  vlmul_e mem_lmul;
+
+  // Logic for EEW/EMUL for vector memory operations
+  always_comb begin
+    if (vrf_memory_op) begin
+      unique case (vmem_ops_eew)
+        3'b000: mem_eew = VSEW_8;
+        3'b101: mem_eew = VSEW_16;
+        3'b110: mem_eew = VSEW_32;
+        default: mem_eew = VSEW_INVALID;
+      endcase
+      mem_lmul = (mem_eew<<vsew_q) >> vlmul_q;
+      unique case ({mem_eew, mem_lmul})
+        {VSEW_8, VLMUL_F4},
+        {VSEW_8, VLMUL_F2},
+        {VSEW_8, VLMUL_1},
+        {VSEW_8, VLMUL_2},
+        {VSEW_8, VLMUL_4},
+        {VSEW_8, VLMUL_8},
+        {VSEW_16, VLMUL_F2},
+        {VSEW_16, VLMUL_1},
+        {VSEW_16, VLMUL_2},
+        {VSEW_16, VLMUL_4},
+        {VSEW_16, VLMUL_8},
+        {VSEW_32, VLMUL_1},
+        {VSEW_32, VLMUL_2},
+        {VSEW_32, VLMUL_4},
+        {VSEW_32, VLMUL_8}: ;
+        default: begin
+          // raise illegal instruction exception
+        end
+      endcase
+    end
+  end
+
+  // Multiplexers for VRF EEW/EMUL
+  assign vrf_vsew = vrf_memory_op ? mem_eew : vsew_q;
+  assign vrf_vlmul = vrf_memory_op ? mem_lmul : vlmul_q;
 
 
   // These assertions are in top-level as instr_valid_id required as the enable term

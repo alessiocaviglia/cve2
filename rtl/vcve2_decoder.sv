@@ -106,7 +106,8 @@ module vcve2_decoder #(
   output logic                  vl_max_o,              // set vl to VLMAX
   output logic                  vl_keep_o,             // keep current value of vl
   // LSU
-  output logic                  unit_stride_o          // 1 - unit strided, 0 - constant strided
+  output logic                  unit_stride_o,         // 1 - unit strided, 0 - constant strided
+  output logic [2:0]            vmem_ops_eew_o         // vector memory operation width
 );
 
   import vcve2_pkg::*;
@@ -152,6 +153,8 @@ module vcve2_decoder #(
   // Vector immediate extraction
   assign imm_v_type_o = { {27{instr[19]}}, instr_rs1 };
   assign imm_vcfg_o = {{21{1'b0}}, instr[30] & ~instr[31], instr[29:20]}; // same as they do in Vicuna
+  // Vector memory operation width
+  assign vmem_ops_eew_o = instr[14:12];
 
   // immediate for CSR manipulation (zero extended)
   assign zimm_rs1_type_o = { 27'b0, instr_rs1 }; // rs1

@@ -169,7 +169,9 @@ module vcve2_id_stage #(
   output logic                      vcfg_write_o,
   output logic                      vl_max_o,
   output logic                      vl_keep_o,
-  output logic                      unit_stride_o
+  // Vector memory operations
+  output logic                      unit_stride_o,
+  output logic [2:0]                vmem_ops_eew_o
 
 );
 
@@ -472,7 +474,8 @@ module vcve2_id_stage #(
     .vl_max_o(vl_max_o),                // set vl to VLMAX
     .vl_keep_o(vl_keep_o),              // keep current value of vl
     // LSU
-    .unit_stride_o(unit_stride_o)
+    .unit_stride_o(unit_stride_o),
+    .vmem_ops_eew_o(vmem_ops_eew_o)     // element width for vector memory operations
     
   );
 
