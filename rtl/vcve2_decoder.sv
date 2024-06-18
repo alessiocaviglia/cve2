@@ -669,24 +669,49 @@ module vcve2_decoder #(
       //////////////////////
 
       OPCODE_LOAD_V: begin  // Vector Load
+        // VRF control signals
         vrf_req_o = 1'b1;
         vrf_we_o = 1'b1;
         vrf_memory_op_o = 1'b1;
         vrf_sel_operation_o = 4'b1000;
         rf_ren_a_o          = 1'b1;
-        data_type_o         = 2'b00;
-        unit_stride_o       = 1'b1;       // now I only implement this
+        case (instr[27:26])                 // only support strided mem operations
+          2'b00: unit_stride_o = 1'b1;
+          2'b10: unit_stride_o = 1'b0;
+          default: illegal_insn = 1'b1;
+        endcase
+        if (!unit_stride_o) begin
+          rf_ren_b_o         = 1'b1;            // read enable for offset
+          case (vmem_ops_eew_o)                 // only support strided mem operations
+            3'b000: data_type_o = 2'b10;   // lb
+            3'b101: data_type_o = 2'b01;  // lh
+            3'b110: data_type_o = 2'b00;  // lw
+            default: illegal_insn = 1'b1;
+          endcase
+        end
       end
 
       OPCODE_STORE_V: begin  // Vector Store
+        // VRF control signals
         vrf_req_o = 1'b1;
         vrf_memory_op_o = 1'b1;
         vrf_sel_operation_o = 4'b0100;
         rf_ren_a_o         = 1'b1;
-        rf_ren_b_o         = 1'b1;
-        data_we_o          = 1'b1;
-        data_type_o         = 2'b00;
-        unit_stride_o       = 1'b1;       // now I only implement this
+        data_we_o          = 1'b1;        // write enable for data memory
+        case (instr[27:26])                 // only support strided mem operations
+          2'b00: unit_stride_o = 1'b1;
+          2'b10: unit_stride_o = 1'b0;
+          default: illegal_insn = 1'b1;
+        endcase
+        if (!unit_stride_o) begin
+          rf_ren_b_o         = 1'b1;            // read enable for offset
+          case (vmem_ops_eew_o)                 // only for constant-strided because in unit-strided accesses are independent on EEW
+            3'b000: data_type_o = 2'b10;   // lb
+            3'b101: data_type_o = 2'b01;  // lh
+            3'b110: data_type_o = 2'b00;  // lw
+            default: illegal_insn = 1'b1;
+          endcase
+        end
       end
 
       OPCODE_OP_V: begin  // Vector Operations
@@ -1266,11 +1291,13 @@ module vcve2_decoder #(
       OPCODE_LOAD_V: begin
         alu_op_b_mux_sel_o = OP_B_REG_B;
         alu_op_a_mux_sel_o = OP_A_MEMADDR;
+        alu_operator_o = ALU_ADD;
       end
 
       OPCODE_STORE_V: begin
         alu_op_b_mux_sel_o = OP_B_REG_B;
         alu_op_a_mux_sel_o = OP_A_MEMADDR;
+        alu_operator_o = ALU_ADD;
       end
 
       OPCODE_OP_V: begin

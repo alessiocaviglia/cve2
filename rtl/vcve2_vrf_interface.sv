@@ -56,7 +56,7 @@ module vcve2_vrf_interface #(
 
   import vcve2_pkg::*;
 
-  parameter NUM_MEM_OPS = VLEN >> ($clog2(PIPE_WIDTH)); // VLEN/PIPE_WIDTH
+  parameter NUM_BYTE_OPS = (VLEN >> ($clog2(PIPE_WIDTH))) << 2; // (VLEN/PIPE_WIDTH) / 8 
 
   // VRF FSM signals
   vcve2_pkg::vrf_state_t vrf_state, vrf_next_state;
@@ -148,9 +148,9 @@ module vcve2_vrf_interface #(
           if (memory_op_i) data_load_addr_o = 1'b1;
           // ITERATIONS COUNTER - we sample the correct value of num_iterations
           if ($signed(lmul_i) < 0) begin
-            num_iterations_d = NUM_MEM_OPS >> -$signed(lmul_i);
+            num_iterations_d = (NUM_BYTE_OPS >> sew_i)  >> -$signed(lmul_i);
           end else begin
-            num_iterations_d = NUM_MEM_OPS << $signed(lmul_i);
+            num_iterations_d = (NUM_BYTE_OPS >> sew_i) << $signed(lmul_i);
           end
           vrf_next_state = VRF_START;
         end

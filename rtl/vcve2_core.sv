@@ -1178,12 +1178,43 @@ module vcve2_core import vcve2_pkg::*; #(
   always_comb begin
     if (vrf_memory_op) begin
       unique case (vmem_ops_eew)
-        3'b000: mem_eew = VSEW_8;
-        3'b101: mem_eew = VSEW_16;
-        3'b110: mem_eew = VSEW_32;
-        default: mem_eew = VSEW_INVALID;
+        3'b000: begin
+          mem_eew = VSEW_8;
+          unique case (vsew_q)
+            VSEW_8: mem_lmul = vlmul_q;
+            VSEW_16: mem_lmul = vlmul_q-1;
+            VSEW_32: mem_lmul = vlmul_q-2;
+            default: begin
+              // raise illegal instruction exception
+            end
+          endcase
+        end
+        3'b101: begin
+          mem_eew = VSEW_16;
+          unique case (vsew_q)
+            VSEW_8: mem_lmul = vlmul_q+1;
+            VSEW_16: mem_lmul = vlmul_q;
+            VSEW_32: mem_lmul = vlmul_q-1;
+            default: begin
+              // raise illegal instruction exception
+            end
+          endcase
+        end
+        3'b110: begin
+          mem_eew = VSEW_32;
+          unique case (vsew_q)
+            VSEW_8: mem_lmul = vlmul_q+2;
+            VSEW_16: mem_lmul = vlmul_q+1;
+            VSEW_32: mem_lmul = vlmul_q;
+            default: begin
+              // raise illegal instruction exception
+            end
+          endcase
+        end
+        default: begin
+          // raise illegal instruction exception
+        end
       endcase
-      mem_lmul = (mem_eew<<vsew_q) >> vlmul_q;
       unique case ({mem_eew, mem_lmul})
         {VSEW_8, VLMUL_F4},
         {VSEW_8, VLMUL_F2},
