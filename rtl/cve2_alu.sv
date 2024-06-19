@@ -112,7 +112,8 @@ module cve2_alu #(
     .operand_a_i(adder_in_a),
     .operand_b_i(adder_in_b),
     .result_o(adder_result_ext_o),
-    .sew_i(adder_ew)
+    .sew_i(adder_ew),
+    .is_sub_i(adder_op_b_negate)
   );
   // Extract the 32-bit result from the 34-bit result
   assign adder_result = adder_result_ext_o[32:1];

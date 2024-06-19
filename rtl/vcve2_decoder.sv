@@ -742,6 +742,9 @@ module vcve2_decoder #(
             {6'b00_0000, 3'b011}: begin    // vadd.vi
             end
             {6'b00_0010, 3'b000}: begin    // vsub.vv
+              vrf_we_o = 1'b1;
+              vrf_sel_operation_o = 4'b1011;
+              vrf_interleaved_o = 1'b1;
             end
             {6'b00_0010, 3'b100}: begin    // vsub.vx
             end
@@ -1337,6 +1340,9 @@ module vcve2_decoder #(
             {6'b00_0000, 3'b011}: begin    // vadd.vi
             end
             {6'b00_0010, 3'b000}: begin    // vsub.vv
+              alu_op_a_mux_sel_o = OP_A_VREG;
+              alu_op_b_mux_sel_o = OP_B_VREG;
+              alu_operator_o = ALU_SUB;
             end
             {6'b00_0010, 3'b100}: begin    // vsub.vx
             end
