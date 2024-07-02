@@ -58,10 +58,14 @@ assign lsu_data_gnt_o = !vrf_has_mem && data_gnt_i;
 
 // second cycle responses
 always_ff @(posedge clk_i or negedge rst_ni) begin
-  if (!rst_ni || !vector_op_i) begin
+  if (!rst_ni) begin
     prev_op_q <= VRF;
   end else begin
-    prev_op_q <= prev_op_d;
+    if (!vector_op_i) begin
+      prev_op_q <= VRF;
+    end else begin
+      prev_op_q <= prev_op_d;
+    end
   end
 end
 always_comb begin

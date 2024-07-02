@@ -258,6 +258,7 @@ module vcve2_decoder #(
     vl_keep_o             = 1'b0;
     vrf_memory_op_o       = 1'b0;
     vrf_interleaved_o    = 1'b0;
+    unit_stride_o         = 1'b0;
 
     opcode                = opcode_e'(instr[6:0]);
 
@@ -680,7 +681,7 @@ module vcve2_decoder #(
           2'b10: unit_stride_o = 1'b0;
           default: illegal_insn = 1'b1;
         endcase
-        if (!unit_stride_o) begin
+        if (instr[27:26] == 2'b10) begin  // if not unit-strided
           rf_ren_b_o         = 1'b1;            // read enable for offset
           case (vmem_ops_eew_o)                 // only support strided mem operations
             3'b000: data_type_o = 2'b10;   // lb
@@ -703,7 +704,7 @@ module vcve2_decoder #(
           2'b10: unit_stride_o = 1'b0;
           default: illegal_insn = 1'b1;
         endcase
-        if (!unit_stride_o) begin
+        if (instr[27:26] == 2'b10) begin  // if not unit-strided
           rf_ren_b_o         = 1'b1;            // read enable for offset
           case (vmem_ops_eew_o)                 // only for constant-strided because in unit-strided accesses are independent on EEW
             3'b000: data_type_o = 2'b10;   // lb
@@ -1322,8 +1323,6 @@ module vcve2_decoder #(
             // vsetvl
             alu_op_a_mux_sel_o = OP_A_REG_A;
             alu_op_b_mux_sel_o = OP_B_REG_B;
-          end else begin
-            illegal_insn = 1'b1;
           end
         end
         // Vector Arithmetic Instructions
@@ -1359,9 +1358,7 @@ module vcve2_decoder #(
               imm_a_mux_sel_o    = IMM_A_V;
               alu_operator_o = ALU_MOVE;
             end
-            default: begin
-              illegal_insn = 1'b1;
-            end
+            default: ;
           endcase
         end
 

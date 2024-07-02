@@ -179,24 +179,36 @@ module cve2_multdiv_fast import vcve2_pkg::*; #(
     logic [33:0]        mac_res_d_sca;
 
     
-    // INPUT MULTIPLEXERS 
+    // INPUT MULTIPLEXERS
     always_comb begin
+      mult1_op_a_vec = '0;
+      mult1_op_b_vec = '0;
+      mult2_op_a_vec = '0;
+      mult2_op_b_vec = '0;
+      mult3_op_a_vec = '0;
+      mult3_op_b_vec = '0;
+      mult1_sign_a_vec = 1'b0;
+      mult1_sign_b_vec = 1'b0;
+      mult2_sign_a_vec = 1'b0;
+      mult2_sign_b_vec = 1'b0;
+      mult3_sign_a_vec = 1'b0;
+      mult3_sign_b_vec = 1'b0;
       case (vsew_i)
         VSEW_8: begin
           // operands are sign extended to 16 bits - not sure this will work
-          mult1_op_a_vec = {{8{op_a_i[`OP_LL][7]}}, op_a_i[`OP_LL]};
-          mult1_op_b_vec = {{8{op_b_i[`OP_LL][7]}}, op_b_i[`OP_LL]};
-          mult2_op_a_vec = {{8{op_a_i[`OP_LH][7]}}, op_a_i[`OP_LH]};
-          mult2_op_b_vec = {{8{op_b_i[`OP_LH][7]}}, op_b_i[`OP_LH]};
-          mult3_op_a_vec = {{8{op_a_i[`OP_HL][7]}}, op_a_i[`OP_HL]};
-          mult3_op_b_vec = {{8{op_b_i[`OP_HL][7]}}, op_b_i[`OP_HL]};
+          mult1_op_a_vec = {{8{op_a_i[7]}}, op_a_i[`OP_LL]};
+          mult1_op_b_vec = {{8{op_b_i[7]}}, op_b_i[`OP_LL]};
+          mult2_op_a_vec = {{8{op_a_i[15]}}, op_a_i[`OP_LH]};
+          mult2_op_b_vec = {{8{op_b_i[15]}}, op_b_i[`OP_LH]};
+          mult3_op_a_vec = {{8{op_a_i[23]}}, op_a_i[`OP_HL]};
+          mult3_op_b_vec = {{8{op_b_i[23]}}, op_b_i[`OP_HL]};
           // the sign bits are the sign bits of the operands
-          mult1_sign_a_vec = op_a_i[`OP_LL][7];
-          mult1_sign_b_vec = op_b_i[`OP_LL][7];
-          mult2_sign_a_vec = op_a_i[`OP_LH][7];
-          mult2_sign_b_vec = op_b_i[`OP_LH][7];
-          mult3_sign_a_vec = op_a_i[`OP_HL][7];
-          mult3_sign_b_vec = op_b_i[`OP_HL][7];
+          mult1_sign_a_vec = op_a_i[7];
+          mult1_sign_b_vec = op_b_i[7];
+          mult2_sign_a_vec = op_a_i[15];
+          mult2_sign_b_vec = op_b_i[15];
+          mult3_sign_a_vec = op_a_i[23];
+          mult3_sign_b_vec = op_b_i[23];
         end
         VSEW_16: begin
           // I only need wo multipliers for this case
@@ -205,19 +217,13 @@ module cve2_multdiv_fast import vcve2_pkg::*; #(
           mult2_op_a_vec = op_a_i[`OP_H];
           mult2_op_b_vec = op_b_i[`OP_H];
           // the sign is the same as the operands
-          mult1_sign_a_vec = op_a_i[`OP_L][15];
-          mult1_sign_b_vec = op_b_i[`OP_L][15];
+          mult1_sign_a_vec = op_a_i[15];
+          mult1_sign_b_vec = op_b_i[15];
         end
         VSEW_32: begin
           // all assignments are the same as the scalar case
         end
         default: begin
-          mult1_op_a_vec = '0;
-          mult1_op_b_vec = '0;
-          mult2_op_a_vec = '0;
-          mult2_op_b_vec = '0;
-          mult3_op_a_vec = '0;
-          mult3_op_b_vec = '0;
         end
       endcase
     end
@@ -272,6 +278,7 @@ module cve2_multdiv_fast import vcve2_pkg::*; #(
 
     // OUTPUT MULTIPLEXERS - TODO verify I don't need conversions
     always_comb begin
+      mult_res_vec = '0;
       case (vsew_i)
         VSEW_8: begin
           mult_res_vec = {mult4_res, mult3_res[7:0], mult2_res[7:0], mult1_res[7:0]};
@@ -283,7 +290,6 @@ module cve2_multdiv_fast import vcve2_pkg::*; #(
           // I use the scalar one
         end
         default: begin
-          mult_res_vec = '0;
         end
       endcase
     end

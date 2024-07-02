@@ -87,7 +87,6 @@ module vcve2_vrf_interface #(
   ////////////////
 
   assign data_be_o = 4'b1111;
-  assign data_wdata_o = wdata_i;
 
   /////////////
   // VRF FSM //

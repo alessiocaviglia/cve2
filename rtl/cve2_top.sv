@@ -138,12 +138,14 @@ module cve2_top import vcve2_pkg::*; #(
   assign core_sleep_o = fetch_enable_q & !clock_en;
   assign fetch_enable_d = fetch_enable_i ? 1'b1 : fetch_enable_q;
 
+  `ifndef SYNTHESIS
   cve2_clock_gate core_clock_gate_i (
     .clk_i    (clk_i),
     .en_i     (clock_en),
     .scan_cg_en_i(test_en_i),
     .clk_o    (clk)
   );
+  `endif
 
   ////////////////////////
   // Core instantiation //

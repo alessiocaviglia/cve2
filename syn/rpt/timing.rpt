@@ -1,0 +1,50 @@
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 1
+Design : cve2_top
+Version: R-2020.09-SP2
+Date   : Sun Jun 30 10:26:56 2024
+****************************************
+
+ # A fanout number of 1000 was used for high fanout net computations.
+
+Operating Conditions: WCCOM   Library: tcbn65lpwc
+Wire Load Model Mode: segmented
+
+  Startpoint: fetch_enable_q_reg
+              (rising edge-triggered flip-flop clocked by INPUT_CLK)
+  Endpoint: fetch_enable_q_reg
+            (rising edge-triggered flip-flop clocked by INPUT_CLK)
+  Path Group: INPUT_CLK
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  cve2_top           ZeroWireload          tcbn65lpwc
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock INPUT_CLK (rise edge)              0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  fetch_enable_q_reg/CP (DFCNQD1)          0.00       0.00 r
+  fetch_enable_q_reg/Q (DFCNQD1)           0.24       0.24 r
+  U3/Z (OR2D1)                             0.09       0.32 r
+  fetch_enable_q_reg/D (DFCNQD1)           0.00       0.32 r
+  data arrival time                                   0.32
+
+  clock INPUT_CLK (rise edge)              3.90       3.90
+  clock network delay (ideal)              0.00       3.90
+  fetch_enable_q_reg/CP (DFCNQD1)          0.00       3.90 r
+  library setup time                      -0.05       3.85
+  data required time                                  3.85
+  -----------------------------------------------------------
+  data required time                                  3.85
+  data arrival time                                  -0.32
+  -----------------------------------------------------------
+  slack (MET)                                         3.52
+
+
+1

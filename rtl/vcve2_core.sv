@@ -1176,6 +1176,8 @@ module vcve2_core import vcve2_pkg::*; #(
 
   // Logic for EEW/EMUL for vector memory operations
   always_comb begin
+    mem_eew = '0;
+    mem_lmul = '0;
     if (vrf_memory_op) begin
       unique case (vmem_ops_eew)
         3'b000: begin

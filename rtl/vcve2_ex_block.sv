@@ -83,8 +83,7 @@ module vcve2_ex_block #(
 
   assign alu_imd_val_q = '{imd_val_q_i[0][31:0], imd_val_q_i[1][31:0]};
 
-  assign alu_mv_result = (alu_operator_i == ALU_MOVE) ? alu_operand_a_i : alu_result;
-  assign result_ex_o  = multdiv_sel ? multdiv_result : alu_mv_result;
+  assign result_ex_o  = multdiv_sel ? multdiv_result : (alu_operator_i == ALU_MOVE) ? alu_mv_result : alu_result;
 
   // branch handling
   assign branch_decision_o  = alu_cmp_result;
@@ -93,6 +92,22 @@ module vcve2_ex_block #(
   //logic [31:0] unused_bt_a_operand, unused_bt_b_operand;
 
   assign branch_target_o = alu_adder_result_ex_o;
+
+  /////////////////
+  // Vector MOVE //
+  /////////////////
+
+  logic sign_mv;
+  assign sign_mv = alu_operand_a_i[31];
+  // Build the vector move result depending on SEW
+  always_comb begin
+    case (vsew_i)
+      VSEW_8:   alu_mv_result = {alu_operand_a_i[7:0], alu_operand_a_i[7:0], alu_operand_a_i[7:0], alu_operand_a_i[7:0]};
+      VSEW_16:  alu_mv_result = {alu_operand_a_i[15:0], alu_operand_a_i[15:0]};
+      VSEW_32:  alu_mv_result = alu_operand_a_i[31:0];
+      default:  alu_mv_result = '0;
+    endcase
+  end
 
   /////////
   // ALU //

@@ -36,6 +36,12 @@ filesets:
       - bhv/cve2_sim_clock_gate.sv
     file_type: systemVerilogSource
 
+  files_after_syn:
+    files:
+      - syn/netlist/netlist.v
+      - syn/netlist/tcbn65lp.v
+    file_type: verilogSource
+
 parameters:
   RVFI:
     datatype: bool
@@ -73,11 +79,29 @@ targets:
     filesets:
       - tool_verilator ? (files_lint_verilator)
       - tool_veriblelint ? (files_lint_verible)
-      - files_rtl
-      - target_sim ? (files_clk_gate)
+      - cve2_sim ? (files_rtl)
+      - cve2_syn_sim ? (files_after_syn)
+      - cve2_sim ? (files_clk_gate)
     toplevel: cve2_top
     parameters:
       - tool_vivado ? (FPGA_XILINX=true)
+
+  synth:
+    filesets:
+      - files_rtl
+    parameters:
+      - SYNTHESIS=true
+    default_tool: design_compiler
+    toplevel:
+      - cve2_top
+    tools:
+      design_compiler:
+        script_dir: # WRT syn/build/syn-design_compiler
+          - ../../scripts
+        report_dir:  # WRT syn/build/syn-design_compiler
+          - ../../rpt
+        dc_script: 
+          - dc_script.tcl
 
   lint:
     <<: *default_target
