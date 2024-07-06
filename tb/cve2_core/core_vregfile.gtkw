@@ -5,7 +5,7 @@
 [dumpfile] "/home/alessio99/tristan/thesis/hw/cve2/tb/build/alessiocaviglia_vcve2_vcve2_sim_0.1/default-verilator/waveform.vcd"
 [dumpfile_mtime] "Thu May 23 12:34:11 2024"
 [dumpfile_size] 114721
-[savefile] "/home/alessio99/tristan/thesis/hw/cve2/tb/cve2_core/core_vregfile.gtkw"
+[savefile] "/home/alessio99/tristan/thesis/hw/cve2/tb/vcve2_core/core_vregfile.gtkw"
 [timestart] 0
 [size] 1848 1016
 [pos] -39 -39

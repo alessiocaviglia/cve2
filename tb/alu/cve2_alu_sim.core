@@ -7,7 +7,7 @@ filesets:
     depend:
       - openhwgroup:cve2:vcve2_pkg
     files:
-      - ../../rtl/cve2_alu.sv
+      - ../../rtl/vcve2_alu.sv
     file_type: systemVerilogSource
 
   tb-verilator:
@@ -21,7 +21,7 @@ targets:
     filesets:
       - files_rtl
       - tb-verilator
-    toplevel: cve2_alu
+    toplevel: vcve2_alu
     tools:
       verilator:
         mode: cc

@@ -6,9 +6,9 @@ Warning: Design has unannotated sequential cell outputs. (PWR-415)
 ****************************************
 Report : power
         -analysis_effort low
-Design : cve2_top
+Design : vcve2_top
 Version: R-2020.09-SP2
-Date   : Thu Jul  4 10:24:20 2024
+Date   : Sat Jul  6 17:57:32 2024
 ****************************************
 
 
@@ -22,7 +22,7 @@ Wire Load Model Mode: segmented
 
 Design        Wire Load Model            Library
 ------------------------------------------------
-cve2_top               ZeroWireload      tcbn65lpwc
+vcve2_top              ZeroWireload      tcbn65lpwc
 
 
 Global Operating Voltage = 1.08 

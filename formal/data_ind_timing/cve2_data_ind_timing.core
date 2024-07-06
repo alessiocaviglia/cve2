@@ -9,7 +9,7 @@ description: "Formal test for data independent timing"
 filesets:
   testbench:
     depend:
-      - alessiocaviglia:vcve2:vcve2_pkg
+      - alessiocaviglia:thesis:vcve2_pkg
       - lowrisc:cve2:cve2_multdiv
       - lowrisc:util:sv2v
     files:
@@ -76,7 +76,7 @@ targets:
   slow: &slow
     filesets:
       - testbench
-    toplevel: cve2_multdiv_slow
+    toplevel: vcve2_multdiv_slow
     default_tool: symbiyosys
     tools:
       symbiyosys:
@@ -113,7 +113,7 @@ targets:
 
   fast: &fast
     <<: *slow
-    toplevel: cve2_multdiv_fast
+    toplevel: vcve2_multdiv_fast
     tools:
       symbiyosys:
         tasknames:

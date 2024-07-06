@@ -26,26 +26,26 @@ INC_DIRS :=                    \
 
 # SystemVerilog sources of Ibex
 SRCS_SV ?=                              \
-  $(SRC_DIR)/cve2_alu.sv                \
-  $(SRC_DIR)/cve2_compressed_decoder.sv \
-  $(SRC_DIR)/cve2_controller.sv         \
-  $(SRC_DIR)/cve2_counter.sv            \
-  $(SRC_DIR)/cve2_csr.sv                \
-  $(SRC_DIR)/cve2_cs_registers.sv       \
+  $(SRC_DIR)/vcve2_alu.sv                \
+  $(SRC_DIR)/vcve2_compressed_decoder.sv \
+  $(SRC_DIR)/vcve2_controller.sv         \
+  $(SRC_DIR)/vcve2_counter.sv            \
+  $(SRC_DIR)/vcve2_csr.sv                \
+  $(SRC_DIR)/vcve2_cs_registers.sv       \
   $(SRC_DIR)/vcve2_decoder.sv            \
   $(SRC_DIR)/vcve2_ex_block.sv           \
-  $(SRC_DIR)/cve2_fetch_fifo.sv         \
+  $(SRC_DIR)/vcve2_fetch_fifo.sv         \
   $(SRC_DIR)/vcve2_id_stage.sv           \
-  $(SRC_DIR)/cve2_if_stage.sv           \
-  $(SRC_DIR)/cve2_load_store_unit.sv    \
-  $(SRC_DIR)/cve2_multdiv_fast.sv       \
-  $(SRC_DIR)/cve2_multdiv_slow.sv       \
-  $(SRC_DIR)/cve2_prefetch_buffer.sv    \
-  $(SRC_DIR)/cve2_pmp.sv                \
-  $(SRC_DIR)/cve2_register_file_ff.sv   \
+  $(SRC_DIR)/vcve2_if_stage.sv           \
+  $(SRC_DIR)/vcve2_load_store_unit.sv    \
+  $(SRC_DIR)/vcve2_multdiv_fast.sv       \
+  $(SRC_DIR)/vcve2_multdiv_slow.sv       \
+  $(SRC_DIR)/vcve2_prefetch_buffer.sv    \
+  $(SRC_DIR)/vcve2_pmp.sv                \
+  $(SRC_DIR)/vcve2_register_file_ff.sv   \
   $(SRC_DIR)/vcve2_wb.sv                 \
   $(SRC_DIR)/vcve2_core.sv               \
-  $(SRC_DIR)/cve2_top.sv
+  $(SRC_DIR)/vcve2_top.sv
 
 PKGS ?=                                        \
   $(SRC_DIR)/vcve2_pkg.sv                       \
@@ -71,8 +71,8 @@ $(GEN_V): $(OUTDIR)%.v: $(SRC_DIR)%.sv $(PKGS) | $(OUTDIR)
 # Disable "M" extension
 $(IBEX_OUT): $(GEN_V) $(PRIM_CLOCK)
 	yosys -p "read_verilog $(PRIM_CLOCK) $(GEN_V)"                     \
-	      -p "chparam -set RV32M 0 cve2_top"                           \
-	      -p "synth -top cve2_top"                                     \
+	      -p "chparam -set RV32M 0 vcve2_top"                           \
+	      -p "synth -top vcve2_top"                                     \
 	      -p "write_verilog $(IBEX_OUT)"
 
 .PHONY: clean

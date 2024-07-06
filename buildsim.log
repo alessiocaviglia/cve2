@@ -1,4 +1,4 @@
-INFO: Preparing alessiocaviglia:vcve2:vcve2_pkg:0.1
+INFO: Preparing alessiocaviglia:thesis:vcve2_pkg:0.1
 INFO: Preparing lowrisc:dv:dv_fcov_macros:0
 INFO: Preparing lowrisc:prim:assert:0.1
 INFO: Preparing lowrisc:prim:cipher_pkg:0.1
@@ -7,7 +7,7 @@ INFO: Preparing lowrisc:prim:ram_1p_pkg:0
 INFO: Preparing lowrisc:prim:secded:0.1
 INFO: Preparing lowrisc:prim:util:0.1
 INFO: Preparing lowrisc:prim:util_get_scramble_params:0
-INFO: Preparing alessiocaviglia:vcve2:vcve2_core:0.1
+INFO: Preparing alessiocaviglia:thesis:vcve2_core:0.1
 INFO: Preparing lowrisc:prim:cipher:0
 INFO: Preparing lowrisc:prim:lfsr:0.1
 INFO: Preparing lowrisc:prim:prim_pkg:0.1
@@ -17,7 +17,7 @@ INFO: Preparing lowrisc:prim:flop:0
 INFO: Preparing lowrisc:prim:ram_1p:0
 INFO: Preparing lowrisc:prim:ram_1p_adv:0.1
 INFO: Preparing lowrisc:prim:ram_1p_scr:0.1
-INFO: Preparing alessiocaviglia:vcve2:vcve2_top:0.1
+INFO: Preparing alessiocaviglia:thesis:vcve2_top:0.1
 INFO: Generating lowrisc:prim:prim_pkg-impl:0.1
 Creating prim_pkg.sv
 Core file written to prim_pkg.core.
@@ -57,7 +57,7 @@ Creating SystemVerilog module for abstract primitive
 Abstract primitive written to /home/thesis/alessio.caviglia/repo/thesis/hw/cve2/syn/build/synth-design_compiler/generated/lowrisc_prim_ram_1p-impl_0/prim_ram_1p.sv
 Creating core file for primitive ram_1p.
 Core file written to /home/thesis/alessio.caviglia/repo/thesis/hw/cve2/syn/build/synth-design_compiler/generated/lowrisc_prim_ram_1p-impl_0/prim_ram_1p.core
-INFO: Wrote dependency graph to /home/thesis/alessio.caviglia/repo/thesis/hw/cve2/syn/build/synth-design_compiler/alessiocaviglia_vcve2_vcve2_top_0.1.deps-after-generators.dot
+INFO: Wrote dependency graph to /home/thesis/alessio.caviglia/repo/thesis/hw/cve2/syn/build/synth-design_compiler/alessiocaviglia_thesis_vcve2_top_0.1.deps-after-generators.dot
 INFO: Wrote Makefile fragment to /home/thesis/alessio.caviglia/repo/thesis/hw/cve2/syn/build/synth-design_compiler/core-deps.mk
 INFO: Setting up project
 INFO: Building

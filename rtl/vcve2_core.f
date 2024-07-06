@@ -1,0 +1,17 @@
+vcve2_pkg.sv
+vcve2_alu.sv
+vcve2_compressed_decoder.sv
+vcve2_controller.sv
+vcve2_counter.sv
+vcve2_cs_registers.sv
+vcve2_decoder.sv
+vcve2_ex_block.sv
+vcve2_id_stage.sv
+vcve2_if_stage.sv
+vcve2_load_store_unit.sv
+vcve2_multdiv_slow.sv
+vcve2_multdiv_fast.sv
+vcve2_prefetch_buffer.sv
+vcve2_fetch_fifo.sv
+vcve2_register_file_ff.sv
+vcve2_core.sv

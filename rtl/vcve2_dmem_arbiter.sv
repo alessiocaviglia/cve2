@@ -70,8 +70,8 @@ always_ff @(posedge clk_i or negedge rst_ni) begin
 end
 always_comb begin
   case (prev_op_q)
-    VRF: prev_op_d = vrf_has_mem;
-    LSU: prev_op_d = (vector_op_i && lsu_resp_valid_i) ? vrf_has_mem : LSU;
+    VRF: prev_op_d = dmem_op_t'(vrf_has_mem);
+    LSU: prev_op_d = (vector_op_i && lsu_resp_valid_i) ? dmem_op_t'(vrf_has_mem) : LSU;
   endcase
 end
 

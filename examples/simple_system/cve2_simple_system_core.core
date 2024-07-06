@@ -7,7 +7,7 @@ description: "Generic simple system for running binaries on ibex using verilator
 filesets:
   files_sim:
     depend:
-      - lowrisc:cve2:cve2_top_tracing
+      - lowrisc:cve2:vcve2_top_tracing
       - lowrisc:cve2:sim_shared
     files:
       - rtl/cve2_simple_system.sv

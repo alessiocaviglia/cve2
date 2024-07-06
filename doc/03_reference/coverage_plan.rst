@@ -258,8 +258,8 @@ Basic read/write functionality must be tested on all implemented CSRs.
 * Access to CSR disallowed due to privilege level/debug mode.
 * Read and write from/to an unimplemented CSR
 
-CSRs addresses do not need to be crossed with the variety of CSR instructions as these all use the same basic read & write interface into ``cve2_cs_registers``.
-Coverage of the above points will be sampled at the ``cve2_cs_registers`` interface (as opposed to sampling CSR instructions).
+CSRs addresses do not need to be crossed with the variety of CSR instructions as these all use the same basic read & write interface into ``vcve2_cs_registers``.
+Coverage of the above points will be sampled at the ``vcve2_cs_registers`` interface (as opposed to sampling CSR instructions).
 
 Miscellaneous
 ^^^^^^^^^^^^^

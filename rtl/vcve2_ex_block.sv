@@ -111,7 +111,7 @@ module vcve2_ex_block #(
   // ALU //
   /////////
 
-  cve2_alu #(
+  vcve2_alu #(
     .RV32B(RV32B)
   ) alu_i (
     .operator_i         (alu_operator_i),
@@ -138,7 +138,7 @@ module vcve2_ex_block #(
   ////////////////
 
   if (RV32M == RV32MSlow) begin : gen_multdiv_slow
-    cve2_multdiv_slow multdiv_i (
+    vcve2_multdiv_slow multdiv_i (
       .clk_i             (clk_i),
       .rst_ni            (rst_ni),
       .mult_en_i         (mult_en_i),
@@ -162,7 +162,7 @@ module vcve2_ex_block #(
       .multdiv_result_o  (multdiv_result)
     );
   end else if (RV32M == RV32MFast || RV32M == RV32MSingleCycle) begin : gen_multdiv_fast
-    cve2_multdiv_fast #(
+    vcve2_multdiv_fast #(
       .RV32M(RV32M)
     ) multdiv_i (
       .clk_i             (clk_i),

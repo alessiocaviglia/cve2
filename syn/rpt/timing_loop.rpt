@@ -109,15 +109,15 @@ Information: Changed wire load model for '*ADD_UNS_OP_32_3_32' from '(none)' to 
 Information: Changed wire load model for 'DW01_add_width31' from '(none)' to 'ZeroWireload'. (OPT-170)
 Information: Changed wire load model for '*ADD_UNS_OP_31_2_31' from '(none)' to 'ZeroWireload'. (OPT-170)
 Information: Updating design information... (UID-85)
-Warning: Design 'cve2_top' contains 7 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+Warning: Design 'vcve2_top' contains 7 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
  
 ****************************************
 Report : timing
         -loops
         -max_paths 10
-Design : cve2_top
+Design : vcve2_top
 Version: R-2020.09-SP2
-Date   : Thu Jul  4 10:21:48 2024
+Date   : Sat Jul  6 17:54:52 2024
 ****************************************
 
  # A fanout number of 1000 was used for high fanout net computations.

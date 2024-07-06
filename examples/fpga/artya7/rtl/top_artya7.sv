@@ -35,7 +35,7 @@ module top_artya7 (
   logic [31:0] data_wdata;
   logic [31:0] data_rdata;
 
-  cve2_top #(
+  vcve2_top #(
      .RegFile(vcve2_pkg::RegFileFPGA),
      .DmHaltAddr(32'h00000000),
      .DmExceptionAddr(32'h00000000)

@@ -60,7 +60,7 @@ for file in ../rtl/*.sv; do
 done
 
 # remove tracer (not needed for synthesis)
-rm -f $LR_SYNTH_OUT_DIR/generated/cve2_tracer.v
+rm -f $LR_SYNTH_OUT_DIR/generated/vcve2_tracer.v
 
 # remove the FPGA & latch-based register file (because we will use the
 # register-based one instead)

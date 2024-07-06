@@ -2,7 +2,7 @@
 
 Register File
 =============
-Source File: :file:`rtl/cve2_register_file_ff.sv`
+Source File: :file:`rtl/vcve2_register_file_ff.sv`
 
 CVE2 has either 31 or 15 32-bit registers if the RV32E extension is disabled or enabled, respectively.
 Register ``x0`` is statically bound to 0 and can only be read, it does not contain any sequential logic.

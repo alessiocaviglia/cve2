@@ -158,7 +158,7 @@ module cve2_simple_system (
     .cfg_device_addr_mask
   );
 
-  cve2_top_tracing #(
+  vcve2_top_tracing #(
       .MHPMCounterNum  ( 29              ),
       .RV32E           ( RV32E           ),
       .RV32M           ( RV32M           ),
@@ -266,7 +266,7 @@ module cve2_simple_system (
   export "DPI-C" function mhpmcounter_get;
 
   function automatic longint unsigned mhpmcounter_get(int index);
-    return u_top.u_cve2_top.u_cve2_core.cs_registers_i.mhpmcounter[index];
+    return u_top.u_vcve2_top.u_cve2_core.cs_registers_i.mhpmcounter[index];
   endfunction
 
 endmodule

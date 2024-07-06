@@ -2,15 +2,15 @@ CAPI=2:
 # Copyright lowRISC contributors.
 # Licensed under the Apache License, Version 2.0, see LICENSE for details.
 # SPDX-License-Identifier: Apache-2.0
-name: "lowrisc:cve2:cve2_top_tracing:0.1"
+name: "lowrisc:cve2:vcve2_top_tracing:0.1"
 description: "Ibex, a small RV32 CPU core with tracing enabled"
 filesets:
   files_rtl:
     depend:
-      - alessiocaviglia:vcve2:vcve2_top
-      - lowrisc:cve2:cve2_tracer
+      - alessiocaviglia:thesis:vcve2_top
+      - lowrisc:cve2:vcve2_tracer
     files:
-      - rtl/cve2_top_tracing.sv
+      - rtl/vcve2_top_tracing.sv
     file_type: systemVerilogSource
 
 parameters:
@@ -101,7 +101,7 @@ targets:
       - files_rtl
     parameters:
       - RVFI=true
-    toplevel: cve2_top_tracing
+    toplevel: vcve2_top_tracing
 
   lint:
     <<: *default_target
@@ -136,7 +136,7 @@ targets:
       - SYNTHESIS=true
       - RVFI=true
     default_tool: veribleformat
-    toplevel: cve2_top_tracing
+    toplevel: vcve2_top_tracing
     tools:
       veribleformat:
         verible_format_args:

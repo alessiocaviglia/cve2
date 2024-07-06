@@ -2,41 +2,41 @@ CAPI=2:
 # Copyright lowRISC contributors.
 # Licensed under the Apache License, Version 2.0, see LICENSE for details.
 # SPDX-License-Identifier: Apache-2.0
-name: "alessiocaviglia:vcve2:vcve2_core:0.1"
+name: "alessiocaviglia:thesis:vcve2_core:0.1"
 description: "Ibex CPU Core Components"
 
 filesets:
   files_rtl:
     depend:
       - lowrisc:prim:assert
-      - alessiocaviglia:vcve2:vcve2_pkg
+      - alessiocaviglia:thesis:vcve2_pkg
       - lowrisc:dv:dv_fcov_macros
     files:
       - rtl/vcve2_fracturable_adder.sv
-      - rtl/cve2_alu.sv
-      - rtl/cve2_branch_predict.sv
-      - rtl/cve2_compressed_decoder.sv
-      - rtl/cve2_controller.sv
-      - rtl/cve2_cs_registers.sv
-      - rtl/cve2_csr.sv
-      - rtl/cve2_counter.sv
+      - rtl/vcve2_alu.sv
+      - rtl/vcve2_branch_predict.sv
+      - rtl/vcve2_compressed_decoder.sv
+      - rtl/vcve2_controller.sv
+      - rtl/vcve2_cs_registers.sv
+      - rtl/vcve2_csr.sv
+      - rtl/vcve2_counter.sv
       - rtl/vcve2_decoder.sv
       - rtl/vcve2_ex_block.sv
-      - rtl/cve2_fetch_fifo.sv
+      - rtl/vcve2_fetch_fifo.sv
       - rtl/vcve2_id_stage.sv
-      - rtl/cve2_if_stage.sv
-      - rtl/cve2_load_store_unit.sv
-      - rtl/cve2_multdiv_fast.sv
-      - rtl/cve2_multdiv_slow.sv
-      - rtl/cve2_prefetch_buffer.sv
-      - rtl/cve2_pmp.sv
+      - rtl/vcve2_if_stage.sv
+      - rtl/vcve2_load_store_unit.sv
+      - rtl/vcve2_multdiv_fast.sv
+      - rtl/vcve2_multdiv_slow.sv
+      - rtl/vcve2_prefetch_buffer.sv
+      - rtl/vcve2_pmp.sv
       - rtl/vcve2_wb.sv
       - rtl/vcve2_vrf_interface.sv
       - rtl/vce2_agu.sv
       - rtl/vcve2_lsu_interface.sv
       - rtl/vcve2_dmem_arbiter.sv
       - rtl/vcve2_core.sv
-      - rtl/cve2_pmp_reset_default.svh: {is_include_file: true}
+      - rtl/vcve2_pmp_reset_default.svh: {is_include_file: true}
     file_type: systemVerilogSource
 
   files_lint_verilator:

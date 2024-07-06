@@ -5,22 +5,22 @@ cve2:
   ]
   files: [
     rtl/vcve2_pkg.sv,
-    rtl/cve2_alu.sv,
-    rtl/cve2_compressed_decoder.sv,
-    rtl/cve2_controller.sv,
-    rtl/cve2_cs_registers.sv,
-    rtl/cve2_counters.sv,
+    rtl/vcve2_alu.sv,
+    rtl/vcve2_compressed_decoder.sv,
+    rtl/vcve2_controller.sv,
+    rtl/vcve2_cs_registers.sv,
+    rtl/vcve2_counters.sv,
     rtl/vcve2_decoder.sv,
     rtl/vcve2_ex_block.sv,
     rtl/vcve2_id_stage.sv,
-    rtl/cve2_if_stage.sv,
+    rtl/vcve2_if_stage.sv,
     rtl/vcve2_wb.sv,
-    rtl/cve2_load_store_unit.sv,
-    rtl/cve2_multdiv_slow.sv,
-    rtl/cve2_multdiv_fast.sv,
-    rtl/cve2_prefetch_buffer.sv,
-    rtl/cve2_fetch_fifo.sv,
-    rtl/cve2_pmp.sv,
+    rtl/vcve2_load_store_unit.sv,
+    rtl/vcve2_multdiv_slow.sv,
+    rtl/vcve2_multdiv_fast.sv,
+    rtl/vcve2_prefetch_buffer.sv,
+    rtl/vcve2_fetch_fifo.sv,
+    rtl/vcve2_pmp.sv,
     rtl/vcve2_core.sv,
     shared/rtl/prim_assert.sv,
   ]
@@ -32,8 +32,8 @@ cve2_vip_rtl:
   ]
   files: [
     rtl/vcve2_pkg.sv,
-    rtl/cve2_tracer_pkg.sv,
-    rtl/cve2_tracer.sv,
+    rtl/vcve2_tracer_pkg.sv,
+    rtl/vcve2_tracer.sv,
     rtl/cve2_core_tracing.sv,
   ]
 cve2_regfile_rtl:

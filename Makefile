@@ -59,7 +59,7 @@ run-simple-system: sw-simple-hello | $(Vcve2_simple_system)
 		--raminit=$(simple-system-program)
 
 compile_verilator:
-	fusesoc --cores-root . run --no-export --target=lint --tool=verilator --setup --build openhwgroup:cve2:cve2_top:0.1 2>&1 | tee buildsim.log
+	fusesoc --cores-root . run --no-export --target=lint --tool=verilator --setup --build alessiocaviglia:thesis:vcve2_top:0.1 2>&1 | tee buildsim.log
 
 # Arty A7 FPGA example
 # Use the following targets (depending on your hardware):
@@ -148,7 +148,7 @@ compile_core:
 .PHONY: syn-core
 syn-core:
 	make clean-syn
-	fusesoc --cores-root . run --build-root $(SYNTHESIS_DIR) --target=synth --tool=design_compiler --setup --build alessiocaviglia:vcve2:vcve2_top 2>&1 | tee buildsim.log
+	fusesoc --cores-root . run --build-root $(SYNTHESIS_DIR) --target=synth --tool=design_compiler --setup --build alessiocaviglia:thesis:vcve2_top 2>&1 | tee buildsim.log
 
 #-------#
 # Utils #
@@ -161,5 +161,6 @@ clean-syn:
 
 .PHONY: prepare-syn-sim
 prepare-syn-sim:
+	mkdir -p $(SYN_NETLIST_DIR)
 	cp $(SYNTHESIS_DIR)/synth-design_compiler/netlist.v $(SYN_NETLIST_DIR)/netlist.v
-	#cp /software/dk/tsmc65/digital/Front_End/verilog/tcbn65lp_200a/tcbn65lp.v $(SYN_NETLIST_DIR)/tcbn65lp.v
+	cp -n /software/dk/tsmc65/digital/Front_End/verilog/tcbn65lp_200a/tcbn65lp.v $(SYN_NETLIST_DIR)/tcbn65lp.v

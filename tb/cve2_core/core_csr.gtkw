@@ -5,7 +5,7 @@
 [dumpfile] "/home/alessio99/tristan/cve2/tb/build/alessiocaviglia_vcve2_vcve2_sim_0.1/default-verilator/waveform.vcd"
 [dumpfile_mtime] "Sat Apr  6 09:55:07 2024"
 [dumpfile_size] 139299
-[savefile] "/home/alessio99/tristan/cve2/tb/cve2_core/core_csr.gtkw"
+[savefile] "/home/alessio99/tristan/cve2/tb/vcve2_core/core_csr.gtkw"
 [timestart] 0
 [size] 1848 1016
 [pos] -39 -39

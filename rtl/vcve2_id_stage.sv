@@ -516,7 +516,7 @@ module vcve2_id_stage #(
 
   assign illegal_insn_o = instr_valid_i & (illegal_insn_dec | illegal_csr_insn_i);
 
-  cve2_controller #(
+  vcve2_controller #(
   ) controller_i (
     .clk_i (clk_i),
     .rst_ni(rst_ni),

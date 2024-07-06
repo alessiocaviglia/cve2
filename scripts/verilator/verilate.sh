@@ -2,8 +2,8 @@
 
 VLT_CONFIG="./lint/verilator_waiver.vlt"
 
-SV_DEPS="./vendor/lowrisc_ip/ip/prim/rtl/prim_ram_1p_pkg.sv rtl/vcve2_pkg.sv ./bhv/cve2_sim_clock_gate.sv"
-SV_TOP="./rtl/cve2_top.sv"
+SV_DEPS="./vendor/lowrisc_ip/ip/prim/rtl/prim_ram_1p_pkg.sv rtl/vcve2_pkg.sv ./bhv/vcve2_sim_clock_gate.sv"
+SV_TOP="./rtl/vcve2_top.sv"
 
 
 verilator --lint-only \

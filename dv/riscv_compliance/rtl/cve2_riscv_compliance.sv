@@ -110,7 +110,7 @@ module cve2_riscv_compliance (
     .cfg_device_addr_mask
   );
 
-  cve2_top_tracing #(
+  vcve2_top_tracing #(
       .PMPEnable       (PMPEnable       ),
       .PMPGranularity  (PMPGranularity  ),
       .PMPNumRegions   (PMPNumRegions   ),

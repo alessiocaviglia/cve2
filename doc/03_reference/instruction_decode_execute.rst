@@ -23,7 +23,7 @@ A small state machine is used to control multi-cycle instructions (see :ref:`pip
 
 Controller
 ----------
-Source File: :file:`rtl/cve2_controller.sv`
+Source File: :file:`rtl/vcve2_controller.sv`
 
 The Controller contains the state machine that controls the overall execution of the processor.
 It is responsible for:
@@ -42,7 +42,7 @@ The decoder takes uncompressed instruction data and issues appropriate control s
 
 Register File
 -------------
-Source Files: :file:`rtl/cve2_register_file_ff.sv` :file:`rtl/cve2_register_file_fpga.sv` :file:`rtl/cve2_register_file_latch.sv`
+Source Files: :file:`rtl/vcve2_register_file_ff.sv` :file:`rtl/cve2_register_file_fpga.sv` :file:`rtl/cve2_register_file_latch.sv`
 
 See :ref:`register-file` for more details.
 
@@ -54,7 +54,7 @@ The execute block contains the ALU and the multiplier/divider blocks, it does li
 
 Arithmetic Logic Unit (ALU)
 ---------------------------
-Source File: :file:`rtl/cve2_alu.sv`
+Source File: :file:`rtl/vcve2_alu.sv`
 
 The Arithmetic Logic Logic (ALU) is a purely combinational block that implements operations required for the Integer Computational Instructions and the comparison operations required for the Control Transfer Instructions in the RV32I RISC-V Specification.
 Other blocks use the ALU for the following tasks:
@@ -110,7 +110,7 @@ Bit-Manipulation Extension
 
 Multiplier/Divider Block (MULT/DIV)
 -----------------------------------
-Source Files: :file:`rtl/cve2_multdiv_slow.sv` :file:`rtl/cve2_multdiv_fast.sv`
+Source Files: :file:`rtl/vcve2_multdiv_slow.sv` :file:`rtl/vcve2_multdiv_fast.sv`
 
 The Multiplier/Divider (MULT/DIV) is a state machine driven block to perform multiplication and division.
 The fast and slow versions differ in multiplier only. All versions implement the same form of long division algorithm. The ALU block is used by the long division algorithm in all versions.
@@ -156,7 +156,7 @@ By setting the ``RV32M`` parameter to "vcve2_pkg::RV32MNone", the M-extension ca
 
 Control and Status Register Block (CSR)
 ---------------------------------------
-Source File: :file:`rtl/cve2_cs_registers.sv`
+Source File: :file:`rtl/vcve2_cs_registers.sv`
 
 The CSR contains all of the CSRs (control/status registers).
 Any CSR read/write is handled through this block.
@@ -166,7 +166,7 @@ Further detail on the implemented CSRs can be found in :ref:`cs-registers`
 
 Load-Store Unit (LSU)
 ---------------------
-Source File: :file:`rtl/cve2_load_store_unit.sv`
+Source File: :file:`rtl/vcve2_load_store_unit.sv`
 
 The Load-Store Unit (LSU) interfaces with main memory to perform load and store operations.
 See :ref:`load-store-unit` for more details.

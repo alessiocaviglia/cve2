@@ -337,7 +337,6 @@ module vcve2_core import vcve2_pkg::*; #(
   logic lsu_if_req;
   logic [31:0] lsu_if_wdata;
   logic [31:0] lsu_if_addr;
-  logic mux_data_if;
   logic lsu_if_load_addr;
   logic unit_stride;
   logic lsu_rvalid;
@@ -358,7 +357,7 @@ module vcve2_core import vcve2_pkg::*; #(
   // IF stage //
   //////////////
 
-  cve2_if_stage #(
+  vcve2_if_stage #(
     .DmHaltAddr       (DmHaltAddr),
     .DmExceptionAddr  (DmExceptionAddr)
   ) if_stage_i (
@@ -629,7 +628,7 @@ module vcve2_core import vcve2_pkg::*; #(
   assign data_req_o   = data_req_out & ~pmp_req_err[PMP_D];
   assign lsu_resp_err = lsu_load_err | lsu_store_err;
 
-  cve2_load_store_unit load_store_unit_i (
+  vcve2_load_store_unit load_store_unit_i (
     .clk_i (clk_i),
     .rst_ni(rst_ni),
 
@@ -827,7 +826,7 @@ module vcve2_core import vcve2_pkg::*; #(
   ////////////////////////
   // RF (Register File) //
   ////////////////////////
-  cve2_register_file_ff #(
+  vcve2_register_file_ff #(
     .RV32E            (RV32E),
     .DataWidth        (32),
     .WordZeroVal      (32'h0)
@@ -855,22 +854,17 @@ module vcve2_core import vcve2_pkg::*; #(
   // VRF interface, containing the logic for the vector register file
   vcve2_vrf_interface #(
     .VLEN(128),
-    .PIPE_WIDTH(32),
-    .AddrWidth(5)
+    .PIPE_WIDTH(32)
   ) vcve2_vrf_interface_inst (
     .clk_i(clk_i),
     .rst_ni(rst_ni),
 
     .req_i(vrf_req),
-    .we_i(vrf_we_wb),
 
-    .raddr_a_i(rf_raddr_a),
-    .raddr_b_i(rf_raddr_b),
     .rdata_a_o(vrf_rdata_a),
     .rdata_b_o(vrf_rdata_b),
     .rdata_c_o(vrf_rdata_c),
 
-    .waddr_i(rf_waddr_wb),
     .wdata_i(vrf_wdata_wb),
 
     // Data memory interface
@@ -935,7 +929,7 @@ module vcve2_core import vcve2_pkg::*; #(
   assign csr_wdata  = alu_operand_a_ex;
   assign csr_addr   = csr_num_e'(csr_access ? alu_operand_b_ex[11:0] : 12'b0);
 
-  cve2_cs_registers #(
+  vcve2_cs_registers #(
     .DbgTriggerEn     (DbgTriggerEn),
     .DbgHwBreakNum    (DbgHwBreakNum),
     .MHPMCounterNum   (MHPMCounterNum),
@@ -1269,7 +1263,7 @@ module vcve2_core import vcve2_pkg::*; #(
     assign pmp_req_type[PMP_D]  = data_we_o ? PMP_ACC_WRITE : PMP_ACC_READ;
     assign pmp_priv_lvl[PMP_D]  = priv_mode_lsu;
 
-    cve2_pmp #(
+    vcve2_pmp #(
       .PMPGranularity(PMPGranularity),
       .PMPNumChan    (PMP_NUM_CHAN),
       .PMPNumRegions (PMPNumRegions)
