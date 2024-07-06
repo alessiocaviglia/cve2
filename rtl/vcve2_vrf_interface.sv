@@ -1,7 +1,6 @@
 module vcve2_vrf_interface #(
     parameter int unsigned VLEN = 128,
-    parameter int unsigned PIPE_WIDTH = 32,
-    parameter int unsigned AddrWidth = 5
+    parameter int unsigned PIPE_WIDTH = 32
 ) (
     // Clock and Reset
     input   logic                       clk_i,
@@ -9,12 +8,9 @@ module vcve2_vrf_interface #(
 
     // Read ports
     input   logic                       req_i,
-    input   logic                       we_i,
-    input   logic [AddrWidth-1:0]       raddr_a_i, raddr_b_i,
     output  logic [PIPE_WIDTH-1:0]      rdata_a_o, rdata_b_o, rdata_c_o,
 
     // Write port
-    input   logic [AddrWidth-1:0]       waddr_i,
     input   logic [PIPE_WIDTH-1:0]      wdata_i,
 
     // Data memory interface

@@ -19,7 +19,7 @@ Information: Changed wire load model for 'cve2_csr_32_0_0' from '(none)' to 'Zer
 Information: Changed wire load model for 'cve2_csr_6_0c' from '(none)' to 'ZeroWireload'. (OPT-170)
 Information: Changed wire load model for 'cve2_cs_registers_1_00000001_00000000_00000028_0_00000000_00000004_0_3_0' from '(none)' to 'ZeroWireload'. (OPT-170)
 Information: Changed wire load model for 'vce2_agu_AddrWidth32' from '(none)' to 'ZeroWireload'. (OPT-170)
-Information: Changed wire load model for 'vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_AddrWidth5' from '(none)' to 'ZeroWireload'. (OPT-170)
+Information: Changed wire load model for 'vcve2_vrf_interface_VLEN128_PIPE_WIDTH32' from '(none)' to 'ZeroWireload'. (OPT-170)
 Information: Changed wire load model for 'cve2_register_file_ff_0_32_00000000' from '(none)' to 'ZeroWireload'. (OPT-170)
 Information: Changed wire load model for 'vcve2_wb' from '(none)' to 'ZeroWireload'. (OPT-170)
 Information: Changed wire load model for 'vcve2_dmem_arbiter' from '(none)' to 'ZeroWireload'. (OPT-170)
@@ -46,7 +46,7 @@ Warning: Design 'cve2_top' contains 7 high-fanout nets. A fanout number of 1000 
 Report : clocks
 Design : cve2_top
 Version: R-2020.09-SP2
-Date   : Sun Jun 30 10:26:09 2024
+Date   : Thu Jul  4 10:21:48 2024
 ****************************************
 
 Attributes:
@@ -58,6 +58,6 @@ Attributes:
 
 Clock          Period   Waveform            Attrs     Sources
 --------------------------------------------------------------------------------
-INPUT_CLK        3.90   {0 1.95}                      {clk_i}
+INPUT_CLK        7.00   {0 3.5}                       {clk_i}
 --------------------------------------------------------------------------------
 1

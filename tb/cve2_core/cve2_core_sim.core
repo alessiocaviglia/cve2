@@ -1,11 +1,11 @@
 CAPI=2:
-name: "alessiocaviglia:vcve2:vcve2_sim:0.1"
+name: "alessiocaviglia:thesis:vcve2_sim:0.1"
 description: "Simulation with a simple testbench of Ibex, a small RV32 CPU core"
 
 filesets:
   files_rtl:
     depend:
-      - alessiocaviglia:vcve2:vcve2_core
+      - alessiocaviglia:thesis:vcve2_core
     file_type: systemVerilogSource
 
   tb-verilator:

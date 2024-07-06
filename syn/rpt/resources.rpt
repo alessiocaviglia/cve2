@@ -3,7 +3,7 @@
 Report : resources
 Design : cve2_top
 Version: R-2020.09-SP2
-Date   : Sun Jun 30 10:26:56 2024
+Date   : Thu Jul  4 10:23:58 2024
 ****************************************
 
 Resource Sharing Report 
@@ -13,34 +13,34 @@ Resource Sharing Report
 | Resource | Module       | Parameters | Resources     | Contained Operations |
 ===============================================================================
 | u_cve2_core/r98         |            |               |                      |
-|          | DW_rash      | A_width=5  |               | u_cve2_core/srl_1074 |
-|          |              | SH_width=3 |               | u_cve2_core/srl_1074_2 |
+|          | DW_rash      | A_width=5  |               | u_cve2_core/srl_1068 |
+|          |              | SH_width=3 |               | u_cve2_core/srl_1068_2 |
 | u_cve2_core/r105        |            |               |                      |
-|          | DW01_dec     | width=3    |               | u_cve2_core/sub_1187 |
-|          |              |            |               | u_cve2_core/sub_1199 |
+|          | DW01_dec     | width=3    |               | u_cve2_core/sub_1181 |
+|          |              |            |               | u_cve2_core/sub_1193 |
 | u_cve2_core/r107        |            |               |                      |
-|          | DW01_inc     | width=3    |               | u_cve2_core/add_1197 |
-|          |              |            |               | u_cve2_core/add_1209 |
+|          | DW01_inc     | width=3    |               | u_cve2_core/add_1191 |
+|          |              |            |               | u_cve2_core/add_1203 |
 | u_cve2_core/r119        |            |               |                      |
-|          | DW01_cmp2    | width=3    |               | u_cve2_core/gt_1074  |
+|          | DW01_cmp2    | width=3    |               | u_cve2_core/gt_1068  |
 | u_cve2_core/r121        |            |               |                      |
-|          | DW01_ash     | A_width=12 |               | u_cve2_core/sll_1074 |
+|          | DW01_ash     | A_width=12 |               | u_cve2_core/sll_1068 |
 |          |              | SH_width=3 |               |                      |
 | u_cve2_core/r123        |            |               |                      |
-|          | DW01_sub     | width=3    |               | u_cve2_core/sub_1074 |
+|          | DW01_sub     | width=3    |               | u_cve2_core/sub_1068 |
 | u_cve2_core/r125        |            |               |                      |
-|          | DW_rash      | A_width=5  |               | u_cve2_core/srl_1074_3 |
+|          | DW_rash      | A_width=5  |               | u_cve2_core/srl_1068_3 |
          |              | SH_width=3 |               |                      |
 | u_cve2_core/r127        |            |               |                      |
-|          | DW01_cmp2    | width=32   |               | u_cve2_core/lte_1079 |
+|          | DW01_cmp2    | width=32   |               | u_cve2_core/lte_1073 |
 | u_cve2_core/r129        |            |               |                      |
-|          | DW01_cmp2    | width=32   |               | u_cve2_core/lte_1080 |
+|          | DW01_cmp2    | width=32   |               | u_cve2_core/lte_1074 |
 | u_cve2_core/r131        |            |               |                      |
-|          | DW01_inc     | width=33   |               | u_cve2_core/add_1163_round |
+|          | DW01_inc     | width=33   |               | u_cve2_core/add_1157_round |
 | u_cve2_core/r133        |            |               |                      |
-|          | DW01_sub     | width=3    |               | u_cve2_core/sub_1188 |
+|          | DW01_sub     | width=3    |               | u_cve2_core/sub_1182 |
 | u_cve2_core/r135        |            |               |                      |
-|          | DW01_add     | width=3    |               | u_cve2_core/add_1208 |
+|          | DW01_add     | width=3    |               | u_cve2_core/add_1202 |
 | u_cve2_core/if_stage_i/prefetch_buffer_i/r57         |                      |
 |          | DW01_add     | width=32   |               | u_cve2_core/if_stage_i/prefetch_buffer_i/add_163 |
 | u_cve2_core/if_stage_i/prefetch_buffer_i/fifo_i/r73  |                      |
@@ -90,31 +90,31 @@ Resource Sharing Report
 | u_cve2_core/lsu_interface_i/r59      |               |                      |
 |          | DW01_add     | width=32   |               | u_cve2_core/lsu_interface_i/add_68 |
 | u_cve2_core/vcve2_vrf_interface_inst/r199            |                      |
-|          | DW_rash      | A_width=5  |               | u_cve2_core/vcve2_vrf_interface_inst/srl_150 |
+|          | DW_rash      | A_width=5  |               | u_cve2_core/vcve2_vrf_interface_inst/srl_146 |
   |            |               |                      |
-|          |              | SH_width=3 |               | u_cve2_core/vcve2_vrf_interface_inst/srl_152 |
+|          |              | SH_width=3 |               | u_cve2_core/vcve2_vrf_interface_inst/srl_148 |
 | u_cve2_core/vcve2_vrf_interface_inst/r202            |                      |
-|          | DW01_dec     | width=32   |               | u_cve2_core/vcve2_vrf_interface_inst/sub_303 |
+|          | DW01_dec     | width=32   |               | u_cve2_core/vcve2_vrf_interface_inst/sub_299 |
   |            |               |                      |
-|          |              |            |               | u_cve2_core/vcve2_vrf_interface_inst/sub_393 |
+|          |              |            |               | u_cve2_core/vcve2_vrf_interface_inst/sub_389 |
   |            |               |                      |
-|          |              |            |               | u_cve2_core/vcve2_vrf_interface_inst/sub_479 |
+|          |              |            |               | u_cve2_core/vcve2_vrf_interface_inst/sub_475 |
   |            |               |                      |
-|          |              |            |               | u_cve2_core/vcve2_vrf_interface_inst/sub_514 |
+|          |              |            |               | u_cve2_core/vcve2_vrf_interface_inst/sub_510 |
 | u_cve2_core/vcve2_vrf_interface_inst/r210            |                      |
-|          | DW01_cmp2    | width=3    |               | u_cve2_core/vcve2_vrf_interface_inst/lt_149 |
+|          | DW01_cmp2    | width=3    |               | u_cve2_core/vcve2_vrf_interface_inst/lt_145 |
 | u_cve2_core/vcve2_vrf_interface_inst/r212            |                      |
-|          | DW01_sub     | width=3    |               | u_cve2_core/vcve2_vrf_interface_inst/sub_150 |
+|          | DW01_sub     | width=3    |               | u_cve2_core/vcve2_vrf_interface_inst/sub_146 |
 | u_cve2_core/vcve2_vrf_interface_inst/r214            |                      |
-|          | DW_rash      | A_width=5  |               | u_cve2_core/vcve2_vrf_interface_inst/srl_150_2 |
+|          | DW_rash      | A_width=5  |               | u_cve2_core/vcve2_vrf_interface_inst/srl_146_2 |
 |            |               |                      |
 |          |              | SH_width=3 |               |                      |
 | u_cve2_core/vcve2_vrf_interface_inst/r216            |                      |
-|          | DW01_ash     | A_width=12 |               | u_cve2_core/vcve2_vrf_interface_inst/sll_152 |
+|          | DW01_ash     | A_width=12 |               | u_cve2_core/vcve2_vrf_interface_inst/sll_148 |
   |            |               |                      |
 |          |              | SH_width=3 |               |                      |
 | u_cve2_core/vcve2_vrf_interface_inst/r218            |                      |
-|          | DW01_sub     | width=32   |               | u_cve2_core/vcve2_vrf_interface_inst/sub_367_aco |
+|          | DW01_sub     | width=32   |               | u_cve2_core/vcve2_vrf_interface_inst/sub_363_aco |
 | u_cve2_core/agu_inst/r63             |               |                      |
 |          | DW01_inc     | width=30   |               | u_cve2_core/agu_inst/add_47 |
 | u_cve2_core/agu_inst/r65             |               |                      |

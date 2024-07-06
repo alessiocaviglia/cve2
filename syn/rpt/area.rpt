@@ -3,7 +3,7 @@
 Report : area
 Design : cve2_top
 Version: R-2020.09-SP2
-Date   : Sun Jun 30 10:26:55 2024
+Date   : Thu Jul  4 10:23:57 2024
 ****************************************
 
 Information: Updating design information... (UID-85)
@@ -12,22 +12,22 @@ Library(s) Used:
 
     tcbn65lpwc (File: /software/dk/tsmc65/digital/Front_End/timing_power_noise/NLDM/tcbn65lp_200a/tcbn65lpwc.db)
 
-Number of ports:                         9701
-Number of nets:                         23520
-Number of cells:                        14100
-Number of combinational cells:          11630
+Number of ports:                         9685
+Number of nets:                         26256
+Number of cells:                        16924
+Number of combinational cells:          14454
 Number of sequential cells:              2403
 Number of macros/black boxes:               0
-Number of buf/inv:                       1967
+Number of buf/inv:                       3562
 Number of references:                       6
 
-Combinational area:              32792.760588
-Buf/Inv area:                     2209.320088
-Noncombinational area:           23606.640333
+Combinational area:              38552.400562
+Buf/Inv area:                     4345.920156
+Noncombinational area:           23622.840330
 Macro/Black Box area:                0.000000
 Net Interconnect area:      undefined  (Wire load has zero net area)
 
-Total cell area:                 56399.400921
+Total cell area:                 62175.240892
 Total area:                 undefined
 
 Hierarchical area distribution
@@ -38,75 +38,75 @@ Hierarchical area distribution
 Hierarchical cell                 Absolute    Percent  Combi-      Noncombi-   Black-
                                   Total       Total    national    national    boxes   Design
 --------------------------------  ----------  -------  ----------  ----------  ------  ---------------------------------------------------------------------------------------------------------
-cve2_top                          56399.4009    100.0      8.2800     15.8400  0.0000  cve2_top
-u_cve2_core                       56375.2809    100.0    624.9600    315.7200  0.0000  vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808
-u_cve2_core/add_1163_round          178.5600      0.3    178.5600      0.0000  0.0000  vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_DW01_inc_0_DW01_inc_1
-u_cve2_core/agu_inst               1668.9600      3.0    458.2800    712.8000  0.0000  vce2_agu_AddrWidth32
+cve2_top                          62175.2409    100.0      8.2800     15.8400  0.0000  cve2_top
+u_cve2_core                       62151.1209    100.0    664.9200    315.7200  0.0000  vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808
+u_cve2_core/add_1157_round          187.2000      0.3    187.2000      0.0000  0.0000  vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_DW01_inc_0_DW01_inc_1
+u_cve2_core/agu_inst               1671.1200      2.7    460.4400    712.8000  0.0000  vce2_agu_AddrWidth32
 u_cve2_core/agu_inst/add_47         165.9600      0.3    165.9600      0.0000  0.0000  vce2_agu_AddrWidth32_DW01_inc_2_DW01_inc_6
 u_cve2_core/agu_inst/add_48         165.9600      0.3    165.9600      0.0000  0.0000  vce2_agu_AddrWidth32_DW01_inc_1_DW01_inc_5
 u_cve2_core/agu_inst/add_49         165.9600      0.3    165.9600      0.0000  0.0000  vce2_agu_AddrWidth32_DW01_inc_0_DW01_inc_4
-u_cve2_core/cs_registers_i         8551.0802     15.2   2243.5201     38.5200  0.0000  cve2_cs_registers_1_00000001_00000000_00000028_0_00000000_00000004_0_3_0
-u_cve2_core/cs_registers_i/eq_1432   146.1600     0.3    146.1600      0.0000  0.0000  cve2_cs_registers_1_00000001_00000000_00000028_0_00000000_00000004_0_3_0_DW01_cmp6_0
+u_cve2_core/cs_registers_i         8982.3601     14.4   2261.1601     38.5200  0.0000  cve2_cs_registers_1_00000001_00000000_00000028_0_00000000_00000004_0_3_0
+u_cve2_core/cs_registers_i/eq_1432   146.1600     0.2    146.1600      0.0000  0.0000  cve2_cs_registers_1_00000001_00000000_00000028_0_00000000_00000004_0_3_0_DW01_cmp6_0
 u_cve2_core/cs_registers_i/gen_trigger_regs.g_dbg_tmatch_reg[0].u_tmatch_control_csr    11.8800     0.0     1.0800    10.8000 0.0000 cve2_csr_00000001_0_0_1
-u_cve2_core/cs_registers_i/gen_trigger_regs.g_dbg_tmatch_reg[0].u_tmatch_value_csr   353.1600     0.6     7.5600   345.6000 0.0000 cve2_csr_32_0_0_1
+u_cve2_core/cs_registers_i/gen_trigger_regs.g_dbg_tmatch_reg[0].u_tmatch_value_csr   351.0000     0.6     5.4000   345.6000 0.0000 cve2_csr_32_0_0_1
 u_cve2_core/cs_registers_i/gen_trigger_regs.u_tselect_csr    11.8800     0.0     1.0800    10.8000 0.0000 cve2_csr_00000001_0_0_0
-u_cve2_core/cs_registers_i/mcycle_counter_i  1170.7200     2.1   302.0400   506.8800 0.0000 cve2_counter_CounterWidth64
-u_cve2_core/cs_registers_i/mcycle_counter_i/add_26   361.8000     0.6   361.8000     0.0000 0.0000 cve2_counter_CounterWidth64_DW01_inc_0_DW01_inc_3
-u_cve2_core/cs_registers_i/minstret_counter_i  1169.6400     2.1   300.9600   506.8800 0.0000 cve2_counter_CounterWidth64_ProvideValUpd1
-u_cve2_core/cs_registers_i/minstret_counter_i/add_26   361.8000     0.6   361.8000     0.0000 0.0000 cve2_counter_CounterWidth64_ProvideValUpd1_DW01_inc_0_DW01_inc_2
+u_cve2_core/cs_registers_i/mcycle_counter_i  1355.0400     2.2   302.4000   506.8800 0.0000 cve2_counter_CounterWidth64
+u_cve2_core/cs_registers_i/mcycle_counter_i/add_26   545.7600     0.9   545.7600     0.0000 0.0000 cve2_counter_CounterWidth64_DW01_inc_0_DW01_inc_3
+u_cve2_core/cs_registers_i/minstret_counter_i  1411.5600     2.3   402.4800   506.8800 0.0000 cve2_counter_CounterWidth64_ProvideValUpd1
+u_cve2_core/cs_registers_i/minstret_counter_i/add_26   502.2000     0.8   502.2000     0.0000 0.0000 cve2_counter_CounterWidth64_ProvideValUpd1_DW01_inc_0_DW01_inc_2
 u_cve2_core/cs_registers_i/u_dcsr_csr   111.2400     0.2    10.8000   100.4400 0.0000  cve2_csr_32_0_40000003
-u_cve2_core/cs_registers_i/u_depc_csr   356.4000     0.6    10.8000   345.6000 0.0000  cve2_csr_32_0_0_5
-u_cve2_core/cs_registers_i/u_dscratch0_csr   355.3200     0.6     9.7200   345.6000 0.0000 cve2_csr_32_0_0_4
-u_cve2_core/cs_registers_i/u_dscratch1_csr   353.1600     0.6     7.5600   345.6000 0.0000 cve2_csr_32_0_0_3
+u_cve2_core/cs_registers_i/u_depc_csr   354.2400     0.6     8.6400   345.6000 0.0000  cve2_csr_32_0_0_5
+u_cve2_core/cs_registers_i/u_dscratch0_csr   354.2400     0.6     8.6400   345.6000 0.0000 cve2_csr_32_0_0_4
+u_cve2_core/cs_registers_i/u_dscratch1_csr   352.0800     0.6     6.4800   345.6000 0.0000 cve2_csr_32_0_0_3
 u_cve2_core/cs_registers_i/u_mcause_csr    76.6800     0.1     1.0800    75.6000 0.0000 cve2_csr_7_0_0_0
-u_cve2_core/cs_registers_i/u_mepc_csr   351.0000     0.6     5.4000   345.6000 0.0000  cve2_csr_32_0_0_0
-u_cve2_core/cs_registers_i/u_mie_csr   206.2800     0.4     1.0800   205.2000  0.0000  cve2_csr_19_0_0
-u_cve2_core/cs_registers_i/u_mscratch_csr   356.4000     0.6    10.8000   345.6000 0.0000 cve2_csr_32_0_0_7
+u_cve2_core/cs_registers_i/u_mepc_csr   348.8400     0.6     3.2400   345.6000 0.0000  cve2_csr_32_0_0_0
+u_cve2_core/cs_registers_i/u_mie_csr   207.7200     0.3     2.5200   205.2000  0.0000  cve2_csr_19_0_0
+u_cve2_core/cs_registers_i/u_mscratch_csr   354.2400     0.6     8.6400   345.6000 0.0000 cve2_csr_32_0_0_7
 u_cve2_core/cs_registers_i/u_mstack_cause_csr    76.6800     0.1     1.0800    75.6000 0.0000 cve2_csr_7_0_0_1
 u_cve2_core/cs_registers_i/u_mstack_csr    34.9200     0.1     5.0400    29.8800 0.0000 cve2_csr_3_0_4
 u_cve2_core/cs_registers_i/u_mstack_epc_csr   353.1600     0.6     7.5600   345.6000 0.0000 cve2_csr_32_0_0_2
-u_cve2_core/cs_registers_i/u_mstatus_csr    67.6800     0.1     7.9200    59.7600 0.0000 cve2_csr_6_0c
-u_cve2_core/cs_registers_i/u_mtval_csr   356.4000     0.6    10.8000   345.6000 0.0000 cve2_csr_32_0_0_6
-u_cve2_core/cs_registers_i/u_mtvec_csr   350.2800     0.6     7.2000   343.0800 0.0000 cve2_csr_32_00000001
-u_cve2_core/dmem_arbiter_i          234.7200      0.4    226.4400      8.2800  0.0000  vcve2_dmem_arbiter
-u_cve2_core/ex_block_i            15161.4002     26.9    390.2400      0.0000  0.0000  vcve2_ex_block_RV32M3_RV32B0
-u_cve2_core/ex_block_i/alu_i       1799.2800      3.2   1038.6000      0.0000  0.0000  cve2_alu_RV32B0
-u_cve2_core/ex_block_i/alu_i/adder_inst   306.7200     0.5    18.7200     0.0000 0.0000 vcve2_fracturable_adder_PIPE_WIDTH32
-u_cve2_core/ex_block_i/alu_i/adder_inst/add_1_root_add_23_2    72.0000     0.1    72.0000     0.0000 0.0000 vcve2_fracturable_adder_PIPE_WIDTH32_DW01_add_3_DW01_add_5
-u_cve2_core/ex_block_i/alu_i/adder_inst/add_1_root_add_24_2    72.0000     0.1    72.0000     0.0000 0.0000 vcve2_fracturable_adder_PIPE_WIDTH32_DW01_add_2_DW01_add_4
-u_cve2_core/ex_block_i/alu_i/adder_inst/add_1_root_add_25_2    72.0000     0.1    72.0000     0.0000 0.0000 vcve2_fracturable_adder_PIPE_WIDTH32_DW01_add_1_DW01_add_3
-u_cve2_core/ex_block_i/alu_i/adder_inst/add_1_root_add_26_2    72.0000     0.1    72.0000     0.0000 0.0000 vcve2_fracturable_adder_PIPE_WIDTH32_DW01_add_0_DW01_add_2
-u_cve2_core/ex_block_i/alu_i/sra_353   453.9600     0.8   453.9600     0.0000  0.0000  cve2_alu_RV32B0_DW_rash_0_DW_rash_4
-u_cve2_core/ex_block_i/gen_multdiv_fast.multdiv_i 12971.8801    23.0  2514.2400   614.8800 0.0000 cve2_multdiv_fast_RV32M3
-u_cve2_core/ex_block_i/gen_multdiv_fast.multdiv_i/add_0_root_add_0_root_add_270_2   281.8800     0.5   281.8800     0.0000 0.0000 cve2_multdiv_fast_RV32M3_DW01_add_4_DW01_add_13
-u_cve2_core/ex_block_i/gen_multdiv_fast.multdiv_i/add_1_root_add_0_root_add_270_2   230.7600     0.4   230.7600     0.0000 0.0000 cve2_multdiv_fast_RV32M3_DW01_add_5_DW01_add_14
-u_cve2_core/ex_block_i/gen_multdiv_fast.multdiv_i/mult_263  2975.0400     5.3  2817.3600     0.0000 0.0000 cve2_multdiv_fast_RV32M3_DW02_mult_1
-u_cve2_core/ex_block_i/gen_multdiv_fast.multdiv_i/mult_263/FS_1   157.6800     0.3   157.6800     0.0000 0.0000 cve2_multdiv_fast_RV32M3_DW01_add_1_DW01_add_10
-u_cve2_core/ex_block_i/gen_multdiv_fast.multdiv_i/mult_264  2975.0400     5.3  2817.3600     0.0000 0.0000 cve2_multdiv_fast_RV32M3_DW02_mult_3
-u_cve2_core/ex_block_i/gen_multdiv_fast.multdiv_i/mult_264/FS_1   157.6800     0.3   157.6800     0.0000 0.0000 cve2_multdiv_fast_RV32M3_DW01_add_3_DW01_add_12
-u_cve2_core/ex_block_i/gen_multdiv_fast.multdiv_i/mult_265  2975.0400     5.3  2817.3600     0.0000 0.0000 cve2_multdiv_fast_RV32M3_DW02_mult_2
-u_cve2_core/ex_block_i/gen_multdiv_fast.multdiv_i/mult_265/FS_1   157.6800     0.3   157.6800     0.0000 0.0000 cve2_multdiv_fast_RV32M3_DW01_add_2_DW01_add_11
+u_cve2_core/cs_registers_i/u_mstatus_csr    67.3200     0.1     7.5600    59.7600 0.0000 cve2_csr_6_0c
+u_cve2_core/cs_registers_i/u_mtval_csr   354.2400     0.6     8.6400   345.6000 0.0000 cve2_csr_32_0_0_6
+u_cve2_core/cs_registers_i/u_mtvec_csr   349.5600     0.6     6.4800   343.0800 0.0000 cve2_csr_32_00000001
+u_cve2_core/dmem_arbiter_i          235.8000      0.4    227.5200      8.2800  0.0000  vcve2_dmem_arbiter
+u_cve2_core/ex_block_i            18484.5602     29.7    483.8400      0.0000  0.0000  vcve2_ex_block_RV32M3_RV32B0
+u_cve2_core/ex_block_i/alu_i       2126.1601      3.4   1104.8400      0.0000  0.0000  cve2_alu_RV32B0
+u_cve2_core/ex_block_i/alu_i/adder_inst   568.8000     0.9    20.1600     0.0000 0.0000 vcve2_fracturable_adder_PIPE_WIDTH32
+u_cve2_core/ex_block_i/alu_i/adder_inst/add_1_root_add_23_2   147.9600     0.2   147.9600     0.0000 0.0000 vcve2_fracturable_adder_PIPE_WIDTH32_DW01_add_7
+u_cve2_core/ex_block_i/alu_i/adder_inst/add_1_root_add_24_2   133.5600     0.2   133.5600     0.0000 0.0000 vcve2_fracturable_adder_PIPE_WIDTH32_DW01_add_6
+u_cve2_core/ex_block_i/alu_i/adder_inst/add_1_root_add_25_2   133.5600     0.2   133.5600     0.0000 0.0000 vcve2_fracturable_adder_PIPE_WIDTH32_DW01_add_5
+u_cve2_core/ex_block_i/alu_i/adder_inst/add_1_root_add_26_2   133.5600     0.2   133.5600     0.0000 0.0000 vcve2_fracturable_adder_PIPE_WIDTH32_DW01_add_4
+u_cve2_core/ex_block_i/alu_i/sra_353   452.5200     0.7   452.5200     0.0000  0.0000  cve2_alu_RV32B0_DW_rash_0_DW_rash_4
+u_cve2_core/ex_block_i/gen_multdiv_fast.multdiv_i 15874.5601    25.5  3089.5201   614.8800 0.0000 cve2_multdiv_fast_RV32M3
+u_cve2_core/ex_block_i/gen_multdiv_fast.multdiv_i/add_0_root_add_0_root_add_270_2   789.8400     1.3   789.8400     0.0000 0.0000 cve2_multdiv_fast_RV32M3_DW01_add_24
+u_cve2_core/ex_block_i/gen_multdiv_fast.multdiv_i/add_1_root_add_0_root_add_270_2   622.8000     1.0   622.8000     0.0000 0.0000 cve2_multdiv_fast_RV32M3_DW01_add_23
+u_cve2_core/ex_block_i/gen_multdiv_fast.multdiv_i/mult_263  3776.0400     6.1  3314.1600     0.0000 0.0000 cve2_multdiv_fast_RV32M3_DW02_mult_1
+u_cve2_core/ex_block_i/gen_multdiv_fast.multdiv_i/mult_263/FS_1   461.8800     0.7   461.8800     0.0000 0.0000 cve2_multdiv_fast_RV32M3_DW01_add_22
+u_cve2_core/ex_block_i/gen_multdiv_fast.multdiv_i/mult_264  3256.9200     5.2  2994.1200     0.0000 0.0000 cve2_multdiv_fast_RV32M3_DW02_mult_3
+u_cve2_core/ex_block_i/gen_multdiv_fast.multdiv_i/mult_264/FS_1   262.8000     0.4   262.8000     0.0000 0.0000 cve2_multdiv_fast_RV32M3_DW01_add_14
+u_cve2_core/ex_block_i/gen_multdiv_fast.multdiv_i/mult_265  3319.5600     5.3  3063.6000     0.0000 0.0000 cve2_multdiv_fast_RV32M3_DW02_mult_2
+u_cve2_core/ex_block_i/gen_multdiv_fast.multdiv_i/mult_265/FS_1   255.9600     0.4   255.9600     0.0000 0.0000 cve2_multdiv_fast_RV32M3_DW01_add_18
 u_cve2_core/ex_block_i/gen_multdiv_fast.multdiv_i/mult_267   285.1200     0.5   285.1200     0.0000 0.0000 cve2_multdiv_fast_RV32M3_DW02_mult_0
 u_cve2_core/ex_block_i/gen_multdiv_fast.multdiv_i/sll_516   119.8800     0.2   119.8800     0.0000 0.0000 cve2_multdiv_fast_RV32M3_DW01_ash_0_DW01_ash_2
-u_cve2_core/id_stage_i             3218.0401      5.7    935.6400    758.8800  0.0000  vcve2_id_stage_0_3_0
-u_cve2_core/id_stage_i/controller_i   841.3200     1.5   569.8800     95.7600  0.0000  cve2_controller
+u_cve2_core/id_stage_i             3415.6801      5.5   1048.6800    758.8800  0.0000  vcve2_id_stage_0_3_0
+u_cve2_core/id_stage_i/controller_i   862.5600     1.4   591.1200     95.7600  0.0000  cve2_controller
 u_cve2_core/id_stage_i/controller_i/add_604_aco   175.6800     0.3   175.6800     0.0000 0.0000 cve2_controller_DW01_add_0_DW01_add_6
-u_cve2_core/id_stage_i/decoder_i    682.2000      1.2    682.2000      0.0000  0.0000  vcve2_decoder_0_3_0
-u_cve2_core/if_stage_i             5276.1601      9.4    300.9600   1252.8000  0.0000  cve2_if_stage_1a110800_1a110808
+u_cve2_core/id_stage_i/decoder_i    745.5600      1.2    745.5600      0.0000  0.0000  vcve2_decoder_0_3_0
+u_cve2_core/if_stage_i             5330.1601      8.6    335.5200   1257.1200  0.0000  cve2_if_stage_1a110800_1a110808
 u_cve2_core/if_stage_i/compressed_decoder_i   467.6400     0.8   467.6400     0.0000 0.0000 cve2_compressed_decoder
-u_cve2_core/if_stage_i/prefetch_buffer_i  3254.7600     5.8   265.3200   717.1200 0.0000 cve2_prefetch_buffer
+u_cve2_core/if_stage_i/prefetch_buffer_i  3269.8800     5.3   269.2800   717.1200 0.0000 cve2_prefetch_buffer
 u_cve2_core/if_stage_i/prefetch_buffer_i/add_163   170.6400     0.3   170.6400     0.0000 0.0000 cve2_prefetch_buffer_DW01_add_0_DW01_add_7
-u_cve2_core/if_stage_i/prefetch_buffer_i/fifo_i  2101.6800     3.7   764.2800  1158.4800 0.0000 cve2_fetch_fifo_00000002
+u_cve2_core/if_stage_i/prefetch_buffer_i/fifo_i  2112.8400     3.4   775.4400  1158.4800 0.0000 cve2_fetch_fifo_00000002
 u_cve2_core/if_stage_i/prefetch_buffer_i/fifo_i/add_144   178.9200     0.3   178.9200     0.0000 0.0000 cve2_fetch_fifo_00000002_DW01_add_0_DW01_add_8
-u_cve2_core/load_store_unit_i      1495.0800      2.7    780.8400    714.2400  0.0000  cve2_load_store_unit
-u_cve2_core/lsu_interface_i         847.0800      1.5    419.7600    262.0800  0.0000  vcve2_lsu_interface
+u_cve2_core/load_store_unit_i      1511.2800      2.4    797.0400    714.2400  0.0000  cve2_load_store_unit
+u_cve2_core/lsu_interface_i         847.0800      1.4    419.7600    262.0800  0.0000  vcve2_lsu_interface
 u_cve2_core/lsu_interface_i/add_68   165.2400     0.3    165.2400      0.0000  0.0000  vcve2_lsu_interface_DW01_add_0_DW01_add_1
-u_cve2_core/register_file_i       14591.5203     25.9   4615.2001   9976.3202  0.0000  cve2_register_file_ff_0_32_00000000
-u_cve2_core/vcve2_vrf_interface_inst  3971.8801     7.0  1335.9600  2275.2000  0.0000  vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_AddrWidth5
-u_cve2_core/vcve2_vrf_interface_inst/r202   144.0000     0.3   144.0000     0.0000 0.0000 vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_AddrWidth5_DW01_dec_0_DW01_dec_1
-u_cve2_core/vcve2_vrf_interface_inst/sub_367_aco   216.7200     0.4   216.7200     0.0000 0.0000 vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_AddrWidth5_DW01_sub_0_DW01_sub_3
-u_cve2_core/wb_i                    240.1200      0.4    240.1200      0.0000  0.0000  vcve2_wb
+u_cve2_core/register_file_i       16160.7603     26.0   6172.5601   9988.2002  0.0000  cve2_register_file_ff_0_32_00000000
+u_cve2_core/vcve2_vrf_interface_inst  3994.2001     6.4  1358.2800  2275.2000  0.0000  vcve2_vrf_interface_VLEN128_PIPE_WIDTH32
+u_cve2_core/vcve2_vrf_interface_inst/r202   144.0000     0.2   144.0000     0.0000 0.0000 vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_DW01_dec_0_DW01_dec_1
+u_cve2_core/vcve2_vrf_interface_inst/sub_363_aco   216.7200     0.3   216.7200     0.0000 0.0000 vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_DW01_sub_0_DW01_sub_3
+u_cve2_core/wb_i                    350.2800      0.6    350.2800      0.0000  0.0000  vcve2_wb
 --------------------------------  ----------  -------  ----------  ----------  ------  ---------------------------------------------------------------------------------------------------------
-Total                                                  32792.7606  23606.6403  0.0000
+Total                                                  38552.4006  23622.8403  0.0000
 
 1

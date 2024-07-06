@@ -97,8 +97,6 @@ module vcve2_ex_block #(
   // Vector MOVE //
   /////////////////
 
-  logic sign_mv;
-  assign sign_mv = alu_operand_a_i[31];
   // Build the vector move result depending on SEW
   always_comb begin
     case (vsew_i)

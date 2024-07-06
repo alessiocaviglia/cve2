@@ -1,11 +1,11 @@
 compile_core:
-	fusesoc --cores-root ../ run --no-export --tool=verilator --setup --build alessiocaviglia:vcve2:vcve2_sim:0.1
+	fusesoc --cores-root ../ run --no-export --tool=verilator --setup --build alessiocaviglia:thesis:vcve2_sim:0.1
 
 simulate_alu: clean_alu
 	fusesoc --cores-root ../ run --no-export --tool=verilator --setup --build --run openhwgroup:cve2:alu_sim:0.1 2>&1 | tee buildsim.log
 
 simulate_core: clean_core
-	fusesoc --cores-root ../ run --no-export --tool=verilator --setup --build --run alessiocaviglia:vcve2:vcve2_sim:0.1 2>&1 | tee buildsim.log
+	fusesoc --cores-root ../ run --no-export --tool=verilator --setup --build --run alessiocaviglia:thesis:vcve2_sim:0.1 2>&1 | tee buildsim.log
 	gtkwave build/alessiocaviglia_vcve2_vcve2_sim_0.1/default-verilator/waveform.vcd
 
 view_core:

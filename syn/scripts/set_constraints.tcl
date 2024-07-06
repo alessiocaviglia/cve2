@@ -1,1 +1,1 @@
-create_clock -name "INPUT_CLK" -period 3.9 [ get_ports clk_i ]
+create_clock -name "INPUT_CLK" -period 7 [ get_ports clk_i ]
