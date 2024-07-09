@@ -46,7 +46,7 @@ Warning: Design 'vcve2_top' contains 7 high-fanout nets. A fanout number of 1000
 Report : clocks
 Design : vcve2_top
 Version: R-2020.09-SP2
-Date   : Sat Jul  6 17:54:52 2024
+Date   : Tue Jul  9 18:05:25 2024
 ****************************************
 
 Attributes:

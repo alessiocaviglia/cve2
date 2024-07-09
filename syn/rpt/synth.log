@@ -27,7 +27,7 @@ Initializing...
 #
 ############################################
 sh date
-Sat Jul  6 17:54:47 CEST 2024
+Tue Jul  9 18:05:11 CEST 2024
 set TOP_MODULE vcve2_top
 vcve2_top
 set DC_SCRIPT dc_script.tcl
@@ -1424,532 +1424,504 @@ Presto compilation completed successfully. (vcve2_fracturable_adder_PIPE_WIDTH32
   tcbn65lpwc (library)        /software/dk/tsmc65/digital/Front_End/timing_power_noise/NLDM/tcbn65lp_200a/tcbn65lpwc.db
 
 Writing ddc file '../../rpt/precompiled.ddc'.
+Warning: The value of variable 'compile_preserve_subdesign_interfaces' has been changed to true because '-no_boundary_optimization' is used. (OPT-133)
+Information: Starting from 2013.12 release, constant propagation is enabled even when boundary optimization is disabled. (OPT-1318)
+Loading db file '/eda/synopsys/2020-21/RHELx86/SYN_2020.09-SP2/libraries/syn/dw_foundation.sldb'
+Information: Failed to find dw_foundation.sldb in the user defined search_path, load it from 'Synopsys Root'. (UISN-70)
+Warning: DesignWare synthetic library dw_foundation.sldb is added to the synthetic_library in the current command. (UISN-40)
+Warning: The -timing_high_effort_script option is ignored.  (OPT-1342)
+Information: Performing power optimization. (PWR-850)
+Analyzing: "/software/dk/tsmc65/digital/Front_End/timing_power_noise/NLDM/tcbn65lp_200a/tcbn65lpwc.db"
+Library analysis succeeded.
+Information: Failed to find dw_foundation.sldb in the user defined search_path, load it from 'Synopsys Root'. (UISN-70)
+Warning: DesignWare synthetic library dw_foundation.sldb is added to the synthetic_library in the current command. (UISN-40)
 Information: Evaluating DesignWare library utilization. (UISN-27)
 
 ============================================================================
 | DesignWare Building Block Library  |         Version         | Available |
 ============================================================================
 | Basic DW Building Blocks           | R-2020.09-DWBB_202009.2 |     *     |
-| Licensed DW Building Blocks        |                         |           |
+| Licensed DW Building Blocks        | R-2020.09-DWBB_202009.2 |     *     |
 ============================================================================
 
+Information: Sequential output inversion is enabled.  SVF file must be used for formal verification. (OPT-1208)
 
 Information: There are 1971 potential problems in your design. Please run 'check_design' for more information. (LINT-99)
 
+Information: Uniquified 8 instances of design 'vcve2_csr_32_0_0'. (OPT-1056)
+Information: Uniquified 2 instances of design 'vcve2_csr_7_0_0'. (OPT-1056)
+Information: Uniquified 2 instances of design 'vcve2_csr_00000001_0_0'. (OPT-1056)
+  Simplifying Design 'vcve2_top'
+Information: Performing clock-gating with positive edge logic: 'integrated' and negative edge logic: 'integrated'. (PWR-1047)
 
+Loaded alib file './alib-52/tcbn65lpwc.db.alib'
+Information: State dependent leakage is now switched from on to off.
 
   Beginning Pass 1 Mapping
   ------------------------
-  Processing 'vcve2_csr_32_0_0_0'
+  Processing 'vcve2_register_file_ff_0_32_00000000'
+  Processing 'vcve2_cs_registers_1_00000001_00000000_00000028_0_00000000_00000004_0_3_0'
+Information: Added key list 'DesignWare' to design 'vcve2_cs_registers_1_00000001_00000000_00000028_0_00000000_00000004_0_3_0'. (DDB-72)
+Information: The register 'mcountinhibit_q_reg[1]' is a constant and will be removed. (OPT-1206)
+  Processing 'vcve2_vrf_interface_VLEN128_PIPE_WIDTH32'
+Information: Added key list 'DesignWare' to design 'vcve2_vrf_interface_VLEN128_PIPE_WIDTH32'. (DDB-72)
+ Implement Synthetic for 'vcve2_vrf_interface_VLEN128_PIPE_WIDTH32'.
+  Processing 'vcve2_decoder_0_3_0'
+  Processing 'vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808'
+Information: Added key list 'DesignWare' to design 'vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808'. (DDB-72)
+ Implement Synthetic for 'vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808'.
+  Processing 'vcve2_multdiv_fast_RV32M3'
+ Implement Synthetic for 'vcve2_multdiv_fast_RV32M3'.
+Information: Added key list 'DesignWare' to design 'vcve2_multdiv_fast_RV32M3'. (DDB-72)
+  Processing 'vcve2_fetch_fifo_00000002'
+ Implement Synthetic for 'vcve2_fetch_fifo_00000002'.
+  Processing 'vcve2_ex_block_RV32M3_RV32B0'
+  Processing 'vcve2_wb'
+  Processing 'vcve2_csr_32_00000001'
+Information: The register 'rdata_q_reg[0]' is a constant and will be removed. (OPT-1206)
+Information: The register 'rdata_q_reg[1]' is a constant and will be removed. (OPT-1206)
+Information: The register 'rdata_q_reg[2]' is a constant and will be removed. (OPT-1206)
+Information: The register 'rdata_q_reg[3]' is a constant and will be removed. (OPT-1206)
+Information: The register 'rdata_q_reg[4]' is a constant and will be removed. (OPT-1206)
+Information: The register 'rdata_q_reg[5]' is a constant and will be removed. (OPT-1206)
+Information: The register 'rdata_q_reg[6]' is a constant and will be removed. (OPT-1206)
+Information: The register 'rdata_q_reg[7]' is a constant and will be removed. (OPT-1206)
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_cs_registers_1_00000001_00000000_00000028_0_00000000_00000004_0_3_0'
+  Mapping integrated clock gating circuitry
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_csr_7_0_0_0_0'
+  Mapping integrated clock gating circuitry
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_csr_6_0c'
+  Mapping integrated clock gating circuitry
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_multdiv_fast_RV32M3_0'
+  Mapping integrated clock gating circuitry
   Processing 'vcve2_csr_00000001_0_0_0'
+  Processing 'vcve2_id_stage_0_3_0'
+Information: The register 'imd_val_q_reg[1][32]' is a constant and will be removed. (OPT-1206)
+Information: The register 'imd_val_q_reg[1][33]' is a constant and will be removed. (OPT-1206)
   Processing 'vcve2_counter_CounterWidth64_ProvideValUpd1'
-  Processing 'vcve2_counter_CounterWidth64'
+ Implement Synthetic for 'vcve2_counter_CounterWidth64_ProvideValUpd1'.
+  Processing 'vcve2_fracturable_adder_PIPE_WIDTH32'
+ Implement Synthetic for 'vcve2_fracturable_adder_PIPE_WIDTH32'.
+  Processing 'vcve2_csr_6_0c'
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_counter_CounterWidth64_0'
+  Mapping integrated clock gating circuitry
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_csr_19_0_0'
+  Mapping integrated clock gating circuitry
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_load_store_unit_0'
+  Mapping integrated clock gating circuitry
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_fetch_fifo_00000002_0'
+  Mapping integrated clock gating circuitry
+  Processing 'vcve2_controller'
+ Implement Synthetic for 'vcve2_controller'.
+  Processing 'vcve2_prefetch_buffer'
+ Implement Synthetic for 'vcve2_prefetch_buffer'.
+  Processing 'vcve2_csr_32_0_40000003'
+  Processing 'vcve2_csr_19_0_0'
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_lsu_interface'
+  Mapping integrated clock gating circuitry
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_prefetch_buffer_0'
+  Mapping integrated clock gating circuitry
+  Processing 'vcve2_if_stage_1a110800_1a110808'
+Information: The register 'pc_id_o_reg[0]' is a constant and will be removed. (OPT-1206)
+  Processing 'vce2_agu_AddrWidth32'
+ Implement Synthetic for 'vce2_agu_AddrWidth32'.
+  Processing 'vcve2_lsu_interface'
+ Implement Synthetic for 'vcve2_lsu_interface'.
   Processing 'vcve2_csr_7_0_0_0'
   Processing 'vcve2_csr_3_0_4'
-  Processing 'vcve2_csr_32_0_40000003'
-  Processing 'vcve2_csr_32_00000001'
-  Processing 'vcve2_csr_19_0_0'
-  Processing 'vcve2_csr_6_0c'
-  Processing 'vcve2_cs_registers_1_00000001_00000000_00000028_0_00000000_00000004_0_3_0'
-Information: The register 'mcountinhibit_q_reg[1]' is a constant and will be removed. (OPT-1206)
-  Processing 'vce2_agu_AddrWidth32'
-  Processing 'vcve2_vrf_interface_VLEN128_PIPE_WIDTH32'
-  Processing 'vcve2_register_file_ff_0_32_00000000'
-  Processing 'vcve2_wb'
-  Processing 'vcve2_dmem_arbiter'
-  Processing 'vcve2_lsu_interface'
-  Processing 'vcve2_load_store_unit'
-  Processing 'vcve2_multdiv_fast_RV32M3'
-  Processing 'vcve2_fracturable_adder_PIPE_WIDTH32'
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_0'
+  Mapping integrated clock gating circuitry
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_counter_CounterWidth64_ProvideValUpd1_0'
+  Mapping integrated clock gating circuitry
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_00000001'
+  Mapping integrated clock gating circuitry
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_0'
+  Mapping integrated clock gating circuitry
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_if_stage_1a110800_1a110808'
+  Mapping integrated clock gating circuitry
   Processing 'vcve2_alu_RV32B0'
-  Processing 'vcve2_ex_block_RV32M3_RV32B0'
-  Processing 'vcve2_controller'
-  Processing 'vcve2_decoder_0_3_0'
-  Processing 'vcve2_id_stage_0_3_0'
-  Processing 'vcve2_compressed_decoder'
-  Processing 'vcve2_fetch_fifo_00000002'
-  Processing 'vcve2_prefetch_buffer'
-  Processing 'vcve2_if_stage_1a110800_1a110808'
-  Processing 'vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808'
+ Implement Synthetic for 'vcve2_alu_RV32B0'.
+Information: Added key list 'DesignWare' to design 'vcve2_alu_RV32B0'. (DDB-72)
   Processing 'vcve2_top'
+  Processing 'vcve2_csr_32_0_0_0'
+  Processing 'vcve2_dmem_arbiter'
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_0'
+  Mapping integrated clock gating circuitry
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_40000003'
+  Mapping integrated clock gating circuitry
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_0'
+  Mapping integrated clock gating circuitry
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_controller'
+  Mapping integrated clock gating circuitry
+  Processing 'vcve2_load_store_unit'
+Information: The register 'pmp_err_q_reg' is a constant and will be removed. (OPT-1206)
+  Processing 'vcve2_compressed_decoder'
+  Processing 'vcve2_counter_CounterWidth64'
+ Implement Synthetic for 'vcve2_counter_CounterWidth64'.
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_csr_3_0_4'
+  Mapping integrated clock gating circuitry
+  Processing 'SNPS_CLOCK_GATE_HIGH_vce2_agu_AddrWidth32_0'
+  Mapping integrated clock gating circuitry
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_id_stage_0_3_0_0'
+  Mapping integrated clock gating circuitry
 
   Updating timing information
 Information: Updating design information... (UID-85)
+Information: The library cell 'TIEL' in the library 'tcbn65lpwc' is not characterized for internal power. (PWR-536)
+Information: The library cell 'TIEH' in the library 'tcbn65lpwc' is not characterized for internal power. (PWR-536)
+Information: The target library(s) contains cell(s), other than black boxes, that are not characterized for internal power. (PWR-24)
+Information: Skipping clock gating on design vcve2_ex_block_RV32M3_RV32B0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design vcve2_wb, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_DW01_inc_J5_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design vcve2_compressed_decoder, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_if_stage_1a110800_1a110808, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design vcve2_decoder_0_3_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_id_stage_0_3_0_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design vcve2_alu_RV32B0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_load_store_unit_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_lsu_interface, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design vcve2_lsu_interface_DW01_add_J10_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_RSOP_216, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vce2_agu_AddrWidth32_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design vce2_agu_AddrWidth32_DW01_inc_J10_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design vce2_agu_AddrWidth32_DW01_inc_J10_1, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design vce2_agu_AddrWidth32_DW01_inc_J10_2, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_cs_registers_1_00000001_00000000_00000028_0_00000000_00000004_0_3_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_prefetch_buffer_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design vcve2_prefetch_buffer_DW01_add_J9_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_controller, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design vcve2_controller_DW01_add_J9_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design vcve2_fracturable_adder_PIPE_WIDTH32, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_multdiv_fast_RV32M3_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design vcve2_multdiv_fast_RV32M3_DP_OP_116J6_122_2826_J6_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design vcve2_multdiv_fast_RV32M3_DW01_dec_J6_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design vcve2_multdiv_fast_RV32M3_DW02_mult_J6_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design vcve2_multdiv_fast_RV32M3_DW_mult_tc_J6_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_DP_OP_221J3_122_1645_J3_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_6_0c, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_7, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_19_0_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_7_0_0_0_1, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_00000001, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_40000003, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_3_0_4, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_counter_CounterWidth64_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design vcve2_counter_CounterWidth64_DW01_inc_J12_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_counter_CounterWidth64_ProvideValUpd1_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design vcve2_counter_CounterWidth64_ProvideValUpd1_DW01_inc_J8_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_fetch_fifo_00000002_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design vcve2_fetch_fifo_00000002_DW01_add_J7_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design vcve2_fracturable_adder_PIPE_WIDTH32_DP_OP_28J8_125_6171_J8_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design vcve2_fracturable_adder_PIPE_WIDTH32_DP_OP_27J8_124_6171_J8_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design vcve2_fracturable_adder_PIPE_WIDTH32_DP_OP_26J8_123_6171_J8_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design vcve2_fracturable_adder_PIPE_WIDTH32_DP_OP_25J8_122_6171_J8_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_7_0_0_0_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_multdiv_fast_RV32M3_1, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_multdiv_fast_RV32M3_2, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_counter_CounterWidth64_1, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_load_store_unit_1, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_load_store_unit_2, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_load_store_unit_3, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_fetch_fifo_00000002_1, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_fetch_fifo_00000002_2, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_fetch_fifo_00000002_3, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_prefetch_buffer_1, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_1, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_counter_CounterWidth64_ProvideValUpd1_1, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_1, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_2, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_3, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_4, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_5, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_6, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_7, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_8, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_9, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_10, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_11, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_12, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_13, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_14, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_15, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_16, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_17, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_18, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_19, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_20, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_21, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_22, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_23, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_24, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_25, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_26, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_27, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_28, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_29, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_30, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_1, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_2, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_3, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_4, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_5, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_6, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_1, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_2, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_3, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_4, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_5, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_6, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vce2_agu_AddrWidth32_1, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vce2_agu_AddrWidth32_2, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_id_stage_0_3_0_1, since there are no registers. (PWR-806)
+Information: Performing clock-gating on design vcve2_vrf_interface_VLEN128_PIPE_WIDTH32. (PWR-730)
+Information: Performing clock-gating on design vcve2_prefetch_buffer. (PWR-730)
+Information: Performing clock-gating on design vcve2_controller. (PWR-730)
+Information: Performing clock-gating on design vcve2_id_stage_0_3_0. (PWR-730)
+Information: Performing clock-gating on design vcve2_csr_00000001_0_0_1. (PWR-730)
+Information: Performing clock-gating on design vcve2_fetch_fifo_00000002. (PWR-730)
+Information: Performing clock-gating on design vcve2_csr_00000001_0_0_0. (PWR-730)
+Information: Performing clock-gating on design vcve2_top. (PWR-730)
+Information: Performing clock-gating on design vcve2_lsu_interface. (PWR-730)
+Information: Performing clock-gating on design vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808. (PWR-730)
+Information: Performing clock-gating on design vcve2_load_store_unit. (PWR-730)
+Information: Performing clock-gating on design vcve2_register_file_ff_0_32_00000000. (PWR-730)
+Information: Performing clock-gating on design vce2_agu_AddrWidth32. (PWR-730)
+Information: Performing clock-gating on design vcve2_csr_6_0c. (PWR-730)
+Information: Performing clock-gating on design vcve2_csr_32_0_0_7. (PWR-730)
+Information: Performing clock-gating on design vcve2_csr_19_0_0. (PWR-730)
+Information: Performing clock-gating on design vcve2_csr_7_0_0_1. (PWR-730)
+Information: Performing clock-gating on design vcve2_csr_32_00000001. (PWR-730)
+Information: Performing clock-gating on design vcve2_csr_32_0_40000003. (PWR-730)
+Information: Performing clock-gating on design vcve2_csr_3_0_4. (PWR-730)
+Information: Performing clock-gating on design vcve2_counter_CounterWidth64. (PWR-730)
+Information: Performing clock-gating on design vcve2_counter_CounterWidth64_ProvideValUpd1. (PWR-730)
+Information: Performing clock-gating on design vcve2_csr_7_0_0_0. (PWR-730)
+Information: Performing clock-gating on design vcve2_csr_32_0_0_0. (PWR-730)
+Information: Performing clock-gating on design vcve2_csr_32_0_0_1. (PWR-730)
+Information: Performing clock-gating on design vcve2_csr_32_0_0_2. (PWR-730)
+Information: Performing clock-gating on design vcve2_csr_32_0_0_3. (PWR-730)
+Information: Performing clock-gating on design vcve2_csr_32_0_0_4. (PWR-730)
+Information: Performing clock-gating on design vcve2_csr_32_0_0_5. (PWR-730)
+Information: Performing clock-gating on design vcve2_csr_32_0_0_6. (PWR-730)
+Information: Performing clock-gating on design vcve2_if_stage_1a110800_1a110808. (PWR-730)
+Information: Performing clock-gating on design vcve2_dmem_arbiter. (PWR-730)
+Information: Performing clock-gating on design vcve2_cs_registers_1_00000001_00000000_00000028_0_00000000_00000004_0_3_0. (PWR-730)
+Information: Performing clock-gating on design vcve2_multdiv_fast_RV32M3. (PWR-730)
+Information: The register 'u_cve2_core/cs_registers_i/gen_trigger_regs.u_tselect_csr/rdata_q_reg[0]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/cs_registers_i/u_depc_csr/rdata_q_reg[0]' is a constant and will be removed. (OPT-1206)
+Information: Removing unused design 'vcve2_csr_00000001_0_0_1'. (OPT-1055)
 
-  Beginning Implementation Selection
-  ----------------------------------
-  Processing 'vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_DW01_inc_0_DW01_inc_1'
-  Processing 'vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_DW01_cmp2_0_DW01_cmp2_3'
-  Processing 'vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_DW01_cmp2_1_DW01_cmp2_4'
-  Processing 'vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_DW_rash_0'
-  Processing 'vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_DW01_ash_0'
-  Processing 'vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_DW_rash_1'
-  Processing 'vcve2_cs_registers_1_00000001_00000000_00000028_0_00000000_00000004_0_3_0_DW01_cmp6_0'
-  Processing 'vcve2_counter_CounterWidth64_ProvideValUpd1_DW01_inc_0_DW01_inc_2'
-  Processing 'vcve2_counter_CounterWidth64_DW01_inc_0_DW01_inc_3'
-  Processing 'vce2_agu_AddrWidth32_DW01_inc_0_DW01_inc_4'
-  Processing 'vce2_agu_AddrWidth32_DW01_inc_1_DW01_inc_5'
-  Processing 'vce2_agu_AddrWidth32_DW01_inc_2_DW01_inc_6'
-  Processing 'vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_DW01_sub_0_DW01_sub_3'
-  Processing 'vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_DW01_ash_0_DW01_ash_1'
-  Processing 'vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_DW_rash_0_DW_rash_2'
-  Processing 'vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_DW01_dec_0_DW01_dec_1'
-  Processing 'vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_DW_rash_1_DW_rash_3'
-  Processing 'vcve2_lsu_interface_DW01_add_0_DW01_add_1'
-  Processing 'vcve2_multdiv_fast_RV32M3_DW01_dec_0_DW01_dec_2'
-  Processing 'vcve2_multdiv_fast_RV32M3_DW01_ash_0_DW01_ash_2'
-  Processing 'vcve2_alu_RV32B0_DW_rash_0_DW_rash_4'
-  Processing 'vcve2_alu_RV32B0_DW01_sub_0_DW01_sub_4'
-  Processing 'vcve2_fracturable_adder_PIPE_WIDTH32_DW01_add_0_DW01_add_2'
-  Processing 'vcve2_fracturable_adder_PIPE_WIDTH32_DW01_add_1_DW01_add_3'
-  Processing 'vcve2_fracturable_adder_PIPE_WIDTH32_DW01_add_2_DW01_add_4'
-  Processing 'vcve2_fracturable_adder_PIPE_WIDTH32_DW01_add_3_DW01_add_5'
-  Processing 'vcve2_controller_DW01_add_0_DW01_add_6'
-  Processing 'vcve2_prefetch_buffer_DW01_add_0_DW01_add_7'
-  Processing 'vcve2_fetch_fifo_00000002_DW01_add_0_DW01_add_8'
-  Allocating blocks in 'DW02_mult_A_width8_B_width8'
-  Building model 'DW01_MUX'
-  Processing 'DW01_MUX'
-  Building model 'DW01_mmux_width2'
-  Processing 'DW01_mmux_width2'
-  Building model 'DW01_mmux_width3'
-  Processing 'DW01_mmux_width3'
-  Building model 'DW01_mmux_width4'
-  Processing 'DW01_mmux_width4'
-  Building model 'DW01_mmux_width5'
-  Processing 'DW01_mmux_width5'
-  Building model 'DW01_NAND2'
-  Processing 'DW01_NAND2'
-  Building model 'DW01_add_width14' (cla)
-  Processing 'DW01_add_width14'
-  Building model 'DW02_mult_A_width8_B_width8' (csa)
-  Processing 'DW02_mult_A_width8_B_width8'
-  Allocating blocks in 'DW02_mult_A_width17_B_width17'
-  Building model 'DW01_add_width32' (cla)
-  Processing 'DW01_add_width32'
-  Building model 'DW02_mult_A_width17_B_width17' (csa)
-  Processing 'DW02_mult_A_width17_B_width17'
-  Building model 'DW01_add_width32' (rpl)
-  Processing 'DW01_add_width32'
-  Processing 'vcve2_multdiv_fast_RV32M3_DW02_mult_0'
-  Processing 'vcve2_multdiv_fast_RV32M3_DW01_add_0_DW01_add_9'
-  Processing 'vcve2_multdiv_fast_RV32M3_DW02_mult_1'
-  Processing 'vcve2_multdiv_fast_RV32M3_DW01_add_1_DW01_add_10'
-  Processing 'vcve2_multdiv_fast_RV32M3_DW02_mult_2'
-  Processing 'vcve2_multdiv_fast_RV32M3_DW01_add_2_DW01_add_11'
-  Processing 'vcve2_multdiv_fast_RV32M3_DW02_mult_3'
-  Processing 'vcve2_multdiv_fast_RV32M3_DW01_add_3_DW01_add_12'
-  Processing 'vcve2_multdiv_fast_RV32M3_DW01_add_4_DW01_add_13'
-  Processing 'vcve2_multdiv_fast_RV32M3_DW01_add_5_DW01_add_14'
-
-  Beginning Mapping Optimizations  (Medium effort)
+  Beginning Mapping Optimizations  (Ultra High effort)
   -------------------------------
+Information: Added key list 'DesignWare' to design 'vcve2_lsu_interface'. (DDB-72)
+Information: Added key list 'DesignWare' to design 'vce2_agu_AddrWidth32'. (DDB-72)
+Information: Added key list 'DesignWare' to design 'vcve2_controller'. (DDB-72)
+Information: Added key list 'DesignWare' to design 'vcve2_fetch_fifo_00000002'. (DDB-72)
   Mapping Optimization (Phase 1)
-  Mapping Optimization (Phase 2)
+Information: Added key list 'DesignWare' to design 'vcve2_prefetch_buffer'. (DDB-72)
+Information: Added key list 'DesignWare' to design 'vcve2_fracturable_adder_PIPE_WIDTH32'. (DDB-72)
+Begin Combinational loops breaking ...
+	Number of combinational loops found: 0
+End Combinational loops breaking ...
 
-                                  TOTAL                                      
-   ELAPSED            WORST NEG   SETUP    DESIGN                            
-    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
-  --------- --------- --------- --------- --------- -------------------------
-    0:00:28   70534.4      2.10    2224.3    2811.1                          
-    0:00:28   70534.4      2.10    2224.3    2811.1                          
-    0:00:29   76070.5      1.77    1501.3     295.6                          
-Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[5]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[9]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[10]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[11]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[14]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[16]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[17]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[3]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[4]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[18]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[19]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[20]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[21]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[22]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[23]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[24]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[25]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[26]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[27]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[28]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[29]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[31]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/if_stage_i/pc_id_o_reg[0]' is a constant and will be removed. (OPT-1206)
-    0:00:42   77715.4      0.71     492.1       0.0                          
-    0:00:43   77649.1      0.78     544.6       0.0                          
-    0:00:43   77649.1      0.78     544.6       0.0                          
-    0:00:43   77649.1      0.78     544.6       0.0                          
-    0:00:44   77645.2      0.77     541.3       0.0                          
-    0:00:44   77645.2      0.77     541.3       0.0                          
-    0:00:44   77645.2      0.77     541.3       0.0                          
-    0:00:47   60932.9      2.80    1589.7       0.0                          
-    0:00:48   61182.0      2.20    1849.6       0.0                          
-    0:00:49   61111.4      1.85    1511.8       0.0                          
-    0:00:49   61123.7      1.72    1422.9       0.0                          
-    0:00:49   61126.2      1.70    1404.7       0.0                          
-    0:00:49   61151.0      1.59    1306.3       0.0                          
-    0:00:50   61143.8      1.54    1277.9       0.0                          
-    0:00:50   61156.8      1.54    1271.4       0.0                          
-    0:00:50   61160.0      1.51    1257.7       0.0                          
-    0:00:50   61173.7      1.52    1266.1       0.0                          
-    0:00:51   61191.4      1.43    1185.2       0.0                          
-    0:00:51   61203.6      1.43    1179.8       0.0                          
-    0:00:51   61219.4      1.42    1157.9       0.0                          
-    0:00:51   61212.6      1.40    1149.2       0.0                          
-    0:00:51   61214.4      1.38    1101.9       0.0                          
-    0:00:51   61214.8      1.35    1087.9       0.0                          
-    0:00:51   61214.8      1.35    1087.9       0.0                          
-    0:00:51   61214.8      1.35    1087.9       0.0                          
-    0:00:51   61214.8      1.35    1087.9       0.0                          
-    0:00:51   61214.8      1.35    1087.9       0.0                          
-    0:00:51   61214.8      1.35    1087.9       0.0                          
-    0:00:51   61214.8      1.35    1087.9       0.0                          
-    0:00:52   61273.4      1.27    1006.0       0.0 u_cve2_core/register_file_i/rf_reg_q_reg[14][18]/D
-    0:00:52   61314.1      1.19     955.6       0.0 u_cve2_core/register_file_i/rf_reg_q_reg[1][15]/D
-    0:00:53   61375.7      1.13     914.7       0.0 u_cve2_core/register_file_i/rf_reg_q_reg[2][14]/D
-    0:00:53   61442.3      1.08     871.4       0.0 u_cve2_core/register_file_i/rf_reg_q_reg[14][18]/D
-    0:00:54   61477.6      1.02     822.3       0.0 u_cve2_core/register_file_i/rf_reg_q_reg[14][18]/D
-    0:00:54   61526.5      0.98     787.9       0.0 u_cve2_core/cs_registers_i/mcycle_counter_i/counter_q_reg[63]/D
-    0:00:55   61563.6      0.96     754.0       0.0 u_cve2_core/register_file_i/rf_reg_q_reg[29][29]/D
-    0:00:55   61617.2      0.92     717.5       0.0 u_cve2_core/register_file_i/rf_reg_q_reg[14][15]/D
-    0:00:56   62056.4      0.77     564.5       0.1 u_cve2_core/register_file_i/rf_reg_q_reg[29][28]/D
-    0:00:57   62325.4      0.62     448.1       0.1                          
+                                  TOTAL                                                
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
+  --------- --------- --------- --------- --------- ------------------------- ---------
+    0:00:26   72347.4      0.00       0.0       7.1                           27752.5020
+    0:00:27   72281.9      0.00       0.0       7.1                           27729.5508
 
+  Beginning Constant Register Removal
+  -----------------------------------
 
+  Beginning Global Optimizations
+  ------------------------------
+  Numerical Synthesis (Phase 1)
+  Numerical Synthesis (Phase 2)
+  Global Optimization (Phase 1)
+  Global Optimization (Phase 2)
+  Global Optimization (Phase 3)
+  Global Optimization (Phase 4)
+  Global Optimization (Phase 5)
+  Global Optimization (Phase 6)
+  Global Optimization (Phase 7)
+  Global Optimization (Phase 8)
+  Global Optimization (Phase 9)
+  Global Optimization (Phase 10)
+  Global Optimization (Phase 11)
+  Global Optimization (Phase 12)
+  Global Optimization (Phase 13)
+  Global Optimization (Phase 14)
+  Global Optimization (Phase 15)
+  Global Optimization (Phase 16)
+  Global Optimization (Phase 17)
+  Global Optimization (Phase 18)
+  Global Optimization (Phase 19)
+  Global Optimization (Phase 20)
+  Global Optimization (Phase 21)
+  Global Optimization (Phase 22)
+  Global Optimization (Phase 23)
+  Global Optimization (Phase 24)
+  Global Optimization (Phase 25)
+  Global Optimization (Phase 26)
+  Global Optimization (Phase 27)
+  Global Optimization (Phase 28)
+  Global Optimization (Phase 29)
+  Global Optimization (Phase 30)
+  Mapping 'vcve2_multdiv_fast_RV32M3_DP_OP_116J6_122_2826_3'
+  Mapping 'vcve2_multdiv_fast_RV32M3_DW_mult_tc_1'
+Information: Added key list 'DesignWare' to design 'vcve2_counter_CounterWidth64'. (DDB-72)
+Information: Added key list 'DesignWare' to design 'vcve2_counter_CounterWidth64_ProvideValUpd1'. (DDB-72)
 
-  Beginning Delay Optimization Phase
-  ----------------------------------
+  Beginning Isolate Ports
+  -----------------------
 
-                                  TOTAL                                      
-   ELAPSED            WORST NEG   SETUP    DESIGN                            
-    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
-  --------- --------- --------- --------- --------- -------------------------
-    0:00:57   62325.4      0.62     448.1       0.1                          
-    0:00:58   62436.6      0.57     414.4       0.1 u_cve2_core/register_file_i/rf_reg_q_reg[14][15]/D
-    0:00:58   62451.4      0.56     406.2       0.1 u_cve2_core/register_file_i/rf_reg_q_reg[14][16]/D
-    0:00:59   62468.3      0.54     399.7       0.1 u_cve2_core/register_file_i/rf_reg_q_reg[4][26]/D
-    0:00:59   62512.2      0.53     393.3       0.1 u_cve2_core/register_file_i/rf_reg_q_reg[14][16]/D
-    0:00:59   62535.6      0.53     386.4       0.1 u_cve2_core/register_file_i/rf_reg_q_reg[14][16]/D
-    0:01:00   62573.4      0.50     368.3       0.1 u_cve2_core/register_file_i/rf_reg_q_reg[14][15]/D
-    0:01:00   62633.2      0.49     358.1       2.6 u_cve2_core/register_file_i/rf_reg_q_reg[9][28]/D
-    0:01:00   62677.8      0.48     350.3       2.6 u_cve2_core/register_file_i/rf_reg_q_reg[9][28]/D
-    0:01:00   62683.9      0.47     347.4       2.6 u_cve2_core/register_file_i/rf_reg_q_reg[9][28]/D
-    0:01:01   62706.2      0.46     339.2       2.6 u_cve2_core/register_file_i/rf_reg_q_reg[14][15]/D
-    0:01:01   62696.9      0.46     337.0       2.6 u_cve2_core/register_file_i/rf_reg_q_reg[14][15]/D
-    0:01:01   62690.0      0.46     334.6       2.6 u_cve2_core/register_file_i/rf_reg_q_reg[14][15]/D
-    0:01:01   62711.6      0.44     319.7       2.6 u_cve2_core/register_file_i/rf_reg_q_reg[6][25]/D
-    0:01:02   62732.9      0.43     312.6       2.6 u_cve2_core/register_file_i/rf_reg_q_reg[19][16]/D
-    0:01:02   62753.8      0.42     303.2       2.6 u_cve2_core/register_file_i/rf_reg_q_reg[19][16]/D
-    0:01:02   62784.7      0.41     287.7       2.6 u_cve2_core/register_file_i/rf_reg_q_reg[19][16]/D
-    0:01:03   62797.3      0.40     285.0       2.6 u_cve2_core/register_file_i/rf_reg_q_reg[14][13]/D
-    0:01:03   62827.2      0.39     273.7       2.6 u_cve2_core/register_file_i/rf_reg_q_reg[14][15]/D
-    0:01:03   62850.2      0.38     271.0       2.6 u_cve2_core/register_file_i/rf_reg_q_reg[14][22]/D
-    0:01:03   62855.6      0.38     269.4       2.6 u_cve2_core/register_file_i/rf_reg_q_reg[14][13]/D
-    0:01:04   62903.5      0.37     262.0       5.3 u_cve2_core/register_file_i/rf_reg_q_reg[16][22]/D
-    0:01:04   62958.2      0.36     255.3       5.3 u_cve2_core/register_file_i/rf_reg_q_reg[13][13]/D
-    0:01:04   62974.1      0.36     250.9       5.3 u_cve2_core/register_file_i/rf_reg_q_reg[13][13]/D
-    0:01:05   62985.6      0.35     246.4       5.3 u_cve2_core/register_file_i/rf_reg_q_reg[14][14]/D
-    0:01:05   62988.1      0.35     245.5       5.3 u_cve2_core/register_file_i/rf_reg_q_reg[29][28]/D
-    0:01:05   62988.5      0.35     245.0       5.3 u_cve2_core/register_file_i/rf_reg_q_reg[30][12]/D
-    0:01:05   62991.0      0.34     240.2       5.3 u_cve2_core/register_file_i/rf_reg_q_reg[29][28]/D
-    0:01:06   62992.4      0.34     239.1       5.3 u_cve2_core/register_file_i/rf_reg_q_reg[30][12]/D
-    0:01:06   62999.6      0.33     234.9       5.3 u_cve2_core/register_file_i/rf_reg_q_reg[29][28]/D
-    0:01:06   63008.6      0.33     233.7       5.3 u_cve2_core/register_file_i/rf_reg_q_reg[14][17]/D
-    0:01:06   63009.7      0.33     232.3       5.3 u_cve2_core/register_file_i/rf_reg_q_reg[16][22]/D
-    0:01:07   63041.8      0.32     228.6       5.3 u_cve2_core/register_file_i/rf_reg_q_reg[29][28]/D
-    0:01:07   63048.6      0.32     222.7       5.3 u_cve2_core/register_file_i/rf_reg_q_reg[30][18]/D
-    0:01:07   63054.7      0.32     218.2       5.3 u_cve2_core/register_file_i/rf_reg_q_reg[29][28]/D
-    0:01:07   63065.5      0.32     217.2       5.3 u_cve2_core/register_file_i/rf_reg_q_reg[29][28]/D
-    0:01:08   63074.9      0.31     214.6       5.3 u_cve2_core/register_file_i/rf_reg_q_reg[29][28]/D
-    0:01:08   63081.7      0.31     214.0       5.3 u_cve2_core/register_file_i/rf_reg_q_reg[29][28]/D
-    0:01:08   63094.3      0.31     212.0       5.3 u_cve2_core/register_file_i/rf_reg_q_reg[29][28]/D
-    0:01:08   63085.7      0.31     208.9       5.3 u_cve2_core/register_file_i/rf_reg_q_reg[29][28]/D
-    0:01:09   63089.6      0.30     205.8       5.3 u_cve2_core/register_file_i/rf_reg_q_reg[2][14]/D
-    0:01:09   63122.8      0.29     200.2       5.3 u_cve2_core/register_file_i/rf_reg_q_reg[4][26]/D
-    0:01:09   63145.1      0.29     193.0       5.3 u_cve2_core/register_file_i/rf_reg_q_reg[2][14]/D
-    0:01:09   63151.6      0.29     191.7       5.3 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:10   63114.8      0.29     190.2       5.3 u_cve2_core/register_file_i/rf_reg_q_reg[2][14]/D
-    0:01:10   63112.0      0.28     189.3       5.3 u_cve2_core/register_file_i/rf_reg_q_reg[2][14]/D
-    0:01:10   63126.7      0.28     186.5       5.3 u_cve2_core/register_file_i/rf_reg_q_reg[2][14]/D
-    0:01:10   63123.1      0.28     186.4       5.3 u_cve2_core/register_file_i/rf_reg_q_reg[14][17]/D
-    0:01:11   63207.0      0.27     180.1       6.0 u_cve2_core/register_file_i/rf_reg_q_reg[30][18]/D
-    0:01:11   63209.5      0.27     178.1       6.0 u_cve2_core/register_file_i/rf_reg_q_reg[2][14]/D
-    0:01:11   63220.3      0.26     174.7       6.0 u_cve2_core/register_file_i/rf_reg_q_reg[9][28]/D
-    0:01:11   63234.7      0.26     170.6       6.0 u_cve2_core/register_file_i/rf_reg_q_reg[30][12]/D
-    0:01:11   63234.7      0.25     168.4       6.0 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:12   63241.6      0.25     166.0       6.0 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:12   63246.6      0.25     163.8       6.0 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:12   63256.3      0.24     160.5       6.0 u_cve2_core/register_file_i/rf_reg_q_reg[2][14]/D
-    0:01:12   63290.2      0.24     159.0       6.0 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:12   63310.7      0.24     156.7       6.0 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:12   63310.3      0.23     154.0       6.0 u_cve2_core/register_file_i/rf_reg_q_reg[9][28]/D
-    0:01:12   63330.8      0.23     153.4       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[9][28]/D
-    0:01:12   63344.5      0.23     152.4       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[29][29]/D
-    0:01:13   63357.5      0.23     151.0       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[14][17]/D
-    0:01:13   63383.8      0.23     150.8       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[13][9]/D
-    0:01:13   63384.1      0.22     148.6       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:13   63397.4      0.22     147.2       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[14][17]/D
-    0:01:13   63411.8      0.22     144.6       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[30][10]/D
-    0:01:14   63412.2      0.22     144.2       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[9][14]/D
-    0:01:14   63413.3      0.22     142.2       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[14][17]/D
-    0:01:14   63418.3      0.21     140.3       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:14   63434.5      0.21     138.1      11.5 u_cve2_core/register_file_i/rf_reg_q_reg[14][17]/D
-    0:01:14   63434.2      0.21     136.8      11.5 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:14   63439.6      0.21     135.7      11.5 u_cve2_core/register_file_i/rf_reg_q_reg[14][17]/D
-    0:01:14   63448.2      0.21     134.5      11.5 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:15   63454.0      0.21     133.4      11.5 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:15   63456.1      0.20     133.0      11.5 u_cve2_core/register_file_i/rf_reg_q_reg[8][14]/D
-    0:01:15   63468.4      0.20     132.6      11.5 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:15   63470.9      0.20     131.7      11.5 u_cve2_core/register_file_i/rf_reg_q_reg[30][7]/D
-    0:01:15   63482.4      0.20     129.8      11.5 u_cve2_core/register_file_i/rf_reg_q_reg[14][16]/D
-    0:01:15   63491.8      0.20     129.4      11.5 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:15   63496.8      0.20     127.6      11.5 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:15   63500.4      0.19     125.1      11.5 u_cve2_core/register_file_i/rf_reg_q_reg[14][17]/D
-    0:01:16   63509.4      0.19     124.1      11.5 u_cve2_core/register_file_i/rf_reg_q_reg[13][10]/D
-    0:01:16   63522.0      0.19     123.0      11.5 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:16   63531.4      0.19     120.7      11.5 u_cve2_core/register_file_i/rf_reg_q_reg[13][27]/D
-    0:01:16   63552.6      0.19     120.0      11.5 u_cve2_core/register_file_i/rf_reg_q_reg[14][17]/D
-    0:01:16   63551.9      0.18     118.9      11.5 u_cve2_core/register_file_i/rf_reg_q_reg[14][17]/D
-    0:01:16   63559.4      0.18     117.1       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[14][17]/D
-    0:01:16   63572.8      0.18     114.6       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[29][29]/D
-    0:01:16   63571.0      0.18     114.5       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[14][17]/D
-    0:01:16   63573.1      0.18     112.8       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[29][29]/D
-    0:01:16   63592.6      0.18     110.6       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[14][17]/D
-    0:01:17   63592.2      0.17     110.0       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[13][27]/D
-    0:01:17   63594.7      0.17     109.3       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[29][29]/D
-    0:01:17   63598.0      0.17     107.3       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[29][29]/D
-    0:01:17   63602.6      0.17     106.0       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[29][29]/D
-    0:01:17   63603.0      0.17     104.8       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[8][14]/D
-    0:01:17   63610.6      0.17     104.3       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[29][29]/D
-    0:01:17   63610.6      0.16     103.3       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[26][18]/D
-    0:01:17   63615.2      0.16     100.7       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[29][29]/D
-    0:01:17   63611.6      0.16     100.3       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[29][29]/D
-    0:01:17   63611.6      0.16     100.0       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:17   63616.7      0.16      99.5       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:18   63631.1      0.16      98.9       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:18   63649.1      0.16      97.4       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[17][28]/D
-    0:01:18   63661.0      0.15      96.5       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[2][27]/D
-    0:01:18   63655.6      0.15      95.4       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:18   63665.6      0.15      93.6       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[29][29]/D
-    0:01:18   63674.3      0.15      92.7       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[8][14]/D
-    0:01:18   63675.4      0.15      91.4       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:18   63677.5      0.15      91.6       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[8][14]/D
-    0:01:18   63688.7      0.15      91.1       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:19   63705.6      0.14      90.0       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[30][24]/D
-    0:01:19   63710.6      0.14      89.7       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:19   63726.8      0.14      89.0       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:19   63742.7      0.14      86.5       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[30][24]/D
-    0:01:19   63790.6      0.14      84.4       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][26]/D
-    0:01:19   63793.1      0.13      83.1       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[17][30]/D
-    0:01:19   63811.1      0.13      83.2       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[26][18]/D
-    0:01:19   63810.0      0.13      81.1       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[26][18]/D
-    0:01:20   63819.7      0.13      80.0       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[8][14]/D
-    0:01:20   63830.2      0.13      78.4       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[26][18]/D
-    0:01:20   63841.7      0.13      77.9       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[8][14]/D
-    0:01:20   63853.2      0.13      76.5       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[26][18]/D
-    0:01:20   63854.3      0.12      76.2       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[8][14]/D
-    0:01:20   63863.6      0.12      75.4       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[17][28]/D
-    0:01:20   63867.6      0.12      75.1       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[17][28]/D
-    0:01:21   63869.8      0.12      74.6       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[17][28]/D
-    0:01:21   63873.4      0.12      74.6       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[26][18]/D
-    0:01:21   63881.6      0.12      74.6       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[17][28]/D
-    0:01:21   63888.8      0.12      74.0       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][26]/D
-    0:01:21   63893.2      0.12      72.7       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[13][9]/D
-    0:01:21   63895.0      0.12      71.6       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[17][28]/D
-    0:01:21   63900.7      0.11      69.3       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[17][28]/D
-    0:01:21   63922.0      0.11      68.3       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[17][30]/D
-    0:01:21   63930.6      0.11      66.8       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[26][18]/D
-    0:01:22   63947.5      0.11      65.7       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[17][28]/D
-    0:01:22   63968.8      0.11      65.5       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[17][28]/D
-    0:01:22   63969.5      0.11      64.3       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[17][28]/D
-    0:01:22   63967.7      0.11      63.1       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[17][28]/D
-    0:01:22   63988.9      0.11      62.6       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[17][28]/D
-    0:01:22   63995.4      0.10      62.1       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[2][27]/D
-    0:01:22   63996.8      0.10      61.3       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][14]/D
-    0:01:22   64018.1      0.10      60.7       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[26][18]/D
-    0:01:23   64027.4      0.10      59.7       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[26][18]/D
-    0:01:23   64032.8      0.10      57.5       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[26][18]/D
-    0:01:23   64055.9      0.10      56.4       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[30][24]/D
-    0:01:23   64059.8      0.10      55.8       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][14]/D
-    0:01:23   64062.7      0.10      55.5       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[17][28]/D
-    0:01:23   64069.2      0.10      55.1       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:23   64072.8      0.09      53.0       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[17][28]/D
-    0:01:23   64093.7      0.09      53.0       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][14]/D
-    0:01:24   64094.8      0.09      52.4       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][14]/D
-    0:01:24   64097.3      0.09      51.6       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[26][18]/D
-    0:01:24   64092.2      0.09      51.5       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][14]/D
-    0:01:24   64101.6      0.09      50.8       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][14]/D
-    0:01:24   64105.6      0.09      50.3       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][14]/D
-    0:01:24   64118.9      0.09      49.7       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][14]/D
-    0:01:24   64133.3      0.09      49.0       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[30][24]/D
-    0:01:24   64144.4      0.09      48.4       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[27][28]/D
-    0:01:25   64121.0      0.09      47.9       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[17][28]/D
-    0:01:25   64129.0      0.08      47.0       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[26][18]/D
-    0:01:25   64132.6      0.08      46.4       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][14]/D
-    0:01:25   64138.7      0.08      45.5       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:25   64137.2      0.08      45.1       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[17][28]/D
-    0:01:25   64140.1      0.08      44.3       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][14]/D
-    0:01:25   64143.4      0.08      43.7       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[17][28]/D
-    0:01:25   64143.4      0.08      43.1       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][26]/D
-    0:01:26   64147.7      0.08      42.1       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][14]/D
-    0:01:26   64141.2      0.08      42.0       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][14]/D
-    0:01:26   64141.9      0.08      41.8       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][14]/D
-    0:01:26   64143.0      0.08      41.6       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][26]/D
-    0:01:26   64143.7      0.08      41.4       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][14]/D
-    0:01:26   64144.1      0.08      41.3       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][26]/D
-    0:01:27   64147.0      0.07      40.5       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[2][27]/D
-    0:01:27   64156.0      0.07      40.3       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][14]/D
-    0:01:27   64148.0      0.07      40.3       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][14]/D
-    0:01:27   64147.0      0.07      39.3       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:27   64149.1      0.07      39.2       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:27   64148.8      0.07      39.1       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][14]/D
-    0:01:27   64171.4      0.07      38.9       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:28   64188.7      0.07      38.6       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:28   64201.0      0.07      38.5       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[2][27]/D
-    0:01:28   64201.3      0.07      37.8       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[16][14]/D
-    0:01:28   64202.4      0.07      37.6       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[16][14]/D
-    0:01:28   64212.8      0.07      36.5       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[16][14]/D
-    0:01:28   64215.0      0.07      36.0       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[2][27]/D
-    0:01:28   64215.4      0.07      35.7       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][26]/D
-    0:01:28   64214.3      0.07      35.4       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:28   64207.8      0.07      35.1       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[1][14]/D
-    0:01:29   64214.3      0.06      34.6       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][26]/D
-    0:01:29   64219.3      0.06      33.6       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[1][14]/D
-    0:01:29   64215.0      0.06      33.0       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[1][14]/D
-    0:01:29   64228.7      0.06      32.7       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[26][18]/D
-    0:01:29   64229.8      0.06      31.9       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[13][10]/D
-    0:01:29   64239.8      0.06      31.5       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][26]/D
-    0:01:29   64233.0      0.06      31.3       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[1][14]/D
-    0:01:30   64233.0      0.06      31.1       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[1][14]/D
-    0:01:30   64235.2      0.06      30.8       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[26][18]/D
-    0:01:30   64243.8      0.06      30.6       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[1][14]/D
-    0:01:30   64244.2      0.06      30.6       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[1][14]/D
-    0:01:30   64242.7      0.06      30.6       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[1][14]/D
-    0:01:31   64244.9      0.06      29.6       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[26][18]/D
-    0:01:31   64253.5      0.06      29.4       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[1][14]/D
-    0:01:31   64257.1      0.06      29.2       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[1][14]/D
-    0:01:31   64256.8      0.06      29.2       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[1][14]/D
-    0:01:31   64256.4      0.06      28.1       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[26][18]/D
-    0:01:31   64263.2      0.05      27.6       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[22][25]/D
-    0:01:31   64260.7      0.05      27.5       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[1][14]/D
-    0:01:32   64271.2      0.05      26.9       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][26]/D
-    0:01:32   64270.1      0.05      25.4       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[1][14]/D
-    0:01:32   64269.4      0.05      25.4       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[1][14]/D
-    0:01:32   64271.9      0.05      25.0       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][26]/D
-    0:01:32   64271.5      0.05      25.0       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[26][18]/D
-    0:01:32   64261.8      0.05      24.6       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][26]/D
-    0:01:32   64264.3      0.05      23.9       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][26]/D
-    0:01:32   64268.6      0.05      23.4       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[1][14]/D
-    0:01:33   64270.4      0.05      23.4       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][26]/D
-    0:01:33   64278.7      0.05      23.1       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][26]/D
-    0:01:33   64282.3      0.05      22.9       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[22][25]/D
-    0:01:33   64280.2      0.05      22.5       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[26][18]/D
-    0:01:33   64293.8      0.05      22.1       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[22][25]/D
-    0:01:33   64296.0      0.05      22.1       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[1][14]/D
-    0:01:33   64298.9      0.05      21.7       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][26]/D
-    0:01:34   64300.3      0.05      21.4       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[26][18]/D
-    0:01:34   64296.4      0.05      21.1       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[26][18]/D
-    0:01:34   64297.4      0.04      20.6       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[14][23]/D
-    0:01:34   64313.3      0.04      20.3       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][26]/D
-    0:01:34   64314.0      0.04      20.2       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[1][14]/D
-    0:01:34   64321.2      0.04      19.7       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[1][14]/D
-    0:01:34   64340.6      0.04      19.4       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][26]/D
-    0:01:34   64342.8      0.04      19.0       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[26][18]/D
-    0:01:35   64352.9      0.04      18.8       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[1][14]/D
-    0:01:37   64353.6      0.04      18.8       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[1][14]/D
-    0:01:39   64359.7      0.04      15.7       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:39   64370.9      0.03      12.8       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[26][18]/D
-    0:01:39   64386.4      0.03      11.1       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:40   64396.4      0.03      11.4       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][26]/D
-    0:01:40   64415.5      0.03      10.3       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][26]/D
-    0:01:40   64417.0      0.03       9.9       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][26]/D
-    0:01:40   64422.4      0.03       9.9       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][26]/D
-    0:01:41   64433.5      0.03       9.9       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][26]/D
-    0:01:41   64436.8      0.03       9.7       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[14][17]/D
-    0:01:41   64451.5      0.03       8.8       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][26]/D
-    0:01:41   64464.5      0.02       8.1       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][26]/D
-    0:01:41   64472.8      0.02       7.3       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[14][17]/D
-    0:01:42   64478.5      0.02       5.9       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][26]/D
-    0:01:42   64491.1      0.02       4.2       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[26][15]/D
-    0:01:42   64489.3      0.01       3.1       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[2][27]/D
-    0:01:42   64486.8      0.01       2.2       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[30][24]/D
-    0:01:43   64484.6      0.01       1.5       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[28][7]/D
-    0:01:43   64494.0      0.01       0.8       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][26]/D
-    0:01:43   64497.2      0.00       0.5       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[30][24]/D
-    0:01:43   64504.1      0.00       0.2       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[2][27]/D
-    0:01:43   64508.0      0.00       0.1       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[4][26]/D
-    0:01:43   64510.6      0.00       0.0       8.7 u_cve2_core/register_file_i/rf_reg_q_reg[26][15]/D
-    0:01:44   64510.6      0.00       0.0       8.7                          
-    0:01:44   64476.0      0.00       0.0       8.7                          
+  Beginning Delay Optimization
+  ----------------------------
+    0:00:33   48816.4      0.84     111.2      76.2                           12861.4199
+    0:00:33   49008.6      0.00       0.0      76.2                           13113.8291
+    0:00:33   49008.6      0.00       0.0      76.2                           13113.8291
+    0:00:33   49007.9      0.00       0.0      76.2                           13113.9668
+Begin Combinational loops breaking ...
+	Number of combinational loops found: 0
+End Combinational loops breaking ...
+Information: The register 'u_cve2_core/vl_q_reg[31]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/vl_q_reg[30]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/vl_q_reg[29]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/vl_q_reg[28]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/vl_q_reg[27]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/vl_q_reg[26]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/vl_q_reg[25]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/vl_q_reg[24]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/vl_q_reg[23]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/vl_q_reg[22]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/vl_q_reg[21]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/vl_q_reg[20]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/vl_q_reg[19]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/vl_q_reg[18]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/vl_q_reg[17]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/vl_q_reg[16]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/vl_q_reg[15]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/vl_q_reg[14]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/vl_q_reg[13]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/vl_q_reg[12]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/vl_q_reg[11]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/vl_q_reg[10]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/vl_q_reg[9]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/vl_q_reg[8]' is a constant and will be removed. (OPT-1206)
+    0:00:34   48380.8      0.00       0.0      76.2                           12903.4238
+    0:00:35   48331.1      0.00       0.0     103.4                           12895.2139
+
+  Beginning WLM Backend Optimization
+  --------------------------------------
+    0:00:39   48058.2      0.00       0.0      72.4                           12613.5449
+    0:00:39   48058.2      0.00       0.0      72.4                           12613.5449
+    0:00:39   48058.2      0.00       0.0      72.4                           12613.5449
+    0:00:41   48026.9      0.00       0.0      10.8                           10625.0166
+    0:00:41   48026.9      0.00       0.0      10.8                           10625.0166
+    0:00:41   48026.9      0.00       0.0      10.8                           10625.0166
+    0:00:41   48026.9      0.00       0.0      10.8                           10625.0166
+    0:00:41   48026.9      0.00       0.0      10.8                           10625.0166
+    0:00:41   48026.9      0.00       0.0      10.8                           10625.0166
+    0:00:41   48026.9      0.00       0.0      10.8                           10625.0166
+    0:00:41   48026.9      0.00       0.0      10.8                           10625.0166
+    0:00:41   48026.9      0.00       0.0      10.8                           10625.0166
+    0:00:41   48026.9      0.00       0.0      10.8                           10625.0166
+    0:00:41   48026.9      0.00       0.0      10.8                           10625.0166
+    0:00:41   48026.9      0.00       0.0      10.8                           10625.0166
+    0:00:41   48026.9      0.00       0.0      10.8                           10625.0166
+    0:00:41   48026.9      0.00       0.0      10.8                           10625.0166
+    0:00:41   48026.9      0.00       0.0      10.8                           10625.0166
+    0:00:41   48026.9      0.00       0.0      10.8                           10625.0166
+    0:00:41   48026.9      0.00       0.0      10.8                           10625.0166
+    0:00:41   48026.9      0.00       0.0      10.8                           10625.0166
+    0:00:41   48026.9      0.00       0.0      10.8                           10625.0166
 
 
   Beginning Design Rule Fixing  (max_transition)  (max_capacitance)
   ----------------------------
 
-                                  TOTAL                                      
-   ELAPSED            WORST NEG   SETUP    DESIGN                            
-    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
-  --------- --------- --------- --------- --------- -------------------------
-    0:01:44   64476.0      0.00       0.0       8.7                          
-    0:01:44   64473.8      0.00       0.0       0.0                          
+                                  TOTAL                                                
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
+  --------- --------- --------- --------- --------- ------------------------- ---------
+    0:00:41   48026.9      0.00       0.0      10.8                           10625.0166
+  Global Optimization (Phase 31)
+  Global Optimization (Phase 32)
+  Global Optimization (Phase 33)
+    0:00:41   48029.0      0.00       0.0       0.0                           10627.4492
+    0:00:41   48029.0      0.00       0.0       0.0                           10627.4492
 
 
-  Beginning Area-Recovery Phase  (cleanup)
-  -----------------------------
+  Beginning Leakage Power Optimization  (max_leakage_power 0)
+  ------------------------------------
 
-                                  TOTAL                                      
-   ELAPSED            WORST NEG   SETUP    DESIGN                            
-    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
-  --------- --------- --------- --------- --------- -------------------------
-    0:01:44   64473.8      0.00       0.0       0.0                          
-    0:01:44   64473.8      0.00       0.0       0.0                          
-    0:01:45   63796.3      0.09      28.4       0.0                          
-    0:01:45   63537.5      0.09      27.6       0.0                          
-    0:01:46   63358.2      0.09      30.4       0.0                          
-    0:01:46   63221.0      0.09      30.7       0.0                          
-    0:01:46   63098.3      0.09      34.1       0.0                          
-    0:01:46   63000.0      0.09      33.5       0.0                          
-    0:01:46   62948.5      0.09      33.6       0.0                          
-    0:01:46   62921.9      0.09      33.8       0.0                          
-    0:01:46   62921.9      0.09      33.8       0.0                          
-    0:01:47   62948.2      0.04      12.0       0.0 u_cve2_core/register_file_i/rf_reg_q_reg[26][15]/D
-    0:01:47   62947.1      0.03      11.1       0.0 u_cve2_core/register_file_i/rf_reg_q_reg[26][15]/D
-    0:01:47   62952.1      0.03      10.8       0.0 u_cve2_core/register_file_i/rf_reg_q_reg[26][15]/D
-    0:01:48   62952.8      0.03      10.8       0.0                          
-    0:01:48   62956.4      0.03       9.1       0.0                          
-    0:01:48   62959.0      0.02       8.7       0.0                          
-    0:01:48   62959.7      0.02       8.0       0.0                          
-    0:01:48   62966.5      0.02       7.7       0.0                          
-    0:01:49   62972.6      0.02       7.2       0.0                          
-    0:01:49   62977.7      0.02       6.2       0.0                          
-    0:01:49   62978.4      0.02       5.9       0.0                          
-    0:01:49   62981.3      0.02       5.0       0.0                          
-    0:01:49   62982.4      0.01       3.9       0.0                          
-    0:01:49   62982.4      0.01       3.8       0.0                          
-    0:01:50   62061.1      2.47     142.9       0.0                          
-    0:01:50   61795.8      2.47     147.0       0.0                          
-    0:01:50   61722.7      2.47     146.7       0.0                          
-    0:01:50   61722.4      2.47     146.7       0.0                          
-    0:01:50   61722.4      2.47     146.7       0.0                          
-    0:01:50   61722.4      2.47     146.7       0.0                          
-    0:01:50   61722.4      2.47     146.7       0.0                          
-    0:01:50   61722.4      2.47     146.7       0.0                          
-    0:01:50   61991.3      0.13      83.0       0.0 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:51   62041.0      0.07      38.7       0.0 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:51   62076.2      0.06      28.7       0.0 u_cve2_core/register_file_i/rf_reg_q_reg[14][17]/D
-    0:01:51   62102.2      0.05      23.9       0.0 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:52   62122.0      0.04      17.1       0.0 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:52   62154.4      0.03      13.1       0.0 u_cve2_core/register_file_i/rf_reg_q_reg[14][17]/D
-    0:01:52   62166.6      0.02       8.6       0.0 u_cve2_core/register_file_i/rf_reg_q_reg[13][31]/D
-    0:01:53   62185.0      0.02       5.3       0.0 u_cve2_core/register_file_i/rf_reg_q_reg[30][12]/D
-    0:01:53   62206.2      0.01       3.5       0.0 u_cve2_core/register_file_i/rf_reg_q_reg[14][17]/D
-    0:01:53   62206.2      0.01       2.9       0.0 u_cve2_core/register_file_i/rf_reg_q_reg[4][26]/D
-    0:01:53   62230.0      0.01       1.2       0.0 u_cve2_core/register_file_i/rf_reg_q_reg[14][17]/D
-    0:01:54   62243.3      0.00       0.5       0.0 u_cve2_core/register_file_i/rf_reg_q_reg[14][17]/D
-    0:01:54   62257.3      0.00       0.0       0.0 u_cve2_core/register_file_i/rf_reg_q_reg[4][26]/D
-    0:01:55   62175.2      0.00       0.0       0.0                          
+                                  TOTAL                                                
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
+  --------- --------- --------- --------- --------- ------------------------- ---------
+    0:00:41   48029.0      0.00       0.0       0.0                           10627.4492
+  Global Optimization (Phase 34)
+  Global Optimization (Phase 35)
+  Global Optimization (Phase 36)
+  Global Optimization (Phase 37)
+  Global Optimization (Phase 38)
+  Global Optimization (Phase 39)
+  Global Optimization (Phase 40)
+  Global Optimization (Phase 41)
+  Global Optimization (Phase 42)
+  Global Optimization (Phase 43)
+  Global Optimization (Phase 44)
+  Global Optimization (Phase 45)
+  Global Optimization (Phase 46)
+  Global Optimization (Phase 47)
+  Global Optimization (Phase 48)
+    0:00:44   50581.1      0.00       0.0       0.0                           12275.4131
+    0:00:44   50581.1      0.00       0.0       0.0                           12275.4131
+    0:00:44   50581.1      0.00       0.0       0.0                           12275.4131
+    0:00:45   48296.2      0.00       0.0       0.0                           9785.5205
+    0:00:45   48296.2      0.00       0.0       0.0                           9785.5205
+    0:00:45   48296.2      0.00       0.0       0.0                           9785.5205
+    0:00:45   48296.2      0.00       0.0       0.0                           9785.5205
+    0:00:45   48296.2      0.00       0.0       0.0                           9785.5205
+    0:00:45   48296.2      0.00       0.0       0.0                           9785.5205
+    0:00:45   48296.2      0.00       0.0       0.0                           9785.5205
+    0:00:45   48296.2      0.00       0.0       0.0                           9785.5205
+    0:00:45   48296.2      0.00       0.0       0.0                           9785.5205
+    0:00:45   48296.2      0.00       0.0       0.0                           9785.5205
+    0:00:45   48296.2      0.00       0.0       0.0                           9785.5205
+    0:00:45   48296.2      0.00       0.0       0.0                           9785.5205
+    0:00:45   48296.2      0.00       0.0       0.0                           9785.5205
+    0:00:45   48296.2      0.00       0.0       0.0                           9785.5205
+    0:00:45   48296.2      0.00       0.0       0.0                           9785.5205
+    0:00:45   48296.2      0.00       0.0       0.0                           9785.5205
+    0:00:45   48296.2      0.00       0.0       0.0                           9785.5205
+    0:00:45   48296.2      0.00       0.0       0.0                           9785.5205
+    0:00:45   48296.2      0.00       0.0       0.0                           9785.5205
+Begin Combinational loops breaking ...
+	Number of combinational loops found: 0
+End Combinational loops breaking ...
+
+                                  TOTAL                                                
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
+  --------- --------- --------- --------- --------- ------------------------- ---------
+    0:00:45   48269.2      0.00       0.0       0.0                           9785.4717
+    0:00:46   48011.4      0.05       0.1       0.0                           9549.7900
+    0:00:46   48022.9      0.00       0.0       0.0                           9565.2793
+    0:00:46   48022.9      0.00       0.0       0.0                           9565.2793
+    0:00:47   48009.2      0.00       0.0       0.0                           9543.9131
+    0:00:48   47725.6      0.00       0.0       0.0                           9463.2236
+    0:00:48   47725.6      0.00       0.0       0.0                           9463.2236
+    0:00:48   47725.6      0.00       0.0       0.0                           9463.2236
+    0:00:48   47725.6      0.00       0.0       0.0                           9463.2236
+    0:00:48   47725.6      0.00       0.0       0.0                           9463.2236
+    0:00:48   47725.6      0.00       0.0       0.0                           9463.2236
+    0:00:49   47697.5      0.00       0.0       0.0                           9444.8242
 Loading db file '/software/dk/tsmc65/digital/Front_End/timing_power_noise/NLDM/tcbn65lp_200a/tcbn65lpwc.db'
 
 
@@ -1959,9 +1931,13 @@ Note: Symbol # after min delay cost means estimated hold TNS across all active s
   Optimization Complete
   ---------------------
 Warning: Design 'vcve2_top' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
-     Net 'u_cve2_core/cs_registers_i/gen_trigger_regs.g_dbg_tmatch_reg[0].u_tmatch_control_csr/clk_i': 2403 load(s), 1 driver(s)
+     Net 'u_cve2_core/id_stage_i/decoder_i/net1882': 2264 load(s), 1 driver(s)
+Information: State dependent leakage is now switched from off to on.
+Information: Propagating switching activity (low effort zero delay simulation). (PWR-6)
 Writing ddc file '../../rpt/compiled.ddc'.
-Warning: In the design vcve2_top, net 'instr_addr_o[0]' is connecting multiple ports. (UCN-1)
+Warning: Design 'vcve2_top' inherited license information from design 'vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808'. (DDB-74)
+Information: Added key list 'DesignWare' to design 'vcve2_top'. (DDB-72)
+Warning: In the design vcve2_top, net 'crash_dump_o[current_pc][0]' is connecting multiple ports. (UCN-1)
 Writing verilog file '/home/thesis/alessio.caviglia/repo/thesis/hw/cve2/syn/build/synth-design_compiler/netlist.v'.
 Warning: Verilog 'assign' or 'tran' statements are written out. (VO-4)
 ############################################
@@ -1969,13 +1945,13 @@ Warning: Verilog 'assign' or 'tran' statements are written out. (VO-4)
 #  all done -- exit
 #
 ############################################
-sh dateSat Jul  6 17:57:32 CEST 2024
-Sat Jul  6 17:57:32 CEST 2024
+sh dateTue Jul  9 18:08:22 CEST 2024
+Tue Jul  9 18:08:22 CEST 2024
 Warning: Cannot use command line editor for terminal type 'xterm-256color'.  (UI-74)
 dc_shell> 
-Memory usage for this session 526 Mbytes.
-Memory usage for this session including child processes 526 Mbytes.
-CPU usage for this session 122 seconds ( 0.03 hours ).
-Elapsed time for this session 227 seconds ( 0.06 hours ).
+Memory usage for this session 577 Mbytes.
+Memory usage for this session including child processes 577 Mbytes.
+CPU usage for this session 98 seconds ( 0.03 hours ).
+Elapsed time for this session 253 seconds ( 0.07 hours ).
 
 Thank you...
