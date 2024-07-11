@@ -26,8 +26,6 @@ write -f ddc -hierarchy -output ${REPORT_DIR}/compiled.ddc
 
 report_area -hier -nosplit > ${REPORT_DIR}/area.rpt
 
-ungroup -all -flatten
-
 change_names -rules verilog -hier
 
 write -format verilog -hier -o netlist.v
