@@ -84,7 +84,7 @@ u_cve2_core/cs_registers_i/u_mtval_csr   262.4400     0.5     2.5200   253.4400 
 u_cve2_core/cs_registers_i/u_mtval_csr/clk_gate_rdata_q_reg     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_5
 u_cve2_core/cs_registers_i/u_mtvec_csr   197.6400     0.3     1.0800   190.0800 0.0000 vcve2_csr_32_00000001
 u_cve2_core/cs_registers_i/u_mtvec_csr/clk_gate_rdata_q_reg     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_00000001
-u_cve2_core/dmem_arbiter_i          253.4400      0.4    245.1600      8.2800  0.0000  vcve2_dmem_arbiter
+u_cve2_core/dmem_arbiter_i          253.4400      0.4    245.1600      8.2800  0.0000  vcve2_dmem_switch
 u_cve2_core/ex_block_i            17421.8401     30.5    525.9600      0.0000  0.0000  vcve2_ex_block_RV32M3_RV32B0
 u_cve2_core/ex_block_i/alu_i       2304.7201      4.0   1736.6400      0.0000  0.0000  vcve2_alu_RV32B0
 u_cve2_core/ex_block_i/alu_i/adder_inst   568.0800     1.0   568.0800     0.0000 0.0000 vcve2_fracturable_adder_PIPE_WIDTH32

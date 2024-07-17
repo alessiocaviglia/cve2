@@ -319,7 +319,7 @@ Running PRESTO HDLC
 Compiling source file ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_lsu_interface.sv
 Presto compilation completed successfully.
 Running PRESTO HDLC
-Compiling source file ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_dmem_arbiter.sv
+Compiling source file ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_dmem_switch.sv
 Presto compilation completed successfully.
 Running PRESTO HDLC
 Compiling source file ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_core.sv
@@ -739,10 +739,10 @@ Inferred memory devices in process
 |     addr_q_reg      | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
 ===============================================================================
 Presto compilation completed successfully. (vcve2_lsu_interface)
-Information: Building the design 'vcve2_dmem_arbiter'. (HDL-193)
+Information: Building the design 'vcve2_dmem_switch'. (HDL-193)
 
 Statistics for case statements in always block at line 71 in file
-	'../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_dmem_arbiter.sv'
+	'../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_dmem_switch.sv'
 ===============================================
 |           Line           |  full/ parallel  |
 ===============================================
@@ -750,14 +750,14 @@ Statistics for case statements in always block at line 71 in file
 ===============================================
 
 Inferred memory devices in process
-	in routine vcve2_dmem_arbiter line 60 in file
-		'../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_dmem_arbiter.sv'.
+	in routine vcve2_dmem_switch line 60 in file
+		'../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_dmem_switch.sv'.
 ===============================================================================
 |    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
 ===============================================================================
 |    prev_op_q_reg    | Flip-flop |   1   |  N  | N  | N  | Y  | N  | N  | N  |
 ===============================================================================
-Presto compilation completed successfully. (vcve2_dmem_arbiter)
+Presto compilation completed successfully. (vcve2_dmem_switch)
 Information: Building the design 'vcve2_wb'. (HDL-193)
 Presto compilation completed successfully. (vcve2_wb)
 Information: Building the design 'vcve2_register_file_ff' instantiated from design 'vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808' with
@@ -1544,7 +1544,7 @@ Information: The register 'pc_id_o_reg[0]' is a constant and will be removed. (O
 Information: Added key list 'DesignWare' to design 'vcve2_alu_RV32B0'. (DDB-72)
   Processing 'vcve2_top'
   Processing 'vcve2_csr_32_0_0_0'
-  Processing 'vcve2_dmem_arbiter'
+  Processing 'vcve2_dmem_switch'
   Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_0'
   Mapping integrated clock gating circuitry
   Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_40000003'
@@ -1708,7 +1708,7 @@ Information: Performing clock-gating on design vcve2_csr_32_0_0_4. (PWR-730)
 Information: Performing clock-gating on design vcve2_csr_32_0_0_5. (PWR-730)
 Information: Performing clock-gating on design vcve2_csr_32_0_0_6. (PWR-730)
 Information: Performing clock-gating on design vcve2_if_stage_1a110800_1a110808. (PWR-730)
-Information: Performing clock-gating on design vcve2_dmem_arbiter. (PWR-730)
+Information: Performing clock-gating on design vcve2_dmem_switch. (PWR-730)
 Information: Performing clock-gating on design vcve2_cs_registers_1_00000001_00000000_00000028_0_00000000_00000004_0_3_0. (PWR-730)
 Information: Performing clock-gating on design vcve2_multdiv_fast_RV32M3. (PWR-730)
 Information: The register 'u_cve2_core/cs_registers_i/gen_trigger_regs.u_tselect_csr/rdata_q_reg[0]' is a constant and will be removed. (OPT-1206)
@@ -2139,38 +2139,38 @@ Warning: In the design vcve2_load_store_unit, net 'adder_result_ex_i[4]' is conn
 Warning: In the design vcve2_load_store_unit, net 'adder_result_ex_i[3]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_load_store_unit, net 'adder_result_ex_i[2]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_load_store_unit, net 'lsu_we_i' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_arbiter, net 'data_rdata_i[31]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_arbiter, net 'data_rdata_i[30]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_arbiter, net 'data_rdata_i[29]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_arbiter, net 'data_rdata_i[28]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_arbiter, net 'data_rdata_i[27]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_arbiter, net 'data_rdata_i[26]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_arbiter, net 'data_rdata_i[25]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_arbiter, net 'data_rdata_i[24]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_arbiter, net 'data_rdata_i[23]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_arbiter, net 'data_rdata_i[22]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_arbiter, net 'data_rdata_i[21]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_arbiter, net 'data_rdata_i[20]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_arbiter, net 'data_rdata_i[19]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_arbiter, net 'data_rdata_i[18]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_arbiter, net 'data_rdata_i[17]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_arbiter, net 'data_rdata_i[16]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_arbiter, net 'data_rdata_i[15]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_arbiter, net 'data_rdata_i[14]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_arbiter, net 'data_rdata_i[13]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_arbiter, net 'data_rdata_i[12]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_arbiter, net 'data_rdata_i[11]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_arbiter, net 'data_rdata_i[10]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_arbiter, net 'data_rdata_i[9]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_arbiter, net 'data_rdata_i[8]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_arbiter, net 'data_rdata_i[7]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_arbiter, net 'data_rdata_i[6]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_arbiter, net 'data_rdata_i[5]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_arbiter, net 'data_rdata_i[4]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_arbiter, net 'data_rdata_i[3]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_arbiter, net 'data_rdata_i[2]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_arbiter, net 'data_rdata_i[1]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_arbiter, net 'data_rdata_i[0]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[31]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[30]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[29]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[28]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[27]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[26]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[25]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[24]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[23]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[22]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[21]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[20]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[19]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[18]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[17]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[16]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[15]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[14]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[13]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[12]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[11]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[10]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[9]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[8]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[7]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[6]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[5]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[4]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[3]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[2]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[1]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[0]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_wb, net 'rf_waddr_id_i[4]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_wb, net 'rf_waddr_id_i[3]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_wb, net 'rf_waddr_id_i[2]' is connecting multiple ports. (UCN-1)

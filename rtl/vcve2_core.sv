@@ -707,7 +707,7 @@ module vcve2_core import vcve2_pkg::*; #(
   /////////////////////////
   // Data memory arbiter //
   /////////////////////////
-  vcve2_dmem_arbiter #(
+  vcve2_dmem_switch #(
   ) dmem_arbiter_i (
     .clk_i(clk_i),
     .rst_ni(rst_ni),

@@ -1,4 +1,4 @@
-module vcve2_dmem_arbiter #(
+module vcve2_dmem_switch #(
 ) (
 	input  logic                  clk_i,
 	input  logic                  rst_ni,

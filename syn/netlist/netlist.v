@@ -13611,7 +13611,7 @@ module vcve2_lsu_interface ( clk_i, rst_ni, lsu_addr_o, lsu_wdata_o, lsu_req_o,
 endmodule
 
 
-module vcve2_dmem_arbiter ( clk_i, rst_ni, data_req_o, data_gnt_i, 
+module vcve2_dmem_switch ( clk_i, rst_ni, data_req_o, data_gnt_i, 
         data_rvalid_i, data_we_o, data_be_o, data_addr_o, data_wdata_o, 
         data_rdata_i, data_err_i, vrf_data_req_i, vrf_data_gnt_o, 
         vrf_data_rvalid_o, vrf_data_we_i, vrf_data_be_i, vrf_data_addr_i, 
@@ -26346,7 +26346,7 @@ endmodule
         vrf_lsu_req), .vrf_data_i(vrf_rdata_c), .vrf_lsu_gnt_o(vrf_lsu_gnt), 
         .scalar_req_i(n66), .scalar_addr_i(alu_adder_result_ex), 
         .scalar_wdata_i(lsu_wdata) );
-  vcve2_dmem_arbiter dmem_arbiter_i ( .clk_i(clk_i), .rst_ni(rst_ni), 
+  vcve2_dmem_switch dmem_arbiter_i ( .clk_i(clk_i), .rst_ni(rst_ni), 
         .data_req_o(data_req_o), .data_gnt_i(data_gnt_i), .data_rvalid_i(
         data_rvalid_i), .data_we_o(data_we_o), .data_be_o(data_be_o), 
         .data_addr_o({data_addr_o[31:2], SYNOPSYS_UNCONNECTED_11, 

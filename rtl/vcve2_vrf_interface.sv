@@ -56,9 +56,13 @@ module vcve2_vrf_interface #(
 
   // VRF FSM signals
   vcve2_pkg::vrf_state_t vrf_state, vrf_next_state;
-  logic [PIPE_WIDTH-1:0] num_iterations_q, num_iterations_d;
+  logic [PIPE_WIDTH-3:0] num_iterations_q, num_iterations_d;
+  logic [PIPE_WIDTH-1:0] num_bytes_elements;
+  logic [1:0] offset_q, offset_d;
   logic first_iteration_d, first_iteration_q;
   logic last_iteration_d, last_iteration_q;
+  logic [3:0] offset_be;
+  logic no_offset;
 
   // Internal registers signals
   logic rs1_en, rs2_en, rs3_en, rd_en;    // rd is used only for load operations
@@ -78,11 +82,28 @@ module vcve2_vrf_interface #(
   logic wbuffer_en, rd_buf_en;
   logic [PIPE_WIDTH-1:0] wbuffer_q, wbuffer_d;
 
-  ////////////////
-  // Temporary  //
-  ////////////////
+  //////////////////
+  // BE selector  //
+  //////////////////
 
-  assign data_be_o = 4'b1111;
+  // depending on vl we could need to access only a section of the 32 bit word
+  always_comb begin
+    no_offset = 1'b0;
+    case (offset_q)
+      2'b00: begin
+        offset_be = 4'b0000;
+        no_offset = 1'b1;
+      end
+      2'b01: offset_be = 4'b0001;
+      2'b10: offset_be = 4'b0011;
+      2'b11: offset_be = 4'b0111;
+      default: offset_be = 4'b0000;
+    endcase
+  end
+  // in interleaved operation the first read will not have the correct be but since it's only a read
+  // it will not impact the state of the memory and the access will certainly be inside the vector register
+  // since if there's an offset it means vl is certainly lower than vlmax
+  assign data_be_o = (!no_offset && last_iteration_q) ? offset_be : 4'b1111;
 
   /////////////
   // VRF FSM //
@@ -92,16 +113,19 @@ module vcve2_vrf_interface #(
     if (!rst_ni) begin
       vrf_state <= VRF_IDLE;
       num_iterations_q <= '0;
+      offset_q <= '0;
       first_iteration_q <= 1'b0;
       last_iteration_q <= 1'b0;
     end else begin
       vrf_state <= vrf_next_state;
       num_iterations_q <= num_iterations_d;
+      offset_q <= offset_d;
       first_iteration_q <= first_iteration_d;
       last_iteration_q <= last_iteration_d;
     end
   end
 
+  assign num_bytes_elements = vl_i<<sew_i;
   always_comb begin
     // register enables
     rs1_en = 1'b0;
@@ -122,6 +146,7 @@ module vcve2_vrf_interface #(
     // ID signals
     vector_done_o = 1'b0;
     num_iterations_d = num_iterations_q;
+    offset_d = offset_q;
     first_iteration_d = first_iteration_q;
     last_iteration_d = last_iteration_q;
     // LSU signals
@@ -131,6 +156,7 @@ module vcve2_vrf_interface #(
     case (vrf_state)
 
       VRF_IDLE: begin
+        last_iteration_d = 1'b0;
         // VRF stays idle until a request is made
         if (!req_i) begin
           vrf_next_state = VRF_IDLE;
@@ -142,11 +168,8 @@ module vcve2_vrf_interface #(
           // Data memory if - load the start address
           if (memory_op_i) data_load_addr_o = 1'b1;
           // ITERATIONS COUNTER - we sample the correct value of num_iterations
-          if ($signed(lmul_i) < 0) begin
-            num_iterations_d = (NUM_BYTE_OPS >> sew_i)  >> -$signed(lmul_i);
-          end else begin
-            num_iterations_d = (NUM_BYTE_OPS >> sew_i) << $signed(lmul_i);
-          end
+          num_iterations_d = num_bytes_elements[31:2];
+          offset_d = num_bytes_elements[1:0];
           vrf_next_state = VRF_START;
         end
       end
@@ -156,7 +179,6 @@ module vcve2_vrf_interface #(
         if (memory_op_i == 0) begin                   // ARITHMETIC OPERATION
           if (interleaved_i) begin                 // OPTIMIZED INTERLEAVED OPS
             first_iteration_d = 1'b1;
-            last_iteration_d = 1'b0;
             data_req_o = 1'b1;                          // read RS1         
             agu_get_rs1_o = 1'b1;
             if (data_gnt_i) begin
@@ -193,7 +215,6 @@ module vcve2_vrf_interface #(
 
         end else begin                                // MEMORY OPERATION
           first_iteration_d = 1'b1;
-          last_iteration_d = 1'b0;
           if (sel_operation_i[2]==1'b1) begin           // store
             data_req_o = 1'b1;
             agu_get_rd_o = 1'b1;
@@ -303,7 +324,7 @@ module vcve2_vrf_interface #(
             agu_get_rs2_o = 1'b1;
             if (data_gnt_i) begin
               agu_incr_o = 1'b1;
-              if (num_iterations_q == 1) last_iteration_d = 1'b1;
+              if (num_iterations_q == (no_offset ? 1 : 0)) last_iteration_d = 1'b1;
               vrf_next_state = VRF_INT_READ2;
             end else begin
               num_iterations_d = num_iterations_q;   // if the operation wasn't accepted we need to repeat it
@@ -467,7 +488,7 @@ module vcve2_vrf_interface #(
           num_iterations_d = '0;
           vrf_next_state = VRF_IDLE;
         // if the next iteration will be the last we don't need to read the operand
-        end else if (num_iterations_q == 1) begin
+        end else if (num_iterations_q == (no_offset ? 1 : 0)) begin
           last_iteration_d = 1'b1;
           vrf_next_state = VRF_LOAD;
         // normal operation
@@ -501,7 +522,7 @@ module vcve2_vrf_interface #(
             num_iterations_d = '0;
             vrf_next_state = VRF_IDLE;
           // In the last cycle we don't read the operand
-          end else if (num_iterations_q == 1) begin
+          end else if (num_iterations_q == (no_offset ? 1 : 0)) begin
             last_iteration_d = 1'b1;
             vrf_next_state = VRF_STORE_READ;
           // Send read request to memory

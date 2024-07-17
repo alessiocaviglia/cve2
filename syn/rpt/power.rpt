@@ -32,7 +32,7 @@ vcve2_ex_block_RV32M3_RV32B0
                        ZeroWireload      tcbn65lpwc
 vcve2_load_store_unit  ZeroWireload      tcbn65lpwc
 vcve2_lsu_interface    ZeroWireload      tcbn65lpwc
-vcve2_dmem_arbiter     ZeroWireload      tcbn65lpwc
+vcve2_dmem_switch     ZeroWireload      tcbn65lpwc
 vcve2_wb               ZeroWireload      tcbn65lpwc
 vcve2_register_file_ff_0_32_00000000
                        ZeroWireload      tcbn65lpwc
