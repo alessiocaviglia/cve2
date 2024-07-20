@@ -64,6 +64,9 @@ module vcve2_ex_block #(
   logic [ 1:0] alu_imd_val_we;
   logic [33:0] multdiv_imd_val_d[2];
   logic [ 1:0] multdiv_imd_val_we;
+  // Additions for vector extensions
+  logic [31:0] alu_operand_a, alu_operand_b;
+  logic [31:0] multdiv_operand_b;
 
   /*
     The multdiv_i output is never selected if RV32M=RV32MNone
@@ -93,6 +96,38 @@ module vcve2_ex_block #(
 
   assign branch_target_o = alu_adder_result_ex_o;
 
+  ///////////////////////
+  // Operand selection //
+  ///////////////////////
+  
+  // multdiv_result is on operand b so that I can reuse the already present negation in the ALU
+  always_comb begin
+    alu_operand_a = alu_operand_a_i;
+    alu_operand_b = alu_operand_b_i;
+    multdiv_operand_b = multdiv_operand_b_i;
+    case (alu_operator_i)
+      ALU_MAC: begin
+        alu_operand_a = alu_operand_c_i;
+        alu_operand_b = multdiv_result;
+      end
+      ALU_NMSAC: begin
+        alu_operand_a = alu_operand_c_i;
+        alu_operand_b = multdiv_result;
+      end
+      ALU_MADD: begin
+        alu_operand_a = alu_operand_c_i;
+        alu_operand_b = multdiv_result;
+        multdiv_operand_b = alu_operand_c_i;
+      end
+      ALU_NMSUB: begin
+        alu_operand_a = alu_operand_c_i;
+        alu_operand_b = multdiv_result;
+        multdiv_operand_b = alu_operand_c_i;
+      end
+      default: ;
+    endcase
+  end
+
   /////////////////
   // Vector MOVE //
   /////////////////
@@ -115,8 +150,8 @@ module vcve2_ex_block #(
     .RV32B(RV32B)
   ) alu_i (
     .operator_i         (alu_operator_i),
-    .operand_a_i        (alu_operand_a_i),
-    .operand_b_i        (alu_operand_b_i),
+    .operand_a_i        (alu_operand_a),
+    .operand_b_i        (alu_operand_b),
     .instr_first_cycle_i(alu_instr_first_cycle_i),
     .imd_val_q_i        (alu_imd_val_q),
     .imd_val_we_o       (alu_imd_val_we),
@@ -174,7 +209,7 @@ module vcve2_ex_block #(
       .operator_i        (multdiv_operator_i),
       .signed_mode_i     (multdiv_signed_mode_i),
       .op_a_i            (multdiv_operand_a_i),
-      .op_b_i            (multdiv_operand_b_i),
+      .op_b_i            (multdiv_operand_b),
       .alu_operand_a_o   (multdiv_alu_operand_a),
       .alu_operand_b_o   (multdiv_alu_operand_b),
       .alu_adder_ext_i   (alu_adder_result_ext),

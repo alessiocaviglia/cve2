@@ -1,3 +1,4 @@
+Warning: Design 'vcve2_top' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
 Information: Changed wire load model for 'DW01_inc_width33' from '(none)' to 'ZeroWireload'. (OPT-170)
 Information: Changed wire load model for '*ADD_UNS_OP_32_1_33' from '(none)' to 'ZeroWireload'. (OPT-170)
 Information: Changed wire load model for 'DW01_inc_width3' from '(none)' to 'ZeroWireload'. (OPT-170)
@@ -103,13 +104,11 @@ Information: Changed wire load model for '*ADD_UNS_OP_8_8_9' from '(none)' to 'Z
 Information: Changed wire load model for 'DW01_add_width9' from '(none)' to 'ZeroWireload'. (OPT-170)
 Information: Changed wire load model for '*ADD_UNS_OP_8_8_9' from '(none)' to 'ZeroWireload'. (OPT-170)
 Information: Changed wire load model for 'DW01_add_width32' from '(none)' to 'ZeroWireload'. (OPT-170)
-Information: Changed wire load model for '*ADD_UNS_OP_32_2_32' from '(none)' to 'ZeroWireload'. (OPT-170)
-Information: Changed wire load model for 'DW01_add_width32' from '(none)' to 'ZeroWireload'. (OPT-170)
 Information: Changed wire load model for '*ADD_UNS_OP_32_3_32' from '(none)' to 'ZeroWireload'. (OPT-170)
 Information: Changed wire load model for 'DW01_add_width31' from '(none)' to 'ZeroWireload'. (OPT-170)
 Information: Changed wire load model for '*ADD_UNS_OP_31_2_31' from '(none)' to 'ZeroWireload'. (OPT-170)
 Information: Updating design information... (UID-85)
-Warning: Design 'vcve2_top' contains 7 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+Warning: Design 'vcve2_top' contains 5 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
  
 ****************************************
 Report : timing
@@ -117,7 +116,7 @@ Report : timing
         -max_paths 10
 Design : vcve2_top
 Version: R-2020.09-SP2
-Date   : Sun Jul 14 15:04:38 2024
+Date   : Sat Jul 20 15:06:49 2024
 ****************************************
 
  # A fanout number of 1000 was used for high fanout net computations.

@@ -43,6 +43,10 @@ typedef enum logic {LSU, VRF} dmem_op_t;
 dmem_op_t prev_op_q, prev_op_d;
 logic vrf_has_mem;
 
+// signal is high when the VRF has control of the data memory, it can happen when the following conditions are met:
+// - it's a memory operation
+// - the VRF didn't request a memory operation
+// - the LSU is not busy with a previously requested memory operation (needed especially for misaligned accesses)
 assign vrf_has_mem = vector_op_i && (!vector_mem_op_i && !lsu_busy_i);
 
 ////////////
@@ -52,11 +56,11 @@ assign vrf_has_mem = vector_op_i && (!vector_mem_op_i && !lsu_busy_i);
 assign vrf_data_rdata_o = data_rdata_i;
 assign lsu_data_rdata_o = data_rdata_i;
 
-// first cycle responses
+// first cycle responses, the grant is given (or not) immediately
 assign vrf_data_gnt_o = vrf_has_mem && data_gnt_i;
 assign lsu_data_gnt_o = !vrf_has_mem && data_gnt_i;
 
-// second cycle responses
+// second cycle responses, responses given on the next cycle, FSM needed to keep track of the previous unit
 always_ff @(posedge clk_i or negedge rst_ni) begin
   if (!rst_ni) begin
     prev_op_q <= VRF;
@@ -75,6 +79,7 @@ always_comb begin
   endcase
 end
 
+// different conditions to ensure that when there is no vector operation the data memory is controlled by the LSU
 assign vrf_data_rvalid_o = ((prev_op_q == VRF) && vector_op_i) && data_rvalid_i;
 assign lsu_data_rvalid_o = ((prev_op_q == LSU) || !vector_op_i) && data_rvalid_i;
 assign vrf_data_err_o = ((prev_op_q == VRF) && vector_op_i) && data_err_i;

@@ -238,7 +238,11 @@ package vcve2_pkg;
     ALU_CRC32C_W,
     
     // Vector extension
-    ALU_MOVE
+    ALU_MOVE,
+    ALU_MAC,
+    ALU_NMSAC,
+    ALU_MADD,
+    ALU_NMSUB
   } alu_op_e;
 
   typedef enum logic [1:0] {
