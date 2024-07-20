@@ -71,6 +71,9 @@ module vcve2_alu #(
       ALU_LT,   ALU_LTU,
       ALU_SLT,  ALU_SLTU,
 
+      // Vector OPs
+      ALU_NMSAC, ALU_NMSUB,
+
       // MinMax OPs (RV32B Ops)
       ALU_MIN,  ALU_MINU,
       ALU_MAX,  ALU_MAXU: adder_op_b_negate = 1'b1;
@@ -1340,7 +1343,10 @@ module vcve2_alu #(
       ALU_ADD,  ALU_SUB,
       // RV32B
       ALU_SH1ADD, ALU_SH2ADD,
-      ALU_SH3ADD: result_o = adder_result;
+      ALU_SH3ADD,
+      // Vector operations
+      ALU_MAC, ALU_NMSAC,
+      ALU_MADD, ALU_NMSUB: result_o = adder_result;
 
       // Shift Operations
       ALU_SLL,  ALU_SRL,

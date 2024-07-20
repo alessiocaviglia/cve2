@@ -732,6 +732,7 @@ module vcve2_decoder #(
         else begin
           vrf_req_o = 1'b1;
           unique case ({instr[31:26], instr[14:12]})  // {funct6, funct3}
+
             // Vector Integer Arithmetic Operations
             {6'b00_0000, 3'b000}: begin    // vadd.vv
               vrf_we_o = 1'b1;
@@ -749,6 +750,29 @@ module vcve2_decoder #(
             end
             {6'b00_0010, 3'b100}: begin    // vsub.vx
             end
+
+            // Multiply-and-Accumulate instructions
+            {6'b10_1101, 3'b010}: begin    // vmacc.vv
+              vrf_we_o = 1'b1;
+              vrf_sel_operation_o = 4'b1111;
+              vrf_interleaved_o = 1'b1;
+            end
+            {6'b10_1101, 3'b110}: begin    // vmacc.vx
+            end
+            {6'b10_1111, 3'b010}: begin    // vnmsac.vv
+            end
+            {6'b10_1111, 3'b110}: begin    // vnmsac.vx
+            end
+            {6'b10_1001, 3'b010}: begin    // vmadd.vv
+            end
+            {6'b10_1001, 3'b110}: begin    // vmadd.vx
+            end
+            {6'b10_1011, 3'b010}: begin    // vnmsub.vv
+            end
+            {6'b10_1011, 3'b110}: begin    // vnmsub.vx
+            end
+
+            // Move instructions
             {6'b01_0111, 3'b000}: begin    // vmv.v.v/vmerge.vvm
               vrf_we_o = 1'b1;
               vrf_sel_operation_o = 4'b1010;
@@ -1345,6 +1369,28 @@ module vcve2_decoder #(
             end
             {6'b00_0010, 3'b100}: begin    // vsub.vx
             end
+
+            // Multiply-and-Accumulate instructions
+            {6'b10_1101, 3'b010}: begin    // vmacc.vv
+              alu_op_a_mux_sel_o = OP_A_VREG;
+              alu_op_b_mux_sel_o = OP_B_VREG;
+              alu_operator_o = ALU_MAC;
+            end
+            {6'b10_1101, 3'b110}: begin    // vmacc.vx
+            end
+            {6'b10_1111, 3'b010}: begin    // vnmsac.vv
+            end
+            {6'b10_1111, 3'b110}: begin    // vnmsac.vx
+            end
+            {6'b10_1001, 3'b010}: begin    // vmadd.vv
+            end
+            {6'b10_1001, 3'b110}: begin    // vmadd.vx
+            end
+            {6'b10_1011, 3'b010}: begin    // vnmsub.vv
+            end
+            {6'b10_1011, 3'b110}: begin    // vnmsub.vx
+            end
+
             {6'b01_0111, 3'b000}: begin    // vmv.v.v/vmerge.vvm
               alu_op_a_mux_sel_o = OP_A_VREG;
               alu_operator_o = ALU_MOVE;

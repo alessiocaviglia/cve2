@@ -28,6 +28,7 @@ module vcve2_lsu_interface (
   logic [31:0] addr_q, addr_d;
   logic curr_state, next_state; 
 
+  // Used by the VRF to store prevous operand in buffer so that it's not lost
   assign vrf_lsu_gnt_o = vec_op_i ? lsu_gnt_i : 1'b0;
 
   always_ff @(posedge clk_i or negedge rst_ni) begin
@@ -40,6 +41,7 @@ module vcve2_lsu_interface (
     end
   end
 
+  // I don't remember why I added this FSM, I will need to verify its usefulness
   always_comb begin
     next_state = curr_state;
     en_rvalid_o = 0;
@@ -65,7 +67,7 @@ module vcve2_lsu_interface (
       addr_d = start_addr_i;
     // when the previous mem op is finished we increment the address
     end else if(lsu_resp_valid_i) begin
-      addr_d = unit_stride_i ? addr_q + 4 : scalar_addr_i;    // verify that this line would be synth in a counter
+      addr_d = unit_stride_i ? addr_q + 4 : scalar_addr_i;
     end
   end
 
@@ -73,6 +75,7 @@ module vcve2_lsu_interface (
   // Output //
   ////////////
 
+  // If there's a vector operation the LSU can only be used by the VRF
   assign lsu_addr_o = vec_op_i ? addr_q : scalar_addr_i;
   assign lsu_wdata_o = vec_op_i ? vrf_data_i : scalar_wdata_i;
   assign lsu_req_o = vec_op_i ? vrf_req_i : scalar_req_i;

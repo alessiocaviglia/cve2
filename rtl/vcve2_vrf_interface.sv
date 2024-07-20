@@ -247,7 +247,6 @@ module vcve2_vrf_interface #(
           data_req_o = 1'b1;
           agu_get_rd_o = 1'b1;
           if (data_gnt_i) begin
-            agu_incr_o = 1'b1;
             vrf_next_state = VRF_INT_READ3;
           end else vrf_next_state = VRF_INT_READ2;
         // if next operation is WRITE RD
@@ -625,6 +624,7 @@ module vcve2_vrf_interface #(
       rs1_q <= '0;
       rs2_q <= '0;
       rs3_q <= '0;
+      rd_q  <= '0;
     end else begin
       if (rs1_en) rs1_q <= rs1_d;
       if (rs2_en) rs2_q <= rs2_d;

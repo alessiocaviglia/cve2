@@ -1,3 +1,4 @@
+Warning: Design 'vcve2_top' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
 Information: Changed wire load model for 'vcve2_csr_32_0_0' from '(none)' to 'ZeroWireload'. (OPT-170)
 Information: Changed wire load model for 'vcve2_csr_00000001_0_0' from '(none)' to 'ZeroWireload'. (OPT-170)
 Information: Changed wire load model for 'vcve2_csr_00000001_0_0' from '(none)' to 'ZeroWireload'. (OPT-170)
@@ -22,16 +23,13 @@ Information: Changed wire load model for 'vce2_agu_AddrWidth32' from '(none)' to
 Information: Changed wire load model for 'vcve2_vrf_interface_VLEN128_PIPE_WIDTH32' from '(none)' to 'ZeroWireload'. (OPT-170)
 Information: Changed wire load model for 'vcve2_register_file_ff_0_32_00000000' from '(none)' to 'ZeroWireload'. (OPT-170)
 Information: Changed wire load model for 'vcve2_wb' from '(none)' to 'ZeroWireload'. (OPT-170)
-Information: Changed wire load model for 'vcve2_dmem_arbiter' from '(none)' to 'ZeroWireload'. (OPT-170)
+Information: Changed wire load model for 'vcve2_dmem_switch' from '(none)' to 'ZeroWireload'. (OPT-170)
 Information: Changed wire load model for 'vcve2_lsu_interface' from '(none)' to 'ZeroWireload'. (OPT-170)
 Information: Changed wire load model for 'vcve2_load_store_unit' from '(none)' to 'ZeroWireload'. (OPT-170)
 Information: Changed wire load model for 'vcve2_multdiv_fast_RV32M3' from '(none)' to 'ZeroWireload'. (OPT-170)
 Information: Changed wire load model for 'vcve2_fracturable_adder_PIPE_WIDTH32' from '(none)' to 'ZeroWireload'. (OPT-170)
 Information: Changed wire load model for 'vcve2_alu_RV32B0' from '(none)' to 'ZeroWireload'. (OPT-170)
 Information: Changed wire load model for 'vcve2_ex_block_RV32M3_RV32B0' from '(none)' to 'ZeroWireload'. (OPT-170)
-Information: Changed wire load model for 'vcve2_controller' from '(none)' to 'ZeroWireload'. (OPT-170)
-Information: Changed wire load model for 'vcve2_decoder_0_3_0' from '(none)' to 'ZeroWireload'. (OPT-170)
-Information: Changed wire load model for 'vcve2_id_stage_0_3_0' from '(none)' to 'ZeroWireload'. (OPT-170)
 Information: Changed wire load model for 'vcve2_compressed_decoder' from '(none)' to 'ZeroWireload'. (OPT-170)
 Information: Changed wire load model for 'vcve2_fetch_fifo_00000002' from '(none)' to 'ZeroWireload'. (OPT-170)
 Information: Changed wire load model for 'vcve2_prefetch_buffer' from '(none)' to 'ZeroWireload'. (OPT-170)
@@ -40,13 +38,13 @@ Information: Changed wire load model for 'vcve2_core_0_00000000_00000004_0000000
   Allocating blocks in 'DW02_mult_A_width17_B_width17'
   Allocating blocks in 'DW02_mult_A_width8_B_width8'
 Information: Updating graph... (UID-83)
-Warning: Design 'vcve2_top' contains 7 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+Warning: Design 'vcve2_top' contains 5 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
  
 ****************************************
 Report : clocks
 Design : vcve2_top
 Version: R-2020.09-SP2
-Date   : Sun Jul 14 15:04:38 2024
+Date   : Sat Jul 20 15:06:49 2024
 ****************************************
 
 Attributes:

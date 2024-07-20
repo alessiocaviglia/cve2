@@ -351,6 +351,11 @@ module vcve2_id_stage #(
   // Vector ALU MUX for Operand C - now it can take just one value
   assign alu_operand_c_ex_o = vrf_rdata_c_i;
 
+  // MUL/DIV MUX for Operand A
+  assign multdiv_operand_a_ex_o = vrf_req_o ? vrf_rdata_a_i : rf_rdata_a_fwd;
+  // MUL/DIV MUX for Operand B
+  assign multdiv_operand_b_ex_o = vrf_req_o ? vrf_rdata_b_i : rf_rdata_b_fwd;
+
   /////////////////////////////////////////
   // Multicycle Operation Stage Register //
   /////////////////////////////////////////
