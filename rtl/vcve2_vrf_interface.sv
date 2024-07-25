@@ -293,7 +293,7 @@ module vcve2_vrf_interface #(
         if (data_rvalid_i) rs3_en = 1;
         // NEXT STATE SELECTION
         if (sel_operation_i[3]) begin
-          if (num_iterations_q == 0) begin
+          if (last_iteration_q) begin
             vrf_next_state = VRF_INT_READ1;
           end else begin
             data_req_o = 1'b1;
@@ -316,7 +316,6 @@ module vcve2_vrf_interface #(
           num_iterations_d = '0;
           vrf_next_state = VRF_IDLE;
         end else begin
-          num_iterations_d = num_iterations_q - 1;
           // if next operation is READ RS2
           if (sel_operation_i[1]) begin
             data_req_o = 1'b1;
@@ -324,6 +323,7 @@ module vcve2_vrf_interface #(
             if (data_gnt_i) begin
               agu_incr_o = 1'b1;
               if (num_iterations_q == (no_offset ? 1 : 0)) last_iteration_d = 1'b1;
+              else num_iterations_d = num_iterations_q - 1;
               vrf_next_state = VRF_INT_READ2;
             end else begin
               num_iterations_d = num_iterations_q;   // if the operation wasn't accepted we need to repeat it
@@ -401,7 +401,7 @@ module vcve2_vrf_interface #(
 
       VRF_WRITE: begin
         // NEXT STATE SELECTION - moving to the next iteration
-        if (num_iterations_q == 1) begin
+        if (num_iterations_q == (no_offset ? 1 : 0)) begin
           vector_done_o = 1'b1;
           num_iterations_d = '0;
           vrf_next_state = VRF_IDLE;
@@ -514,6 +514,7 @@ module vcve2_vrf_interface #(
 
       VRF_STORE_WAITLSU: begin
         if (lsu_done_i || first_iteration_q) begin
+          first_iteration_d = 1'b0;
           read_delayed = 1'b0;
           // Exit condition
           if (last_iteration_q) begin
@@ -526,7 +527,6 @@ module vcve2_vrf_interface #(
             vrf_next_state = VRF_STORE_READ;
           // Send read request to memory
           end else begin
-            first_iteration_d = 1'b0;
             num_iterations_d = num_iterations_q - 1;
             data_req_o = 1'b1;
             agu_get_rd_o = 1'b1;

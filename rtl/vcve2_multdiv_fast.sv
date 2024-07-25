@@ -284,7 +284,7 @@ module vcve2_multdiv_fast import vcve2_pkg::*; #(
           mult_res_vec = {mult4_res, mult3_res[7:0], mult2_res[7:0], mult1_res[7:0]};
         end
         VSEW_16: begin
-          mult_res_vec = {mult1_res[15:0], mult2_res[15:0]};
+          mult_res_vec = {mult2_res[15:0], mult1_res[15:0]};
         end
         VSEW_32: begin
           // I use the scalar one

@@ -302,7 +302,7 @@ module vcve2_id_stage #(
   always_comb begin : alu_operand_a_mux
     unique case (alu_op_a_mux_sel)
       OP_A_REG_A:   alu_operand_a = rf_rdata_a_fwd;
-      OP_A_VREG:    alu_operand_a = vrf_rdata_a_i;     // [VEC] Vector extension
+      OP_A_VREG:    alu_operand_a = vrf_rdata_b_i;     // [VEC] Vector extension
       OP_A_FWD:     alu_operand_a = lsu_addr_last_i;
       OP_A_CURRPC:  alu_operand_a = pc_id_i;
       OP_A_IMM:     alu_operand_a = imm_a;
@@ -342,7 +342,7 @@ module vcve2_id_stage #(
   always_comb begin : alu_operand_b_mux
     unique case (alu_op_b_mux_sel)
       OP_B_REG_B:  alu_operand_b = rf_rdata_b_fwd;
-      OP_B_VREG:   alu_operand_b = vrf_rdata_b_i;     // [VEC] Vector extension
+      OP_B_VREG:   alu_operand_b = vrf_rdata_a_i;     // [VEC] Vector extension
       OP_B_IMM:    alu_operand_b = imm_b;
       default:     alu_operand_b = '0;
     endcase
