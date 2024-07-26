@@ -6,9 +6,11 @@ module vcve2_lsu_interface (
   output logic [31:0] lsu_wdata_o,
   output logic        lsu_req_o,
   output logic        en_rvalid_o,
+  output logic [3:0]  lsu_be_o,
   // signals from LSU
   input  logic        lsu_resp_valid_i,
   input  logic        lsu_gnt_i,
+  input  logic        lsu_incr_req_i,
   // signals from ID/EX
   input  logic [31:0] start_addr_i,
   input  logic        load_start_i,
@@ -18,6 +20,7 @@ module vcve2_lsu_interface (
   input  logic        vrf_req_i,
   input  logic [31:0] vrf_data_i,
   output logic        vrf_lsu_gnt_o,
+  input  logic [3:0]  vrf_lsu_be_i,
   // scalar pipeline signals
   input  logic        scalar_req_i,
   input  logic [31:0] scalar_addr_i,
@@ -76,8 +79,10 @@ module vcve2_lsu_interface (
   ////////////
 
   // If there's a vector operation the LSU can only be used by the VRF
-  assign lsu_addr_o = vec_op_i ? addr_q : scalar_addr_i;
+  assign lsu_addr_o = (vec_op_i && !lsu_incr_req_i) ? addr_q : scalar_addr_i;
   assign lsu_wdata_o = vec_op_i ? vrf_data_i : scalar_wdata_i;
   assign lsu_req_o = vec_op_i ? vrf_req_i : scalar_req_i;
+  // The be of the LSU is driven only if vector operation
+  assign lsu_be_o = vec_op_i ? vrf_lsu_be_i : 4'b1111;
 
 endmodule

@@ -31,6 +31,7 @@ module vcve2_alu #(
   output logic              comparison_result_o,
   output logic              is_equal_result_o,
   input  logic              vec_instr_i,
+  input  logic              mem_op_i,
   input  logic [2:0]        vsew_i
 );
   import vcve2_pkg::*;
@@ -60,7 +61,7 @@ module vcve2_alu #(
     adder_op_a_shift2 = 1'b0;
     adder_op_a_shift3 = 1'b0;
     adder_op_b_negate = 1'b0;
-    adder_ew = vec_instr_i ? vsew_i[1:0] : 2'b10;  // default to 32-bit
+    adder_ew = (vec_instr_i && !mem_op_i) ? vsew_i[1:0] : 2'b10;  // default to 32-bit
     unique case (operator_i)
       // Adder OPs
       ALU_SUB,

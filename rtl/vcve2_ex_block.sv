@@ -47,6 +47,7 @@ module vcve2_ex_block #(
 
   // Vector extension
   input  logic                  vec_instr_i,
+  input  logic                  mem_op_i,
   input  logic [2:0]            vsew_i
 );
 
@@ -165,6 +166,7 @@ module vcve2_ex_block #(
     .comparison_result_o(alu_cmp_result),
     .is_equal_result_o  (alu_is_equal_result),
     .vec_instr_i        (vec_instr_i),            // Vector extension
+    .mem_op_i           (mem_op_i),               // Vector extension
     .vsew_i             (vsew_i)                  // Vector extension
   );
 

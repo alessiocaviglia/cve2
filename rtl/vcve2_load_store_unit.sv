@@ -59,7 +59,10 @@ module vcve2_load_store_unit
   output logic         busy_o,
 
   output logic         perf_load_o,
-  output logic         perf_store_o
+  output logic         perf_store_o,
+
+  // Vector extension signals
+  input  logic [3:0]   vec_be_i            // byte enable, needed for constant strided memory oeprations
 );
 
   logic [31:0]  data_addr;
@@ -112,18 +115,66 @@ module vcve2_load_store_unit
       2'b00: begin // Writing a word
         if (!handle_misaligned_q) begin // first part of potentially misaligned transaction
           unique case (data_offset)
-            2'b00:   data_be = 4'b1111;
-            2'b01:   data_be = 4'b1110;
-            2'b10:   data_be = 4'b1100;
-            2'b11:   data_be = 4'b1000;
+            2'b00:   data_be = vec_be_i; // 4'b1111 in normal scenarios, different if odd last iteration
+            2'b01: begin
+              case (vec_be_i)
+                4'b0000: data_be = 4'b0000;
+                4'b0001: data_be = 4'b0010;
+                4'b0011: data_be = 4'b0110;
+                4'b0111: data_be = 4'b1110;
+                default: data_be = 4'b1110;
+              endcase
+            end
+            2'b10: begin
+              case (vec_be_i)
+                4'b0000: data_be = 4'b0000;
+                4'b0001: data_be = 4'b0100;
+                4'b0011: data_be = 4'b1100;
+                4'b0111: data_be = 4'b1100;
+                default: data_be = 4'b1100;
+              endcase
+            end
+            2'b11: begin
+              case (vec_be_i)
+                4'b0000: data_be = 4'b0000;
+                4'b0001: data_be = 4'b1000;
+                4'b0011: data_be = 4'b1000;
+                4'b0111: data_be = 4'b1000;
+                default: data_be = 4'b1000;
+              endcase
+            end
             default: data_be = 4'b1111;
           endcase // case (data_offset)
         end else begin // second part of misaligned transaction
           unique case (data_offset)
             2'b00:   data_be = 4'b0000; // this is not used, but included for completeness
-            2'b01:   data_be = 4'b0001;
-            2'b10:   data_be = 4'b0011;
-            2'b11:   data_be = 4'b0111;
+            2'b01: begin
+              case (vec_be_i)
+                4'b0000: data_be = 4'b0000;
+                4'b0001: data_be = 4'b0000;
+                4'b0011: data_be = 4'b0000;
+                4'b0111: data_be = 4'b0000;
+                default: data_be = 4'b0001;
+              endcase
+            end
+            2'b10: begin
+              case (vec_be_i)
+                4'b0000: data_be = 4'b0000;
+                4'b0001: data_be = 4'b0000;
+                4'b0011: data_be = 4'b0000;
+                4'b0111: data_be = 4'b0001;
+                default: data_be = 4'b0011;
+              endcase
+            end
+            2'b11: begin
+              case (vec_be_i)
+                4'b0000: data_be = 4'b0000;
+                4'b0001: data_be = 4'b0000;
+                4'b0011: data_be = 4'b0001;
+                4'b0111: data_be = 4'b0011;
+                default: data_be = 4'b0111;
+              endcase
+            end
             default: data_be = 4'b1111;
           endcase // case (data_offset)
         end

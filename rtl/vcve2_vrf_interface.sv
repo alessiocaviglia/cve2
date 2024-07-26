@@ -37,6 +37,7 @@ module vcve2_vrf_interface #(
     // ID signals
     input  logic [3:0]            sel_operation_i,    // each bit enables a different operation, 0 - R RS1, 1 - R RS2, 2 - R RS3, 3 - W RD
     input  logic                  memory_op_i,        // 0 - arithmetic operation, 1 - load/store operation
+    input  logic                  unit_stride_i,      // 0 - non-unit stride, 1 - unit stride
     input  logic                  interleaved_i,      // 0 - non-interleaved, 1 - interleaved
     output logic                  vector_done_o,      // signals the pipeline that the vector operation is finished (most likely with a write to the VRF)
     
