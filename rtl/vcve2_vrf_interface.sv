@@ -75,16 +75,12 @@ module vcve2_vrf_interface #(
 
   // Delayed grant for read operations in store
   logic read_delayed;
-  logic curr_state_rdelay, next_state_rdelay;
   logic rdata_mux;
-  logic rbuffer_en;
-  logic [PIPE_WIDTH-1:0] rbuffer_q, rbuffer_d;
-  // Delayed grant for write operations in interleaved
   logic write_delayed;
-  logic curr_state_wdelay, next_state_wdelay;
+  logic [1:0] curr_state_delay, next_state_delay;
   logic [1:0] wdata_mux;
-  logic wbuffer_en, rd_buf_en;
-  logic [PIPE_WIDTH-1:0] wbuffer_q, wbuffer_d;
+  logic buffer_en, rd_buf_en;
+  logic [PIPE_WIDTH-1:0] buffer_q, buffer_d;
 
   //////////////////
   // BE selector  //
@@ -532,72 +528,53 @@ module vcve2_vrf_interface #(
   // Delayed grant support //
   ///////////////////////////
 
-  // Delayed read buffer
-  assign rbuffer_d = rs1_d;
-  always_ff @(posedge clk_i or negedge rst_ni) begin
-    if (!rst_ni) begin
-      curr_state_rdelay <= 1'b0;
-      rbuffer_q <= '0;
-    end else begin
-      curr_state_rdelay <= next_state_rdelay;
-      if (rbuffer_en) rbuffer_q <= rbuffer_d;
-    end
-  end
-  always_comb begin
-    rbuffer_en = 1'b0;
-    case (curr_state_rdelay)
-      1'b0: begin
-        rdata_mux = 1'b0;
-        if (read_delayed) begin
-          rbuffer_en = 1'b1;
-          next_state_rdelay = 1'b1;
-        end else begin
-          next_state_rdelay = 1'b0;
-        end
-      end
-      1'b1: begin
-        rdata_mux = 1'b1;
-        if (read_delayed) begin
-          next_state_rdelay = 1'b1;
-        end else begin
-          next_state_rdelay = 1'b0;
-        end
-      end
-    endcase
-  end
-
   // Delayed write buffer
-  assign wbuffer_d = rd_q;
+  assign buffer_d = read_delayed ? rs1_d : rd_q;
   always_ff @(posedge clk_i or negedge rst_ni) begin
     if (!rst_ni) begin
-      curr_state_wdelay <= 1'b0;
-      wbuffer_q <= '0;
+      curr_state_delay <= 2'b00;
+      buffer_q <= '0;
     end else begin
-      curr_state_wdelay <= next_state_wdelay;
-      if (wbuffer_en) wbuffer_q <= wbuffer_d;
+      curr_state_delay <= next_state_delay;
+      if (buffer_en) buffer_q <= buffer_d;
     end
   end
   always_comb begin
     rd_buf_en = 1'b0;
-    wbuffer_en = 1'b0;
-    case (curr_state_wdelay)
-      1'b0: begin
-        wdata_mux = memory_op_i ? 2'b01 : 2'b00;
-        if (write_delayed) begin
-          if (!memory_op_i) rd_buf_en = 1'b1;
-          else wbuffer_en = 1'b1;
-          next_state_wdelay = 1'b1;
+    buffer_en = 1'b0;
+    rdata_mux = 1'b0;
+    wdata_mux = memory_op_i ? 2'b01 : 2'b00;
+    case (curr_state_delay)
+      // Initial state: we wait for delay
+      2'b00: begin
+        if (write_delayed || read_delayed) begin
+          if (!memory_op_i) rd_buf_en = 1'b1;          // if it's not a memory operation we need to sample input signal
+          else buffer_en = 1'b1;                       // if it's a memory operations we : load - sample the already sampled result, store - sample the operand to avoid changing LSU inputs while we wait
+          next_state_delay = write_delayed ? 2'b01 : 2'b10;
         end else begin
-          next_state_wdelay = 1'b0;
+          next_state_delay = 2'b00;
         end
       end
-      1'b1: begin
+      // State with write delayed
+      2'b01: begin
         wdata_mux = memory_op_i ? 2'b10 : 2'b01;
         if (write_delayed) begin
-          next_state_wdelay = 1'b1;
+          next_state_delay = 2'b01;
         end else begin
-          next_state_wdelay = 1'b0;
+          next_state_delay = 2'b00;
         end
+      end
+      // State with read delayed
+      2'b10: begin
+        rdata_mux = 1'b1;
+        if (read_delayed) begin
+          next_state_delay = 2'b10;
+        end else begin
+          next_state_delay = 2'b00;
+        end
+      end
+      default: begin
+        next_state_delay = 2'b00;
       end
     endcase
   end
@@ -631,7 +608,7 @@ module vcve2_vrf_interface #(
   // Outputs //
   /////////////
 
-  assign rdata_a_o = rdata_mux ? rbuffer_q : rs1_q;
+  assign rdata_a_o = rdata_mux ? buffer_q : rs1_q;
   assign rdata_b_o = rs2_q;
   assign rdata_c_o = rs3_q;
   // mux for the write data
@@ -639,7 +616,7 @@ module vcve2_vrf_interface #(
     case (wdata_mux)
       2'b00: data_wdata_o = wdata_i;
       2'b01: data_wdata_o = rd_q;
-      2'b10: data_wdata_o = wbuffer_q;
+      2'b10: data_wdata_o = buffer_q;
       default: data_wdata_o = '0;
     endcase
   end
