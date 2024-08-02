@@ -98,6 +98,9 @@ module vcve2_decoder #(
   output logic[3:0]             vrf_sel_operation_o,
   output logic                  vrf_memory_op_o,
   output logic                  vrf_interleaved_o,
+  // Slide instructions
+  output logic                  vrf_slide_op_o,
+  output logic                  is_slide_up_o,
   // immediate
   output logic [31:0]           imm_v_type_o,          // immediate for vector instructions
   // vector cfg setting instructions
@@ -259,6 +262,9 @@ module vcve2_decoder #(
     vrf_memory_op_o       = 1'b0;
     vrf_interleaved_o    = 1'b0;
     unit_stride_o         = 1'b0;
+    // slide instructions
+    vrf_slide_op_o        = 1'b0;
+    is_slide_up_o         = 1'b0;
 
     opcode                = opcode_e'(instr[6:0]);
 
@@ -775,7 +781,7 @@ module vcve2_decoder #(
             // Move instructions
             {6'b01_0111, 3'b000}: begin    // vmv.v.v/vmerge.vvm
               vrf_we_o = 1'b1;
-              vrf_sel_operation_o = 4'b1010;
+              vrf_sel_operation_o = 4'b1001;
             end
             {6'b01_0111, 3'b100}: begin    // vmv.v.x/vmerge.vxm
               vrf_we_o = 1'b1;
@@ -784,6 +790,20 @@ module vcve2_decoder #(
             {6'b01_0111, 3'b011}: begin    // vmv.v.i/vmerge.vim
               vrf_we_o = 1'b1;
               vrf_sel_operation_o = 4'b1000;
+            end
+
+            // Slide instructions
+            {6'b00_1110, 3'b100}: begin    // vslideup.vx
+              vrf_we_o = 1'b1;
+              vrf_sel_operation_o = 4'b1010;
+              vrf_slide_op_o = 1'b1;
+              is_slide_up_o = 1'b1;
+            end
+            {6'b00_1110, 3'b011}: begin    // vslideup.vi
+              vrf_we_o = 1'b1;
+              vrf_sel_operation_o = 4'b1010;
+              vrf_slide_op_o = 1'b1;
+              is_slide_up_o = 1'b1;
             end
             default: begin
               illegal_insn = 1'b1;
@@ -1318,13 +1338,13 @@ module vcve2_decoder #(
 
       OPCODE_LOAD_V: begin
         alu_op_b_mux_sel_o = OP_B_REG_B;
-        alu_op_a_mux_sel_o = OP_A_MEMADDR;
+        alu_op_a_mux_sel_o = OP_A_FWD;
         alu_operator_o = ALU_ADD;
       end
 
       OPCODE_STORE_V: begin
         alu_op_b_mux_sel_o = OP_B_REG_B;
-        alu_op_a_mux_sel_o = OP_A_MEMADDR;
+        alu_op_a_mux_sel_o = OP_A_FWD;
         alu_operator_o = ALU_ADD;
       end
 
@@ -1403,6 +1423,19 @@ module vcve2_decoder #(
               alu_op_a_mux_sel_o = OP_A_IMM;
               imm_a_mux_sel_o    = IMM_A_V;
               alu_operator_o = ALU_MOVE;
+            end
+
+            // Slide instructions
+            {6'b00_1110, 3'b100}: begin    // vslideup.vx
+              alu_op_a_mux_sel_o = OP_A_REG_A;
+              alu_op_b_mux_sel_o = OP_B_VREG;
+              alu_operator_o = ALU_SLIDE;
+            end
+            {6'b00_1110, 3'b011}: begin    // vslideup.vi
+              alu_op_a_mux_sel_o = OP_A_IMM;
+              alu_op_b_mux_sel_o = OP_B_VREG;
+              alu_operator_o = ALU_SLIDE;
+              imm_a_mux_sel_o    = IMM_A_Z;
             end
             default: ;
           endcase

@@ -17,14 +17,14 @@ package vcve2_pkg;
   // Vector register starting addresses
   /* verilator lint_off LITENDIAN */
   parameter logic[0:31][31:0] VREG_START_ADDR = {
-    32'h0000_0000, 32'h0000_0080, 32'h0000_0100, 32'h0000_0180,
-    32'h0000_0200, 32'h0000_0280, 32'h0000_0300, 32'h0000_0380,
-    32'h0000_0400, 32'h0000_0480, 32'h0000_0500, 32'h0000_0580,
-    32'h0000_0600, 32'h0000_0680, 32'h0000_0700, 32'h0000_0780,
-    32'h0000_0800, 32'h0000_0880, 32'h0000_0900, 32'h0000_0980,
-    32'h0000_0A00, 32'h0000_0A80, 32'h0000_0B00, 32'h0000_0B80,
-    32'h0000_0C00, 32'h0000_0C80, 32'h0000_0D00, 32'h0000_0D80,
-    32'h0000_0E00, 32'h0000_0E80, 32'h0000_0F00, 32'h0000_0F80
+    32'h0000_D000, 32'h0000_D080, 32'h0000_D100, 32'h0000_D180,
+    32'h0000_D200, 32'h0000_D280, 32'h0000_D300, 32'h0000_D380,
+    32'h0000_D400, 32'h0000_D480, 32'h0000_D500, 32'h0000_D580,
+    32'h0000_D600, 32'h0000_D680, 32'h0000_D700, 32'h0000_D780,
+    32'h0000_D800, 32'h0000_D880, 32'h0000_D900, 32'h0000_D980,
+    32'h0000_DA00, 32'h0000_DA80, 32'h0000_DB00, 32'h0000_DB80,
+    32'h0000_DC00, 32'h0000_DC80, 32'h0000_DD00, 32'h0000_DD80,
+    32'h0000_DE00, 32'h0000_DE80, 32'h0000_DF00, 32'h0000_DF80
   };
   /* verilator lint_on LITENDIAN */
 
@@ -36,8 +36,7 @@ package vcve2_pkg;
     VRF_INT_READ2,
     VRF_INT_READ3,
     VRF_INT_WRITE,
-    VRF_READ1,
-    VRF_READ2,
+    VRF_READ,
     VRF_WRITE,
     VRF_LOAD,
     VRF_LOAD_WAITGNT,
@@ -242,7 +241,8 @@ package vcve2_pkg;
     ALU_MAC,
     ALU_NMSAC,
     ALU_MADD,
-    ALU_NMSUB
+    ALU_NMSUB,
+    ALU_SLIDE
   } alu_op_e;
 
   typedef enum logic [1:0] {
@@ -302,8 +302,7 @@ package vcve2_pkg;
     OP_A_VREG,              // Vector extension
     OP_A_FWD,
     OP_A_CURRPC,
-    OP_A_IMM,
-    OP_A_MEMADDR            // Vector extension
+    OP_A_IMM
   } op_a_sel_e;
 
   // Immediate a selection
@@ -317,7 +316,8 @@ package vcve2_pkg;
   typedef enum logic[1:0] {      // added a bit to support vector extension
     OP_B_REG_B,
     OP_B_VREG,                // Vector extension
-    OP_B_IMM
+    OP_B_IMM,
+    OP_B_SLIDE                // Vector extension
   } op_b_sel_e;
 
   // Immediate b selection

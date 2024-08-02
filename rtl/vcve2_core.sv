@@ -301,6 +301,9 @@ module vcve2_core import vcve2_pkg::*; #(
   logic vrf_lsu_req; // Signal from the VRF that tells the LSU to start the memory operation
   vsew_e vrf_vsew;
   vlmul_e vrf_vlmul;
+  // Slide instructions
+  logic vrf_slide_op; // Signal indicating that the vector operation is a slide operation
+  logic is_slide_up; // Signal indicating that the slide operation is up
   // Data memory interface
   logic vrf_data_req;
   logic vrf_data_gnt;
@@ -567,13 +570,20 @@ module vcve2_core import vcve2_pkg::*; #(
     .vrf_memory_op_o(vrf_memory_op),
     .vrf_interleaved_o(vrf_interleaved),
     .vector_done_i(vector_done),
+    // Slide instructions
+    .vrf_slide_op_o(vrf_slide_op),
+    .is_slide_up_o(is_slide_up),
     // vcfg
     .vcfg_write_o(vcfg_write),
     .vl_max_o(vl_max),
     .vl_keep_o(vl_keep),
+    .vsew_i(vsew_q),
     // LSU
     .unit_stride_o(unit_stride),
-    .vmem_ops_eew_o(vmem_ops_eew)
+    .vmem_ops_eew_o(vmem_ops_eew),
+    // Slide
+    .slide_addr_req_i(agu_load && vrf_slide_op),
+    .slide_base_addr_i(agu_addr_o)
   );
 
   // for RVFI only
@@ -902,6 +912,7 @@ module vcve2_core import vcve2_pkg::*; #(
     .unit_stride_i(unit_stride),
     .interleaved_i(vrf_interleaved),
     .vector_done_o(vector_done),
+    .slide_op_i(vrf_slide_op),
     .lsu_req_o(vrf_lsu_req),
     .lsu_done_i(lsu_resp_valid),
 
@@ -912,7 +923,7 @@ module vcve2_core import vcve2_pkg::*; #(
   );
 
   // AGU, translates the VR numbero to a memory address
-  vce2_agu #(
+  vcve2_agu #(
     .AddrWidth(32)
 ) agu_inst (
     .clk_i(clk_i),
@@ -922,12 +933,16 @@ module vcve2_core import vcve2_pkg::*; #(
     .rs2_i(rf_raddr_b),
     .rd_i(rf_waddr_wb),
     // control signals from VRF
-    .load_i(agu_load),    
+    .load_i(agu_load),
     .get_rs1_i(agu_get_rs1),  
     .get_rs2_i(agu_get_rs2),
     .get_rd_i(agu_get_rd),  
     .incr_i(agu_incr),
+    // slide instructions
+    .is_slide_i(vrf_slide_op),
+    .is_slide_up_i(is_slide_up),
     // memory address output
+    .addr_i(alu_adder_result_ex),
     .addr_o(agu_addr_o) 
   );
 

@@ -165,20 +165,27 @@ module vcve2_id_stage #(
   output logic                      vrf_memory_op_o,
   output logic                      vrf_interleaved_o,
   input  logic                      vector_done_i,
+  // Slide instructions
+  output logic                      vrf_slide_op_o,
+  output logic                      is_slide_up_o,
   // Vector cfg
   output logic                      vcfg_write_o,
   output logic                      vl_max_o,
   output logic                      vl_keep_o,
+  input  vcve2_pkg::vsew_e          vsew_i,
   // Vector memory operations
   output logic                      unit_stride_o,
-  output logic [2:0]                vmem_ops_eew_o
+  output logic [2:0]                vmem_ops_eew_o,
+  // Vectore slide instructions
+  input  logic                      slide_addr_req_i,
+  input  logic [31:0]               slide_base_addr_i
 
 );
 
+  import vcve2_pkg::*;
+
   // TODO: now it's only this but I will add things probably while adding supported instructions
   assign vrf_wdata_o = result_ex_i;
-
-  import vcve2_pkg::*;
 
   // Decoder/Controller, ID stage internal signals
   logic        illegal_insn_dec;
@@ -280,9 +287,10 @@ module vcve2_id_stage #(
   /////////////
 
   // Misaligned loads/stores result in two aligned loads/stores, compute second address
-  assign alu_op_a_mux_sel = lsu_addr_incr_req_i ? OP_A_FWD        : alu_op_a_mux_sel_dec;
-  assign alu_op_b_mux_sel = lsu_addr_incr_req_i ? OP_B_IMM        : alu_op_b_mux_sel_dec;
-  assign imm_b_mux_sel    = lsu_addr_incr_req_i ? IMM_B_INCR_ADDR : imm_b_mux_sel_dec;
+  assign alu_op_a_mux_sel = lsu_addr_incr_req_i ? OP_A_FWD          : alu_op_a_mux_sel_dec;
+  assign alu_op_b_mux_sel = lsu_addr_incr_req_i ? OP_B_IMM          : 
+                            slide_addr_req_i    ? OP_B_SLIDE        : alu_op_b_mux_sel_dec;
+  assign imm_b_mux_sel    = lsu_addr_incr_req_i ? IMM_B_INCR_ADDR   : imm_b_mux_sel_dec;
 
   ///////////////////
   // Operand MUXES //
@@ -301,12 +309,11 @@ module vcve2_id_stage #(
   // Main ALU MUX for Operand A
   always_comb begin : alu_operand_a_mux
     unique case (alu_op_a_mux_sel)
-      OP_A_REG_A:   alu_operand_a = rf_rdata_a_fwd;
+      OP_A_REG_A:   alu_operand_a = slide_addr_req_i ? rf_rdata_a_fwd<<vsew_i : rf_rdata_a_fwd; // Support for vector slide immediate
       OP_A_VREG:    alu_operand_a = vrf_rdata_b_i;     // [VEC] Vector extension
       OP_A_FWD:     alu_operand_a = lsu_addr_last_i;
       OP_A_CURRPC:  alu_operand_a = pc_id_i;
-      OP_A_IMM:     alu_operand_a = imm_a;
-      OP_A_MEMADDR: alu_operand_a = lsu_addr_last_i;   // [VEC] Vector extension
+      OP_A_IMM:     alu_operand_a = slide_addr_req_i ? imm_a<<vsew_i : imm_a;   // Support for vector slide immediate
       default:     alu_operand_a = pc_id_i;
     endcase
   end
@@ -342,8 +349,9 @@ module vcve2_id_stage #(
   always_comb begin : alu_operand_b_mux
     unique case (alu_op_b_mux_sel)
       OP_B_REG_B:  alu_operand_b = rf_rdata_b_fwd;
-      OP_B_VREG:   alu_operand_b = vrf_rdata_a_i;     // [VEC] Vector extension
+      OP_B_VREG:   alu_operand_b = vrf_rdata_b_i;     // [VEC] Vector extension
       OP_B_IMM:    alu_operand_b = imm_b;
+      OP_B_SLIDE:  alu_operand_b = slide_base_addr_i;
       default:     alu_operand_b = '0;
     endcase
   end
@@ -471,6 +479,8 @@ module vcve2_id_stage #(
     .vrf_sel_operation_o(vrf_sel_operation_o),
     .vrf_memory_op_o(vrf_memory_op_o),
     .vrf_interleaved_o(vrf_interleaved_o),
+    .vrf_slide_op_o(vrf_slide_op_o),
+    .is_slide_up_o(is_slide_up_o),
     // vector immediates
     .imm_v_type_o(imm_v_type),
     // vector cfg setting instructions
