@@ -805,6 +805,18 @@ module vcve2_decoder #(
               vrf_slide_op_o = 1'b1;
               is_slide_up_o = 1'b1;
             end
+            {6'b00_1111, 3'b100}: begin    // vslidedown.vx
+              vrf_we_o = 1'b1;
+              vrf_sel_operation_o = 4'b1010;
+              vrf_slide_op_o = 1'b1;
+              is_slide_up_o = 1'b0;
+            end
+            {6'b00_1111, 3'b011}: begin    // vslidedown.vi
+              vrf_we_o = 1'b1;
+              vrf_sel_operation_o = 4'b1010;
+              vrf_slide_op_o = 1'b1;
+              is_slide_up_o = 1'b0;
+            end
             default: begin
               illegal_insn = 1'b1;
             end
@@ -1432,6 +1444,17 @@ module vcve2_decoder #(
               alu_operator_o = ALU_SLIDE;
             end
             {6'b00_1110, 3'b011}: begin    // vslideup.vi
+              alu_op_a_mux_sel_o = OP_A_IMM;
+              alu_op_b_mux_sel_o = OP_B_VREG;
+              alu_operator_o = ALU_SLIDE;
+              imm_a_mux_sel_o    = IMM_A_Z;
+            end
+            {6'b00_1111, 3'b100}: begin    // vslidedown.vx
+              alu_op_a_mux_sel_o = OP_A_REG_A;
+              alu_op_b_mux_sel_o = OP_B_VREG;
+              alu_operator_o = ALU_SLIDE;
+            end
+            {6'b00_1111, 3'b011}: begin    // vslidedown.vi
               alu_op_a_mux_sel_o = OP_A_IMM;
               alu_op_b_mux_sel_o = OP_B_VREG;
               alu_operator_o = ALU_SLIDE;

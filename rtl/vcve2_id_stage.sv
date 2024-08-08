@@ -310,7 +310,7 @@ module vcve2_id_stage #(
   always_comb begin : alu_operand_a_mux
     unique case (alu_op_a_mux_sel)
       OP_A_REG_A:   alu_operand_a = slide_addr_req_i ? rf_rdata_a_fwd<<vsew_i : rf_rdata_a_fwd; // Support for vector slide immediate
-      OP_A_VREG:    alu_operand_a = vrf_rdata_b_i;     // [VEC] Vector extension
+      OP_A_VREG:    alu_operand_a = vrf_rdata_a_i;     // [VEC] Vector extension
       OP_A_FWD:     alu_operand_a = lsu_addr_last_i;
       OP_A_CURRPC:  alu_operand_a = pc_id_i;
       OP_A_IMM:     alu_operand_a = slide_addr_req_i ? imm_a<<vsew_i : imm_a;   // Support for vector slide immediate

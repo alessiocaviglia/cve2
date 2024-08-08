@@ -912,7 +912,11 @@ module vcve2_core import vcve2_pkg::*; #(
     .unit_stride_i(unit_stride),
     .interleaved_i(vrf_interleaved),
     .vector_done_o(vector_done),
+    // Slide
     .slide_op_i(vrf_slide_op),
+    .slide_offset_i(alu_operand_a_ex),
+    .is_slide_up_i(is_slide_up),
+    // LSU
     .lsu_req_o(vrf_lsu_req),
     .lsu_done_i(lsu_resp_valid),
 

@@ -7,7 +7,7 @@ module vcve2_vrf_interface #(
     input   logic                       rst_ni,
 
     // Read ports
-    input   logic                       req_i,
+    input   logic                       req_i,                              // request signal for VRF
     output  logic [PIPE_WIDTH-1:0]      rdata_a_o, rdata_b_o, rdata_c_o,
 
     // Write port
@@ -24,8 +24,8 @@ module vcve2_vrf_interface #(
     output logic [31:0]  data_wdata_o,
     input  logic [31:0]  data_rdata_i,
     // LSU control signals
-    output logic         data_load_addr_o,
-    input  logic         lsu_gnt_i,
+    output logic         data_load_addr_o,  // loads the address for the memory operation in a counter
+    input  logic         lsu_gnt_i,         // grant of LSU, if not immediately given for a write we sample the result/operand
 
     // AGU
     output logic         agu_load_o,
@@ -43,6 +43,8 @@ module vcve2_vrf_interface #(
     
     // Slide signals
     input  logic                  slide_op_i,         // 0 - no slide, 1 - slide
+    input  logic [31:0]           slide_offset_i,     // offset for the slide operation
+    input  logic                  is_slide_up_i,      // 0 - slide down, 1 - slide up
 
     // LSU signals
     output logic                  lsu_req_o,          // signals the LSU that it can start the memory operation
@@ -82,6 +84,17 @@ module vcve2_vrf_interface #(
   logic buffer_en, rd_buf_en;
   logic [PIPE_WIDTH-1:0] buffer_q, buffer_d;
 
+  // Slide instructions support
+  logic [23:0] slide_buffer_d, slide_buffer_q;
+  logic [31:0] slide_rdata;
+  logic slide_buffer_en;
+  logic [1:0] slide_offset_q;
+  logic slide_offset_en;
+  logic slide_first_write_d, slide_first_write_q;
+  logic sel_slide_be;                             // signal used to select the correct byte-enable for the first write operation
+  logic [3:0] slide_offset_be;
+  logic no_offset_first;
+
   //////////////////
   // BE selector  //
   //////////////////
@@ -89,21 +102,65 @@ module vcve2_vrf_interface #(
   // depending on vl we could need to access only a section of the 32 bit word
   always_comb begin
     no_offset = 1'b0;
-    case (offset_q)
+    no_offset_first = 1'b0;
+    // BE for last write
+    // For slide down operations it depends both on vl and the offset
+    if (slide_op_i && !is_slide_up_i) begin
+      case ({offset_q, slide_offset_q})
+        4'b0111: begin
+          offset_be = 4'b0011;
+          no_offset = 1'b1;
+        end
+        4'b0110, 4'b1011: begin
+          offset_be = 4'b0111;
+          no_offset = 1'b1;
+        end
+        4'b0000, 4'b0101, 4'b1010, 4'b1111: begin
+          offset_be = 4'b1111;
+          no_offset = 1'b1;
+        end
+        4'b0011, 4'b0100, 4'b1001, 4'b1110: begin
+          offset_be = 4'b0001;
+        end
+        4'b0010, 4'b1000, 4'b1101: begin
+          offset_be = 4'b0011;
+        end
+        4'b0001, 4'b1100: begin
+          offset_be = 4'b0111;
+        end
+        default: offset_be = 4'b0000;
+      endcase
+    end
+    // For other operations it depends only on vl
+    else begin
+      case (offset_q)
+        2'b00: begin
+          offset_be = 4'b1111;
+          no_offset = 1'b1;
+        end
+        2'b01: offset_be = 4'b0001;
+        2'b10: offset_be = 4'b0011;
+        2'b11: offset_be = 4'b0111;
+        default: offset_be = 4'b0000;
+      endcase
+    end
+    // In slide up operation the first read can be a different be
+    case (slide_offset_q)
       2'b00: begin
-        offset_be = 4'b0000;
-        no_offset = 1'b1;
+        slide_offset_be = 4'b1111;
+        no_offset_first = 1'b1;
       end
-      2'b01: offset_be = 4'b0001;
-      2'b10: offset_be = 4'b0011;
-      2'b11: offset_be = 4'b0111;
-      default: offset_be = 4'b0000;
+      2'b01: slide_offset_be = 4'b1110;
+      2'b10: slide_offset_be = 4'b1100;
+      2'b11: slide_offset_be = 4'b1000;
+      default: slide_offset_be = 4'b0000;
     endcase
   end
   // in interleaved operation the first read will not have the correct be but since it's only a read
   // it will not impact the state of the memory and the access will certainly be inside the vector register
   // since if there's an offset it means vl is certainly lower than vlmax
-  assign data_be_o = (!no_offset && last_iteration_q) ? offset_be : 4'b1111;
+  assign data_be_o = sel_slide_be                     ? slide_offset_be :
+                     last_iteration_q                 ? offset_be       : 4'b1111;
 
   /////////////
   // VRF FSM //
@@ -116,12 +173,16 @@ module vcve2_vrf_interface #(
       offset_q <= '0;
       first_iteration_q <= 1'b0;
       last_iteration_q <= 1'b0;
+      slide_offset_q <= '0;
+      slide_first_write_q <= 1'b0;
     end else begin
       vrf_state <= vrf_next_state;
       num_iterations_q <= num_iterations_d;
       offset_q <= offset_d;
       first_iteration_q <= first_iteration_d;
       last_iteration_q <= last_iteration_d;
+      if (slide_offset_en) slide_offset_q <= slide_offset_i[1:0];
+      slide_first_write_q <= slide_first_write_d;
     end
   end
 
@@ -149,6 +210,11 @@ module vcve2_vrf_interface #(
     offset_d = offset_q;
     first_iteration_d = first_iteration_q;
     last_iteration_d = last_iteration_q;
+    // slide
+    slide_buffer_en = 1'b0;
+    slide_offset_en = 1'b0;
+    slide_first_write_d = slide_first_write_q;
+    sel_slide_be = 1'b0;
     // LSU signals
     lsu_req_o = 1'b0;
     data_load_addr_o = 1'b0;
@@ -172,7 +238,8 @@ module vcve2_vrf_interface #(
             agu_load_o = 1'b1;
             // Data memory if - load the start address
             if (memory_op_i) data_load_addr_o = 1'b1;
-            num_iterations_d = num_bytes_elements[31:2];
+            num_iterations_d = slide_op_i ? num_bytes_elements[31:2] - slide_offset_i[31:2] : num_bytes_elements[31:2];
+            slide_offset_en = slide_op_i;
             offset_d = num_bytes_elements[1:0];
             vrf_next_state = VRF_START;
           end
@@ -182,6 +249,7 @@ module vcve2_vrf_interface #(
       VRF_START: begin
         // NEXT STATE SELECTION
         first_iteration_d = 1'b1;
+        slide_first_write_d = 1'b1;
         if (memory_op_i == 0) begin                   // ARITHMETIC OPERATION
           if (interleaved_i) begin
             data_req_o = 1'b1;                          // read RS1         
@@ -197,7 +265,8 @@ module vcve2_vrf_interface #(
               else agu_get_rs2_o = 1'b1;
               if (data_gnt_i) begin
                 agu_incr_o = 1'b1;
-                vrf_next_state = VRF_READ;
+                if (slide_op_i && !is_slide_up_i && !no_offset_first) vrf_next_state = VRF_LOAD_SLIDE;
+                else vrf_next_state = VRF_READ;
               end else vrf_next_state = VRF_START;
             end else if (sel_operation_i[3]) begin
               data_we_o = 1'b1;
@@ -338,17 +407,37 @@ module vcve2_vrf_interface #(
       // Arithmetic operations - single operand, slide, move //
       /////////////////////////////////////////////////////////
 
+      VRF_LOAD_SLIDE: begin
+        if (data_rvalid_i) begin
+          rs2_en = 1'b1;
+          slide_buffer_en = 1'b1;
+        end
+        data_req_o = 1'b1;
+        agu_get_rs2_o = 1'b1;
+        if (data_gnt_i) begin
+          agu_incr_o = 1'b1;
+          vrf_next_state = VRF_READ;
+        end else begin
+          vrf_next_state = VRF_LOAD_SLIDE;
+        end
+      end
+
       VRF_READ: begin
         // SAMPLE
-        if (data_rvalid_i && !last_iteration_q) rs2_en = 1;
+        if (data_rvalid_i && !last_iteration_q) begin
+          rs2_en = 1'b1;
+          if (slide_op_i) slide_buffer_en = 1'b1;
+        end
         // NEXT STATE SELECTION
         if (!first_iteration_q) begin
           data_we_o = 1'b1;
           data_req_o = 1'b1;
           agu_get_rd_o = 1'b1;
+          if (slide_first_write_q && is_slide_up_i) sel_slide_be = 1'b1;
           if (data_gnt_i) begin
             write_delayed = 1'b0;
             agu_incr_o = 1'b1;
+            slide_first_write_d = 1'b0;
             vrf_next_state = VRF_WRITE;
           end else begin
             write_delayed = 1'b1;
@@ -369,17 +458,23 @@ module vcve2_vrf_interface #(
         end else begin
           // if next operation is READ
           if (sel_operation_i[0] || sel_operation_i[1]) begin
-            data_req_o = 1'b1;
-            if (sel_operation_i[0]) agu_get_rs1_o = 1'b1;
-            else agu_get_rs2_o = 1'b1;
-            if (data_gnt_i) begin
-              agu_incr_o = 1'b1;
-              if (num_iterations_q == (no_offset ? 1 : 0)) last_iteration_d = 1'b1;
-              else num_iterations_d = num_iterations_q - 1;
+            if (num_iterations_q == (no_offset ? 1 : 0)) begin
+              last_iteration_d = 1'b1;
+              data_req_o = 1'b0;
               vrf_next_state = VRF_READ;
-            end else begin
-              num_iterations_d = num_iterations_q;   // if the operation wasn't accepted we need to repeat it
-              vrf_next_state = VRF_WRITE;
+            end
+            else begin 
+              data_req_o = 1'b1;
+              if (sel_operation_i[0]) agu_get_rs1_o = 1'b1;
+              else agu_get_rs2_o = 1'b1;
+              if (data_gnt_i) begin
+                agu_incr_o = 1'b1;
+                num_iterations_d = num_iterations_q - 1;
+                vrf_next_state = VRF_READ;
+              end else begin
+                num_iterations_d = num_iterations_q;   // if the operation wasn't accepted we need to repeat it
+                vrf_next_state = VRF_WRITE;
+              end
             end
           // if we don't read vs2 it means we write again
           end else begin
@@ -524,6 +619,37 @@ module vcve2_vrf_interface #(
     endcase
   end
 
+  ////////////////////////////////
+  // Slide instructions support //
+  ////////////////////////////////
+  
+  always_ff @(posedge clk_i or negedge rst_ni) begin
+    if (!rst_ni) begin
+      slide_buffer_q <= '0;
+    end else begin
+      if (slide_buffer_en) slide_buffer_q <= slide_buffer_d;
+    end
+  end
+  // Since the sampled offset bits are already shifted of SEW bits we can directly use them
+  always_comb begin
+    slide_buffer_d = slide_buffer_q;
+    case (slide_offset_q)
+      2'b01: begin
+        slide_rdata = is_slide_up_i ? {data_rdata_i[23:0], slide_buffer_q[7:0]} : {data_rdata_i[7:0], slide_buffer_q[23:0]};
+        slide_buffer_d = is_slide_up_i ? {16'h0, data_rdata_i[31:24]} : data_rdata_i[31:8];
+      end
+      2'b10: begin
+        slide_rdata = {data_rdata_i[15:0], slide_buffer_q[15:0]};
+        slide_buffer_d = {8'h00, data_rdata_i[31:16]};
+      end
+      2'b11: begin
+        slide_rdata = is_slide_up_i ? {data_rdata_i[7:0], slide_buffer_q[23:0]} : {data_rdata_i[23:0], slide_buffer_q[7:0]};
+        slide_buffer_d = is_slide_up_i ? data_rdata_i[31:8] : {16'h0, data_rdata_i[31:24]};
+      end
+      default: slide_rdata = data_rdata_i;
+    endcase
+  end
+
   ///////////////////////////
   // Delayed grant support //
   ///////////////////////////
@@ -597,10 +723,10 @@ module vcve2_vrf_interface #(
       if (rd_en || rd_buf_en) rd_q <= rd_d;
     end
   end
-  always_comb begin   // TODO: probably this condition is redundant and I should remove it
-    rs1_d = rs1_en ? data_rdata_i : rs1_q;
-    rs2_d = rs2_en ? data_rdata_i : rs2_q;
-    rs3_d = rs3_en ? data_rdata_i : rs3_q;
+  always_comb begin
+    rs1_d = data_rdata_i;
+    rs2_d = slide_op_i ? slide_rdata : data_rdata_i;
+    rs3_d = data_rdata_i;
     rd_d = wdata_i;
   end
 

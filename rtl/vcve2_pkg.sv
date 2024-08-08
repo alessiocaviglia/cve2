@@ -36,6 +36,7 @@ package vcve2_pkg;
     VRF_INT_READ2,
     VRF_INT_READ3,
     VRF_INT_WRITE,
+    VRF_LOAD_SLIDE,
     VRF_READ,
     VRF_WRITE,
     VRF_LOAD,
