@@ -156,11 +156,22 @@ module vcve2_vrf_interface #(
       default: slide_offset_be = 4'b0000;
     endcase
   end
-  // in interleaved operation the first read will not have the correct be but since it's only a read
-  // it will not impact the state of the memory and the access will certainly be inside the vector register
-  // since if there's an offset it means vl is certainly lower than vlmax
-  assign data_be_o = sel_slide_be                     ? slide_offset_be :
-                     last_iteration_q                 ? offset_be       : 4'b1111;
+
+  always_comb begin
+    // if it's the first write of a slideup operation it's possible we need a different byte-enable
+    if (sel_slide_be) begin
+      if (last_iteration_q) begin
+        data_be_o = slide_offset_be & offset_be;
+      end
+      else data_be_o = slide_offset_be;
+    end
+    else if (last_iteration_q) begin
+      data_be_o = offset_be;
+    end
+    else begin
+      data_be_o = 4'b1111;
+    end
+  end
 
   /////////////
   // VRF FSM //

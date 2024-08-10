@@ -1424,8 +1424,10 @@ module vcve2_decoder #(
             end
 
             {6'b01_0111, 3'b000}: begin    // vmv.v.v/vmerge.vvm
-              alu_op_a_mux_sel_o = OP_A_VREG;
-              alu_operator_o = ALU_MOVE;
+              alu_op_a_mux_sel_o = OP_A_IMM;
+              alu_op_b_mux_sel_o = OP_B_VREG;
+              alu_operator_o = ALU_SLIDE;
+              imm_a_mux_sel_o    = IMM_A_ZERO;
             end
             {6'b01_0111, 3'b100}: begin    // vmv.v.x/vmerge.vxm
               alu_op_a_mux_sel_o = OP_A_REG_A;
