@@ -7,6 +7,8 @@
   `define RVFI
 `endif
 
+`define TWO_DATAIFS
+
 `include "prim_assert.sv"
 
 /**
@@ -53,6 +55,40 @@ module vcve2_core import vcve2_pkg::*; #(
   output logic [31:0]                  data_wdata_o,
   input  logic [31:0]                  data_rdata_i,
   input  logic                         data_err_i,
+
+  // Additional data memory interface
+  `ifdef TWO_DATAIFS
+  output logic                         data_req_1_o,
+  input  logic                         data_gnt_1_i,
+  input  logic                         data_rvalid_1_i,
+  output logic                         data_we_1_o,
+  output logic [3:0]                   data_be_1_o,
+  output logic [31:0]                  data_addr_1_o,
+  output logic [31:0]                  data_wdata_1_o,
+  input  logic [31:0]                  data_rdata_1_i,
+  input  logic                         data_err_1_i,
+
+`elsif THREE_DATAIFS
+  output logic                         data_req_1_o,
+  input  logic                         data_gnt_1_i,
+  input  logic                         data_rvalid_1_i,
+  output logic                         data_we_1_o,
+  output logic [3:0]                   data_be_1_o,
+  output logic [31:0]                  data_addr_1_o,
+  output logic [31:0]                  data_wdata_1_o,
+  input  logic [31:0]                  data_rdata_1_i,
+  input  logic                         data_err_1_i,
+
+  output logic                         data_req_2_o,
+  input  logic                         data_gnt_2_i,
+  input  logic                         data_rvalid_2_i,
+  output logic                         data_we_2_o,
+  output logic [3:0]                   data_be_2_o,
+  output logic [31:0]                  data_addr_2_o,
+  output logic [31:0]                  data_wdata_2_o,
+  input  logic [31:0]                  data_rdata_2_i,
+  input  logic                         data_err_2_i,
+`endif
 
   // Interrupt inputs
   input  logic                         irq_software_i,
@@ -869,6 +905,86 @@ module vcve2_core import vcve2_pkg::*; #(
   // VRF (Vector Register File) //
   ////////////////////////////////
 
+  assign data_addr_1_o = agu_addr_o;
+  //assign data_addr_2_o = agu_addr_o;
+
+  vcve2_vrf_wrapper #(
+    .NUM_INSTANCES(2),
+    .VLEN(128),
+    .PIPE_WIDTH(32)
+  ) vrf_wrapper_i (
+    .clk_i(clk_i),
+    .rst_ni(rst_ni),
+
+    .req_i(vrf_req),
+    .rdata_a_o(vrf_rdata_a),
+    .rdata_b_o(vrf_rdata_b),
+    .rdata_c_o(vrf_rdata_c),
+    .wdata_i(vrf_wdata_wb),
+
+    .data_req_o(vrf_data_req),
+    .data_gnt_i(vrf_data_gnt),
+    .data_rvalid_i(vrf_data_rvalid),
+    .data_err_i(vrf_data_err),
+    .data_pmp_err_i(pmp_req_err[PMP_D]),
+    .data_we_o(vrf_data_we),
+    .data_be_o(vrf_data_be),
+    .data_wdata_o(vrf_data_wdata),
+    .data_rdata_i(vrf_data_rdata),
+
+    .data_req_1_o(data_req_1_o),
+    .data_gnt_1_i(data_gnt_1_i),
+    .data_rvalid_1_i(data_rvalid_1_i),
+    .data_err_1_i(data_err_1_i),
+    //.data_pmp_err_1_i(data_pmp_err_1_i), // Uncomment if needed
+    .data_we_1_o(data_we_1_o),
+    .data_be_1_o(data_be_1_o),
+    .data_wdata_1_o(data_wdata_1_o),
+    .data_rdata_1_i(data_rdata_1_i),
+  /*
+    .data_req_2_o(data_req_2_o),
+    .data_gnt_2_i(data_gnt_2_i),
+    .data_rvalid_2_i(data_rvalid_2_i),
+    .data_err_2_i(data_err_2_i),
+    //.data_pmp_err_2_i(data_pmp_err_2_i), // Uncomment if needed
+    .data_we_2_o(data_we_2_o),
+    .data_be_2_o(data_be_2_o),
+    .data_wdata_2_o(data_wdata_2_o),
+    .data_rdata_2_i(data_rdata_2_i),*/
+
+    // LSU control signals
+    .data_load_addr_o(lsu_if_load_addr),
+    .lsu_gnt_i(vrf_lsu_gnt),
+
+    // AGU signals
+    .agu_load_o(agu_load),
+    .agu_get_rs1_o(agu_get_rs1),
+    .agu_get_rs2_o(agu_get_rs2),
+    .agu_get_rd_o(agu_get_rd),
+    .agu_incr_o(agu_incr),
+
+    // control signals
+    .sel_operation_i(vrf_sel_operation),
+    .memory_op_i(vrf_memory_op),
+    .unit_stride_i(unit_stride),
+    .interleaved_i(vrf_interleaved),
+    .vector_done_o(vector_done),
+    // Slide
+    .slide_op_i(vrf_slide_op),
+    .slide_offset_i(alu_operand_a_ex),
+    .is_slide_up_i(is_slide_up),
+    // LSU
+    .lsu_req_o(vrf_lsu_req),
+    .lsu_done_i(lsu_resp_valid),
+
+    // CSR
+    .lmul_i(vrf_vlmul),
+    .sew_i(vrf_vsew),
+    .vl_i(vl_q)
+  );
+
+
+  /*
   // VRF interface, containing the logic for the vector register file
   vcve2_vrf_interface #(
     .VLEN(128),
@@ -924,7 +1040,7 @@ module vcve2_core import vcve2_pkg::*; #(
     .lmul_i(vrf_vlmul),
     .sew_i(vrf_vsew),
     .vl_i(vl_q)
-  );
+  ); */
 
   // AGU, translates the VR numbero to a memory address
   vcve2_agu #(

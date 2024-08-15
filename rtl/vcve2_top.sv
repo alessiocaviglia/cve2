@@ -49,6 +49,39 @@ module vcve2_top import vcve2_pkg::*; #(
   input  logic [31:0]                  data_rdata_i,
   input  logic                         data_err_i,
 
+  `ifdef TWO_DATAIFS
+  output logic                         data_req_1_o,
+  input  logic                         data_gnt_1_i,
+  input  logic                         data_rvalid_1_i,
+  output logic                         data_we_1_o,
+  output logic [3:0]                   data_be_1_o,
+  output logic [31:0]                  data_addr_1_o,
+  output logic [31:0]                  data_wdata_1_o,
+  input  logic [31:0]                  data_rdata_1_i,
+  input  logic                         data_err_1_i,
+
+`elsif THREE_DATAIFS
+  output logic                         data_req_1_o,
+  input  logic                         data_gnt_1_i,
+  input  logic                         data_rvalid_1_i,
+  output logic                         data_we_1_o,
+  output logic [3:0]                   data_be_1_o,
+  output logic [31:0]                  data_addr_1_o,
+  output logic [31:0]                  data_wdata_1_o,
+  input  logic [31:0]                  data_rdata_1_i,
+  input  logic                         data_err_1_i,
+
+  output logic                         data_req_2_o,
+  input  logic                         data_gnt_2_i,
+  input  logic                         data_rvalid_2_i,
+  output logic                         data_we_2_o,
+  output logic [3:0]                   data_be_2_o,
+  output logic [31:0]                  data_addr_2_o,
+  output logic [31:0]                  data_wdata_2_o,
+  input  logic [31:0]                  data_rdata_2_i,
+  input  logic                         data_err_2_i,
+`endif
+
   // Interrupt inputs
   input  logic                         irq_software_i,
   input  logic                         irq_timer_i,
@@ -190,6 +223,26 @@ module vcve2_top import vcve2_pkg::*; #(
     .data_wdata_o,
     .data_rdata_i,
     .data_err_i,
+
+    .data_req_1_o,
+    .data_gnt_1_i,
+    .data_rvalid_1_i,
+    .data_we_1_o,
+    .data_be_1_o,
+    .data_addr_1_o,
+    .data_wdata_1_o,
+    .data_rdata_1_i,
+    .data_err_1_i,
+
+    /*.data_req_2_o,
+    .data_gnt_2_i,
+    .data_rvalid_2_i,
+    .data_we_2_o,
+    .data_be_2_o,
+    .data_addr_2_o,
+    .data_wdata_2_o,
+    .data_rdata_2_i,
+    .data_err_2_i,*/
 
     .irq_software_i,
     .irq_timer_i,

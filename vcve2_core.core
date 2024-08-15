@@ -32,6 +32,7 @@ filesets:
       - rtl/vcve2_pmp.sv
       - rtl/vcve2_wb.sv
       - rtl/vcve2_vrf_interface.sv
+      - rtl/vcve2_vrf_wrapper.sv
       - rtl/vcve2_agu.sv
       - rtl/vcve2_lsu_interface.sv
       - rtl/vcve2_dmem_switch.sv
