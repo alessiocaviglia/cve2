@@ -261,6 +261,7 @@ module vcve2_vrf_interface #(
         // NEXT STATE SELECTION
         first_iteration_d = 1'b1;
         slide_first_write_d = 1'b1;
+        
         if (memory_op_i == 0) begin                   // ARITHMETIC OPERATION
           if (interleaved_i) begin
             data_req_o = 1'b1;                          // read RS1         
@@ -269,6 +270,7 @@ module vcve2_vrf_interface #(
               agu_incr_o = 1'b1;
               vrf_next_state = VRF_INT_READ1;
             end else vrf_next_state = VRF_START;
+            
           end else begin
             if (sel_operation_i[0] || sel_operation_i[1]) begin
               data_req_o = 1'b1;

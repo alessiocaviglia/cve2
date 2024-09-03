@@ -14,19 +14,7 @@ package vcve2_pkg;
 
   parameter int unsigned VLEN = 128; // Vector length
 
-  // Vector register starting addresses
-  /* verilator lint_off LITENDIAN */
-  parameter logic[0:31][31:0] VREG_START_ADDR = {
-    32'h0000_D000, 32'h0000_D080, 32'h0000_D100, 32'h0000_D180,
-    32'h0000_D200, 32'h0000_D280, 32'h0000_D300, 32'h0000_D380,
-    32'h0000_D400, 32'h0000_D480, 32'h0000_D500, 32'h0000_D580,
-    32'h0000_D600, 32'h0000_D680, 32'h0000_D700, 32'h0000_D780,
-    32'h0000_D800, 32'h0000_D880, 32'h0000_D900, 32'h0000_D980,
-    32'h0000_DA00, 32'h0000_DA80, 32'h0000_DB00, 32'h0000_DB80,
-    32'h0000_DC00, 32'h0000_DC80, 32'h0000_DD00, 32'h0000_DD80,
-    32'h0000_DE00, 32'h0000_DE80, 32'h0000_DF00, 32'h0000_DF80
-  };
-  /* verilator lint_on LITENDIAN */
+  parameter logic [22:0] VRF_START_ADDR = 23'h00_0064;
 
   // Vector register file states
   typedef enum logic [3:0]{
