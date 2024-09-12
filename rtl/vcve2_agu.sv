@@ -1,4 +1,5 @@
 module vcve2_agu #(
+    parameter int unsigned NumIfs = 1,
     parameter AddrWidth = 32
 ) (
     input logic clk_i,

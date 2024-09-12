@@ -1,20 +1,27 @@
 INFO: Preparing alessiocaviglia:thesis:vcve2_pkg:0.1
+INFO: Preparing lowrisc:dv:crypto_prince_ref:0.1
 INFO: Preparing lowrisc:dv:dv_fcov_macros:0
-INFO: Preparing lowrisc:prim:assert:0.1
-INFO: Preparing lowrisc:prim:cipher_pkg:0.1
+INFO: Preparing lowrisc:dv:secded_enc:0
 INFO: Preparing lowrisc:prim:primgen:0.1
 INFO: Preparing lowrisc:prim:ram_1p_pkg:0
 INFO: Preparing lowrisc:prim:secded:0.1
 INFO: Preparing lowrisc:prim:util:0.1
 INFO: Preparing lowrisc:prim:util_get_scramble_params:0
-INFO: Preparing alessiocaviglia:thesis:vcve2_core:0.1
-INFO: Preparing lowrisc:prim:cipher:0
-INFO: Preparing lowrisc:prim:lfsr:0.1
+INFO: Preparing lowrisc:tool:check_tool_requirements:0.1
+INFO: Preparing lowrisc:dv:scramble_model:0
+INFO: Preparing lowrisc:dv_verilator:memutil_dpi:0
+INFO: Preparing lowrisc:lint:common:0.1
 INFO: Preparing lowrisc:prim:prim_pkg:0.1
+INFO: Preparing lowrisc:dv_verilator:memutil_dpi_scrambled:0
+INFO: Preparing lowrisc:prim:assert:0.1
 INFO: Preparing lowrisc:prim:buf:0
+INFO: Preparing lowrisc:prim:cipher_pkg:0.1
 INFO: Preparing lowrisc:prim:clock_mux2:0
 INFO: Preparing lowrisc:prim:flop:0
 INFO: Preparing lowrisc:prim:ram_1p:0
+INFO: Preparing alessiocaviglia:thesis:vcve2_core:0.1
+INFO: Preparing lowrisc:prim:cipher:0
+INFO: Preparing lowrisc:prim:lfsr:0.1
 INFO: Preparing lowrisc:prim:ram_1p_adv:0.1
 INFO: Preparing lowrisc:prim:ram_1p_scr:0.1
 INFO: Preparing alessiocaviglia:thesis:vcve2_top:0.1
@@ -27,39 +34,116 @@ Inspecting generic module /home/thesis/alessio.caviglia/repo/thesis/hw/cve2/vend
 No module named 'anytree'
 Verible parser failed, using regex fallback instead.
 Creating SystemVerilog module for abstract primitive
-Abstract primitive written to /home/thesis/alessio.caviglia/repo/thesis/hw/cve2/syn/build/synth-design_compiler/generated/lowrisc_prim_buf-impl_0/prim_buf.sv
+Abstract primitive written to /home/thesis/alessio.caviglia/repo/thesis/hw/cve2/build/alessiocaviglia_thesis_vcve2_top_0.1/lint-verilator/generated/lowrisc_prim_buf-impl_0/prim_buf.sv
 Creating core file for primitive buf.
-Core file written to /home/thesis/alessio.caviglia/repo/thesis/hw/cve2/syn/build/synth-design_compiler/generated/lowrisc_prim_buf-impl_0/prim_buf.core
+Core file written to /home/thesis/alessio.caviglia/repo/thesis/hw/cve2/build/alessiocaviglia_thesis_vcve2_top_0.1/lint-verilator/generated/lowrisc_prim_buf-impl_0/prim_buf.core
 INFO: Generating lowrisc:prim:clock_mux2-impl:0
 Implementations for primitive clock_mux2: generic, xilinx
 Inspecting generic module /home/thesis/alessio.caviglia/repo/thesis/hw/cve2/vendor/lowrisc_ip/ip/prim_generic/rtl/prim_generic_clock_mux2.sv
 No module named 'anytree'
 Verible parser failed, using regex fallback instead.
 Creating SystemVerilog module for abstract primitive
-Abstract primitive written to /home/thesis/alessio.caviglia/repo/thesis/hw/cve2/syn/build/synth-design_compiler/generated/lowrisc_prim_clock_mux2-impl_0/prim_clock_mux2.sv
+Abstract primitive written to /home/thesis/alessio.caviglia/repo/thesis/hw/cve2/build/alessiocaviglia_thesis_vcve2_top_0.1/lint-verilator/generated/lowrisc_prim_clock_mux2-impl_0/prim_clock_mux2.sv
 Creating core file for primitive clock_mux2.
-Core file written to /home/thesis/alessio.caviglia/repo/thesis/hw/cve2/syn/build/synth-design_compiler/generated/lowrisc_prim_clock_mux2-impl_0/prim_clock_mux2.core
+Core file written to /home/thesis/alessio.caviglia/repo/thesis/hw/cve2/build/alessiocaviglia_thesis_vcve2_top_0.1/lint-verilator/generated/lowrisc_prim_clock_mux2-impl_0/prim_clock_mux2.core
 INFO: Generating lowrisc:prim:flop-impl:0
 Implementations for primitive flop: generic, xilinx
 Inspecting generic module /home/thesis/alessio.caviglia/repo/thesis/hw/cve2/vendor/lowrisc_ip/ip/prim_generic/rtl/prim_generic_flop.sv
 No module named 'anytree'
 Verible parser failed, using regex fallback instead.
 Creating SystemVerilog module for abstract primitive
-Abstract primitive written to /home/thesis/alessio.caviglia/repo/thesis/hw/cve2/syn/build/synth-design_compiler/generated/lowrisc_prim_flop-impl_0/prim_flop.sv
+Abstract primitive written to /home/thesis/alessio.caviglia/repo/thesis/hw/cve2/build/alessiocaviglia_thesis_vcve2_top_0.1/lint-verilator/generated/lowrisc_prim_flop-impl_0/prim_flop.sv
 Creating core file for primitive flop.
-Core file written to /home/thesis/alessio.caviglia/repo/thesis/hw/cve2/syn/build/synth-design_compiler/generated/lowrisc_prim_flop-impl_0/prim_flop.core
+Core file written to /home/thesis/alessio.caviglia/repo/thesis/hw/cve2/build/alessiocaviglia_thesis_vcve2_top_0.1/lint-verilator/generated/lowrisc_prim_flop-impl_0/prim_flop.core
 INFO: Generating lowrisc:prim:ram_1p-impl:0
 Implementations for primitive ram_1p: generic
 Inspecting generic module /home/thesis/alessio.caviglia/repo/thesis/hw/cve2/vendor/lowrisc_ip/ip/prim_generic/rtl/prim_generic_ram_1p.sv
 No module named 'anytree'
 Verible parser failed, using regex fallback instead.
 Creating SystemVerilog module for abstract primitive
-Abstract primitive written to /home/thesis/alessio.caviglia/repo/thesis/hw/cve2/syn/build/synth-design_compiler/generated/lowrisc_prim_ram_1p-impl_0/prim_ram_1p.sv
+Abstract primitive written to /home/thesis/alessio.caviglia/repo/thesis/hw/cve2/build/alessiocaviglia_thesis_vcve2_top_0.1/lint-verilator/generated/lowrisc_prim_ram_1p-impl_0/prim_ram_1p.sv
 Creating core file for primitive ram_1p.
-Core file written to /home/thesis/alessio.caviglia/repo/thesis/hw/cve2/syn/build/synth-design_compiler/generated/lowrisc_prim_ram_1p-impl_0/prim_ram_1p.core
-INFO: Wrote dependency graph to /home/thesis/alessio.caviglia/repo/thesis/hw/cve2/syn/build/synth-design_compiler/alessiocaviglia_thesis_vcve2_top_0.1.deps-after-generators.dot
-INFO: Wrote Makefile fragment to /home/thesis/alessio.caviglia/repo/thesis/hw/cve2/syn/build/synth-design_compiler/core-deps.mk
+Core file written to /home/thesis/alessio.caviglia/repo/thesis/hw/cve2/build/alessiocaviglia_thesis_vcve2_top_0.1/lint-verilator/generated/lowrisc_prim_ram_1p-impl_0/prim_ram_1p.core
+INFO: Wrote dependency graph to /home/thesis/alessio.caviglia/repo/thesis/hw/cve2/build/alessiocaviglia_thesis_vcve2_top_0.1/lint-verilator/alessiocaviglia_thesis_vcve2_top_0.1.deps-after-generators.dot
+INFO: Wrote Makefile fragment to /home/thesis/alessio.caviglia/repo/thesis/hw/cve2/build/alessiocaviglia_thesis_vcve2_top_0.1/lint-verilator/core-deps.mk
 INFO: Setting up project
-INFO: Building
-INFO: (running make, which runs dc_shell which has an unbelievably long lag before printing. be patient)
+INFO: Running pre_build script check_tool_requirements
+util/check_tool_requirements.py:159: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  min_sv = StrictVersion(min_semver)
+util/check_tool_requirements.py:177: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  actual_sv = StrictVersion(actual_semver)
+INFO: Tool verilator present: Sufficiently recent version (found 4.210; needed 4.028)
+util/check_tool_requirements.py:177: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  actual_sv = StrictVersion(actual_semver)
+INFO: Tool edalize present: Sufficiently recent version (found 0.5.1; needed 0.2.0)
+INFO: Building simulation model
+INFO: make[2]: Entering directory '/home/thesis/alessio.caviglia/repo/thesis/hw/cve2/build/alessiocaviglia_thesis_vcve2_top_0.1/lint-verilator'
+verilator -f alessiocaviglia_thesis_vcve2_top_0.1.vc -Wall --unroll-count 72
+make[2]: Leaving directory '/home/thesis/alessio.caviglia/repo/thesis/hw/cve2/build/alessiocaviglia_thesis_vcve2_top_0.1/lint-verilator'
+
+ERROR: %Warning-DECLFILENAME: ../../../bhv/vcve2_sim_clock_gate.sv:15:8: Filename 'vcve2_sim_clock_gate' does not match MODULE name: 'vcve2_clock_gate'
+   15 | module vcve2_clock_gate (
+      |        ^~~~~~~~~~~~~~~~
+                       ... For warning description see https://verilator.org/warn/DECLFILENAME?v=4.210
+                       ... Use "/* verilator lint_off DECLFILENAME */" and lint_on around source to disable this message.
+%Warning-UNUSED: ../../../rtl/vcve2_core.sv:284:9: Signal is not used: 'vl_max'
+                                                 : ... In instance vcve2_top.u_cve2_core
+  284 |   logic vl_max, vl_keep;
+      |         ^~~~~~
+%Warning-UNUSED: ../../../rtl/vcve2_core.sv:331:9: Signal is not used: 'vrf_we_wb'
+                                                 : ... In instance vcve2_top.u_cve2_core
+  331 |   logic vrf_we_wb;  
+      |         ^~~~~~~~~
+%Warning-UNUSED: ../../../rtl/vcve2_core.sv:349:9: Signal is not used: 'en_lsu_rvalid'
+                                                 : ... In instance vcve2_top.u_cve2_core
+  349 |   logic en_lsu_rvalid;
+      |         ^~~~~~~~~~~~~
+%Warning-UNUSED: ../../../rtl/vcve2_vrf_wrapper.sv:15:41: Signal is not used: 'data_pmp_err_i'
+                                                        : ... In instance vcve2_top.u_cve2_core.vrf_wrapper_i
+   15 |     input   logic                       data_pmp_err_i,
+      |                                         ^~~~~~~~~~~~~~
+%Warning-UNUSED: ../../../rtl/vcve2_vrf_wrapper.sv:65:11: Signal is not driven, nor used: 'req_1_d'
+                                                        : ... In instance vcve2_top.u_cve2_core.vrf_wrapper_i
+   65 |     logic req_1_d, req_1_q;
+      |           ^~~~~~~
+%Warning-UNUSED: ../../../rtl/vcve2_vrf_wrapper.sv:65:20: Signal is not driven, nor used: 'req_1_q'
+                                                        : ... In instance vcve2_top.u_cve2_core.vrf_wrapper_i
+   65 |     logic req_1_d, req_1_q;
+      |                    ^~~~~~~
+%Warning-UNUSED: ../../../rtl/vcve2_agu.sv:25:34: Bits of signal are not used: 'addr_i'[1:0]
+                                                : ... In instance vcve2_top.u_cve2_core.agu_inst
+   25 |     input  logic [AddrWidth-1:0] addr_i,    
+      |                                  ^~~~~~
+%Warning-UNUSED: ../../../rtl/vcve2_alu.sv:35:29: Bits of signal are not used: 'vsew_i'[2]
+                                                : ... In instance vcve2_top.u_cve2_core.ex_block_i.alu_i
+   35 |   input  logic [2:0]        vsew_i
+      |                             ^~~~~~
+%Warning-UNUSED: ../../../rtl/vcve2_multdiv_fast.sv:179:25: Bits of signal are not used: 'mac_res_d_sca'[33:32]
+                                                          : ... In instance vcve2_top.u_cve2_core.ex_block_i..gen_multdiv_fast.multdiv_i
+  179 |     logic [33:0]        mac_res_d_sca;
+      |                         ^~~~~~~~~~~~~
+%Warning-UNUSED: ../../../rtl/vcve2_vrf_interface.sv:20:26: Signal is not used: 'data_err_i'
+                                                          : ... In instance vcve2_top.u_cve2_core.vrf_wrapper_i.vcve2_instances[0].vcve2_inst
+   20 |     input  logic         data_err_i,
+      |                          ^~~~~~~~~~
+%Warning-UNUSED: ../../../rtl/vcve2_vrf_interface.sv:21:26: Signal is not used: 'data_pmp_err_i'
+                                                          : ... In instance vcve2_top.u_cve2_core.vrf_wrapper_i.vcve2_instances[0].vcve2_inst
+   21 |     input  logic         data_pmp_err_i,
+      |                          ^~~~~~~~~~~~~~
+%Warning-UNUSED: ../../../rtl/vcve2_vrf_interface.sv:40:35: Signal is not used: 'unit_stride_i'
+                                                          : ... In instance vcve2_top.u_cve2_core.vrf_wrapper_i.vcve2_instances[0].vcve2_inst
+   40 |     input  logic                  unit_stride_i,       
+      |                                   ^~~~~~~~~~~~~
+%Warning-UNUSED: ../../../rtl/vcve2_vrf_interface.sv:54:35: Signal is not used: 'lmul_i'
+                                                          : ... In instance vcve2_top.u_cve2_core.vrf_wrapper_i.vcve2_instances[0].vcve2_inst
+   54 |     input vcve2_pkg::vlmul_e      lmul_i,
+      |                                   ^~~~~~
+%Warning-UNUSED: ../../../rtl/vcve2_vrf_interface.sv:61:13: Parameter is not used: 'NUM_BYTE_OPS'
+                                                          : ... In instance vcve2_top.u_cve2_core.vrf_wrapper_i.vcve2_instances[0].vcve2_inst
+   61 |   parameter NUM_BYTE_OPS = (VLEN >> ($clog2(PIPE_WIDTH))) << 2;  
+      |             ^~~~~~~~~~~~
+%Error: Exiting due to 15 warning(s)
+make[2]: *** [Makefile:16: Vvcve2_top.mk] Error 1
+
+ERROR: Failed to build alessiocaviglia:thesis:vcve2_top:0.1 : '['make', 'Vvcve2_top.mk']' exited with an error: 2
 

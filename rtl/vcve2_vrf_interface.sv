@@ -13,6 +13,10 @@ module vcve2_vrf_interface #(
     // Write port
     input   logic [PIPE_WIDTH-1:0]      wdata_i,
 
+    // Multiple data prots support
+    output  logic                       op_done_o,
+    input   logic                       other_done_i,
+
     // Data memory interface
     output logic         data_req_o,
     input  logic         data_gnt_i,
@@ -94,6 +98,9 @@ module vcve2_vrf_interface #(
   logic sel_slide_be;                             // signal used to select the correct byte-enable for the first write operation
   logic [3:0] slide_offset_be;
   logic no_offset_first;
+
+  // Multiple ports sync
+  vcve2_pkg::vrf_state_t next_state_waitsync;
 
   //////////////////
   // BE selector  //
@@ -186,14 +193,16 @@ module vcve2_vrf_interface #(
       last_iteration_q <= 1'b0;
       slide_offset_q <= '0;
       slide_first_write_q <= 1'b0;
+      next_state_waitsync = VRF_IDLE;
     end else begin
-      vrf_state <= vrf_next_state;
+      vrf_state <= !op_done_o || (op_done_o && other_done_i) ? vrf_next_state : VRF_WAIT_SYNC;
       num_iterations_q <= num_iterations_d;
       offset_q <= offset_d;
       first_iteration_q <= first_iteration_d;
       last_iteration_q <= last_iteration_d;
       if (slide_offset_en) slide_offset_q <= slide_offset_i[1:0];
       slide_first_write_q <= slide_first_write_d;
+      next_state_waitsync = op_done_o && !other_done_i ? vrf_next_state : next_state_waitsync;
     end
   end
 
@@ -229,6 +238,8 @@ module vcve2_vrf_interface #(
     // LSU signals
     lsu_req_o = 1'b0;
     data_load_addr_o = 1'b0;
+    // multiple ports sync
+    op_done_o = 1'b1;         // by default it's seen as done
 
     case (vrf_state)
 
@@ -268,7 +279,10 @@ module vcve2_vrf_interface #(
             if (data_gnt_i) begin
               agu_incr_o = 1'b1;
               vrf_next_state = VRF_INT_READ1;
-            end else vrf_next_state = VRF_START;
+            end else begin
+              op_done_o = 1'b0;
+              vrf_next_state = VRF_START;
+            end
           end else begin
             if (sel_operation_i[0] || sel_operation_i[1]) begin
               data_req_o = 1'b1;
@@ -278,7 +292,10 @@ module vcve2_vrf_interface #(
                 agu_incr_o = 1'b1;
                 if (slide_op_i && !is_slide_up_i && !no_offset_first) vrf_next_state = VRF_LOAD_SLIDE;
                 else vrf_next_state = VRF_READ;
-              end else vrf_next_state = VRF_START;
+              end else begin
+                op_done_o = 1'b0;
+                vrf_next_state = VRF_START;
+              end
             end else if (sel_operation_i[3]) begin
               data_we_o = 1'b1;
               data_req_o = 1'b1;
@@ -286,7 +303,10 @@ module vcve2_vrf_interface #(
               if (data_gnt_i) begin
                 agu_incr_o = 1'b1;
                 vrf_next_state = VRF_WRITE;
-              end else vrf_next_state = VRF_START;
+              end else begin
+                op_done_o = 1'b0;
+                vrf_next_state = VRF_START;
+              end
             end else begin                              // illegal operation  
               vrf_next_state = VRF_IDLE;
             end
@@ -299,7 +319,10 @@ module vcve2_vrf_interface #(
             if (data_gnt_i) begin
               agu_incr_o = 1'b1;
               vrf_next_state = VRF_STORE_READ;
-            end else vrf_next_state = VRF_START;
+            end else begin
+              op_done_o = 1'b0;
+              vrf_next_state = VRF_START;
+            end
           end else if (sel_operation_i[3]==1'b1) begin  // load
             lsu_req_o = 1'b1;
             vrf_next_state = VRF_LOAD;
@@ -328,6 +351,7 @@ module vcve2_vrf_interface #(
             agu_incr_o = 1'b1;
             vrf_next_state = VRF_INT_WRITE;
           end else begin
+            op_done_o = 1'b0;
             write_delayed = 1'b1;
             vrf_next_state = VRF_INT_READ1;
           end
@@ -347,7 +371,10 @@ module vcve2_vrf_interface #(
           agu_get_rd_o = 1'b1;
           if (data_gnt_i) begin
             vrf_next_state = VRF_INT_READ3;
-          end else vrf_next_state = VRF_INT_READ2;
+          end else begin
+            op_done_o = 1'b0;
+            vrf_next_state = VRF_INT_READ2;
+          end
         // if next operation is WRITE RD
         end else if (sel_operation_i[3]) begin
           if (last_iteration_q) begin
@@ -358,7 +385,10 @@ module vcve2_vrf_interface #(
             if (data_gnt_i) begin
               agu_incr_o = 1'b1;
               vrf_next_state = VRF_INT_READ1;
-            end else vrf_next_state = VRF_INT_READ2;
+            end else begin
+              op_done_o = 1'b0;
+              vrf_next_state = VRF_INT_READ2;
+            end
           end
         // illegal operation
         end else begin
@@ -379,7 +409,10 @@ module vcve2_vrf_interface #(
             if (data_gnt_i) begin
               agu_incr_o = 1'b1;
               vrf_next_state = VRF_INT_READ1;
-            end else vrf_next_state = VRF_INT_READ3;
+            end else begin
+              op_done_o = 1'b0;
+              vrf_next_state = VRF_INT_READ3;
+            end
           end
         // illegal operation
         end else begin
@@ -404,6 +437,7 @@ module vcve2_vrf_interface #(
               else num_iterations_d = num_iterations_q - 1;
               vrf_next_state = VRF_INT_READ2;
             end else begin
+              op_done_o = 1'b0;
               num_iterations_d = num_iterations_q;   // if the operation wasn't accepted we need to repeat it
               vrf_next_state = VRF_INT_WRITE;
             end
@@ -429,6 +463,7 @@ module vcve2_vrf_interface #(
           agu_incr_o = 1'b1;
           vrf_next_state = VRF_READ;
         end else begin
+          op_done_o = 1'b0;
           vrf_next_state = VRF_LOAD_SLIDE;
         end
       end
@@ -451,6 +486,7 @@ module vcve2_vrf_interface #(
             slide_first_write_d = 1'b0;
             vrf_next_state = VRF_WRITE;
           end else begin
+            op_done_o = 1'b0;
             write_delayed = 1'b1;
             vrf_next_state = VRF_READ;
           end
@@ -483,6 +519,7 @@ module vcve2_vrf_interface #(
                 num_iterations_d = num_iterations_q - 1;
                 vrf_next_state = VRF_READ;
               end else begin
+                op_done_o = 1'b0;
                 num_iterations_d = num_iterations_q;   // if the operation wasn't accepted we need to repeat it
                 vrf_next_state = VRF_WRITE;
               end
@@ -498,6 +535,7 @@ module vcve2_vrf_interface #(
               if (num_iterations_q == (no_offset ? 1 : 0)) last_iteration_d = 1'b1;
               else num_iterations_d = num_iterations_q - 1;
             end else begin
+              op_done_o = 1'b0;
               num_iterations_d = num_iterations_q;   // if the operation wasn't accepted we need to repeat it
             end
           end
@@ -521,6 +559,7 @@ module vcve2_vrf_interface #(
               agu_incr_o = 1'b1;
               vrf_next_state = VRF_LOAD_WRITE;
             end else begin
+              op_done_o = 1'b0;
               write_delayed = 1'b1;
               vrf_next_state = VRF_LOAD_WAITGNT;
             end
@@ -531,6 +570,7 @@ module vcve2_vrf_interface #(
           end
         // we wait here for lsu to finish
         end else begin
+          op_done_o = 1'b0;
           vrf_next_state = VRF_LOAD;
         end
       end
@@ -545,6 +585,7 @@ module vcve2_vrf_interface #(
           agu_incr_o = 1'b1;
           vrf_next_state = VRF_LOAD_WRITE;
         end else begin
+          op_done_o = 1'b0;
           vrf_next_state = VRF_LOAD_WAITGNT;
         end
       end
@@ -577,6 +618,7 @@ module vcve2_vrf_interface #(
           end
           vrf_next_state = VRF_STORE_WAITLSU;
         end else begin
+          op_done_o = 1'b0;
           vrf_next_state = VRF_STORE_READ;
         end
       end
@@ -608,6 +650,7 @@ module vcve2_vrf_interface #(
           end
         // we wait in this state
         end else begin
+          op_done_o = 1'b0;
           vrf_next_state = VRF_STORE_WAITLSU;
         end
       end
@@ -619,8 +662,14 @@ module vcve2_vrf_interface #(
           agu_incr_o = 1'b1;
           vrf_next_state = VRF_STORE_READ;
         end else begin
+          op_done_o = 1'b0;
           vrf_next_state = VRF_STORE_WAITGNT;
         end
+      end
+
+      VRF_WAIT_SYNC: begin
+        op_done_o = 1'b1;
+        vrf_next_state = next_state_waitsync;
       end
 
       // illegal state go back to idle
