@@ -97,7 +97,7 @@ module vcve2_decoder #(
   output logic                  vrf_we_o,              // write enable for vector register file
   output logic[3:0]             vrf_sel_operation_o,
   output logic                  vrf_memory_op_o,
-  output logic                  vrf_interleaved_o,
+  output logic                  vrf_mult_ops_o,
   // Slide instructions
   output logic                  vrf_slide_op_o,
   output logic                  is_slide_up_o,
@@ -260,7 +260,7 @@ module vcve2_decoder #(
     vl_max_o              = 1'b0;
     vl_keep_o             = 1'b0;
     vrf_memory_op_o       = 1'b0;
-    vrf_interleaved_o    = 1'b0;
+    vrf_mult_ops_o    = 1'b0;
     unit_stride_o         = 1'b0;
     // slide instructions
     vrf_slide_op_o        = 1'b0;
@@ -743,7 +743,7 @@ module vcve2_decoder #(
             {6'b00_0000, 3'b000}: begin    // vadd.vv
               vrf_we_o = 1'b1;
               vrf_sel_operation_o = 4'b1011;
-              vrf_interleaved_o = 1'b1;
+              vrf_mult_ops_o = 1'b1;
             end
             {6'b00_0000, 3'b100}: begin    // vadd.vx
             end
@@ -752,16 +752,23 @@ module vcve2_decoder #(
             {6'b00_0010, 3'b000}: begin    // vsub.vv
               vrf_we_o = 1'b1;
               vrf_sel_operation_o = 4'b1011;
-              vrf_interleaved_o = 1'b1;
+              vrf_mult_ops_o = 1'b1;
             end
             {6'b00_0010, 3'b100}: begin    // vsub.vx
+            end
+            {6'b10_0101, 3'b010}: begin    // vmul.vv
+              vrf_we_o = 1'b1;
+              vrf_sel_operation_o = 4'b1011;
+              vrf_mult_ops_o = 1'b1;
+              multdiv_operator_o    = MD_OP_MULL;
+              multdiv_signed_mode_o = 2'b00;
             end
 
             // Multiply-and-Accumulate instructions
             {6'b10_1101, 3'b010}: begin    // vmacc.vv
               vrf_we_o = 1'b1;
               vrf_sel_operation_o = 4'b1111;
-              vrf_interleaved_o = 1'b1;
+              vrf_mult_ops_o = 1'b1;
             end
             {6'b10_1101, 3'b110}: begin    // vmacc.vx
             end
@@ -1400,6 +1407,10 @@ module vcve2_decoder #(
               alu_operator_o = ALU_SUB;
             end
             {6'b00_0010, 3'b100}: begin    // vsub.vx
+            end
+            {6'b10_0101, 3'b010}: begin    // vmul.vv
+              alu_operator_o = ALU_ADD;
+              mult_sel_o     = (RV32M == RV32MNone) ? 1'b0 : 1'b1;
             end
 
             // Multiply-and-Accumulate instructions

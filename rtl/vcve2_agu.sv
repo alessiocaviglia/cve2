@@ -65,7 +65,7 @@ module vcve2_agu #(
     always_comb begin
         // if the instruction is a slide we need to load the address incremented by offset, to do so the adder is exploted
         if (load_i && is_slide_i) begin
-            addr_o = {VRF_START_ADDR, !is_slide_up_i ? rs1_i : rd_i, 4'b0000};
+            addr_o = {VRF_START_ADDR, !is_slide_up_i ? rs2_i : rd_i, 4'b0000};
         end else begin
             addr_o = get_rs1_i ? {VRF_START_ADDR, rs1_i[4:3], addr_rs1_q, 2'b00} :
                      get_rs2_i ? {VRF_START_ADDR, rs2_i[4:3], addr_rs2_q, 2'b00} :

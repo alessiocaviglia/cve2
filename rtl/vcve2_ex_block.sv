@@ -138,6 +138,7 @@ module vcve2_ex_block #(
   assign alu_vec_elem_sel = (alu_operator_i == ALU_MOVE || alu_operator_i == ALU_SLIDE) ? vec_instr_i : 1'b0;
   // Build the vector move result depending on SEW
   always_comb begin
+    alu_vec_elem_result = '0;
     if (alu_operator_i == ALU_MOVE) begin
       case (vsew_i)
         VSEW_8:   alu_vec_elem_result = {alu_operand_a_i[7:0], alu_operand_a_i[7:0], alu_operand_a_i[7:0], alu_operand_a_i[7:0]};

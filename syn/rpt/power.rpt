@@ -1,15 +1,13 @@
 Information: Propagating switching activity (low effort zero delay simulation). (PWR-6)
-Warning: There is no defined clock in the design. (PWR-80)
 Warning: Design has unannotated primary inputs. (PWR-414)
 Warning: Design has unannotated sequential cell outputs. (PWR-415)
-Warning: Design has unannotated black box outputs. (PWR-428)
  
 ****************************************
 Report : power
         -analysis_effort low
 Design : vcve2_top
 Version: R-2020.09-SP2
-Date   : Sat Jul 20 15:14:59 2024
+Date   : Fri Sep 13 16:20:58 2024
 ****************************************
 
 
@@ -28,6 +26,7 @@ vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110
                        ZeroWireload      tcbn65lpwc
 vcve2_if_stage_1a110800_1a110808
                        ZeroWireload      tcbn65lpwc
+vcve2_id_stage_0_3_0   ZeroWireload      tcbn65lpwc
 vcve2_ex_block_RV32M3_RV32B0
                        ZeroWireload      tcbn65lpwc
 vcve2_load_store_unit  ZeroWireload      tcbn65lpwc
@@ -38,13 +37,23 @@ vcve2_register_file_ff_0_32_00000000
                        ZeroWireload      tcbn65lpwc
 vcve2_vrf_interface_VLEN128_PIPE_WIDTH32
                        ZeroWireload      tcbn65lpwc
-vce2_agu_AddrWidth32   ZeroWireload      tcbn65lpwc
+vcve2_agu_AddrWidth32  ZeroWireload      tcbn65lpwc
 vcve2_cs_registers_1_00000001_00000000_00000028_0_00000000_00000004_0_3_0
+                       ZeroWireload      tcbn65lpwc
+SNPS_CLOCK_GATE_HIGH_vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_0
+                       ZeroWireload      tcbn65lpwc
+SNPS_CLOCK_GATE_HIGH_vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_1
                        ZeroWireload      tcbn65lpwc
 vcve2_prefetch_buffer  ZeroWireload      tcbn65lpwc
 vcve2_compressed_decoder
                        ZeroWireload      tcbn65lpwc
 SNPS_CLOCK_GATE_HIGH_vcve2_if_stage_1a110800_1a110808
+                       ZeroWireload      tcbn65lpwc
+vcve2_decoder_0_3_0    ZeroWireload      tcbn65lpwc
+vcve2_controller       ZeroWireload      tcbn65lpwc
+SNPS_CLOCK_GATE_HIGH_vcve2_id_stage_0_3_0_0
+                       ZeroWireload      tcbn65lpwc
+SNPS_CLOCK_GATE_HIGH_vcve2_id_stage_0_3_0_1
                        ZeroWireload      tcbn65lpwc
 vcve2_alu_RV32B0       ZeroWireload      tcbn65lpwc
 vcve2_multdiv_fast_RV32M3
@@ -135,11 +144,11 @@ SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_2
                        ZeroWireload      tcbn65lpwc
 SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_1
                        ZeroWireload      tcbn65lpwc
-SNPS_CLOCK_GATE_HIGH_vce2_agu_AddrWidth32_0
+SNPS_CLOCK_GATE_HIGH_vcve2_agu_AddrWidth32_0
                        ZeroWireload      tcbn65lpwc
-SNPS_CLOCK_GATE_HIGH_vce2_agu_AddrWidth32_2
+SNPS_CLOCK_GATE_HIGH_vcve2_agu_AddrWidth32_2
                        ZeroWireload      tcbn65lpwc
-SNPS_CLOCK_GATE_HIGH_vce2_agu_AddrWidth32_1
+SNPS_CLOCK_GATE_HIGH_vcve2_agu_AddrWidth32_1
                        ZeroWireload      tcbn65lpwc
 vcve2_csr_6_0c         ZeroWireload      tcbn65lpwc
 vcve2_csr_32_0_0_7     ZeroWireload      tcbn65lpwc
@@ -168,6 +177,8 @@ vcve2_fetch_fifo_00000002
 SNPS_CLOCK_GATE_HIGH_vcve2_prefetch_buffer_0
                        ZeroWireload      tcbn65lpwc
 SNPS_CLOCK_GATE_HIGH_vcve2_prefetch_buffer_1
+                       ZeroWireload      tcbn65lpwc
+SNPS_CLOCK_GATE_HIGH_vcve2_controller
                        ZeroWireload      tcbn65lpwc
 vcve2_fracturable_adder_PIPE_WIDTH32
                        ZeroWireload      tcbn65lpwc
@@ -234,12 +245,12 @@ Power-specific unit information :
     Leakage Power Units = 1nW
 
 
-  Cell Internal Power  =   6.5250 mW   (17%)
-  Net Switching Power  =  32.3025 mW   (83%)
+  Cell Internal Power  = 783.1251 uW   (85%)
+  Net Switching Power  = 137.8744 uW   (15%)
                          ---------
-Total Dynamic Power    =  38.8275 mW  (100%)
+Total Dynamic Power    = 920.9995 uW  (100%)
 
-Cell Leakage Power     =  13.3601 uW
+Cell Leakage Power     =  13.5908 uW
 
 
                  Internal         Switching           Leakage            Total
@@ -248,10 +259,10 @@ Power Group      Power            Power               Power              Power  
 io_pad             0.0000            0.0000            0.0000            0.0000  (   0.00%)
 memory             0.0000            0.0000            0.0000            0.0000  (   0.00%)
 black_box          0.0000            0.0000            0.0000            0.0000  (   0.00%)
-clock_network      5.8080           32.2464        8.5708e+03           38.0630  (  98.00%)
-register           0.6464        3.6474e-03        3.8344e+03            0.6539  (   1.68%)
+clock_network      0.1207        3.9768e-02          110.0285            0.1606  (  17.18%)
+register           0.5689        7.3625e-03        3.6637e+03            0.5799  (  62.05%)
 sequential         0.0000            0.0000            0.0000            0.0000  (   0.00%)
-combinational  7.0627e-02        5.2426e-02          954.7719            0.1240  (   0.32%)
+combinational  9.3546e-02        9.0743e-02        9.8170e+03            0.1941  (  20.77%)
 --------------------------------------------------------------------------------------------------
-Total              6.5250 mW        32.3025 mW     1.3360e+04 nW        38.8408 mW
+Total              0.7831 mW         0.1379 mW     1.3591e+04 nW         0.9346 mW
 1

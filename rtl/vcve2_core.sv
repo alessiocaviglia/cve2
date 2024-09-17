@@ -296,7 +296,7 @@ module vcve2_core import vcve2_pkg::*; #(
   logic [31:0] vrf_rdata_c; // Third read port of vector register file
   logic [3:0] vrf_sel_operation; // Number of operands needed for current vector operation
   logic vrf_memory_op; // Signal indicating that the vector operation is a memory operation
-  logic vrf_interleaved; // Signal indicating that the VRF memory accesses will be interleaved
+  logic vrf_mult_ops; // Signal indicating that the VRF memory accesses will be interleaved
   logic vector_done; // Signal indicating that the vector operation is done
   logic vrf_lsu_req; // Signal from the VRF that tells the LSU to start the memory operation
   vsew_e vrf_vsew;
@@ -568,7 +568,7 @@ module vcve2_core import vcve2_pkg::*; #(
     .vrf_wdata_o(vrf_wdata_id),
     .vrf_sel_operation_o(vrf_sel_operation),
     .vrf_memory_op_o(vrf_memory_op),
-    .vrf_interleaved_o(vrf_interleaved),
+    .vrf_mult_ops_o(vrf_mult_ops),
     .vector_done_i(vector_done),
     // Slide instructions
     .vrf_slide_op_o(vrf_slide_op),
@@ -910,7 +910,7 @@ module vcve2_core import vcve2_pkg::*; #(
     .sel_operation_i(vrf_sel_operation),
     .memory_op_i(vrf_memory_op),
     .unit_stride_i(unit_stride),
-    .interleaved_i(vrf_interleaved),
+    .mult_ops_i(vrf_mult_ops),
     .vector_done_o(vector_done),
     // Slide
     .slide_op_i(vrf_slide_op),

@@ -163,7 +163,7 @@ module vcve2_id_stage #(
   output logic [31:0]               vrf_wdata_o,
   output logic [3:0]                vrf_sel_operation_o,
   output logic                      vrf_memory_op_o,
-  output logic                      vrf_interleaved_o,
+  output logic                      vrf_mult_ops_o,
   input  logic                      vector_done_i,
   // Slide instructions
   output logic                      vrf_slide_op_o,
@@ -478,7 +478,7 @@ module vcve2_id_stage #(
     .vrf_we_o(vrf_we_id_o),
     .vrf_sel_operation_o(vrf_sel_operation_o),
     .vrf_memory_op_o(vrf_memory_op_o),
-    .vrf_interleaved_o(vrf_interleaved_o),
+    .vrf_mult_ops_o(vrf_mult_ops_o),
     .vrf_slide_op_o(vrf_slide_op_o),
     .is_slide_up_o(is_slide_up_o),
     // vector immediates
@@ -638,8 +638,8 @@ module vcve2_id_stage #(
 
   assign multdiv_operator_ex_o       = multdiv_operator;
   assign multdiv_signed_mode_ex_o    = multdiv_signed_mode;
-  assign multdiv_operand_a_ex_o      = rf_rdata_a_fwd;
-  assign multdiv_operand_b_ex_o      = rf_rdata_b_fwd;
+  // assign multdiv_operand_a_ex_o      = rf_rdata_a_fwd;
+  // assign multdiv_operand_b_ex_o      = rf_rdata_b_fwd;
 
   ////////////////////////
   // Branch set control //
@@ -729,7 +729,7 @@ module vcve2_id_stage #(
                 id_fsm_d    = MULTI_CYCLE;
               end
             end
-            multdiv_en_dec: begin
+            multdiv_en_dec && !vrf_req_o: begin       // when a mul is requested during a memory operation the FSM is handled by the VRF logic
               // MUL or DIV operation
               if (~ex_valid_i) begin
                 // When single-cycle multiply is configured mul can finish in the first cycle so
