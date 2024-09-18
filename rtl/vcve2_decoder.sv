@@ -110,7 +110,9 @@ module vcve2_decoder #(
   output logic                  vl_keep_o,             // keep current value of vl
   // LSU
   output logic                  unit_stride_o,         // 1 - unit strided, 0 - constant strided
-  output logic [2:0]            vmem_ops_eew_o         // vector memory operation width
+  output logic [2:0]            vmem_ops_eew_o,         // vector memory operation width
+  // EX block
+  output logic                  fract_o                 // value coming on operand a is to be fractured
 );
 
   import vcve2_pkg::*;
@@ -746,8 +748,12 @@ module vcve2_decoder #(
               vrf_mult_ops_o = 1'b1;
             end
             {6'b00_0000, 3'b100}: begin    // vadd.vx
+              vrf_we_o = 1'b1;
+              vrf_sel_operation_o = 4'b1010;
             end
             {6'b00_0000, 3'b011}: begin    // vadd.vi
+              vrf_we_o = 1'b1;
+              vrf_sel_operation_o = 4'b1010;
             end
             {6'b00_0010, 3'b000}: begin    // vsub.vv
               vrf_we_o = 1'b1;
@@ -876,6 +882,8 @@ module vcve2_decoder #(
     alu_multicycle_o   = 1'b0;
     mult_sel_o         = 1'b0;
     div_sel_o          = 1'b0;
+
+    fract_o            = 1'b0; 
 
     unique case (opcode_alu)
 
@@ -1398,8 +1406,17 @@ module vcve2_decoder #(
               alu_operator_o = ALU_ADD;
             end
             {6'b00_0000, 3'b100}: begin    // vadd.vx
+              alu_op_a_mux_sel_o = OP_A_REG_A;
+              alu_op_b_mux_sel_o = OP_B_VREG;
+              alu_operator_o = ALU_ADD;
+              fract_o = 1'b1;
             end
             {6'b00_0000, 3'b011}: begin    // vadd.vi
+              alu_op_a_mux_sel_o = OP_A_IMM;
+              alu_op_b_mux_sel_o = OP_B_VREG;
+              alu_operator_o = ALU_ADD;
+              imm_a_mux_sel_o    = IMM_A_Z;
+              fract_o = 1'b1;
             end
             {6'b00_0010, 3'b000}: begin    // vsub.vv
               alu_op_a_mux_sel_o = OP_A_VREG;
@@ -1443,11 +1460,13 @@ module vcve2_decoder #(
             {6'b01_0111, 3'b100}: begin    // vmv.v.x/vmerge.vxm
               alu_op_a_mux_sel_o = OP_A_REG_A;
               alu_operator_o = ALU_MOVE;
+              fract_o = 1'b1;
             end
             {6'b01_0111, 3'b011}: begin    // vmv.v.i/vmerge.vim
               alu_op_a_mux_sel_o = OP_A_IMM;
               imm_a_mux_sel_o    = IMM_A_V;
               alu_operator_o = ALU_MOVE;
+              fract_o = 1'b1;
             end
 
             // Slide instructions

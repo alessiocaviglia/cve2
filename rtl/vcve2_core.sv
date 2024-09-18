@@ -284,9 +284,9 @@ module vcve2_core import vcve2_pkg::*; #(
   vlmul_e vlmul_q, vlmul_d;
   logic [1:0] vma_vta_q, vma_vta_d;
   logic [31:0] vl_q, vl_d;
-  logic [31:0] vstart_q, vstart_d;
-  logic [31:0] vxrm_q, vxrm_d;
-  logic [31:0] vxsat_q, vxsat_d;
+  // logic [31:0] vstart_q, vstart_d;
+  // logic [31:0] vxrm_q, vxrm_d;
+  // logic [31:0] vxsat_q, vxsat_d;
   // EEW/EMUL
   logic [2:0] vmem_ops_eew;
   // Vector Register File
@@ -348,6 +348,7 @@ module vcve2_core import vcve2_pkg::*; #(
   logic [3:0] lsu_vec_be;
   // Misc
   logic rf_we_wb_temp;
+  logic fract;
 
   //////////////////////
   // Clock management //
@@ -583,7 +584,9 @@ module vcve2_core import vcve2_pkg::*; #(
     .vmem_ops_eew_o(vmem_ops_eew),
     // Slide
     .slide_addr_req_i(agu_load && vrf_slide_op),
-    .slide_base_addr_i(agu_addr_o)
+    .slide_base_addr_i(agu_addr_o),
+    // EX
+    .fract_o(fract)
   );
 
   // for RVFI only
@@ -630,7 +633,8 @@ module vcve2_core import vcve2_pkg::*; #(
     // Vecto extension
     .vec_instr_i(vrf_req),
     .mem_op_i(vrf_memory_op),
-    .vsew_i(vsew_q)
+    .vsew_i(vsew_q),
+    .fract_i(fract)
   );
 
   /////////////////////
@@ -1054,18 +1058,18 @@ module vcve2_core import vcve2_pkg::*; #(
       vlmul_q    <= VLMUL_1;
       vma_vta_q  <= '0;
       vl_q       <= '0; 
-      vstart_q   <= '0;
-      vxrm_q     <= '0;
-      vxsat_q    <= '0;
+      // vstart_q   <= '0;
+      // vxrm_q     <= '0;
+      // vxsat_q    <= '0;
       vill_q     <= '0;
     end else begin
       vsew_q     <= vsew_d;
       vlmul_q    <= vlmul_d;
       vma_vta_q  <= vma_vta_d;
       vl_q       <= vl_d;
-      vstart_q   <= vstart_d;
-      vxrm_q     <= vxrm_d;
-      vxsat_q    <= vxsat_d;
+      // vstart_q   <= vstart_d;
+      // vxrm_q     <= vxrm_d;
+      // vxsat_q    <= vxsat_d;
       vill_q     <= vill_d;
     end
   end
@@ -1080,9 +1084,9 @@ module vcve2_core import vcve2_pkg::*; #(
     vlmul_d    = vlmul_q;
     vma_vta_d  = vma_vta_q;
     vl_d       = vl_q;
-    vstart_d   = vstart_q;
-    vxrm_d     = vxrm_q;
-    vxsat_d    = vxsat_q;
+    // vstart_d   = vstart_q;
+    // vxrm_d     = vxrm_q;
+    // vxsat_d    = vxsat_q;
     vill_d     = vill_q;
     new_vlmax  = '0;
     avl_lt     = 1'b0;
@@ -1125,7 +1129,7 @@ module vcve2_core import vcve2_pkg::*; #(
               default: vill_d = 1'b1;
             endcase
           end
-          //vsew multiplied by four
+          // vsew multiplied by four
           {VSEW_8, VSEW_32} : begin
             unique case ({vlmul_q, vlmul_d})
               {VLMUL_F8, VLMUL_F2},

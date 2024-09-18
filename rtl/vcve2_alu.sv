@@ -1346,6 +1346,7 @@ module vcve2_alu #(
       ALU_SH1ADD, ALU_SH2ADD,
       ALU_SH3ADD,
       // Vector operations
+      ALU_MOVE,
       ALU_MAC, ALU_NMSAC,
       ALU_MADD, ALU_NMSUB,
       ALU_SLIDE : result_o = adder_result;

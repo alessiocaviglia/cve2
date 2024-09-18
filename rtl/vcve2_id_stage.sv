@@ -178,7 +178,9 @@ module vcve2_id_stage #(
   output logic [2:0]                vmem_ops_eew_o,
   // Vectore slide instructions
   input  logic                      slide_addr_req_i,
-  input  logic [31:0]               slide_base_addr_i
+  input  logic [31:0]               slide_base_addr_i,
+  // Vector EX
+  output logic                      fract_o
 
 );
 
@@ -490,8 +492,9 @@ module vcve2_id_stage #(
     .vl_keep_o(vl_keep_o),              // keep current value of vl
     // LSU
     .unit_stride_o(unit_stride_o),
-    .vmem_ops_eew_o(vmem_ops_eew_o)     // element width for vector memory operations
-    
+    .vmem_ops_eew_o(vmem_ops_eew_o),     // element width for vector memory operations
+    // EX
+    .fract_o(fract_o)
   );
 
   /////////////////////////////////
