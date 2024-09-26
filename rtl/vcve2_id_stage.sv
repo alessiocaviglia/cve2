@@ -178,7 +178,9 @@ module vcve2_id_stage #(
   output logic [2:0]                vmem_ops_eew_o,
   // Vectore slide instructions
   input  logic                      slide_addr_req_i,
-  input  logic [31:0]               slide_base_addr_i
+  input  logic [31:0]               slide_base_addr_i,
+  // CSR related invalid instruction
+  input  logic                      illegal_vec_csr_insn_i
 
 );
 
@@ -581,7 +583,7 @@ module vcve2_id_stage #(
   // Controller //
   ////////////////
 
-  assign illegal_insn_o = instr_valid_i & (illegal_insn_dec | illegal_csr_insn_i);
+  assign illegal_insn_o = instr_valid_i & (illegal_insn_dec | illegal_csr_insn_i) | (vrf_req_o && illegal_vec_csr_insn_i);
 
   vcve2_controller #(
   ) controller_i (

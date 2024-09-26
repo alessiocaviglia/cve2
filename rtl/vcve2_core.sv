@@ -284,6 +284,9 @@ module vcve2_core import vcve2_pkg::*; #(
   vlmul_e vlmul_q, vlmul_d;
   logic [1:0] vma_vta_q, vma_vta_d;
   logic [31:0] vl_q, vl_d;
+  logic illegal_vrf_addr_lmul;
+  logic illegal_mem_eew;
+  logic illegal_vec_csr_insn;
   // logic [31:0] vstart_q, vstart_d;
   // logic [31:0] vxrm_q, vxrm_d;
   // logic [31:0] vxsat_q, vxsat_d;
@@ -583,7 +586,9 @@ module vcve2_core import vcve2_pkg::*; #(
     .vmem_ops_eew_o(vmem_ops_eew),
     // Slide
     .slide_addr_req_i(agu_load && vrf_slide_op),
-    .slide_base_addr_i(agu_addr_o)
+    .slide_base_addr_i(agu_addr_o),
+    // CSR exceptions
+    .illegal_vec_csr_insn_i(illegal_vec_csr_insn)
   );
 
   // for RVFI only
@@ -1075,6 +1080,9 @@ module vcve2_core import vcve2_pkg::*; #(
   logic [31:0] new_vlmax;
   logic avl_lt, avl_lt_double;
 
+  // signal combining exceptions related to vector CSR
+  assign illegal_vec_csr_insn = illegal_mem_eew | illegal_vrf_addr_lmul;
+
   always_comb begin
     vsew_d     = vsew_q;
     vlmul_d    = vlmul_q;
@@ -1193,6 +1201,25 @@ module vcve2_core import vcve2_pkg::*; #(
     end
   end
 
+  // Register address validity check wrt LMUL setting
+  logic [2:0] vlmul_mask;
+  logic [4:0] masked_vs1, masked_vs2, masked_vd;
+  always_comb begin
+    case (vlmul_q)
+      VLMUL_1, VLMUL_F2, VLMUL_F4, VLMUL_F8: vlmul_mask = 3'b111;
+      VLMUL_2: vlmul_mask = 3'b110;
+      VLMUL_4: vlmul_mask = 3'b100;
+      VLMUL_8: vlmul_mask = 3'b000;
+      default: vlmul_mask = 3'b111;
+    endcase
+  end
+  assign masked_vs1 = rf_raddr_a & {2'b00, vlmul_mask};
+  assign masked_vs2 = rf_raddr_b & {2'b00, vlmul_mask};
+  assign masked_vd  = rf_waddr_wb & {2'b00, vlmul_mask};
+  assign illegal_vrf_addr_lmul = ((masked_vs1 != rf_raddr_a) & vrf_sel_operation[0]) |
+                                 ((masked_vs2 != rf_raddr_b) & vrf_sel_operation[1]) |
+                                 ((masked_vd  != rf_waddr_wb) & (vrf_sel_operation[2] | vrf_sel_operation[3]));
+
   vsew_e mem_eew;
   vlmul_e mem_lmul;
 
@@ -1200,6 +1227,7 @@ module vcve2_core import vcve2_pkg::*; #(
   always_comb begin
     mem_eew = '0;
     mem_lmul = '0;
+    illegal_mem_eew = 1'b0;
     if (vrf_memory_op) begin
       unique case (vmem_ops_eew)
         3'b000: begin
@@ -1209,7 +1237,7 @@ module vcve2_core import vcve2_pkg::*; #(
             VSEW_16: mem_lmul = vlmul_q-1;
             VSEW_32: mem_lmul = vlmul_q-2;
             default: begin
-              // raise illegal instruction exception
+              illegal_mem_eew = 1'b1;
             end
           endcase
         end
@@ -1220,7 +1248,7 @@ module vcve2_core import vcve2_pkg::*; #(
             VSEW_16: mem_lmul = vlmul_q;
             VSEW_32: mem_lmul = vlmul_q-1;
             default: begin
-              // raise illegal instruction exception
+              illegal_mem_eew = 1'b1;
             end
           endcase
         end
@@ -1231,12 +1259,12 @@ module vcve2_core import vcve2_pkg::*; #(
             VSEW_16: mem_lmul = vlmul_q+1;
             VSEW_32: mem_lmul = vlmul_q;
             default: begin
-              // raise illegal instruction exception
+              illegal_mem_eew = 1'b1;
             end
           endcase
         end
         default: begin
-          // raise illegal instruction exception
+          illegal_mem_eew = 1'b1;
         end
       endcase
       unique case ({mem_eew, mem_lmul})
