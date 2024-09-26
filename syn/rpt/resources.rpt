@@ -3,7 +3,7 @@
 Report : resources
 Design : vcve2_top
 Version: R-2020.09-SP2
-Date   : Tue Sep 24 12:38:09 2024
+Date   : Thu Sep 26 17:17:46 2024
 ****************************************
 
 
@@ -20,23 +20,26 @@ Resource Report for this hierarchy in file
 =============================================================================
 | Cell           | Module         | Parameters | Contained Operations       |
 =============================================================================
-| gt_x_4         | DW_cmp         | width=3    | gt_1096 (vcve2_core.sv:1096) |
-| ash_6          | DW_leftsh      | A_width=12 | sll_1096 (vcve2_core.sv:1096) |
+| gt_x_4         | DW_cmp         | width=3    | gt_1104 (vcve2_core.sv:1104) |
+| ash_6          | DW_leftsh      | A_width=12 | sll_1104 (vcve2_core.sv:1104) |
               |                | SH_width=3 |                            |
-| sub_x_7        | DW01_sub       | width=3    | sub_1096 (vcve2_core.sv:1096) |
-| ashr_8         | DW_rightsh     | A_width=5  | srl_1096_3 (vcve2_core.sv:1096) |
+| sub_x_7        | DW01_sub       | width=3    | sub_1104 (vcve2_core.sv:1104) |
+| ashr_8         | DW_rightsh     | A_width=5  | srl_1104_3 (vcve2_core.sv:1104) |
             |                | SH_width=3 |                            |
-| lte_x_9        | DW_cmp         | width=32   | lte_1101 (vcve2_core.sv:1101) |
-| lte_x_10       | DW_cmp         | width=32   | lte_1102 (vcve2_core.sv:1102) |
-| add_x_11       | DW01_inc       | width=33   | add_1185_round (vcve2_core.sv:1185) |
-| sub_x_19       | DW01_sub       | width=3    | sub_1210 (vcve2_core.sv:1210) |
-| add_x_21       | DW01_add       | width=3    | add_1230 (vcve2_core.sv:1230) |
-| ashr_5         | DW_rightsh     | A_width=5  | srl_1096 (vcve2_core.sv:1096) |
-              |                | SH_width=3 | srl_1096_2 (vcve2_core.sv:1096) |
-| sub_x_18       | DW01_dec       | width=3    | sub_1209 (vcve2_core.sv:1209) |
-              |                |            | sub_1221 (vcve2_core.sv:1221) |
-| add_x_20       | DW01_inc       | width=3    | add_1219 (vcve2_core.sv:1219) |
-              |                |            | add_1231 (vcve2_core.sv:1231) |
+| lte_x_9        | DW_cmp         | width=32   | lte_1109 (vcve2_core.sv:1109) |
+| lte_x_10       | DW_cmp         | width=32   | lte_1110 (vcve2_core.sv:1110) |
+| add_x_11       | DW01_inc       | width=33   | add_1193_round (vcve2_core.sv:1193) |
+| ne_x_19        | DW_cmp         | width=5    | ne_1219 (vcve2_core.sv:1219) |
+| ne_x_20        | DW_cmp         | width=5    | ne_1219_2 (vcve2_core.sv:1219) |
+| ne_x_21        | DW_cmp         | width=5    | ne_1219_3 (vcve2_core.sv:1219) |
+| sub_x_23       | DW01_sub       | width=3    | sub_1238 (vcve2_core.sv:1238) |
+| add_x_25       | DW01_add       | width=3    | add_1258 (vcve2_core.sv:1258) |
+| ashr_5         | DW_rightsh     | A_width=5  | srl_1104 (vcve2_core.sv:1104) |
+              |                | SH_width=3 | srl_1104_2 (vcve2_core.sv:1104) |
+| sub_x_22       | DW01_dec       | width=3    | sub_1237 (vcve2_core.sv:1237) |
+              |                |            | sub_1249 (vcve2_core.sv:1249) |
+| add_x_24       | DW01_inc       | width=3    | add_1247 (vcve2_core.sv:1247) |
+              |                |            | add_1259 (vcve2_core.sv:1259) |
 =============================================================================
 
 
@@ -52,11 +55,14 @@ Implementation Report
 | lte_x_9            | DW_cmp           | apparch (area)     |                |
 | lte_x_10           | DW_cmp           | apparch (area)     |                |
 | add_x_11           | DW01_inc         | apparch (area)     |                |
-| sub_x_19           | DW01_sub         | apparch (area)     |                |
-| add_x_21           | DW01_add         | apparch (area)     |                |
+| ne_x_19            | DW_cmp           | apparch (area)     |                |
+| ne_x_20            | DW_cmp           | apparch (area)     |                |
+| ne_x_21            | DW_cmp           | apparch (area)     |                |
+| sub_x_23           | DW01_sub         | apparch (area)     |                |
+| add_x_25           | DW01_add         | apparch (area)     |                |
 | ashr_5             | DW_rightsh       | astr (area)        |                |
-| sub_x_18           | DW01_dec         | apparch (area)     |                |
-| add_x_20           | DW01_inc         | apparch (area)     |                |
+| sub_x_22           | DW01_dec         | apparch (area)     |                |
+| add_x_24           | DW01_inc         | apparch (area)     |                |
 ===============================================================================
 
  
@@ -612,9 +618,9 @@ Resource Report for this hierarchy in file
 =============================================================================
 | Cell           | Module         | Parameters | Contained Operations       |
 =============================================================================
-| ash_5          | DW_leftsh      | A_width=32 | sll_322 (vcve2_id_stage.sv:322) |
+| ash_5          | DW_leftsh      | A_width=32 | sll_324 (vcve2_id_stage.sv:324) |
             |                | SH_width=3 |                            |
-| ash_6          | DW_leftsh      | A_width=32 | sll_339 (vcve2_id_stage.sv:339) |
+| ash_6          | DW_leftsh      | A_width=32 | sll_341 (vcve2_id_stage.sv:341) |
             |                | SH_width=3 |                            |
 =============================================================================
 

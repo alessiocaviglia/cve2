@@ -1,13 +1,10 @@
-Information: Propagating switching activity (low effort zero delay simulation). (PWR-6)
-Warning: Design has unannotated primary inputs. (PWR-414)
-Warning: Design has unannotated sequential cell outputs. (PWR-415)
  
 ****************************************
 Report : power
         -analysis_effort low
 Design : vcve2_top
 Version: R-2020.09-SP2
-Date   : Tue Sep 24 12:38:10 2024
+Date   : Thu Sep 26 17:17:46 2024
 ****************************************
 
 
@@ -245,12 +242,12 @@ Power-specific unit information :
     Leakage Power Units = 1nW
 
 
-  Cell Internal Power  = 800.2869 uW   (84%)
-  Net Switching Power  = 151.4753 uW   (16%)
+  Cell Internal Power  = 781.5277 uW   (85%)
+  Net Switching Power  = 143.0648 uW   (15%)
                          ---------
-Total Dynamic Power    = 951.7621 uW  (100%)
+Total Dynamic Power    = 924.5925 uW  (100%)
 
-Cell Leakage Power     =  15.9011 uW
+Cell Leakage Power     =  16.3337 uW
 
 
                  Internal         Switching           Leakage            Total
@@ -259,10 +256,10 @@ Power Group      Power            Power               Power              Power  
 io_pad             0.0000            0.0000            0.0000            0.0000  (   0.00%)
 memory             0.0000            0.0000            0.0000            0.0000  (   0.00%)
 black_box          0.0000            0.0000            0.0000            0.0000  (   0.00%)
-clock_network      0.1207        4.0366e-02          110.0285            0.1612  (  16.66%)
-register           0.5725        7.6728e-03        3.7005e+03            0.5838  (  60.34%)
+clock_network      0.1183        3.9913e-02          110.0295            0.1583  (  16.82%)
+register           0.5629        7.6145e-03        3.7209e+03            0.5743  (  61.03%)
 sequential         0.0000            0.0000            0.0000            0.0000  (   0.00%)
-combinational      0.1071            0.1034        1.2091e+04            0.2226  (  23.01%)
+combinational      0.1003        9.5538e-02        1.2503e+04            0.2084  (  22.15%)
 --------------------------------------------------------------------------------------------------
-Total              0.8003 mW         0.1515 mW     1.5901e+04 nW         0.9677 mW
+Total              0.7815 mW         0.1431 mW     1.6334e+04 nW         0.9409 mW
 1

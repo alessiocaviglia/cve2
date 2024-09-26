@@ -3,7 +3,7 @@
 Report : area
 Design : vcve2_top
 Version: R-2020.09-SP2
-Date   : Tue Sep 24 12:38:08 2024
+Date   : Thu Sep 26 17:17:45 2024
 ****************************************
 
 Information: Updating design information... (UID-85)
@@ -12,22 +12,22 @@ Library(s) Used:
 
     tcbn65lpwc (File: /software/dk/tsmc65/digital/Front_End/timing_power_noise/NLDM/tcbn65lp_200a/tcbn65lpwc.db)
 
-Number of ports:                         8009
-Number of nets:                         27263
-Number of cells:                        19981
-Number of combinational cells:          17475
+Number of ports:                         8010
+Number of nets:                         27309
+Number of cells:                        20056
+Number of combinational cells:          17550
 Number of sequential cells:              2388
 Number of macros/black boxes:               0
-Number of buf/inv:                       3168
+Number of buf/inv:                       3247
 Number of references:                       6
 
-Combinational area:              42081.840503
-Buf/Inv area:                     4337.280144
-Noncombinational area:           18896.760167
+Combinational area:              42883.560493
+Buf/Inv area:                     4572.720142
+Noncombinational area:           18915.120168
 Macro/Black Box area:                0.000000
 Net Interconnect area:      undefined  (Wire load has zero net area)
 
-Total cell area:                 60978.600670
+Total cell area:                 61798.680661
 Total area:                 undefined
 
 Hierarchical area distribution
@@ -38,31 +38,31 @@ Hierarchical area distribution
 Hierarchical cell                 Absolute    Percent  Combi-      Noncombi-   Black-
                                   Total       Total    national    national    boxes   Design
 --------------------------------  ----------  -------  ----------  ----------  ------  ----------------------------------------------------------------------------------------------------------
-vcve2_top                         60978.6007    100.0      7.9200     15.8400  0.0000  vcve2_top
-u_cve2_core                       60954.8407    100.0    433.0800    114.8400  0.0000  vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808
-u_cve2_core/agu_inst                435.2400      0.7    297.0000    118.8000  0.0000  vcve2_agu_AddrWidth32
+vcve2_top                         61798.6807    100.0      7.9200     15.8400  0.0000  vcve2_top
+u_cve2_core                       61774.9207    100.0    474.4800    114.8400  0.0000  vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808
+u_cve2_core/agu_inst                418.3200      0.7    278.6400    120.2400  0.0000  vcve2_agu_AddrWidth32
 u_cve2_core/agu_inst/clk_gate_addr_rd_q_reg     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_agu_AddrWidth32_0
 u_cve2_core/agu_inst/clk_gate_addr_rs1_q_reg     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_agu_AddrWidth32_2
 u_cve2_core/agu_inst/clk_gate_addr_rs2_q_reg     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_agu_AddrWidth32_1
 u_cve2_core/clk_gate_vl_q_reg         6.4800      0.0      0.0000      6.4800  0.0000  SNPS_CLOCK_GATE_HIGH_vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_1
 u_cve2_core/clk_gate_vsew_q_reg       6.4800      0.0      0.0000      6.4800  0.0000  SNPS_CLOCK_GATE_HIGH_vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_0
-u_cve2_core/cs_registers_i         7954.9201     13.0   2414.1600     36.7200  0.0000  vcve2_cs_registers_1_00000001_00000000_00000028_0_00000000_00000004_0_3_0
+u_cve2_core/cs_registers_i         8201.1601     13.3   2496.2400     36.7200  0.0000  vcve2_cs_registers_1_00000001_00000000_00000028_0_00000000_00000004_0_3_0
 u_cve2_core/cs_registers_i/gen_trigger_regs.g_dbg_tmatch_reg[0].u_tmatch_control_csr    13.6800     0.0     3.6000    10.0800 0.0000 vcve2_csr_00000001_0_0_0
-u_cve2_core/cs_registers_i/gen_trigger_regs.g_dbg_tmatch_reg[0].u_tmatch_value_csr   262.4400     0.4     2.5200   253.4400 0.0000 vcve2_csr_32_0_0_0
+u_cve2_core/cs_registers_i/gen_trigger_regs.g_dbg_tmatch_reg[0].u_tmatch_value_csr   261.0000     0.4     1.0800   253.4400 0.0000 vcve2_csr_32_0_0_0
 u_cve2_core/cs_registers_i/gen_trigger_regs.g_dbg_tmatch_reg[0].u_tmatch_value_csr/clk_gate_rdata_q_reg     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_0
-u_cve2_core/cs_registers_i/mcycle_counter_i  1265.7600     2.1   745.9200   506.8800 0.0000 vcve2_counter_CounterWidth64
+u_cve2_core/cs_registers_i/mcycle_counter_i  1383.8400     2.2   864.0000   506.8800 0.0000 vcve2_counter_CounterWidth64
 u_cve2_core/cs_registers_i/mcycle_counter_i/clk_gate_counter_q_reg     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_counter_CounterWidth64_0
 u_cve2_core/cs_registers_i/mcycle_counter_i/clk_gate_counter_q_reg_0     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_counter_CounterWidth64_1
-u_cve2_core/cs_registers_i/minstret_counter_i  1304.6400     2.1   784.8000   506.8800 0.0000 vcve2_counter_CounterWidth64_ProvideValUpd1
+u_cve2_core/cs_registers_i/minstret_counter_i  1348.5600     2.2   828.7200   506.8800 0.0000 vcve2_counter_CounterWidth64_ProvideValUpd1
 u_cve2_core/cs_registers_i/minstret_counter_i/clk_gate_counter_q_reg     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_counter_CounterWidth64_ProvideValUpd1_0
 u_cve2_core/cs_registers_i/minstret_counter_i/clk_gate_counter_q_reg_0     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_counter_CounterWidth64_ProvideValUpd1_1
-u_cve2_core/cs_registers_i/u_dcsr_csr   262.0800     0.4     1.0800   254.5200 0.0000  vcve2_csr_32_0_40000003
+u_cve2_core/cs_registers_i/u_dcsr_csr   264.2400     0.4     2.1600   255.6000 0.0000  vcve2_csr_32_0_40000003
 u_cve2_core/cs_registers_i/u_dcsr_csr/clk_gate_rdata_q_reg     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_40000003
 u_cve2_core/cs_registers_i/u_depc_csr   253.0800     0.4     1.0800   245.5200 0.0000  vcve2_csr_32_0_0_4
 u_cve2_core/cs_registers_i/u_depc_csr/clk_gate_rdata_q_reg     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_4
 u_cve2_core/cs_registers_i/u_dscratch0_csr   262.4400     0.4     2.5200   253.4400 0.0000 vcve2_csr_32_0_0_3
 u_cve2_core/cs_registers_i/u_dscratch0_csr/clk_gate_rdata_q_reg     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_3
-u_cve2_core/cs_registers_i/u_dscratch1_csr   261.0000     0.4     1.0800   253.4400 0.0000 vcve2_csr_32_0_0_2
+u_cve2_core/cs_registers_i/u_dscratch1_csr   262.4400     0.4     2.5200   253.4400 0.0000 vcve2_csr_32_0_0_2
 u_cve2_core/cs_registers_i/u_dscratch1_csr/clk_gate_rdata_q_reg     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_2
 u_cve2_core/cs_registers_i/u_mcause_csr    63.0000     0.1     1.0800    55.4400 0.0000 vcve2_csr_7_0_0_1
 u_cve2_core/cs_registers_i/u_mcause_csr/clk_gate_rdata_q_reg     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_csr_7_0_0_0_1
@@ -84,39 +84,39 @@ u_cve2_core/cs_registers_i/u_mtval_csr   262.4400     0.4     2.5200   253.4400 
 u_cve2_core/cs_registers_i/u_mtval_csr/clk_gate_rdata_q_reg     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_5
 u_cve2_core/cs_registers_i/u_mtvec_csr   199.0800     0.3     2.5200   190.0800 0.0000 vcve2_csr_32_00000001
 u_cve2_core/cs_registers_i/u_mtvec_csr/clk_gate_rdata_q_reg     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_00000001
-u_cve2_core/dmem_arbiter_i          252.0000      0.4    243.7200      8.2800  0.0000  vcve2_dmem_switch
-u_cve2_core/ex_block_i            19626.1202     32.2    976.3200      0.0000  0.0000  vcve2_ex_block_RV32M3_RV32B0
-u_cve2_core/ex_block_i/alu_i       3194.2801      5.2   2086.2000      0.0000  0.0000  vcve2_alu_RV32B0
-u_cve2_core/ex_block_i/alu_i/adder_inst  1108.0800     1.8  1108.0800     0.0000 0.0000 vcve2_fracturable_adder_PIPE_WIDTH32
-u_cve2_core/ex_block_i/gen_multdiv_fast.multdiv_i 15455.5201    25.3 14846.4001   589.6800 0.0000 vcve2_multdiv_fast_RV32M3
+u_cve2_core/dmem_arbiter_i          236.1600      0.4    227.8800      8.2800  0.0000  vcve2_dmem_switch
+u_cve2_core/ex_block_i            19349.2801     31.3    941.0400      0.0000  0.0000  vcve2_ex_block_RV32M3_RV32B0
+u_cve2_core/ex_block_i/alu_i       2904.1200      4.7   2021.7600      0.0000  0.0000  vcve2_alu_RV32B0
+u_cve2_core/ex_block_i/alu_i/adder_inst   882.3600     1.4   882.3600     0.0000 0.0000 vcve2_fracturable_adder_PIPE_WIDTH32
+u_cve2_core/ex_block_i/gen_multdiv_fast.multdiv_i 15504.1201    25.1 14897.1601   587.5200 0.0000 vcve2_multdiv_fast_RV32M3
 u_cve2_core/ex_block_i/gen_multdiv_fast.multdiv_i/clk_gate_div_counter_q_reg     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_multdiv_fast_RV32M3_0
 u_cve2_core/ex_block_i/gen_multdiv_fast.multdiv_i/clk_gate_op_numerator_q_reg     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_multdiv_fast_RV32M3_2
 u_cve2_core/ex_block_i/gen_multdiv_fast.multdiv_i/clk_gate_op_quotient_q_reg     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_multdiv_fast_RV32M3_1
-u_cve2_core/id_stage_i             8175.2402     13.4   5177.1601    547.5600  0.0000  vcve2_id_stage_0_3_0
+u_cve2_core/id_stage_i             8481.9601     13.7   5448.6001    548.6400  0.0000  vcve2_id_stage_0_3_0
 u_cve2_core/id_stage_i/clk_gate_imd_val_q_reg[0]     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_id_stage_0_3_0_0
 u_cve2_core/id_stage_i/clk_gate_imd_val_q_reg[1]     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_id_stage_0_3_0_1
-u_cve2_core/id_stage_i/controller_i   820.4400     1.3   718.9200     95.0400  0.0000  vcve2_controller
+u_cve2_core/id_stage_i/controller_i   802.8000     1.3   701.2800     95.0400  0.0000  vcve2_controller
 u_cve2_core/id_stage_i/controller_i/clk_gate_ctrl_fsm_cs_reg     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_controller
-u_cve2_core/id_stage_i/decoder_i   1617.1200      2.7   1617.1200      0.0000  0.0000  vcve2_decoder_0_3_0
-u_cve2_core/if_stage_i             4764.9601      7.8    373.3200    995.4000  0.0000  vcve2_if_stage_1a110800_1a110808
+u_cve2_core/id_stage_i/decoder_i   1668.9600      2.7   1668.9600      0.0000  0.0000  vcve2_decoder_0_3_0
+u_cve2_core/if_stage_i             4710.2401      7.6    360.0000   1002.6000  0.0000  vcve2_if_stage_1a110800_1a110808
 u_cve2_core/if_stage_i/clk_gate_pc_id_o_reg     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_if_stage_1a110800_1a110808
 u_cve2_core/if_stage_i/compressed_decoder_i   387.7200     0.6   387.7200     0.0000 0.0000 vcve2_compressed_decoder
-u_cve2_core/if_stage_i/prefetch_buffer_i  3002.0400     4.9   559.4400   522.7200 0.0000 vcve2_prefetch_buffer
+u_cve2_core/if_stage_i/prefetch_buffer_i  2953.4400     4.8   568.0800   522.7200 0.0000 vcve2_prefetch_buffer
 u_cve2_core/if_stage_i/prefetch_buffer_i/clk_gate_fetch_addr_q_reg     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_prefetch_buffer_1
 u_cve2_core/if_stage_i/prefetch_buffer_i/clk_gate_stored_addr_q_reg     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_prefetch_buffer_0
-u_cve2_core/if_stage_i/prefetch_buffer_i/fifo_i  1906.9200     3.1   824.7600  1056.2400 0.0000 vcve2_fetch_fifo_00000002
+u_cve2_core/if_stage_i/prefetch_buffer_i/fifo_i  1849.6800     3.0   770.4000  1053.3600 0.0000 vcve2_fetch_fifo_00000002
 u_cve2_core/if_stage_i/prefetch_buffer_i/fifo_i/clk_gate_err_q_reg     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_fetch_fifo_00000002_3
 u_cve2_core/if_stage_i/prefetch_buffer_i/fifo_i/clk_gate_err_q_reg_0     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_fetch_fifo_00000002_2
 u_cve2_core/if_stage_i/prefetch_buffer_i/fifo_i/clk_gate_err_q_reg_1     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_fetch_fifo_00000002_1
 u_cve2_core/if_stage_i/prefetch_buffer_i/fifo_i/clk_gate_instr_addr_q_reg     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_fetch_fifo_00000002_0
-u_cve2_core/load_store_unit_i      1329.1200      2.2    772.5600    530.6400  0.0000  vcve2_load_store_unit
+u_cve2_core/load_store_unit_i      1326.2400      2.1    767.5200    532.8000  0.0000  vcve2_load_store_unit
 u_cve2_core/load_store_unit_i/clk_gate_addr_last_q_reg     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_load_store_unit_2
 u_cve2_core/load_store_unit_i/clk_gate_data_we_q_reg     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_load_store_unit_3
 u_cve2_core/load_store_unit_i/clk_gate_ls_fsm_cs_reg     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_load_store_unit_1
 u_cve2_core/load_store_unit_i/clk_gate_rdata_q_reg     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_load_store_unit_0
-u_cve2_core/lsu_interface_i         851.4000      1.4    583.5600    261.3600  0.0000  vcve2_lsu_interface
+u_cve2_core/lsu_interface_i         840.6000      1.4    572.7600    261.3600  0.0000  vcve2_lsu_interface
 u_cve2_core/lsu_interface_i/clk_gate_addr_q_reg     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_lsu_interface
-u_cve2_core/register_file_i       12866.7601     21.1   4807.8000   7858.0801  0.0000  vcve2_register_file_ff_0_32_00000000
+u_cve2_core/register_file_i       13429.0801     21.7   5370.1200   7858.0801  0.0000  vcve2_register_file_ff_0_32_00000000
 u_cve2_core/register_file_i/clk_gate_rf_reg_q_reg[10]     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_22
 u_cve2_core/register_file_i/clk_gate_rf_reg_q_reg[11]     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_21
 u_cve2_core/register_file_i/clk_gate_rf_reg_q_reg[12]     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_20
@@ -148,7 +148,7 @@ u_cve2_core/register_file_i/clk_gate_rf_reg_q_reg[6]     6.4800     0.0     0.00
 u_cve2_core/register_file_i/clk_gate_rf_reg_q_reg[7]     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_25
 u_cve2_core/register_file_i/clk_gate_rf_reg_q_reg[8]     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_24
 u_cve2_core/register_file_i/clk_gate_rf_reg_q_reg[9]     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_23
-u_cve2_core/vcve2_vrf_interface_inst  3785.0401     6.2  1934.2800  1805.4000  0.0000  vcve2_vrf_interface_VLEN128_PIPE_WIDTH32
+u_cve2_core/vcve2_vrf_interface_inst  3842.2801     6.2  1981.0800  1815.8400  0.0000  vcve2_vrf_interface_VLEN128_PIPE_WIDTH32
 u_cve2_core/vcve2_vrf_interface_inst/clk_gate_buffer_q_reg     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_5
 u_cve2_core/vcve2_vrf_interface_inst/clk_gate_num_iterations_q_reg     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_0
 u_cve2_core/vcve2_vrf_interface_inst/clk_gate_rd_q_reg     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_4
@@ -156,8 +156,8 @@ u_cve2_core/vcve2_vrf_interface_inst/clk_gate_rs1_q_reg     6.4800     0.0     0
 u_cve2_core/vcve2_vrf_interface_inst/clk_gate_rs2_q_reg     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_2
 u_cve2_core/vcve2_vrf_interface_inst/clk_gate_rs3_q_reg     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_1
 u_cve2_core/vcve2_vrf_interface_inst/clk_gate_slide_buffer_q_reg     6.4800     0.0     0.0000     6.4800 0.0000 SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_6
-u_cve2_core/wb_i                    353.1600      0.6    353.1600      0.0000  0.0000  vcve2_wb
+u_cve2_core/wb_i                    337.3200      0.5    337.3200      0.0000  0.0000  vcve2_wb
 --------------------------------  ----------  -------  ----------  ----------  ------  ----------------------------------------------------------------------------------------------------------
-Total                                                  42081.8405  18896.7602  0.0000
+Total                                                  42883.5605  18915.1202  0.0000
 
 1

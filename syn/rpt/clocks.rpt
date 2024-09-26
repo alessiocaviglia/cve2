@@ -46,7 +46,7 @@ Warning: Design 'vcve2_top' contains 7 high-fanout nets. A fanout number of 1000
 Report : clocks
 Design : vcve2_top
 Version: R-2020.09-SP2
-Date   : Tue Sep 24 12:19:42 2024
+Date   : Thu Sep 26 17:03:45 2024
 ****************************************
 
 Attributes:
@@ -58,6 +58,6 @@ Attributes:
 
 Clock          Period   Waveform            Attrs     Sources
 --------------------------------------------------------------------------------
-INPUT_CLK        4.80   {0 2.4}                       {clk_i}
+INPUT_CLK        4.90   {0 2.45}                      {clk_i}
 --------------------------------------------------------------------------------
 1
