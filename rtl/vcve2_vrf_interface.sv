@@ -668,7 +668,7 @@ module vcve2_vrf_interface #(
   ///////////////////////////
 
   // Delayed write buffer
-  assign buffer_d = read_delayed ? rs1_d : rd_q;
+  assign buffer_d = read_delayed ? rs3_q : rd_q;
   always_ff @(posedge clk_i or negedge rst_ni) begin
     if (!rst_ni) begin
       curr_state_delay <= 2'b00;
@@ -747,9 +747,9 @@ module vcve2_vrf_interface #(
   // Outputs //
   /////////////
 
-  assign rdata_a_o = rdata_mux ? buffer_q : rs1_q;
+  assign rdata_a_o = rs1_q;
   assign rdata_b_o = rs2_q;
-  assign rdata_c_o = rs3_q;
+  assign rdata_c_o = rdata_mux ? buffer_q : rs3_q;
   // mux for the write data
   always_comb begin
     case (wdata_mux)
