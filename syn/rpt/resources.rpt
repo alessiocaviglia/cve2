@@ -3,7 +3,7 @@
 Report : resources
 Design : vcve2_top
 Version: R-2020.09-SP2
-Date   : Fri Sep 13 16:20:58 2024
+Date   : Tue Sep 24 12:38:09 2024
 ****************************************
 
 
@@ -51,7 +51,7 @@ Implementation Report
 | ashr_8             | DW_rightsh       | astr (area)        |                |
 | lte_x_9            | DW_cmp           | apparch (area)     |                |
 | lte_x_10           | DW_cmp           | apparch (area)     |                |
-| add_x_11           | DW01_inc         | pparch (area,speed)                 |
+| add_x_11           | DW01_inc         | apparch (area)     |                |
 | sub_x_19           | DW01_sub         | apparch (area)     |                |
 | add_x_21           | DW01_add         | apparch (area)     |                |
 | ashr_5             | DW_rightsh       | astr (area)        |                |
@@ -291,27 +291,27 @@ Resource Report for this hierarchy in file
 =============================================================================
 | Cell           | Module         | Parameters | Contained Operations       |
 =============================================================================
-| ash_17         | DW_leftsh      | A_width=32 | sll_200 (vcve2_vrf_interface.sv:200) |
+| ash_17         | DW_leftsh      | A_width=32 | sll_199 (vcve2_vrf_interface.sv:199) |
        |                | SH_width=3 |                            |
-| eq_x_193       | DW_cmp         | width=30   | eq_405 (vcve2_vrf_interface.sv:405) |
-        |                |            | eq_474 (vcve2_vrf_interface.sv:474) |
-        |                |            | eq_500 (vcve2_vrf_interface.sv:500) |
-        |                |            | eq_561 (vcve2_vrf_interface.sv:561) |
-        |                |            | eq_596 (vcve2_vrf_interface.sv:596) |
-| DP_OP_252_134_3567              |            |                            |
-|                | DP_OP_252_134_3567 |        |                            |
+| eq_x_204       | DW_cmp         | width=30   | eq_415 (vcve2_vrf_interface.sv:415) |
+        |                |            | eq_484 (vcve2_vrf_interface.sv:484) |
+        |                |            | eq_510 (vcve2_vrf_interface.sv:510) |
+        |                |            | eq_571 (vcve2_vrf_interface.sv:571) |
+        |                |            | eq_606 (vcve2_vrf_interface.sv:606) |
+| DP_OP_261_134_4653              |            |                            |
+|                | DP_OP_261_134_4653 |        |                            |
 =============================================================================
 
-Datapath Report for DP_OP_252_134_3567
+Datapath Report for DP_OP_261_134_4653
 ==============================================================================
 | Cell                 | Contained Operations                                |
 ==============================================================================
-| DP_OP_252_134_3567   | sub_601_aco (vcve2_vrf_interface.sv:601)            |
-|                      | sub_566_aco (vcve2_vrf_interface.sv:566)            |
-|                      | sub_485_aco (vcve2_vrf_interface.sv:485)            |
-|                      | sub_501_aco (vcve2_vrf_interface.sv:501)            |
-|                      | sub_406_aco (vcve2_vrf_interface.sv:406)            |
-|                      | sub_252 (vcve2_vrf_interface.sv:252)                |
+| DP_OP_261_134_4653   | sub_611_aco (vcve2_vrf_interface.sv:611)            |
+|                      | sub_576_aco (vcve2_vrf_interface.sv:576)            |
+|                      | sub_495_aco (vcve2_vrf_interface.sv:495)            |
+|                      | sub_511_aco (vcve2_vrf_interface.sv:511)            |
+|                      | sub_416_aco (vcve2_vrf_interface.sv:416)            |
+|                      | sub_251 (vcve2_vrf_interface.sv:251)                |
 ==============================================================================
 
 ==============================================================================
@@ -320,7 +320,7 @@ Datapath Report for DP_OP_252_134_3567
 ==============================================================================
 | I1    | PI   | Signed   | 30    |                                          |
 | I2    | PI   | Signed   | 30    |                                          |
-| O1    | PO   | Signed   | 30    | I1 - I2 ( vcve2_vrf_interface.sv:252 vcve2_vrf_interface.sv:406 vcve2_vrf_interface.sv:485 vcve2_vrf_interface.sv:501 vcve2_vrf_interface.sv:566 vcve2_vrf_interface.sv:601 ) |
+| O1    | PO   | Signed   | 30    | I1 - I2 ( vcve2_vrf_interface.sv:251 vcve2_vrf_interface.sv:416 vcve2_vrf_interface.sv:495 vcve2_vrf_interface.sv:511 vcve2_vrf_interface.sv:576 vcve2_vrf_interface.sv:611 ) |
 ==============================================================================
 
 
@@ -330,8 +330,8 @@ Implementation Report
 | Cell               | Module           | Implementation     | Implementation |
 ===============================================================================
 | ash_17             | DW_leftsh        | astr (area)        |                |
-| eq_x_193           | DW_cmp           | apparch (area)     |                |
-| DP_OP_252_134_3567 | DP_OP_252_134_3567 | str (area,speed) |                |
+| eq_x_204           | DW_cmp           | apparch (area)     |                |
+| DP_OP_261_134_4653 | DP_OP_261_134_4653 | str (area,speed) |                |
 ===============================================================================
 
 
@@ -612,9 +612,9 @@ Resource Report for this hierarchy in file
 =============================================================================
 | Cell           | Module         | Parameters | Contained Operations       |
 =============================================================================
-| ash_5          | DW_leftsh      | A_width=32 | sll_312 (vcve2_id_stage.sv:312) |
+| ash_5          | DW_leftsh      | A_width=32 | sll_322 (vcve2_id_stage.sv:322) |
             |                | SH_width=3 |                            |
-| ash_6          | DW_leftsh      | A_width=32 | sll_316 (vcve2_id_stage.sv:316) |
+| ash_6          | DW_leftsh      | A_width=32 | sll_339 (vcve2_id_stage.sv:339) |
             |                | SH_width=3 |                            |
 =============================================================================
 

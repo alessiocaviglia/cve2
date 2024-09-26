@@ -158,7 +158,6 @@ module vcve2_vrf_interface #(
   end
 
   always_comb begin
-    // if it's the first write of a slideup operation it's possible we need a different byte-enable
     if (sel_slide_be) begin
       if (last_iteration_q) begin
         data_be_o = slide_offset_be & offset_be;
@@ -264,8 +263,9 @@ module vcve2_vrf_interface #(
         
         if (memory_op_i == 0) begin                   // ARITHMETIC OPERATION
           if (mult_ops_i) begin
-            data_req_o = 1'b1;                          // read RS1         
-            agu_get_rs1_o = 1'b1;
+            data_req_o = 1'b1;
+            if (sel_operation_i[0]) agu_get_rs1_o = 1'b1;
+            else agu_get_rs2_o = 1'b1;
             if (data_gnt_i) begin
               agu_incr_o = 1'b1;
               vrf_next_state = VRF_INT_READ1;
@@ -319,7 +319,10 @@ module vcve2_vrf_interface #(
       // In the following states the exit condition is the gnt signal since: gnt=1 => data_rvalid of the previous operation=1
       VRF_INT_READ1: begin
         // SAMPLE
-        if (data_rvalid_i && !last_iteration_q) rs1_en = 1;
+        if (data_rvalid_i && !last_iteration_q) begin
+          if (sel_operation_i[0]) rs1_en = 1;
+          else rs2_en = 1;
+        end
         // NEXT STATE SELECTION
         if (!first_iteration_q) begin
           data_we_o = 1'b1;
@@ -341,10 +344,13 @@ module vcve2_vrf_interface #(
 
       VRF_INT_READ2: begin
         // SAMPLE
-        if (data_rvalid_i) rs2_en = 1;
+        if (data_rvalid_i) begin
+          if (sel_operation_i[0]) rs2_en = 1;
+          else rs3_en = 1;
+        end
         // NEXT STATE SELECTION
-        // if next operation is READ RD
-        if (sel_operation_i[2]) begin
+        // thirs state used only form vmacc.vv
+        if (sel_operation_i[0] && sel_operation_i[2]) begin
           data_req_o = 1'b1;
           agu_get_rd_o = 1'b1;
           if (data_gnt_i) begin
@@ -356,7 +362,8 @@ module vcve2_vrf_interface #(
             vrf_next_state = VRF_INT_READ1;
           end else begin
             data_req_o = 1'b1;
-            agu_get_rs1_o = 1'b1;
+            if (sel_operation_i[0]) agu_get_rs1_o = 1'b1;
+            else agu_get_rs2_o = 1'b1;
             if (data_gnt_i) begin
               agu_incr_o = 1'b1;
               vrf_next_state = VRF_INT_READ1;
@@ -399,9 +406,12 @@ module vcve2_vrf_interface #(
           // if next operation is READ RS2
           if (sel_operation_i[1]) begin
             data_req_o = 1'b1;
-            agu_get_rs2_o = 1'b1;
+            if (sel_operation_i[0]) agu_get_rs2_o = 1'b1;
+            else agu_get_rd_o = 1'b1;
             if (data_gnt_i) begin
-              agu_incr_o = 1'b1;
+              if (sel_operation_i[0]) begin
+                agu_incr_o = 1'b1;
+              end
               if (num_iterations_q == (no_offset ? 1 : 0)) last_iteration_d = 1'b1;
               else num_iterations_d = num_iterations_q - 1;
               vrf_next_state = VRF_INT_READ2;

@@ -27,7 +27,7 @@ Initializing...
 #
 ############################################
 sh date
-Fri Sep 13 16:10:43 CEST 2024
+Tue Sep 24 12:19:38 CEST 2024
 set TOP_MODULE vcve2_top
 vcve2_top
 set DC_SCRIPT dc_script.tcl
@@ -505,17 +505,17 @@ Inferred memory devices in process
 Presto compilation completed successfully. (vcve2_if_stage_1a110800_1a110808)
 Information: Building the design 'vcve2_id_stage' instantiated from design 'vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808' with
 	the parameters "RV32E=1'h0,RV32M=3,RV32B=0". (HDL-193)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_id_stage.sv:326: DEFAULT branch of CASE statement cannot be reached. (ELAB-311)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_id_stage.sv:350: DEFAULT branch of CASE statement cannot be reached. (ELAB-311)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_id_stage.sv:392: DEFAULT branch of CASE statement cannot be reached. (ELAB-311)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_id_stage.sv:723: DEFAULT branch of CASE statement cannot be reached. (ELAB-311)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_id_stage.sv:352: DEFAULT branch of CASE statement cannot be reached. (ELAB-311)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_id_stage.sv:377: DEFAULT branch of CASE statement cannot be reached. (ELAB-311)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_id_stage.sv:445: DEFAULT branch of CASE statement cannot be reached. (ELAB-311)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_id_stage.sv:775: DEFAULT branch of CASE statement cannot be reached. (ELAB-311)
 
-Statistics for case statements in always block at line 300 in file
+Statistics for case statements in always block at line 299 in file
 	'../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_id_stage.sv'
 ===============================================
 |           Line           |  full/ parallel  |
 ===============================================
-|           301            |    user/user     |
+|           300            |    user/user     |
 ===============================================
 
 Statistics for case statements in always block at line 310 in file
@@ -524,43 +524,47 @@ Statistics for case statements in always block at line 310 in file
 |           Line           |  full/ parallel  |
 ===============================================
 |           311            |    user/user     |
+|           315            |    auto/auto     |
+|           332            |    auto/auto     |
 ===============================================
 
-Statistics for case statements in always block at line 325 in file
+Statistics for case statements in always block at line 351 in file
 	'../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_id_stage.sv'
 ===============================================
 |           Line           |  full/ parallel  |
 ===============================================
-|           326            |    user/user     |
+|           352            |    user/user     |
 ===============================================
 
-Statistics for case statements in always block at line 349 in file
+Statistics for case statements in always block at line 376 in file
 	'../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_id_stage.sv'
 ===============================================
 |           Line           |  full/ parallel  |
 ===============================================
-|           350            |    user/user     |
+|           377            |    user/user     |
+|           381            |    auto/auto     |
+|           396            |    auto/auto     |
 ===============================================
 
-Statistics for case statements in always block at line 391 in file
+Statistics for case statements in always block at line 444 in file
 	'../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_id_stage.sv'
 ===============================================
 |           Line           |  full/ parallel  |
 ===============================================
-|           392            |    user/user     |
+|           445            |    user/user     |
 ===============================================
 
-Statistics for case statements in always block at line 709 in file
+Statistics for case statements in always block at line 761 in file
 	'../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_id_stage.sv'
 ===============================================
 |           Line           |  full/ parallel  |
 ===============================================
-|           723            |    user/user     |
-|           725            |    user/user     |
+|           775            |    user/user     |
+|           777            |    user/user     |
 ===============================================
 
 Inferred memory devices in process
-	in routine vcve2_id_stage_0_3_0 line 372 in file
+	in routine vcve2_id_stage_0_3_0 line 425 in file
 		'../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_id_stage.sv'.
 ===============================================================================
 |    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
@@ -569,7 +573,7 @@ Inferred memory devices in process
 ===============================================================================
 
 Inferred memory devices in process
-	in routine vcve2_id_stage_0_3_0 line 653 in file
+	in routine vcve2_id_stage_0_3_0 line 705 in file
 		'../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_id_stage.sv'.
 ================================================================================
 |    Register Name     |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
@@ -578,7 +582,7 @@ Inferred memory devices in process
 ================================================================================
 
 Inferred memory devices in process
-	in routine vcve2_id_stage_0_3_0 line 671 in file
+	in routine vcve2_id_stage_0_3_0 line 723 in file
 		'../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_id_stage.sv'.
 ======================================================================================
 |       Register Name        |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
@@ -587,7 +591,7 @@ Inferred memory devices in process
 ======================================================================================
 
 Inferred memory devices in process
-	in routine vcve2_id_stage_0_3_0 line 696 in file
+	in routine vcve2_id_stage_0_3_0 line 748 in file
 		'../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_id_stage.sv'.
 ===============================================================================
 |    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
@@ -598,20 +602,12 @@ Presto compilation completed successfully. (vcve2_id_stage_0_3_0)
 Information: Building the design 'vcve2_ex_block' instantiated from design 'vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808' with
 	the parameters "RV32M=3,RV32B=0". (HDL-193)
 
-Statistics for case statements in always block at line 106 in file
+Statistics for case statements in always block at line 105 in file
 	'../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_ex_block.sv'
 ===============================================
 |           Line           |  full/ parallel  |
 ===============================================
 |           110            |    auto/auto     |
-===============================================
-
-Statistics for case statements in always block at line 140 in file
-	'../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_ex_block.sv'
-===============================================
-|           Line           |  full/ parallel  |
-===============================================
-|           143            |    auto/auto     |
 ===============================================
 Presto compilation completed successfully. (vcve2_ex_block_RV32M3_RV32B0)
 Information: Building the design 'vcve2_load_store_unit'. (HDL-193)
@@ -797,11 +793,11 @@ Statistics for MUX_OPs
 Presto compilation completed successfully. (vcve2_register_file_ff_0_32_00000000)
 Information: Building the design 'vcve2_vrf_interface' instantiated from design 'vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808' with
 	the parameters "VLEN=128,PIPE_WIDTH=32". (HDL-193)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_vrf_interface.sv:405: signed to unsigned conversion occurs. (VER-318)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_vrf_interface.sv:474: signed to unsigned conversion occurs. (VER-318)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_vrf_interface.sv:500: signed to unsigned conversion occurs. (VER-318)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_vrf_interface.sv:561: signed to unsigned conversion occurs. (VER-318)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_vrf_interface.sv:596: signed to unsigned conversion occurs. (VER-318)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_vrf_interface.sv:415: signed to unsigned conversion occurs. (VER-318)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_vrf_interface.sv:484: signed to unsigned conversion occurs. (VER-318)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_vrf_interface.sv:510: signed to unsigned conversion occurs. (VER-318)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_vrf_interface.sv:571: signed to unsigned conversion occurs. (VER-318)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_vrf_interface.sv:606: signed to unsigned conversion occurs. (VER-318)
 Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_vrf_interface.sv:109: DEFAULT branch of CASE statement cannot be reached. (ELAB-311)
 Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_vrf_interface.sv:136: DEFAULT branch of CASE statement cannot be reached. (ELAB-311)
 Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_vrf_interface.sv:148: DEFAULT branch of CASE statement cannot be reached. (ELAB-311)
@@ -816,40 +812,40 @@ Statistics for case statements in always block at line 103 in file
 |           148            |    auto/auto     |
 ===============================================
 
-Statistics for case statements in always block at line 201 in file
+Statistics for case statements in always block at line 200 in file
 	'../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_vrf_interface.sv'
 ===============================================
 |           Line           |  full/ parallel  |
 ===============================================
-|           233            |    auto/auto     |
+|           232            |    auto/auto     |
 ===============================================
 
-Statistics for case statements in always block at line 647 in file
+Statistics for case statements in always block at line 657 in file
 	'../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_vrf_interface.sv'
 ===============================================
 |           Line           |  full/ parallel  |
 ===============================================
-|           649            |    auto/auto     |
+|           659            |    auto/auto     |
 ===============================================
 
-Statistics for case statements in always block at line 681 in file
+Statistics for case statements in always block at line 691 in file
 	'../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_vrf_interface.sv'
 ===============================================
 |           Line           |  full/ parallel  |
 ===============================================
-|           686            |    auto/auto     |
+|           696            |    auto/auto     |
 ===============================================
 
-Statistics for case statements in always block at line 754 in file
+Statistics for case statements in always block at line 764 in file
 	'../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_vrf_interface.sv'
 ===============================================
 |           Line           |  full/ parallel  |
 ===============================================
-|           755            |    auto/auto     |
+|           765            |    auto/auto     |
 ===============================================
 
 Inferred memory devices in process
-	in routine vcve2_vrf_interface_VLEN128_PIPE_WIDTH32 line 180 in file
+	in routine vcve2_vrf_interface_VLEN128_PIPE_WIDTH32 line 179 in file
 		'../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_vrf_interface.sv'.
 ===================================================================================
 |      Register Name      |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
@@ -864,7 +860,7 @@ Inferred memory devices in process
 ===================================================================================
 
 Inferred memory devices in process
-	in routine vcve2_vrf_interface_VLEN128_PIPE_WIDTH32 line 639 in file
+	in routine vcve2_vrf_interface_VLEN128_PIPE_WIDTH32 line 649 in file
 		'../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_vrf_interface.sv'.
 ===============================================================================
 |    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
@@ -873,7 +869,7 @@ Inferred memory devices in process
 ===============================================================================
 
 Inferred memory devices in process
-	in routine vcve2_vrf_interface_VLEN128_PIPE_WIDTH32 line 672 in file
+	in routine vcve2_vrf_interface_VLEN128_PIPE_WIDTH32 line 682 in file
 		'../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_vrf_interface.sv'.
 ================================================================================
 |    Register Name     |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
@@ -883,7 +879,7 @@ Inferred memory devices in process
 ================================================================================
 
 Inferred memory devices in process
-	in routine vcve2_vrf_interface_VLEN128_PIPE_WIDTH32 line 726 in file
+	in routine vcve2_vrf_interface_VLEN128_PIPE_WIDTH32 line 736 in file
 		'../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_vrf_interface.sv'.
 ===============================================================================
 |    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
@@ -1029,54 +1025,54 @@ Information: Building the design 'vcve2_decoder' instantiated from design 'vcve2
 Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:449: Statement unreachable (Branch condition impossible to meet).  (VER-61)
 Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:449: Statement unreachable (Branch condition impossible to meet).  (VER-61)
 Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:458: Statement unreachable (Branch condition impossible to meet).  (VER-61)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1004: Statement unreachable (Branch condition impossible to meet).  (VER-61)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1024: Statement unreachable (Branch condition impossible to meet).  (VER-61)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1039: Statement unreachable (Branch condition impossible to meet).  (VER-61)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1045: Statement unreachable (Branch condition impossible to meet).  (VER-61)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1051: Statement unreachable (Branch condition impossible to meet).  (VER-61)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1057: Statement unreachable (Branch condition impossible to meet).  (VER-61)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1063: Statement unreachable (Branch condition impossible to meet).  (VER-61)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1069: Statement unreachable (Branch condition impossible to meet).  (VER-61)
 Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1019: Statement unreachable (Branch condition impossible to meet).  (VER-61)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1025: Statement unreachable (Branch condition impossible to meet).  (VER-61)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1031: Statement unreachable (Branch condition impossible to meet).  (VER-61)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1037: Statement unreachable (Branch condition impossible to meet).  (VER-61)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1043: Statement unreachable (Branch condition impossible to meet).  (VER-61)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1049: Statement unreachable (Branch condition impossible to meet).  (VER-61)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:999: Statement unreachable (Branch condition impossible to meet).  (VER-61)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1081: Statement unreachable (Branch condition impossible to meet).  (VER-61)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1092: Statement unreachable (Branch condition impossible to meet).  (VER-61)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1066: Statement unreachable (Branch condition impossible to meet).  (VER-61)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1118: Statement unreachable (Branch condition impossible to meet).  (VER-61)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1175: Statement unreachable (Branch condition impossible to meet).  (VER-61)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1181: Statement unreachable (Branch condition impossible to meet).  (VER-61)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1187: Statement unreachable (Branch condition impossible to meet).  (VER-61)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1188: Statement unreachable (Branch condition impossible to meet).  (VER-61)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1189: Statement unreachable (Branch condition impossible to meet).  (VER-61)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1190: Statement unreachable (Branch condition impossible to meet).  (VER-61)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1192: Statement unreachable (Branch condition impossible to meet).  (VER-61)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1193: Statement unreachable (Branch condition impossible to meet).  (VER-61)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1194: Statement unreachable (Branch condition impossible to meet).  (VER-61)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1196: Statement unreachable (Branch condition impossible to meet).  (VER-61)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1197: Statement unreachable (Branch condition impossible to meet).  (VER-61)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1198: Statement unreachable (Branch condition impossible to meet).  (VER-61)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1101: Statement unreachable (Branch condition impossible to meet).  (VER-61)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1112: Statement unreachable (Branch condition impossible to meet).  (VER-61)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1086: Statement unreachable (Branch condition impossible to meet).  (VER-61)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1138: Statement unreachable (Branch condition impossible to meet).  (VER-61)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1195: Statement unreachable (Branch condition impossible to meet).  (VER-61)
 Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1201: Statement unreachable (Branch condition impossible to meet).  (VER-61)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1202: Statement unreachable (Branch condition impossible to meet).  (VER-61)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1203: Statement unreachable (Branch condition impossible to meet).  (VER-61)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1206: Statement unreachable (Branch condition impossible to meet).  (VER-61)
 Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1207: Statement unreachable (Branch condition impossible to meet).  (VER-61)
 Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1208: Statement unreachable (Branch condition impossible to meet).  (VER-61)
 Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1209: Statement unreachable (Branch condition impossible to meet).  (VER-61)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1210: Statement unreachable (Branch condition impossible to meet).  (VER-61)
 Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1212: Statement unreachable (Branch condition impossible to meet).  (VER-61)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1215: Statement unreachable (Branch condition impossible to meet).  (VER-61)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1213: Statement unreachable (Branch condition impossible to meet).  (VER-61)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1214: Statement unreachable (Branch condition impossible to meet).  (VER-61)
 Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1216: Statement unreachable (Branch condition impossible to meet).  (VER-61)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1217: Statement unreachable (Branch condition impossible to meet).  (VER-61)
 Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1218: Statement unreachable (Branch condition impossible to meet).  (VER-61)
 Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1221: Statement unreachable (Branch condition impossible to meet).  (VER-61)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1224: Statement unreachable (Branch condition impossible to meet).  (VER-61)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1222: Statement unreachable (Branch condition impossible to meet).  (VER-61)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1223: Statement unreachable (Branch condition impossible to meet).  (VER-61)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1226: Statement unreachable (Branch condition impossible to meet).  (VER-61)
 Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1227: Statement unreachable (Branch condition impossible to meet).  (VER-61)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1230: Statement unreachable (Branch condition impossible to meet).  (VER-61)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1233: Statement unreachable (Branch condition impossible to meet).  (VER-61)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1228: Statement unreachable (Branch condition impossible to meet).  (VER-61)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1229: Statement unreachable (Branch condition impossible to meet).  (VER-61)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1232: Statement unreachable (Branch condition impossible to meet).  (VER-61)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1235: Statement unreachable (Branch condition impossible to meet).  (VER-61)
 Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1236: Statement unreachable (Branch condition impossible to meet).  (VER-61)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1238: Statement unreachable (Branch condition impossible to meet).  (VER-61)
 Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1241: Statement unreachable (Branch condition impossible to meet).  (VER-61)
 Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1244: Statement unreachable (Branch condition impossible to meet).  (VER-61)
 Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1247: Statement unreachable (Branch condition impossible to meet).  (VER-61)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1252: Statement unreachable (Branch condition impossible to meet).  (VER-61)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1258: Statement unreachable (Branch condition impossible to meet).  (VER-61)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1250: Statement unreachable (Branch condition impossible to meet).  (VER-61)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1253: Statement unreachable (Branch condition impossible to meet).  (VER-61)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1256: Statement unreachable (Branch condition impossible to meet).  (VER-61)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1261: Statement unreachable (Branch condition impossible to meet).  (VER-61)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1264: Statement unreachable (Branch condition impossible to meet).  (VER-61)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1267: Statement unreachable (Branch condition impossible to meet).  (VER-61)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1272: Statement unreachable (Branch condition impossible to meet).  (VER-61)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1278: Statement unreachable (Branch condition impossible to meet).  (VER-61)
 Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:388: DEFAULT branch of CASE statement cannot be reached. (ELAB-311)
-Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:990: DEFAULT branch of CASE statement cannot be reached. (ELAB-311)
+Warning:  ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv:1010: DEFAULT branch of CASE statement cannot be reached. (ELAB-311)
 
 Statistics for case statements in always block at line 226 in file
 	'../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv'
@@ -1102,17 +1098,17 @@ Statistics for case statements in always block at line 226 in file
 |           740            |    user/user     |
 ===============================================
 
-Statistics for case statements in always block at line 858 in file
+Statistics for case statements in always block at line 878 in file
 	'../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_decoder.sv'
 ===============================================
 |           Line           |  full/ parallel  |
 ===============================================
-|           873            |    user/user     |
-|           915            |    user/user     |
-|           990            |    user/user     |
-|           1160           |    user/user     |
-|           1308           |    user/user     |
-|           1386           |    user/user     |
+|           893            |    user/user     |
+|           935            |    user/user     |
+|           1010           |    user/user     |
+|           1180           |    user/user     |
+|           1328           |    user/user     |
+|           1406           |    user/user     |
 ===============================================
 Presto compilation completed successfully. (vcve2_decoder_0_3_0)
 Information: Building the design 'vcve2_controller'. (HDL-193)
@@ -1498,49 +1494,32 @@ Information: State dependent leakage is now switched from on to off.
   Processing 'vcve2_cs_registers_1_00000001_00000000_00000028_0_00000000_00000004_0_3_0'
 Information: Added key list 'DesignWare' to design 'vcve2_cs_registers_1_00000001_00000000_00000028_0_00000000_00000004_0_3_0'. (DDB-72)
 Information: The register 'mcountinhibit_q_reg[1]' is a constant and will be removed. (OPT-1206)
+  Processing 'vcve2_decoder_0_3_0'
   Processing 'vcve2_vrf_interface_VLEN128_PIPE_WIDTH32'
 Information: Added key list 'DesignWare' to design 'vcve2_vrf_interface_VLEN128_PIPE_WIDTH32'. (DDB-72)
  Implement Synthetic for 'vcve2_vrf_interface_VLEN128_PIPE_WIDTH32'.
-  Processing 'vcve2_decoder_0_3_0'
   Processing 'vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808'
 Information: Added key list 'DesignWare' to design 'vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808'. (DDB-72)
  Implement Synthetic for 'vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808'.
   Processing 'vcve2_multdiv_fast_RV32M3'
  Implement Synthetic for 'vcve2_multdiv_fast_RV32M3'.
 Information: Added key list 'DesignWare' to design 'vcve2_multdiv_fast_RV32M3'. (DDB-72)
-  Processing 'vcve2_controller'
- Implement Synthetic for 'vcve2_controller'.
-  Processing 'vcve2_counter_CounterWidth64_ProvideValUpd1'
- Implement Synthetic for 'vcve2_counter_CounterWidth64_ProvideValUpd1'.
-  Processing 'vcve2_agu_AddrWidth32'
- Implement Synthetic for 'vcve2_agu_AddrWidth32'.
-  Processing 'vcve2_csr_19_0_0'
-  Processing 'vcve2_load_store_unit'
-Information: The register 'pmp_err_q_reg' is a constant and will be removed. (OPT-1206)
-  Processing 'vcve2_top'
-  Processing 'vcve2_counter_CounterWidth64'
- Implement Synthetic for 'vcve2_counter_CounterWidth64'.
-  Processing 'vcve2_fracturable_adder_PIPE_WIDTH32'
- Implement Synthetic for 'vcve2_fracturable_adder_PIPE_WIDTH32'.
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_00000001'
-  Mapping integrated clock gating circuitry
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_0'
-  Mapping integrated clock gating circuitry
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_id_stage_0_3_0_0'
-  Mapping integrated clock gating circuitry
-  Processing 'vcve2_csr_00000001_0_0_0'
-  Processing 'vcve2_ex_block_RV32M3_RV32B0'
+  Processing 'vcve2_id_stage_0_3_0'
+Information: The register 'imd_val_q_reg[1][32]' is a constant and will be removed. (OPT-1206)
+Information: The register 'imd_val_q_reg[1][33]' is a constant and will be removed. (OPT-1206)
+ Implement Synthetic for 'vcve2_id_stage_0_3_0'.
+Information: Added key list 'DesignWare' to design 'vcve2_id_stage_0_3_0'. (DDB-72)
+  Processing 'vcve2_fetch_fifo_00000002'
+ Implement Synthetic for 'vcve2_fetch_fifo_00000002'.
   Processing 'vcve2_compressed_decoder'
   Processing 'vcve2_lsu_interface'
  Implement Synthetic for 'vcve2_lsu_interface'.
-  Processing 'vcve2_csr_7_0_0_0'
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_0'
+  Processing 'vcve2_fracturable_adder_PIPE_WIDTH32'
+ Implement Synthetic for 'vcve2_fracturable_adder_PIPE_WIDTH32'.
+  Processing 'vcve2_csr_3_0_4'
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_counter_CounterWidth64_ProvideValUpd1_0'
   Mapping integrated clock gating circuitry
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_cs_registers_1_00000001_00000000_00000028_0_00000000_00000004_0_3_0'
-  Mapping integrated clock gating circuitry
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_counter_CounterWidth64_0'
-  Mapping integrated clock gating circuitry
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_40000003'
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_csr_3_0_4'
   Mapping integrated clock gating circuitry
   Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_agu_AddrWidth32_0'
   Mapping integrated clock gating circuitry
@@ -1548,16 +1527,26 @@ Information: The register 'pmp_err_q_reg' is a constant and will be removed. (OP
   Mapping integrated clock gating circuitry
   Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_fetch_fifo_00000002_0'
   Mapping integrated clock gating circuitry
-  Processing 'vcve2_id_stage_0_3_0'
-Information: The register 'imd_val_q_reg[1][32]' is a constant and will be removed. (OPT-1206)
-Information: The register 'imd_val_q_reg[1][33]' is a constant and will be removed. (OPT-1206)
- Implement Synthetic for 'vcve2_id_stage_0_3_0'.
-Information: Added key list 'DesignWare' to design 'vcve2_id_stage_0_3_0'. (DDB-72)
-  Processing 'vcve2_wb'
-  Processing 'vcve2_dmem_switch'
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_load_store_unit_0'
+  Processing 'vcve2_controller'
+ Implement Synthetic for 'vcve2_controller'.
+  Processing 'vcve2_counter_CounterWidth64_ProvideValUpd1'
+ Implement Synthetic for 'vcve2_counter_CounterWidth64_ProvideValUpd1'.
+  Processing 'vcve2_agu_AddrWidth32'
+ Implement Synthetic for 'vcve2_agu_AddrWidth32'.
+  Processing 'vcve2_csr_19_0_0'
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_0'
   Mapping integrated clock gating circuitry
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_prefetch_buffer_0'
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_cs_registers_1_00000001_00000000_00000028_0_00000000_00000004_0_3_0'
+  Mapping integrated clock gating circuitry
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_0'
+  Mapping integrated clock gating circuitry
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_counter_CounterWidth64_0'
+  Mapping integrated clock gating circuitry
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_csr_19_0_0'
+  Mapping integrated clock gating circuitry
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_lsu_interface'
+  Mapping integrated clock gating circuitry
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_if_stage_1a110800_1a110808'
   Mapping integrated clock gating circuitry
   Processing 'vcve2_alu_RV32B0'
  Implement Synthetic for 'vcve2_alu_RV32B0'.
@@ -1565,6 +1554,22 @@ Information: Added key list 'DesignWare' to design 'vcve2_alu_RV32B0'. (DDB-72)
   Processing 'vcve2_prefetch_buffer'
  Implement Synthetic for 'vcve2_prefetch_buffer'.
   Processing 'vcve2_csr_32_0_0_0'
+  Processing 'vcve2_csr_32_0_40000003'
+  Processing 'vcve2_csr_7_0_0_0'
+  Processing 'vcve2_csr_6_0c'
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_csr_7_0_0_0_0'
+  Mapping integrated clock gating circuitry
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_csr_6_0c'
+  Mapping integrated clock gating circuitry
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_load_store_unit_0'
+  Mapping integrated clock gating circuitry
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_prefetch_buffer_0'
+  Mapping integrated clock gating circuitry
+  Processing 'vcve2_load_store_unit'
+Information: The register 'pmp_err_q_reg' is a constant and will be removed. (OPT-1206)
+  Processing 'vcve2_top'
+  Processing 'vcve2_counter_CounterWidth64'
+ Implement Synthetic for 'vcve2_counter_CounterWidth64'.
   Processing 'vcve2_csr_32_00000001'
 Information: The register 'rdata_q_reg[0]' is a constant and will be removed. (OPT-1206)
 Information: The register 'rdata_q_reg[1]' is a constant and will be removed. (OPT-1206)
@@ -1574,28 +1579,19 @@ Information: The register 'rdata_q_reg[4]' is a constant and will be removed. (O
 Information: The register 'rdata_q_reg[5]' is a constant and will be removed. (OPT-1206)
 Information: The register 'rdata_q_reg[6]' is a constant and will be removed. (OPT-1206)
 Information: The register 'rdata_q_reg[7]' is a constant and will be removed. (OPT-1206)
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_counter_CounterWidth64_ProvideValUpd1_0'
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_40000003'
   Mapping integrated clock gating circuitry
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_csr_3_0_4'
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_0'
   Mapping integrated clock gating circuitry
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_csr_6_0c'
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_id_stage_0_3_0_0'
   Mapping integrated clock gating circuitry
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_lsu_interface'
-  Mapping integrated clock gating circuitry
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_if_stage_1a110800_1a110808'
-  Mapping integrated clock gating circuitry
-  Processing 'vcve2_fetch_fifo_00000002'
- Implement Synthetic for 'vcve2_fetch_fifo_00000002'.
+  Processing 'vcve2_csr_00000001_0_0_0'
   Processing 'vcve2_if_stage_1a110800_1a110808'
 Information: The register 'pc_id_o_reg[0]' is a constant and will be removed. (OPT-1206)
-  Processing 'vcve2_csr_32_0_40000003'
-  Processing 'vcve2_csr_6_0c'
-  Processing 'vcve2_csr_3_0_4'
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_0'
-  Mapping integrated clock gating circuitry
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_csr_7_0_0_0_0'
-  Mapping integrated clock gating circuitry
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_csr_19_0_0'
+  Processing 'vcve2_ex_block_RV32M3_RV32B0'
+  Processing 'vcve2_wb'
+  Processing 'vcve2_dmem_switch'
+  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_00000001'
   Mapping integrated clock gating circuitry
   Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_0'
   Mapping integrated clock gating circuitry
@@ -1618,26 +1614,26 @@ Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_id_stage
 Information: Skipping clock gating on design vcve2_alu_RV32B0, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_load_store_unit_0, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_lsu_interface, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design vcve2_lsu_interface_DW01_add_J9_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design vcve2_lsu_interface_DW01_add_J8_0, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_0, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_RSOP_246, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_RSOP_255, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_agu_AddrWidth32_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design vcve2_agu_AddrWidth32_DW01_inc_J7_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design vcve2_agu_AddrWidth32_DW01_inc_J7_1, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design vcve2_agu_AddrWidth32_DW01_inc_J7_2, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design vcve2_agu_AddrWidth32_DW01_inc_J9_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design vcve2_agu_AddrWidth32_DW01_inc_J9_1, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design vcve2_agu_AddrWidth32_DW01_inc_J9_2, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_cs_registers_1_00000001_00000000_00000028_0_00000000_00000004_0_3_0, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_prefetch_buffer_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design vcve2_prefetch_buffer_DW01_add_J11_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design vcve2_prefetch_buffer_DW01_add_J10_0, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_controller, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design vcve2_controller_DW01_add_J7_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design vcve2_controller_DW01_add_J9_0, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design vcve2_fracturable_adder_PIPE_WIDTH32, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_multdiv_fast_RV32M3_0, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design vcve2_multdiv_fast_RV32M3_DP_OP_116J6_122_2826_J6_0, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design vcve2_multdiv_fast_RV32M3_DW01_dec_J6_0, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design vcve2_multdiv_fast_RV32M3_DW02_mult_J6_0, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design vcve2_multdiv_fast_RV32M3_DW_mult_tc_J6_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_DP_OP_252J3_122_5514_J3_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_DP_OP_261J4_122_3328_J4_0, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_6_0c, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_7, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_19_0_0, since there are no registers. (PWR-806)
@@ -1646,24 +1642,16 @@ Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0
 Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_40000003, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_3_0_4, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_counter_CounterWidth64_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design vcve2_counter_CounterWidth64_DW01_inc_J8_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design vcve2_counter_CounterWidth64_DW01_inc_J11_0, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_counter_CounterWidth64_ProvideValUpd1_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design vcve2_counter_CounterWidth64_ProvideValUpd1_DW01_inc_J7_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design vcve2_counter_CounterWidth64_ProvideValUpd1_DW01_inc_J9_0, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_fetch_fifo_00000002_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design vcve2_fetch_fifo_00000002_DW01_add_J12_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design vcve2_fetch_fifo_00000002_DW01_add_J8_0, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design vcve2_fracturable_adder_PIPE_WIDTH32_DP_OP_28J8_125_6171_J8_0, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design vcve2_fracturable_adder_PIPE_WIDTH32_DP_OP_27J8_124_6171_J8_0, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design vcve2_fracturable_adder_PIPE_WIDTH32_DP_OP_26J8_123_6171_J8_0, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design vcve2_fracturable_adder_PIPE_WIDTH32_DP_OP_25J8_122_6171_J8_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_1, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_2, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_3, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_4, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_5, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_6, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_id_stage_0_3_0_1, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_1, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_counter_CounterWidth64_1, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_counter_CounterWidth64_ProvideValUpd1_1, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_agu_AddrWidth32_1, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_agu_AddrWidth32_2, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_multdiv_fast_RV32M3_1, since there are no registers. (PWR-806)
@@ -1671,11 +1659,7 @@ Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_multdiv_
 Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_fetch_fifo_00000002_1, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_fetch_fifo_00000002_2, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_fetch_fifo_00000002_3, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_load_store_unit_1, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_load_store_unit_2, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_load_store_unit_3, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_prefetch_buffer_1, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_counter_CounterWidth64_ProvideValUpd1_1, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_1, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_0, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_1, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_2, since there are no registers. (PWR-806)
@@ -1683,7 +1667,19 @@ Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0
 Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_4, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_5, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_6, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_counter_CounterWidth64_1, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_7_0_0_0_0, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_load_store_unit_1, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_load_store_unit_2, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_load_store_unit_3, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_prefetch_buffer_1, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_1, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_2, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_3, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_4, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_5, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_6, since there are no registers. (PWR-806)
+Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_id_stage_0_3_0_1, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_1, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_2, since there are no registers. (PWR-806)
 Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_3, since there are no registers. (PWR-806)
@@ -1736,7 +1732,6 @@ Information: Performing clock-gating on design vcve2_csr_32_0_40000003. (PWR-730
 Information: Performing clock-gating on design vcve2_csr_3_0_4. (PWR-730)
 Information: Performing clock-gating on design vcve2_counter_CounterWidth64. (PWR-730)
 Information: Performing clock-gating on design vcve2_counter_CounterWidth64_ProvideValUpd1. (PWR-730)
-Information: Performing clock-gating on design vcve2_csr_7_0_0_0. (PWR-730)
 Information: Performing clock-gating on design vcve2_csr_32_0_0_0. (PWR-730)
 Information: Performing clock-gating on design vcve2_csr_32_0_0_1. (PWR-730)
 Information: Performing clock-gating on design vcve2_csr_32_0_0_2. (PWR-730)
@@ -1744,6 +1739,7 @@ Information: Performing clock-gating on design vcve2_csr_32_0_0_3. (PWR-730)
 Information: Performing clock-gating on design vcve2_csr_32_0_0_4. (PWR-730)
 Information: Performing clock-gating on design vcve2_csr_32_0_0_5. (PWR-730)
 Information: Performing clock-gating on design vcve2_csr_32_0_0_6. (PWR-730)
+Information: Performing clock-gating on design vcve2_csr_7_0_0_0. (PWR-730)
 Information: Performing clock-gating on design vcve2_if_stage_1a110800_1a110808. (PWR-730)
 Information: Performing clock-gating on design vcve2_dmem_switch. (PWR-730)
 Information: Performing clock-gating on design vcve2_cs_registers_1_00000001_00000000_00000028_0_00000000_00000004_0_3_0. (PWR-730)
@@ -1758,8 +1754,8 @@ Information: Added key list 'DesignWare' to design 'vcve2_agu_AddrWidth32'. (DDB
 Information: Added key list 'DesignWare' to design 'vcve2_lsu_interface'. (DDB-72)
 Information: Added key list 'DesignWare' to design 'vcve2_controller'. (DDB-72)
 Information: Added key list 'DesignWare' to design 'vcve2_fracturable_adder_PIPE_WIDTH32'. (DDB-72)
-Information: Added key list 'DesignWare' to design 'vcve2_prefetch_buffer'. (DDB-72)
   Mapping Optimization (Phase 1)
+Information: Added key list 'DesignWare' to design 'vcve2_prefetch_buffer'. (DDB-72)
   Mapping Optimization (Phase 2)
   Mapping Optimization (Phase 3)
   Mapping Optimization (Phase 4)
@@ -1767,7 +1763,6 @@ Information: Added key list 'DesignWare' to design 'vcve2_prefetch_buffer'. (DDB
   Mapping Optimization (Phase 6)
   Mapping Optimization (Phase 7)
   Mapping Optimization (Phase 8)
-  Mapping Optimization (Phase 9)
 Information: Added key list 'DesignWare' to design 'vcve2_fetch_fifo_00000002'. (DDB-72)
 Information: Added key list 'DesignWare' to design 'vcve2_counter_CounterWidth64'. (DDB-72)
 Information: Added key list 'DesignWare' to design 'vcve2_counter_CounterWidth64_ProvideValUpd1'. (DDB-72)
@@ -1779,8 +1774,8 @@ End Combinational loops breaking ...
    ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
     TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
   --------- --------- --------- --------- --------- ------------------------- ---------
-    0:00:56   78098.0      1.25     771.3      36.3                           30305.5938
-    0:00:56   77999.0      1.61    1123.6      36.3                           30273.7168
+    0:01:03   80717.0      1.92    1643.0      40.0                           31679.2773
+    0:01:04   80610.1      1.95    1655.8      40.0                           31644.4648
 
   Beginning Constant Register Removal
   -----------------------------------
@@ -1819,25 +1814,22 @@ End Combinational loops breaking ...
   Global Optimization (Phase 28)
   Global Optimization (Phase 29)
   Global Optimization (Phase 30)
-  Global Optimization (Phase 31)
-  Mapping 'vcve2_multdiv_fast_RV32M3_DW_mult_tc_10'
-  Mapping 'vcve2_multdiv_fast_RV32M3_DP_OP_116J6_122_2826_10'
+  Mapping 'vcve2_multdiv_fast_RV32M3_DP_OP_116J6_122_2826_5'
 
   Beginning Isolate Ports
   -----------------------
 
   Beginning Delay Optimization
   ----------------------------
-    0:01:02   52895.9      2.00    1696.2      71.9                           14823.0752
-    0:01:24   55362.2      0.62     544.6     107.1                           16445.7422
-    0:01:24   55362.2      0.62     544.6     107.1                           16445.7422
-    0:01:24   55377.7      0.62     545.1     105.6                           16457.1055
+    0:01:10   54601.2      2.58    2486.9      76.5                           15491.5166
+    0:01:34   57331.8      1.03    1003.5     114.2                           17157.2070
+    0:01:34   57331.8      1.03    1003.5     114.2                           17157.2070
+    0:01:35   57346.2      1.03    1000.3     112.3                           17168.5605
 Begin Combinational loops breaking ...
 	Number of combinational loops found: 0
 End Combinational loops breaking ...
 Information: The register 'u_cve2_core/vl_q_reg[31]' is a constant and will be removed. (OPT-1206)
 Information: The register 'u_cve2_core/vl_q_reg[30]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/vl_q_reg[12]' is a constant and will be removed. (OPT-1206)
 Information: The register 'u_cve2_core/vl_q_reg[29]' is a constant and will be removed. (OPT-1206)
 Information: The register 'u_cve2_core/vl_q_reg[28]' is a constant and will be removed. (OPT-1206)
 Information: The register 'u_cve2_core/vl_q_reg[27]' is a constant and will be removed. (OPT-1206)
@@ -1855,38 +1847,39 @@ Information: The register 'u_cve2_core/vl_q_reg[16]' is a constant and will be r
 Information: The register 'u_cve2_core/vl_q_reg[15]' is a constant and will be removed. (OPT-1206)
 Information: The register 'u_cve2_core/vl_q_reg[14]' is a constant and will be removed. (OPT-1206)
 Information: The register 'u_cve2_core/vl_q_reg[13]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/vl_q_reg[12]' is a constant and will be removed. (OPT-1206)
 Information: The register 'u_cve2_core/vl_q_reg[11]' is a constant and will be removed. (OPT-1206)
 Information: The register 'u_cve2_core/vl_q_reg[10]' is a constant and will be removed. (OPT-1206)
 Information: The register 'u_cve2_core/vl_q_reg[9]' is a constant and will be removed. (OPT-1206)
 Information: The register 'u_cve2_core/vl_q_reg[8]' is a constant and will be removed. (OPT-1206)
-    0:01:25   54713.5      0.62     551.4     105.6                           16199.7461
-    0:01:26   54657.0      0.71     554.2     126.8                           16188.4883
+    0:01:36   56697.1      1.03     997.7     112.3                           16948.4668
+    0:01:37   56631.2      1.30    1018.9     127.5                           16933.2363
 
   Beginning WLM Backend Optimization
   --------------------------------------
-    0:01:29   54135.7      0.71     490.9      11.1                           15877.6885
-    0:01:30   54037.4      0.71     492.5      11.1                           15819.7002
-    0:01:31   54137.5      0.61     470.3      11.1                           15891.2471
-    0:01:31   54137.5      0.61     470.3      11.1                           15891.2471
-    0:01:33   53951.0      0.61     413.5       0.8                           14484.5234
-    0:01:33   53951.0      0.61     413.5       0.8                           14484.5234
-    0:03:01   56665.1      0.33     190.4      66.9                           15384.6260
-    0:03:01   56665.1      0.33     190.4      66.9                           15384.6260
-    0:03:02   56841.8      0.32     174.3      66.9                           15513.5771
-    0:03:02   56841.8      0.32     174.3      66.9                           15513.5771
-    0:03:29   57393.7      0.27     152.3      74.4                           15733.7334
-    0:03:29   57393.7      0.27     152.3      74.4                           15733.7334
-    0:04:16   59247.4      0.09      26.5      72.1                           16851.7344
-    0:04:16   59247.4      0.09      26.5      72.1                           16851.7344
-    0:04:48   59347.4      0.08      23.6      72.1                           16825.7598
-    0:04:48   59347.4      0.08      23.6      72.1                           16825.7598
-    0:05:05   59774.4      0.06      12.8      72.1                           17095.5957
-    0:05:05   59774.4      0.06      12.8      72.1                           17095.5957
-    0:05:20   59808.6      0.04       8.5      72.1                           17104.3418
-    0:05:20   59808.6      0.04       8.5      72.1                           17104.3418
-    0:05:41   60277.0      0.02       3.0      72.1                           17356.5371
-    0:05:41   60277.0      0.02       3.0      72.1                           17356.5371
-    0:06:09   60276.6      0.02       3.3      72.1                           17331.4082
+    0:01:41   56131.9      1.29     961.0       9.7                           16626.7441
+    0:01:42   55902.6      1.28     971.3       9.7                           16497.7383
+    0:01:44   55973.9      1.02     921.3       9.7                           16556.9102
+    0:01:44   55973.9      1.02     921.3       9.7                           16556.9102
+    0:01:47   55812.2      1.02     877.8       0.0                           15316.2939
+    0:01:47   55812.2      1.02     877.8       0.0                           15316.2939
+    0:02:56   58614.5      0.82     669.1       9.2                           16288.3799
+    0:02:56   58614.5      0.82     669.1       9.2                           16288.3799
+    0:02:57   58911.8      0.76     612.9      10.3                           16496.3184
+    0:02:57   58911.8      0.76     612.9      10.3                           16496.3184
+    0:04:55   61110.4      0.62     482.1      94.0                           17247.6816
+    0:04:55   61110.4      0.62     482.1      94.0                           17247.6816
+    0:05:38   62887.0      0.40     304.0     111.6                           18308.1855
+    0:05:38   62887.0      0.40     304.0     111.6                           18308.1855
+    0:06:16   62929.4      0.39     295.1     116.0                           18270.9062
+    0:06:16   62929.4      0.39     295.1     116.0                           18270.9062
+    0:06:36   63450.4      0.38     285.8     111.5                           18595.6113
+    0:06:36   63450.4      0.38     285.8     111.5                           18595.6113
+    0:07:41   63836.3      0.37     281.6     151.0                           18702.2090
+    0:07:41   63836.3      0.37     281.6     151.0                           18702.2090
+    0:07:57   64260.4      0.37     276.9     157.6                           18934.2852
+    0:07:57   64260.4      0.37     276.9     157.6                           18934.2852
+    0:08:30   64391.0      0.34     254.7      34.3                           18969.2383
 
 
   Beginning Design Rule Fixing  (max_transition)  (max_capacitance)
@@ -1896,12 +1889,12 @@ Information: The register 'u_cve2_core/vl_q_reg[8]' is a constant and will be re
    ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
     TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
   --------- --------- --------- --------- --------- ------------------------- ---------
-    0:06:09   60276.6      0.02       3.3      72.1                           17331.4082
+    0:08:30   64391.0      0.34     254.7      34.3                           18969.2383
+  Global Optimization (Phase 31)
   Global Optimization (Phase 32)
   Global Optimization (Phase 33)
-  Global Optimization (Phase 34)
-    0:06:10   60289.9      0.01       1.1       0.0                           17327.9980
-    0:06:18   60281.3      0.01       0.6       0.0                           17314.3945
+    0:08:32   64496.2      0.31     230.6       0.0                           19044.7324
+    0:09:41   64699.9      0.37     274.8     123.8                           19081.8086
 
 
   Beginning Leakage Power Optimization  (max_leakage_power 0)
@@ -1911,7 +1904,8 @@ Information: The register 'u_cve2_core/vl_q_reg[8]' is a constant and will be re
    ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
     TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
   --------- --------- --------- --------- --------- ------------------------- ---------
-    0:06:18   60281.3      0.01       0.6       0.0                           17314.3945
+    0:09:41   64699.9      0.37     274.8     123.8                           19081.8086
+  Global Optimization (Phase 34)
   Global Optimization (Phase 35)
   Global Optimization (Phase 36)
   Global Optimization (Phase 37)
@@ -1927,29 +1921,28 @@ Information: The register 'u_cve2_core/vl_q_reg[8]' is a constant and will be re
   Global Optimization (Phase 47)
   Global Optimization (Phase 48)
   Global Optimization (Phase 49)
-  Global Optimization (Phase 50)
-    0:06:26   59772.6      0.15     103.9       0.0                           17350.3594
-    0:07:24   60517.4      0.11      47.7      14.4                           17586.9531
-    0:07:24   60517.4      0.11      47.7      14.4                           17586.9531
-    0:07:26   58341.6      0.11      38.8       6.3                           15360.9219
-    0:07:26   58341.6      0.11      38.8       6.3                           15360.9219
-    0:07:35   58434.1      0.11      37.6       6.3                           15399.8799
-    0:07:35   58434.1      0.11      37.6       6.3                           15399.8799
-    0:07:36   58459.3      0.11      36.2       6.3                           15417.7930
-    0:07:36   58459.3      0.11      36.2       6.3                           15417.7930
-    0:07:40   58421.2      0.10      34.3       6.3                           15398.5547
-    0:07:40   58421.2      0.10      34.3       6.3                           15398.5547
-    0:08:02   59195.9      0.00       0.0      28.6                           15895.5693
-    0:08:02   59195.9      0.00       0.0      28.6                           15895.5693
-    0:08:02   59195.9      0.00       0.0      28.6                           15895.5693
-    0:08:02   59195.9      0.00       0.0      28.6                           15895.5693
-    0:08:02   59195.9      0.00       0.0      28.6                           15895.5693
-    0:08:02   59195.9      0.00       0.0      28.6                           15895.5693
-    0:08:02   59195.9      0.00       0.0      28.6                           15895.5693
-    0:08:02   59195.9      0.00       0.0      28.6                           15895.5693
-    0:08:02   59195.9      0.00       0.0      28.6                           15895.5693
-    0:08:02   59195.9      0.00       0.0      28.6                           15895.5693
-    0:08:02   59195.9      0.00       0.0      28.6                           15895.5693
+    0:09:50   63207.0      0.43     344.3       0.0                           18760.5352
+    0:12:07   64579.3      0.33     251.4     132.8                           19244.5547
+    0:12:07   64579.3      0.33     251.4     132.8                           19244.5547
+    0:12:09   62624.2      0.33     232.8      33.4                           17197.3242
+    0:12:09   62624.2      0.33     232.8      33.4                           17197.3242
+    0:12:36   62718.1      0.32     227.8      35.9                           17219.2266
+    0:12:37   62718.1      0.32     227.8      35.9                           17219.2266
+    0:12:38   62963.3      0.31     225.8      36.5                           17373.1660
+    0:12:38   62963.3      0.31     225.8      36.5                           17373.1660
+    0:13:14   63014.8      0.30     214.3      36.7                           17386.6172
+    0:13:14   63014.8      0.30     214.3      36.7                           17386.6172
+    0:13:39   63893.9      0.26     177.3      36.0                           17890.8105
+    0:13:39   63893.9      0.26     177.3      36.0                           17890.8105
+    0:14:15   63935.3      0.25     168.9      39.1                           17868.5664
+    0:14:15   63935.3      0.25     168.9      39.1                           17868.5664
+    0:14:32   64309.0      0.27     163.5      50.8                           18103.5664
+    0:14:32   64309.0      0.27     163.5      50.8                           18103.5664
+    0:14:55   64265.8      0.23     149.9      49.9                           18040.7422
+    0:14:55   64265.8      0.23     149.9      49.9                           18040.7422
+    0:15:20   64940.0      0.19      97.0      74.2                           18443.0957
+    0:15:20   64940.0      0.19      97.0      74.2                           18443.0957
+    0:15:39   64912.3      0.19      93.3      74.2                           18424.8770
 Begin Combinational loops breaking ...
 	Number of combinational loops found: 0
 End Combinational loops breaking ...
@@ -1958,19 +1951,25 @@ End Combinational loops breaking ...
    ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
     TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
   --------- --------- --------- --------- --------- ------------------------- ---------
-    0:08:03   59166.7      0.00       0.0      28.6                           15895.3643
-    0:08:05   57375.7      0.03       3.2      25.1                           14615.0322
-    0:08:06   57406.3      0.00       0.0      26.1                           14635.0205
-    0:08:06   57406.3      0.00       0.0      26.1                           14635.0205
-    0:08:08   57158.3      0.00       0.0       0.0                           14319.9570
-    0:08:10   56853.0      0.00       0.0       0.0                           14182.9023
-    0:08:10   56823.8      0.00       0.0       0.0                           14160.7148
-    0:08:10   56823.8      0.00       0.0       0.0                           14160.7148
-    0:08:10   56823.8      0.00       0.0       0.0                           14160.7148
-    0:08:10   56823.8      0.00       0.0       0.0                           14160.7148
-    0:08:10   56823.8      0.00       0.0       0.0                           14160.7148
-    0:08:10   56823.8      0.00       0.0       0.0                           14160.7148
-    0:08:14   56046.2      0.00       0.0       0.0                           13672.3770
+    0:15:40   64881.0      0.19      93.3      74.2                           18424.8223
+    0:15:44   61313.8      0.23      82.5      50.0                           16049.6650
+    0:15:48   61538.4      0.18      55.0      50.0 u_cve2_core/cs_registers_i/minstret_counter_i/clk_gate_counter_q_reg/latch/E 16203.2402
+    0:15:50   61571.2      0.17      54.5      50.0                           16218.5146
+    0:15:51   61521.8      0.17      54.3      50.0                           16202.2578
+    0:15:51   61480.1      0.17      54.3      50.0                           16190.2832
+    0:15:52   61440.8      0.17      54.3      50.0                           16183.3926
+    0:15:52   61440.8      0.17      54.3      50.0                           16183.3926
+    0:15:54   61426.4      0.17      54.4      50.0                           16195.3066
+    0:15:55   61201.1      0.17      54.6      50.0                           16091.4131
+    0:15:57   61238.5      0.16      52.1       0.0 u_cve2_core/cs_registers_i/minstret_counter_i/counter_q_reg[5]/D 16103.3389
+    0:15:59   61300.4      0.16      50.1       0.0 u_cve2_core/cs_registers_i/minstret_counter_i/counter_q_reg[5]/D 16127.9102
+    0:16:00   61323.1      0.16      48.4       0.0                           16144.4365
+    0:16:23   61872.1      0.13      43.8       0.0                           16505.4102
+    0:16:23   61872.1      0.13      43.8       0.0                           16505.4102
+    0:16:24   61882.2      0.13      41.4       0.0                           16511.2520
+    0:16:24   61882.2      0.13      41.4       0.0                           16511.2520
+    0:16:24   61922.2      0.13      41.4       0.0                           16532.3496
+    0:16:31   60978.6      0.13      38.4       0.0                           15960.5205
 Loading db file '/software/dk/tsmc65/digital/Front_End/timing_power_noise/NLDM/tcbn65lp_200a/tcbn65lpwc.db'
 
 
@@ -1980,7 +1979,7 @@ Note: Symbol # after min delay cost means estimated hold TNS across all active s
   Optimization Complete
   ---------------------
 Warning: Design 'vcve2_top' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
-     Net 'u_cve2_core/cs_registers_i/u_mstack_epc_csr/net122346': 1867 load(s), 1 driver(s)
+     Net 'u_cve2_core/cs_registers_i/gen_trigger_regs.g_dbg_tmatch_reg[0].u_tmatch_control_csr/net120620': 1956 load(s), 1 driver(s)
 Information: State dependent leakage is now switched from off to on.
 Information: Propagating switching activity (low effort zero delay simulation). (PWR-6)
 Writing ddc file '../../rpt/compiled.ddc'.
@@ -2083,25 +2082,19 @@ Warning: In the design vcve2_id_stage_0_3_0, net 'result_ex_i[2]' is connecting 
 Warning: In the design vcve2_id_stage_0_3_0, net 'result_ex_i[1]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_id_stage_0_3_0, net 'result_ex_i[0]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_id_stage_0_3_0, net 'instr_id_done_o' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'branch_target_o[31]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[31]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[30]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[29]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[28]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'branch_target_o[27]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'branch_target_o[29]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[26]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'branch_target_o[25]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[24]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[23]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'branch_target_o[21]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[20]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[19]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'branch_target_o[16]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'branch_target_o[15]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'branch_target_o[18]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'branch_target_o[17]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[14]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'branch_target_o[13]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[12]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[11]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[10]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[9]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'branch_target_o[8]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[8]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[7]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[6]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[5]' is connecting multiple ports. (UCN-1)
@@ -2180,62 +2173,54 @@ Warning: In the design vcve2_wb, net 'rf_waddr_id_i[1]' is connecting multiple p
 Warning: In the design vcve2_wb, net 'rf_waddr_id_i[0]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_wb, net 'vrf_we_id_i' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_agu_AddrWidth32, net 'addr_o[15]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[31]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[30]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[29]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[28]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[27]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[26]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[25]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[24]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[23]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[22]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[21]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[19]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[20]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[18]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[17]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[16]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[15]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[12]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[11]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[10]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[9]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[8]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[7]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'imm_i_type_o[4]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'imm_u_type_o[23]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'imm_u_type_o[21]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'imm_u_type_o[20]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'imm_v_type_o[11]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'imm_j_type_o[18]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'imm_j_type_o[16]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'imm_j_type_o[15]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_decoder_0_3_0, net 'imm_i_type_o[26]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_decoder_0_3_0, net 'imm_u_type_o[30]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_decoder_0_3_0, net 'imm_s_type_o[9]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_decoder_0_3_0, net 'imm_s_type_o[8]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_decoder_0_3_0, net 'imm_u_type_o[27]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_decoder_0_3_0, net 'imm_u_type_o[26]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_decoder_0_3_0, net 'imm_s_type_o[31]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_decoder_0_3_0, net 'imm_s_type_o[30]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_decoder_0_3_0, net 'imm_v_type_o[8]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_decoder_0_3_0, net 'imm_u_type_o[18]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_decoder_0_3_0, net 'imm_u_type_o[16]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_decoder_0_3_0, net 'imm_u_type_o[15]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_decoder_0_3_0, net 'vmem_ops_eew_o[2]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'imm_u_type_o[13]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'vrf_we_o' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_decoder_0_3_0, net 'vmem_ops_eew_o[1]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_decoder_0_3_0, net 'vmem_ops_eew_o[0]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_decoder_0_3_0, net 'imm_v_type_o[16]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_decoder_0_3_0, net 'vrf_sel_operation_o[3]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_decoder_0_3_0, net 'imm_v_type_o[27]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_controller, net 'csr_restore_dret_id_o' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[31]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_alu_RV32B0, net 'adder_result_ext_o[31]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_ext_o[30]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_ext_o[29]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[27]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[26]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[25]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_ext_o[25]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[23]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[29]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[28]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_alu_RV32B0, net 'adder_result_ext_o[27]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[21]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[20]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_ext_o[20]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[19]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[18]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[17]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_ext_o[17]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[15]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[14]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[13]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[12]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[11]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_alu_RV32B0, net 'adder_result_ext_o[13]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_alu_RV32B0, net 'adder_result_ext_o[12]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_alu_RV32B0, net 'adder_result_ext_o[11]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_ext_o[9]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[9]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[8]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[7]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[6]' is connecting multiple ports. (UCN-1)
 Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[5]' is connecting multiple ports. (UCN-1)
@@ -2252,13 +2237,13 @@ Warning: Verilog 'assign' or 'tran' statements are written out. (VO-4)
 #  all done -- exit
 #
 ############################################
-sh dateFri Sep 13 16:20:58 CEST 2024
-Fri Sep 13 16:20:58 CEST 2024
+sh dateTue Sep 24 12:38:10 CEST 2024
+Tue Sep 24 12:38:10 CEST 2024
 Warning: Cannot use command line editor for terminal type 'xterm-256color'.  (UI-74)
 dc_shell> 
-Memory usage for this session 587 Mbytes.
-Memory usage for this session including child processes 587 Mbytes.
-CPU usage for this session 542 seconds ( 0.15 hours ).
-Elapsed time for this session 667 seconds ( 0.19 hours ).
+Memory usage for this session 591 Mbytes.
+Memory usage for this session including child processes 591 Mbytes.
+CPU usage for this session 1036 seconds ( 0.29 hours ).
+Elapsed time for this session 1164 seconds ( 0.32 hours ).
 
 Thank you...

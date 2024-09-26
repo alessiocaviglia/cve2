@@ -7,7 +7,7 @@ Report : power
         -analysis_effort low
 Design : vcve2_top
 Version: R-2020.09-SP2
-Date   : Fri Sep 13 16:20:58 2024
+Date   : Tue Sep 24 12:38:10 2024
 ****************************************
 
 
@@ -245,12 +245,12 @@ Power-specific unit information :
     Leakage Power Units = 1nW
 
 
-  Cell Internal Power  = 783.1251 uW   (85%)
-  Net Switching Power  = 137.8744 uW   (15%)
+  Cell Internal Power  = 800.2869 uW   (84%)
+  Net Switching Power  = 151.4753 uW   (16%)
                          ---------
-Total Dynamic Power    = 920.9995 uW  (100%)
+Total Dynamic Power    = 951.7621 uW  (100%)
 
-Cell Leakage Power     =  13.5908 uW
+Cell Leakage Power     =  15.9011 uW
 
 
                  Internal         Switching           Leakage            Total
@@ -259,10 +259,10 @@ Power Group      Power            Power               Power              Power  
 io_pad             0.0000            0.0000            0.0000            0.0000  (   0.00%)
 memory             0.0000            0.0000            0.0000            0.0000  (   0.00%)
 black_box          0.0000            0.0000            0.0000            0.0000  (   0.00%)
-clock_network      0.1207        3.9768e-02          110.0285            0.1606  (  17.18%)
-register           0.5689        7.3625e-03        3.6637e+03            0.5799  (  62.05%)
+clock_network      0.1207        4.0366e-02          110.0285            0.1612  (  16.66%)
+register           0.5725        7.6728e-03        3.7005e+03            0.5838  (  60.34%)
 sequential         0.0000            0.0000            0.0000            0.0000  (   0.00%)
-combinational  9.3546e-02        9.0743e-02        9.8170e+03            0.1941  (  20.77%)
+combinational      0.1071            0.1034        1.2091e+04            0.2226  (  23.01%)
 --------------------------------------------------------------------------------------------------
-Total              0.7831 mW         0.1379 mW     1.3591e+04 nW         0.9346 mW
+Total              0.8003 mW         0.1515 mW     1.5901e+04 nW         0.9677 mW
 1

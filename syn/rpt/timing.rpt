@@ -6,7 +6,7 @@ Report : timing
         -max_paths 1
 Design : vcve2_top
 Version: R-2020.09-SP2
-Date   : Fri Sep 13 16:20:58 2024
+Date   : Tue Sep 24 12:38:09 2024
 ****************************************
 
  # A fanout number of 1000 was used for high fanout net computations.
@@ -16,8 +16,8 @@ Wire Load Model Mode: segmented
 
   Startpoint: u_cve2_core/if_stage_i/instr_rdata_id_o_reg_20_
               (rising edge-triggered flip-flop clocked by INPUT_CLK)
-  Endpoint: u_cve2_core/if_stage_i/prefetch_buffer_i/fifo_i/clk_gate_err_q_reg/latch
-            (gating element for clock INPUT_CLK)
+  Endpoint: u_cve2_core/cs_registers_i/u_mstatus_csr/rdata_q_reg_2_
+            (rising edge-triggered flip-flop clocked by INPUT_CLK)
   Path Group: INPUT_CLK
   Path Type: max
 
@@ -25,123 +25,129 @@ Wire Load Model Mode: segmented
   ------------------------------------------------
   SNPS_CLOCK_GATE_HIGH_vcve2_if_stage_1a110800_1a110808 ZeroWireload tcbn65lpwc
   vcve2_if_stage_1a110800_1a110808 ZeroWireload tcbn65lpwc
-  vcve2_decoder_0_3_0 ZeroWireload         tcbn65lpwc
   vcve2_id_stage_0_3_0 ZeroWireload        tcbn65lpwc
-  vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808 ZeroWireload tcbn65lpwc
   vcve2_register_file_ff_0_32_00000000 ZeroWireload tcbn65lpwc
+  vcve2_agu_AddrWidth32 ZeroWireload       tcbn65lpwc
+  vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808 ZeroWireload tcbn65lpwc
+  vcve2_controller   ZeroWireload          tcbn65lpwc
+  vcve2_decoder_0_3_0 ZeroWireload         tcbn65lpwc
   vcve2_lsu_interface ZeroWireload         tcbn65lpwc
   vcve2_ex_block_RV32M3_RV32B0 ZeroWireload tcbn65lpwc
   vcve2_multdiv_fast_RV32M3 ZeroWireload   tcbn65lpwc
   vcve2_alu_RV32B0   ZeroWireload          tcbn65lpwc
   vcve2_fracturable_adder_PIPE_WIDTH32 ZeroWireload tcbn65lpwc
-  vcve2_agu_AddrWidth32 ZeroWireload       tcbn65lpwc
-  vcve2_controller   ZeroWireload          tcbn65lpwc
-  vcve2_fetch_fifo_00000002 ZeroWireload   tcbn65lpwc
-  vcve2_prefetch_buffer ZeroWireload       tcbn65lpwc
-  SNPS_CLOCK_GATE_HIGH_vcve2_fetch_fifo_00000002_3 ZeroWireload tcbn65lpwc
+  vcve2_cs_registers_1_00000001_00000000_00000028_0_00000000_00000004_0_3_0 ZeroWireload tcbn65lpwc
+  vcve2_csr_6_0c     ZeroWireload          tcbn65lpwc
 
   Point                                                   Incr       Path
   --------------------------------------------------------------------------
   clock INPUT_CLK (rise edge)                             0.00       0.00
   clock network delay (ideal)                             0.00       0.00
-  u_cve2_core/if_stage_i/instr_rdata_id_o_reg_20_/CP (DFCNQD1)     0.00     0.00 r
-  u_cve2_core/if_stage_i/instr_rdata_id_o_reg_20_/Q (DFCNQD1)     0.24     0.24 r
-  u_cve2_core/if_stage_i/instr_rdata_id_o[20] (vcve2_if_stage_1a110800_1a110808)     0.00     0.24 r
-  u_cve2_core/id_stage_i/instr_rdata_i[20] (vcve2_id_stage_0_3_0)     0.00     0.24 r
-  u_cve2_core/id_stage_i/decoder_i/instr_rdata_i[20] (vcve2_decoder_0_3_0)     0.00     0.24 r
-  u_cve2_core/id_stage_i/decoder_i/U353/Z (BUFFD4)        0.09       0.33 r
-  u_cve2_core/id_stage_i/decoder_i/rf_raddr_b_o[0] (vcve2_decoder_0_3_0)     0.00     0.33 r
-  u_cve2_core/id_stage_i/rf_raddr_b_o[0] (vcve2_id_stage_0_3_0)     0.00     0.33 r
-  u_cve2_core/register_file_i/raddr_b_i[0] (vcve2_register_file_ff_0_32_00000000)     0.00     0.33 r
-  u_cve2_core/register_file_i/U1333/ZN (INVD3)            0.04       0.37 f
-  u_cve2_core/register_file_i/U462/ZN (ND2D4)             0.04       0.40 r
-  u_cve2_core/register_file_i/U539/ZN (INVD6)             0.04       0.44 f
-  u_cve2_core/register_file_i/U1293/ZN (ND2D4)            0.03       0.47 r
-  u_cve2_core/register_file_i/U1362/ZN (CKND2)            0.03       0.50 f
-  u_cve2_core/register_file_i/U1051/ZN (AOI22D0)          0.11       0.61 r
-  u_cve2_core/register_file_i/U2156/ZN (ND4D1)            0.12       0.73 f
-  u_cve2_core/register_file_i/U1340/ZN (NR2D0)            0.09       0.82 r
-  u_cve2_core/register_file_i/U498/ZN (ND2D1)             0.06       0.88 f
-  u_cve2_core/register_file_i/rdata_b_o[31] (vcve2_register_file_ff_0_32_00000000)     0.00     0.88 f
-  u_cve2_core/id_stage_i/rf_rdata_b_i[31] (vcve2_id_stage_0_3_0)     0.00     0.88 f
-  u_cve2_core/id_stage_i/U485/ZN (CKND2D0)                0.06       0.94 r
-  u_cve2_core/id_stage_i/U335/ZN (IOA21D1)                0.04       0.98 f
-  u_cve2_core/id_stage_i/multdiv_operand_b_ex_o[31] (vcve2_id_stage_0_3_0)     0.00     0.98 f
-  u_cve2_core/ex_block_i/multdiv_operand_b_i[31] (vcve2_ex_block_RV32M3_RV32B0)     0.00     0.98 f
-  u_cve2_core/ex_block_i/U84/ZN (CKND2D1)                 0.05       1.03 r
-  u_cve2_core/ex_block_i/U117/ZN (ND2D2)                  0.06       1.09 f
-  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/op_b_i[31] (vcve2_multdiv_fast_RV32M3)     0.00     1.09 f
-  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U136/ZN (ND2D1)     0.06     1.15 r
-  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U481/ZN (ND3D3)     0.09     1.24 f
-  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U1791/Z (CKXOR2D1)     0.19     1.43 r
-  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U1790/ZN (OAI22D1)     0.07     1.49 f
-  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U286/S (FA1D0)     0.19     1.68 r
-  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U1354/S (FA1D1)     0.25     1.93 f
-  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U1304/S (FA1D1)     0.24     2.17 f
-  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U1258/S (FA1D1)     0.24     2.41 r
-  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U1817/Z (CKXOR2D1)     0.15     2.57 f
-  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U2037/ZN (IOA21D1)     0.04     2.61 r
-  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U1169/ZN (IOA21D1)     0.06     2.67 f
-  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U3090/S (FA1D4)     0.25     2.92 r
-  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U1147/ZN (NR2XD2)     0.04     2.96 f
-  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U555/ZN (NR2XD2)     0.06     3.02 r
-  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U42/ZN (CKND2D1)     0.05     3.07 f
-  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U1110/ZN (CKND2)     0.04     3.11 r
-  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U3064/ZN (CKND2D2)     0.04     3.15 f
-  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U3124/ZN (CKND2)     0.03     3.18 r
-  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U3123/ZN (CKND2D2)     0.04     3.22 f
-  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U3007/ZN (AOI22D2)     0.07     3.28 r
-  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U1054/ZN (CKND2D2)     0.04     3.33 f
-  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/multdiv_result_o[22] (vcve2_multdiv_fast_RV32M3)     0.00     3.33 f
-  u_cve2_core/ex_block_i/U171/ZN (CKND2D2)                0.03       3.36 r
-  u_cve2_core/ex_block_i/U249/ZN (ND2D2)                  0.04       3.40 f
-  u_cve2_core/ex_block_i/alu_i/operand_b_i[22] (vcve2_alu_RV32B0)     0.00     3.40 f
-  u_cve2_core/ex_block_i/alu_i/U34/ZN (ND2D1)             0.05       3.45 r
-  u_cve2_core/ex_block_i/alu_i/U640/ZN (ND2D2)            0.05       3.50 f
-  u_cve2_core/ex_block_i/alu_i/adder_inst/operand_b_i[23] (vcve2_fracturable_adder_PIPE_WIDTH32)     0.00     3.50 f
-  u_cve2_core/ex_block_i/alu_i/adder_inst/U142/ZN (CKND2)     0.03     3.54 r
-  u_cve2_core/ex_block_i/alu_i/adder_inst/U138/ZN (ND2D3)     0.05     3.59 f
-  u_cve2_core/ex_block_i/alu_i/adder_inst/U22/Z (CKBD1)     0.09     3.68 f
-  u_cve2_core/ex_block_i/alu_i/adder_inst/U116/ZN (AOI21D2)     0.07     3.75 r
-  u_cve2_core/ex_block_i/alu_i/adder_inst/U368/ZN (XNR2D1)     0.16     3.90 r
-  u_cve2_core/ex_block_i/alu_i/adder_inst/U348/ZN (NR2D2)     0.03     3.93 f
-  u_cve2_core/ex_block_i/alu_i/adder_inst/U329/ZN (NR2D3)     0.08     4.02 r
-  u_cve2_core/ex_block_i/alu_i/adder_inst/result_o[24] (vcve2_fracturable_adder_PIPE_WIDTH32)     0.00     4.02 r
-  u_cve2_core/ex_block_i/alu_i/U641/ZN (NR2XD1)           0.06       4.07 f
-  u_cve2_core/ex_block_i/alu_i/U650/ZN (CKND2D2)          0.04       4.11 r
-  u_cve2_core/ex_block_i/alu_i/U655/ZN (NR3D2)            0.04       4.15 f
-  u_cve2_core/ex_block_i/alu_i/U330/ZN (CKND2D2)          0.05       4.19 r
-  u_cve2_core/ex_block_i/alu_i/U488/ZN (OAI21D2)          0.04       4.24 f
-  u_cve2_core/ex_block_i/alu_i/U448/ZN (ND2D2)            0.04       4.27 r
-  u_cve2_core/ex_block_i/alu_i/U65/ZN (ND3D3)             0.06       4.33 f
-  u_cve2_core/ex_block_i/alu_i/comparison_result_o (vcve2_alu_RV32B0)     0.00     4.33 f
-  u_cve2_core/ex_block_i/branch_decision_o (vcve2_ex_block_RV32M3_RV32B0)     0.00     4.33 f
-  u_cve2_core/id_stage_i/branch_decision_i (vcve2_id_stage_0_3_0)     0.00     4.33 f
-  u_cve2_core/id_stage_i/U46/ZN (ND2D4)                   0.05       4.38 r
-  u_cve2_core/id_stage_i/U347/ZN (CKND2D2)                0.06       4.43 f
-  u_cve2_core/id_stage_i/controller_i/stall_id_i (vcve2_controller)     0.00     4.43 f
-  u_cve2_core/id_stage_i/controller_i/U305/ZN (AOI211XD4)     0.12     4.55 r
-  u_cve2_core/id_stage_i/controller_i/id_in_ready_o (vcve2_controller)     0.00     4.55 r
-  u_cve2_core/id_stage_i/id_in_ready_o (vcve2_id_stage_0_3_0)     0.00     4.55 r
-  u_cve2_core/if_stage_i/id_in_ready_i (vcve2_if_stage_1a110800_1a110808)     0.00     4.55 r
-  u_cve2_core/if_stage_i/prefetch_buffer_i/ready_i (vcve2_prefetch_buffer)     0.00     4.55 r
-  u_cve2_core/if_stage_i/prefetch_buffer_i/fifo_i/out_ready_i (vcve2_fetch_fifo_00000002)     0.00     4.55 r
-  u_cve2_core/if_stage_i/prefetch_buffer_i/fifo_i/U4/ZN (CKND2D1)     0.06     4.61 f
-  u_cve2_core/if_stage_i/prefetch_buffer_i/fifo_i/U29/ZN (ND2D1)     0.04     4.65 r
-  u_cve2_core/if_stage_i/prefetch_buffer_i/fifo_i/clk_gate_err_q_reg/EN (SNPS_CLOCK_GATE_HIGH_vcve2_fetch_fifo_00000002_3)     0.00     4.65 r
-  u_cve2_core/if_stage_i/prefetch_buffer_i/fifo_i/clk_gate_err_q_reg/latch/E (CKLNQD1)     0.00     4.65 r
-  data arrival time                                                  4.65
+  u_cve2_core/if_stage_i/instr_rdata_id_o_reg_20_/CP (DFCNQD4)     0.00     0.00 r
+  u_cve2_core/if_stage_i/instr_rdata_id_o_reg_20_/Q (DFCNQD4)     0.31     0.31 r
+  u_cve2_core/if_stage_i/instr_rdata_id_o[20] (vcve2_if_stage_1a110800_1a110808)     0.00     0.31 r
+  u_cve2_core/id_stage_i/instr_rdata_i[20] (vcve2_id_stage_0_3_0)     0.00     0.31 r
+  u_cve2_core/id_stage_i/decoder_i/instr_rdata_i[20] (vcve2_decoder_0_3_0)     0.00     0.31 r
+  u_cve2_core/id_stage_i/decoder_i/rf_raddr_b_o[0] (vcve2_decoder_0_3_0)     0.00     0.31 r
+  u_cve2_core/id_stage_i/rf_raddr_b_o[0] (vcve2_id_stage_0_3_0)     0.00     0.31 r
+  u_cve2_core/register_file_i/raddr_b_i[0] (vcve2_register_file_ff_0_32_00000000)     0.00     0.31 r
+  u_cve2_core/register_file_i/U49/ZN (NR2D1)              0.07       0.38 f
+  u_cve2_core/register_file_i/U703/ZN (CKND2)             0.04       0.41 r
+  u_cve2_core/register_file_i/U1294/ZN (NR2D1)            0.03       0.44 f
+  u_cve2_core/register_file_i/U260/ZN (CKND1)             0.04       0.48 r
+  u_cve2_core/register_file_i/U277/ZN (CKND3)             0.08       0.56 f
+  u_cve2_core/register_file_i/U1001/ZN (AOI22D0)          0.11       0.67 r
+  u_cve2_core/register_file_i/U1661/ZN (ND4D1)            0.11       0.78 f
+  u_cve2_core/register_file_i/U1662/ZN (NR2D1)            0.08       0.86 r
+  u_cve2_core/register_file_i/U3/ZN (ND2D1)               0.08       0.94 f
+  u_cve2_core/register_file_i/rdata_b_o[0] (vcve2_register_file_ff_0_32_00000000)     0.00     0.94 f
+  u_cve2_core/id_stage_i/rf_rdata_b_i[0] (vcve2_id_stage_0_3_0)     0.00     0.94 f
+  u_cve2_core/id_stage_i/U612/ZN (INVD0)                  0.06       1.00 r
+  u_cve2_core/id_stage_i/U866/ZN (NR2XD0)                 0.04       1.03 f
+  u_cve2_core/id_stage_i/U1976/ZN (CKND2D0)               0.06       1.10 r
+  u_cve2_core/id_stage_i/U2143/ZN (INR3D1)                0.11       1.21 r
+  u_cve2_core/id_stage_i/U1117/ZN (OAI21D1)               0.06       1.27 f
+  u_cve2_core/id_stage_i/multdiv_operand_b_ex_o[24] (vcve2_id_stage_0_3_0)     0.00     1.27 f
+  u_cve2_core/ex_block_i/multdiv_operand_b_i[24] (vcve2_ex_block_RV32M3_RV32B0)     0.00     1.27 f
+  u_cve2_core/ex_block_i/U120/ZN (CKND2D1)                0.05       1.32 r
+  u_cve2_core/ex_block_i/U385/ZN (IOA21D2)                0.04       1.36 f
+  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/op_b_i[24] (vcve2_multdiv_fast_RV32M3)     0.00     1.36 f
+  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U1922/ZN (CKND2D2)     0.05     1.41 r
+  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U196/ZN (CKND2D4)     0.06     1.47 f
+  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U3040/Z (CKXOR2D1)     0.15     1.62 f
+  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U2878/ZN (OAI22D2)     0.06     1.68 r
+  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U2985/S (FA1D1)     0.25     1.93 f
+  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U2323/S (FA1D1)     0.24     2.17 f
+  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U3333/ZN (XNR3D4)     0.27     2.44 f
+  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U4315/S (FA1D4)     0.17     2.61 f
+  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U1037/Z (CKXOR2D1)     0.16     2.77 f
+  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U2991/ZN (OAI22D2)     0.06     2.83 r
+  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U4117/S (FA1D1)     0.24     3.07 r
+  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U610/ZN (CKND2)     0.03     3.10 f
+  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U609/ZN (ND2D2)     0.03     3.14 r
+  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U406/ZN (CKND3)     0.03     3.17 f
+  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U438/ZN (NR2XD3)     0.04     3.21 r
+  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U66/ZN (ND2D3)     0.05     3.26 f
+  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U2837/ZN (AOI21D4)     0.09     3.34 r
+  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U458/ZN (NR2XD4)     0.05     3.39 f
+  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U2632/ZN (ND2D8)     0.05     3.44 r
+  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U476/ZN (ND2D2)     0.04     3.47 f
+  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U648/ZN (ND2D2)     0.03     3.50 r
+  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U2642/ZN (ND2D2)     0.03     3.53 f
+  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/U2661/ZN (ND2D2)     0.03     3.57 r
+  u_cve2_core/ex_block_i/gen_multdiv_fast_multdiv_i/multdiv_result_o[23] (vcve2_multdiv_fast_RV32M3)     0.00     3.57 r
+  u_cve2_core/ex_block_i/U45/ZN (ND2D2)                   0.04       3.60 f
+  u_cve2_core/ex_block_i/U44/ZN (ND2D3)                   0.04       3.64 r
+  u_cve2_core/ex_block_i/alu_i/operand_b_i[23] (vcve2_alu_RV32B0)     0.00     3.64 r
+  u_cve2_core/ex_block_i/alu_i/U56/ZN (INVD2)             0.03       3.67 f
+  u_cve2_core/ex_block_i/alu_i/U66/ZN (ND2D2)             0.03       3.70 r
+  u_cve2_core/ex_block_i/alu_i/U57/ZN (ND2D3)             0.05       3.74 f
+  u_cve2_core/ex_block_i/alu_i/adder_inst/operand_b_i[24] (vcve2_fracturable_adder_PIPE_WIDTH32)     0.00     3.74 f
+  u_cve2_core/ex_block_i/alu_i/adder_inst/U289/ZN (ND2D2)     0.04     3.78 r
+  u_cve2_core/ex_block_i/alu_i/adder_inst/U310/ZN (ND2D2)     0.04     3.82 f
+  u_cve2_core/ex_block_i/alu_i/adder_inst/U305/ZN (NR2XD2)     0.04     3.86 r
+  u_cve2_core/ex_block_i/alu_i/adder_inst/U306/ZN (AOI22D4)     0.04     3.90 f
+  u_cve2_core/ex_block_i/alu_i/adder_inst/U302/ZN (NR2XD4)     0.06     3.96 r
+  u_cve2_core/ex_block_i/alu_i/adder_inst/U19/ZN (CKND1)     0.03     4.00 f
+  u_cve2_core/ex_block_i/alu_i/adder_inst/U92/ZN (ND2D2)     0.03     4.03 r
+  u_cve2_core/ex_block_i/alu_i/adder_inst/U168/ZN (CKND2D2)     0.03     4.06 f
+  u_cve2_core/ex_block_i/alu_i/adder_inst/U390/ZN (ND2D2)     0.03     4.09 r
+  u_cve2_core/ex_block_i/alu_i/adder_inst/U317/ZN (CKND2D2)     0.04     4.13 f
+  u_cve2_core/ex_block_i/alu_i/adder_inst/result_o[27] (vcve2_fracturable_adder_PIPE_WIDTH32)     0.00     4.13 f
+  u_cve2_core/ex_block_i/alu_i/U44/ZN (CKND2)             0.03       4.16 r
+  u_cve2_core/ex_block_i/alu_i/U500/ZN (ND3D2)            0.05       4.21 f
+  u_cve2_core/ex_block_i/alu_i/U471/ZN (NR2XD1)           0.04       4.25 r
+  u_cve2_core/ex_block_i/alu_i/U470/ZN (CKND2D2)          0.04       4.29 f
+  u_cve2_core/ex_block_i/alu_i/U484/ZN (NR2XD1)           0.04       4.33 r
+  u_cve2_core/ex_block_i/alu_i/U694/ZN (CKND2D2)          0.03       4.36 f
+  u_cve2_core/ex_block_i/alu_i/U202/ZN (AOI22D2)          0.06       4.42 r
+  u_cve2_core/ex_block_i/alu_i/U48/ZN (CKND2D3)           0.06       4.48 f
+  u_cve2_core/ex_block_i/alu_i/comparison_result_o (vcve2_alu_RV32B0)     0.00     4.48 f
+  u_cve2_core/ex_block_i/branch_decision_o (vcve2_ex_block_RV32M3_RV32B0)     0.00     4.48 f
+  u_cve2_core/id_stage_i/branch_decision_i (vcve2_id_stage_0_3_0)     0.00     4.48 f
+  u_cve2_core/id_stage_i/U2354/ZN (AOI21D4)               0.06       4.54 r
+  u_cve2_core/id_stage_i/csr_op_en_o (vcve2_id_stage_0_3_0)     0.00     4.54 r
+  u_cve2_core/U67/ZN (INVD4)                              0.04       4.58 f
+  u_cve2_core/U40/ZN (CKND12)                             0.04       4.62 r
+  u_cve2_core/cs_registers_i/csr_op_en_i (vcve2_cs_registers_1_00000001_00000000_00000028_0_00000000_00000004_0_3_0)     0.00     4.62 r
+  u_cve2_core/cs_registers_i/U10/ZN (CKND2D1)             0.06       4.68 f
+  u_cve2_core/cs_registers_i/U97/ZN (CKND2)               0.04       4.72 r
+  u_cve2_core/cs_registers_i/U43/ZN (CKND2D0)             0.06       4.78 f
+  u_cve2_core/cs_registers_i/U260/ZN (OAI211D0)           0.07       4.85 r
+  u_cve2_core/cs_registers_i/u_mstatus_csr/wr_data_i[2] (vcve2_csr_6_0c)     0.00     4.85 r
+  u_cve2_core/cs_registers_i/u_mstatus_csr/rdata_q_reg_2_/D (DFSNQD1)     0.00     4.85 r
+  data arrival time                                                  4.85
 
   clock INPUT_CLK (rise edge)                             4.80       4.80
   clock network delay (ideal)                             0.00       4.80
-  u_cve2_core/if_stage_i/prefetch_buffer_i/fifo_i/clk_gate_err_q_reg/latch/CP (CKLNQD1)     0.00     4.80 r
-  clock gating setup time                                -0.15       4.65
-  data required time                                                 4.65
+  u_cve2_core/cs_registers_i/u_mstatus_csr/rdata_q_reg_2_/CP (DFSNQD1)     0.00     4.80 r
+  library setup time                                     -0.08       4.72
+  data required time                                                 4.72
   --------------------------------------------------------------------------
-  data required time                                                 4.65
-  data arrival time                                                 -4.65
+  data required time                                                 4.72
+  data arrival time                                                 -4.85
   --------------------------------------------------------------------------
-  slack (MET)                                                        0.00
+  slack (VIOLATED)                                                  -0.13
 
 
 1

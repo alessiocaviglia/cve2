@@ -48,8 +48,7 @@ module vcve2_ex_block #(
   // Vector extension
   input  logic                  vec_instr_i,
   input  logic                  mem_op_i,
-  input  logic [2:0]            vsew_i,
-  input  logic                  fract_i
+  input  logic [2:0]            vsew_i
 );
 
   import vcve2_pkg::*;
@@ -133,15 +132,6 @@ module vcve2_ex_block #(
       default: ;
     endcase
 
-    // The instructions above don't need fracturable so it's safe to add it here
-    if (fract_i) begin
-      case (vsew_i)
-        VSEW_8:   alu_operand_a = {alu_operand_a_i[7:0], alu_operand_a_i[7:0], alu_operand_a_i[7:0], alu_operand_a_i[7:0]};
-        VSEW_16:  alu_operand_a = {alu_operand_a_i[15:0], alu_operand_a_i[15:0]};
-        VSEW_32:  alu_operand_a = alu_operand_a_i;
-        default:  alu_operand_a = '0;
-      endcase
-    end
   end
 
   /////////

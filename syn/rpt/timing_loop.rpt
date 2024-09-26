@@ -123,7 +123,7 @@ Report : timing
         -max_paths 10
 Design : vcve2_top
 Version: R-2020.09-SP2
-Date   : Fri Sep 13 16:10:48 2024
+Date   : Tue Sep 24 12:19:42 2024
 ****************************************
 
  # A fanout number of 1000 was used for high fanout net computations.

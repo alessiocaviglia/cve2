@@ -348,7 +348,6 @@ module vcve2_core import vcve2_pkg::*; #(
   logic [3:0] lsu_vec_be;
   // Misc
   logic rf_we_wb_temp;
-  logic fract;
 
   //////////////////////
   // Clock management //
@@ -584,9 +583,7 @@ module vcve2_core import vcve2_pkg::*; #(
     .vmem_ops_eew_o(vmem_ops_eew),
     // Slide
     .slide_addr_req_i(agu_load && vrf_slide_op),
-    .slide_base_addr_i(agu_addr_o),
-    // EX
-    .fract_o(fract)
+    .slide_base_addr_i(agu_addr_o)
   );
 
   // for RVFI only
@@ -633,8 +630,7 @@ module vcve2_core import vcve2_pkg::*; #(
     // Vecto extension
     .vec_instr_i(vrf_req),
     .mem_op_i(vrf_memory_op),
-    .vsew_i(vsew_q),
-    .fract_i(fract)
+    .vsew_i(vsew_q)
   );
 
   /////////////////////

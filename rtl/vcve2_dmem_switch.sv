@@ -44,7 +44,7 @@ dmem_op_t prev_op_q, prev_op_d;
 logic vrf_has_mem;
 
 // signal is high when the VRF has control of the data memory, it can happen when the following conditions are met:
-// - it's a memory operation
+// - it's a vector operation
 // - the VRF didn't request a memory operation
 // - the LSU is not busy with a previously requested memory operation (needed especially for misaligned accesses)
 assign vrf_has_mem = vector_op_i && (!vector_mem_op_i && !lsu_busy_i);
