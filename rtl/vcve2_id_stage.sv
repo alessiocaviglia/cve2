@@ -163,7 +163,7 @@ module vcve2_id_stage #(
   output logic [31:0]               vrf_wdata_o,
   output logic [3:0]                vrf_sel_operation_o,
   output logic                      vrf_memory_op_o,
-  output logic                      vrf_interleaved_o,
+  output logic                      vrf_mult_ops_o,
   input  logic                      vector_done_i,
   // Slide instructions
   output logic                      vrf_slide_op_o,
@@ -178,13 +178,14 @@ module vcve2_id_stage #(
   output logic [2:0]                vmem_ops_eew_o,
   // Vectore slide instructions
   input  logic                      slide_addr_req_i,
-  input  logic [31:0]               slide_base_addr_i
+  input  logic [31:0]               slide_base_addr_i,
+  // CSR related invalid instruction
+  input  logic                      illegal_vec_csr_insn_i
 
 );
 
   import vcve2_pkg::*;
 
-  // TODO: now it's only this but I will add things probably while adding supported instructions
   assign vrf_wdata_o = result_ex_i;
 
   // Decoder/Controller, ID stage internal signals
@@ -307,13 +308,40 @@ module vcve2_id_stage #(
   end
 
   // Main ALU MUX for Operand A
+  // it has been modified to correctly handle immediate and scalar values when SEW<32 for vector instructions
   always_comb begin : alu_operand_a_mux
     unique case (alu_op_a_mux_sel)
-      OP_A_REG_A:   alu_operand_a = slide_addr_req_i ? rf_rdata_a_fwd<<vsew_i : rf_rdata_a_fwd; // Support for vector slide immediate
+
+      OP_A_REG_A: begin
+        if (vrf_req_o && !vrf_memory_op_o && !vrf_slide_op_o) begin
+          case (vsew_i)
+            VSEW_8:   alu_operand_a = {rf_rdata_a_fwd[7:0], rf_rdata_a_fwd[7:0], rf_rdata_a_fwd[7:0], rf_rdata_a_fwd[7:0]};
+            VSEW_16:  alu_operand_a = {rf_rdata_a_fwd[15:0], rf_rdata_a_fwd[15:0]};
+            VSEW_32:  alu_operand_a = rf_rdata_a_fwd;
+            default:  alu_operand_a = '0;
+          endcase
+        end else begin
+          alu_operand_a = slide_addr_req_i ? rf_rdata_a_fwd<<vsew_i : rf_rdata_a_fwd; // Support for vector slide immediate
+        end     
+      end   
+
       OP_A_VREG:    alu_operand_a = vrf_rdata_a_i;     // [VEC] Vector extension
       OP_A_FWD:     alu_operand_a = lsu_addr_last_i;
       OP_A_CURRPC:  alu_operand_a = pc_id_i;
-      OP_A_IMM:     alu_operand_a = slide_addr_req_i ? imm_a<<vsew_i : imm_a;   // Support for vector slide immediate
+
+      OP_A_IMM: begin
+        if (vrf_req_o && !vrf_memory_op_o && !vrf_slide_op_o) begin
+          case (vsew_i)
+            VSEW_8:   alu_operand_a = {imm_a[7:0], imm_a[7:0], imm_a[7:0], imm_a[7:0]};
+            VSEW_16:  alu_operand_a = {imm_a[15:0], imm_a[15:0]};
+            VSEW_32:  alu_operand_a = imm_a;
+            default:  alu_operand_a = '0;
+          endcase
+        end else begin
+          alu_operand_a = slide_addr_req_i ? imm_a<<vsew_i : imm_a;   // Support for vector slide immediate
+        end     
+      end
+
       default:     alu_operand_a = pc_id_i;
     endcase
   end
@@ -346,11 +374,38 @@ module vcve2_id_stage #(
       IMM_B_INCR_ADDR})
 
   // ALU MUX for Operand B - Modified to include vector register
+  // it has been modified to correctly handle immediate and scalar values when SEW<32 for vector instructions
   always_comb begin : alu_operand_b_mux
     unique case (alu_op_b_mux_sel)
-      OP_B_REG_B:  alu_operand_b = rf_rdata_b_fwd;
+
+      OP_B_REG_B:  begin
+        if (vrf_req_o && !vrf_memory_op_o && !vrf_slide_op_o) begin
+          case (vsew_i)
+            VSEW_8:   alu_operand_b = {rf_rdata_b_fwd[7:0], rf_rdata_b_fwd[7:0], rf_rdata_b_fwd[7:0], rf_rdata_b_fwd[7:0]};
+            VSEW_16:  alu_operand_b = {rf_rdata_b_fwd[15:0], rf_rdata_b_fwd[15:0]};
+            VSEW_32:  alu_operand_b = rf_rdata_b_fwd;
+            default:  alu_operand_b = '0;
+          endcase
+        end else begin
+          alu_operand_b = rf_rdata_b_fwd;
+        end
+      end
+
       OP_B_VREG:   alu_operand_b = vrf_rdata_b_i;     // [VEC] Vector extension
-      OP_B_IMM:    alu_operand_b = imm_b;
+
+      OP_B_IMM:    begin
+        if (vrf_req_o && !vrf_memory_op_o && !vrf_slide_op_o) begin
+          case (vsew_i)
+            VSEW_8:   alu_operand_b = {imm_b[7:0], imm_b[7:0], imm_b[7:0], imm_b[7:0]};
+            VSEW_16:  alu_operand_b = {imm_b[15:0], imm_b[15:0]};
+            VSEW_32:  alu_operand_b = imm_b;
+            default:  alu_operand_b = '0;
+          endcase
+        end else begin
+          alu_operand_b = imm_b;
+        end
+      end
+
       OP_B_SLIDE:  alu_operand_b = slide_base_addr_i;
       default:     alu_operand_b = '0;
     endcase
@@ -360,9 +415,9 @@ module vcve2_id_stage #(
   assign alu_operand_c_ex_o = vrf_rdata_c_i;
 
   // MUL/DIV MUX for Operand A
-  assign multdiv_operand_a_ex_o = vrf_req_o ? vrf_rdata_a_i : rf_rdata_a_fwd;
+  assign multdiv_operand_a_ex_o = vrf_req_o ? alu_operand_a : rf_rdata_a_fwd;
   // MUL/DIV MUX for Operand B
-  assign multdiv_operand_b_ex_o = vrf_req_o ? vrf_rdata_b_i : rf_rdata_b_fwd;
+  assign multdiv_operand_b_ex_o = vrf_req_o ? alu_operand_b : rf_rdata_b_fwd;
 
   /////////////////////////////////////////
   // Multicycle Operation Stage Register //
@@ -478,7 +533,7 @@ module vcve2_id_stage #(
     .vrf_we_o(vrf_we_id_o),
     .vrf_sel_operation_o(vrf_sel_operation_o),
     .vrf_memory_op_o(vrf_memory_op_o),
-    .vrf_interleaved_o(vrf_interleaved_o),
+    .vrf_mult_ops_o(vrf_mult_ops_o),
     .vrf_slide_op_o(vrf_slide_op_o),
     .is_slide_up_o(is_slide_up_o),
     // vector immediates
@@ -491,7 +546,6 @@ module vcve2_id_stage #(
     // LSU
     .unit_stride_o(unit_stride_o),
     .vmem_ops_eew_o(vmem_ops_eew_o)     // element width for vector memory operations
-    
   );
 
   /////////////////////////////////
@@ -529,7 +583,7 @@ module vcve2_id_stage #(
   // Controller //
   ////////////////
 
-  assign illegal_insn_o = instr_valid_i & (illegal_insn_dec | illegal_csr_insn_i);
+  assign illegal_insn_o = instr_valid_i & (illegal_insn_dec | illegal_csr_insn_i) | (vrf_req_o && illegal_vec_csr_insn_i);
 
   vcve2_controller #(
   ) controller_i (
@@ -638,8 +692,8 @@ module vcve2_id_stage #(
 
   assign multdiv_operator_ex_o       = multdiv_operator;
   assign multdiv_signed_mode_ex_o    = multdiv_signed_mode;
-  assign multdiv_operand_a_ex_o      = rf_rdata_a_fwd;
-  assign multdiv_operand_b_ex_o      = rf_rdata_b_fwd;
+  // assign multdiv_operand_a_ex_o      = rf_rdata_a_fwd;
+  // assign multdiv_operand_b_ex_o      = rf_rdata_b_fwd;
 
   ////////////////////////
   // Branch set control //
@@ -729,7 +783,7 @@ module vcve2_id_stage #(
                 id_fsm_d    = MULTI_CYCLE;
               end
             end
-            multdiv_en_dec: begin
+            multdiv_en_dec && !vrf_req_o: begin       // when a mul is requested during a memory operation the FSM is handled by the VRF logic
               // MUL or DIV operation
               if (~ex_valid_i) begin
                 // When single-cycle multiply is configured mul can finish in the first cycle so

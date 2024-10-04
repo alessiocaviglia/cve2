@@ -97,7 +97,7 @@ module vcve2_decoder #(
   output logic                  vrf_we_o,              // write enable for vector register file
   output logic[3:0]             vrf_sel_operation_o,
   output logic                  vrf_memory_op_o,
-  output logic                  vrf_interleaved_o,
+  output logic                  vrf_mult_ops_o,
   // Slide instructions
   output logic                  vrf_slide_op_o,
   output logic                  is_slide_up_o,
@@ -260,7 +260,7 @@ module vcve2_decoder #(
     vl_max_o              = 1'b0;
     vl_keep_o             = 1'b0;
     vrf_memory_op_o       = 1'b0;
-    vrf_interleaved_o    = 1'b0;
+    vrf_mult_ops_o    = 1'b0;
     unit_stride_o         = 1'b0;
     // slide instructions
     vrf_slide_op_o        = 1'b0;
@@ -743,27 +743,47 @@ module vcve2_decoder #(
             {6'b00_0000, 3'b000}: begin    // vadd.vv
               vrf_we_o = 1'b1;
               vrf_sel_operation_o = 4'b1011;
-              vrf_interleaved_o = 1'b1;
+              vrf_mult_ops_o = 1'b1;
             end
             {6'b00_0000, 3'b100}: begin    // vadd.vx
+              vrf_we_o = 1'b1;
+              vrf_sel_operation_o = 4'b1010;
             end
             {6'b00_0000, 3'b011}: begin    // vadd.vi
+              vrf_we_o = 1'b1;
+              vrf_sel_operation_o = 4'b1010;
             end
             {6'b00_0010, 3'b000}: begin    // vsub.vv
               vrf_we_o = 1'b1;
               vrf_sel_operation_o = 4'b1011;
-              vrf_interleaved_o = 1'b1;
+              vrf_mult_ops_o = 1'b1;
             end
             {6'b00_0010, 3'b100}: begin    // vsub.vx
+            end
+            {6'b10_0101, 3'b010}: begin    // vmul.vv
+              vrf_we_o = 1'b1;
+              vrf_sel_operation_o = 4'b1011;
+              vrf_mult_ops_o = 1'b1;
+              multdiv_operator_o    = MD_OP_MULL;
+              multdiv_signed_mode_o = 2'b00;
+            end
+            {6'b10_0101, 3'b110}: begin    // vmul.vx
+              vrf_we_o = 1'b1;
+              vrf_sel_operation_o = 4'b1010;
+              multdiv_operator_o    = MD_OP_MULL;
+              multdiv_signed_mode_o = 2'b00;
             end
 
             // Multiply-and-Accumulate instructions
             {6'b10_1101, 3'b010}: begin    // vmacc.vv
               vrf_we_o = 1'b1;
               vrf_sel_operation_o = 4'b1111;
-              vrf_interleaved_o = 1'b1;
+              vrf_mult_ops_o = 1'b1;
             end
             {6'b10_1101, 3'b110}: begin    // vmacc.vx
+              vrf_we_o = 1'b1;
+              vrf_sel_operation_o = 4'b1110;
+              vrf_mult_ops_o = 1'b1;
             end
             {6'b10_1111, 3'b010}: begin    // vnmsac.vv
             end
@@ -1385,14 +1405,22 @@ module vcve2_decoder #(
         else begin
           unique case ({instr_alu[31:26], instr_alu[14:12]})  // {funct6, funct3}
             // Vector Integer Arithmetic Operations
+            // ADD-SUB
             {6'b00_0000, 3'b000}: begin    // vadd.vv
               alu_op_a_mux_sel_o = OP_A_VREG;
               alu_op_b_mux_sel_o = OP_B_VREG;
               alu_operator_o = ALU_ADD;
             end
             {6'b00_0000, 3'b100}: begin    // vadd.vx
+              alu_op_a_mux_sel_o = OP_A_REG_A;
+              alu_op_b_mux_sel_o = OP_B_VREG;
+              alu_operator_o = ALU_ADD;
             end
             {6'b00_0000, 3'b011}: begin    // vadd.vi
+              alu_op_a_mux_sel_o = OP_A_IMM;
+              alu_op_b_mux_sel_o = OP_B_VREG;
+              alu_operator_o = ALU_ADD;
+              imm_a_mux_sel_o    = IMM_A_Z;
             end
             {6'b00_0010, 3'b000}: begin    // vsub.vv
               alu_op_a_mux_sel_o = OP_A_VREG;
@@ -1400,6 +1428,112 @@ module vcve2_decoder #(
               alu_operator_o = ALU_SUB;
             end
             {6'b00_0010, 3'b100}: begin    // vsub.vx
+              alu_op_a_mux_sel_o = OP_A_REG_A;
+              alu_op_b_mux_sel_o = OP_B_VREG;
+              alu_operator_o = ALU_SUB;
+            end
+            // LOGICAL
+            {6'b00_1001, 3'b000}: begin    // vand.vv
+              alu_op_a_mux_sel_o = OP_A_VREG;
+              alu_op_b_mux_sel_o = OP_B_VREG;
+              alu_operator_o     = ALU_AND;
+            end
+            {6'b00_1001, 3'b100}: begin    // vand.vx
+              alu_op_a_mux_sel_o = OP_A_REG_A;
+              alu_op_b_mux_sel_o = OP_B_VREG;
+              alu_operator_o     = ALU_AND;
+            end
+            {6'b00_1001, 3'b011}: begin    // vand.vi
+              alu_op_a_mux_sel_o = OP_A_IMM;
+              alu_op_b_mux_sel_o = OP_B_VREG;
+              alu_operator_o     = ALU_AND;
+              imm_a_mux_sel_o    = IMM_A_Z;
+            end
+            {6'b00_1010, 3'b000}: begin    // vor.vv
+              alu_op_a_mux_sel_o = OP_A_VREG;
+              alu_op_b_mux_sel_o = OP_B_VREG;
+              alu_operator_o     = ALU_OR;
+            end
+            {6'b00_1010, 3'b100}: begin    // vor.vx
+              alu_op_a_mux_sel_o = OP_A_REG_A;
+              alu_op_b_mux_sel_o = OP_B_VREG;
+              alu_operator_o     = ALU_OR;
+            end
+            {6'b00_1010, 3'b011}: begin    // vor.vi
+              alu_op_a_mux_sel_o = OP_A_IMM;
+              alu_op_b_mux_sel_o = OP_B_VREG;
+              alu_operator_o     = ALU_OR;
+              imm_a_mux_sel_o    = IMM_A_Z;
+            end
+            {6'b00_1011, 3'b000}: begin    // vxor.vv
+              alu_op_a_mux_sel_o = OP_A_VREG;
+              alu_op_b_mux_sel_o = OP_B_VREG;
+              alu_operator_o     = ALU_XOR;
+            end
+            {6'b00_1011, 3'b100}: begin    // vxor.vx
+              alu_op_a_mux_sel_o = OP_A_REG_A;
+              alu_op_b_mux_sel_o = OP_B_VREG;
+              alu_operator_o     = ALU_XOR;
+            end
+            {6'b00_1011, 3'b011}: begin    // vxor.vi
+              alu_op_a_mux_sel_o = OP_A_IMM;
+              alu_op_b_mux_sel_o = OP_B_VREG;
+              alu_operator_o     = ALU_XOR;
+              imm_a_mux_sel_o    = IMM_A_Z;
+            end
+            // MAX
+            {6'b00_0100, 3'b000}: begin    // vminu.vv
+              alu_op_a_mux_sel_o = OP_A_VREG;
+              alu_op_b_mux_sel_o = OP_B_VREG;
+              alu_operator_o     = ALU_MINU;
+            end
+            {6'b00_0100, 3'b100}: begin    // vminu.vx
+              alu_op_a_mux_sel_o = OP_A_REG_A;
+              alu_op_b_mux_sel_o = OP_B_VREG;
+              alu_operator_o     = ALU_MINU;
+            end
+            {6'b00_0101, 3'b000}: begin    // vmin.vv
+              alu_op_a_mux_sel_o = OP_A_VREG;
+              alu_op_b_mux_sel_o = OP_B_VREG;
+              alu_operator_o     = ALU_MIN;
+            end
+            {6'b00_0101, 3'b100}: begin    // vmin.vx
+              alu_op_a_mux_sel_o = OP_A_REG_A;
+              alu_op_b_mux_sel_o = OP_B_VREG;
+              alu_operator_o     = ALU_MIN;
+            end
+            {6'b00_0110, 3'b000}: begin    // vmaxu.vv
+              alu_op_a_mux_sel_o = OP_A_VREG;
+              alu_op_b_mux_sel_o = OP_B_VREG;
+              alu_operator_o     = ALU_MAXU;
+            end
+            {6'b00_0110, 3'b100}: begin    // vmaxu.vx
+              alu_op_a_mux_sel_o = OP_A_REG_A;
+              alu_op_b_mux_sel_o = OP_B_VREG;
+              alu_operator_o     = ALU_MAXU;
+            end
+            {6'b00_0111, 3'b000}: begin    // vmax.vv
+              alu_op_a_mux_sel_o = OP_A_VREG;
+              alu_op_b_mux_sel_o = OP_B_VREG;
+              alu_operator_o     = ALU_MAX;
+            end
+            {6'b00_0111, 3'b100}: begin    // vmax.vx
+              alu_op_a_mux_sel_o = OP_A_REG_A;
+              alu_op_b_mux_sel_o = OP_B_VREG;
+              alu_operator_o     = ALU_MAX;
+            end
+            // MUL
+            {6'b10_0101, 3'b010}: begin    // vmul.vv
+              alu_op_a_mux_sel_o = OP_A_VREG;
+              alu_op_b_mux_sel_o = OP_B_VREG;
+              alu_operator_o = ALU_ADD;
+              mult_sel_o     = (RV32M == RV32MNone) ? 1'b0 : 1'b1;
+            end
+            {6'b10_0101, 3'b110}: begin    // vmul.vx
+              alu_op_a_mux_sel_o = OP_A_REG_A;
+              alu_op_b_mux_sel_o = OP_B_VREG;
+              alu_operator_o = ALU_ADD;
+              mult_sel_o     = (RV32M == RV32MNone) ? 1'b0 : 1'b1;
             end
 
             // Multiply-and-Accumulate instructions
@@ -1409,6 +1543,9 @@ module vcve2_decoder #(
               alu_operator_o = ALU_MAC;
             end
             {6'b10_1101, 3'b110}: begin    // vmacc.vx
+              alu_op_a_mux_sel_o = OP_A_REG_A;
+              alu_op_b_mux_sel_o = OP_B_VREG;
+              alu_operator_o = ALU_MAC;
             end
             {6'b10_1111, 3'b010}: begin    // vnmsac.vv
             end

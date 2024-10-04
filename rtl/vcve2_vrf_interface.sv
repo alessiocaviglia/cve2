@@ -42,7 +42,7 @@ module vcve2_vrf_interface #(
     input  logic [3:0]            sel_operation_i,    // each bit enables a different operation, 0 - R RS1, 1 - R RS2, 2 - R RS3, 3 - W RD
     input  logic                  memory_op_i,        // 0 - arithmetic operation, 1 - load/store operation
     input  logic                  unit_stride_i,      // 0 - non-unit stride, 1 - unit stride
-    input  logic                  interleaved_i,      // 0 - non-interleaved, 1 - interleaved
+    input  logic                  mult_ops_i,      // 0 - non-interleaved, 1 - interleaved
     output logic                  vector_done_o,      // signals the pipeline that the vector operation is finished (most likely with a write to the VRF)
     
     // Slide signals
@@ -165,7 +165,6 @@ module vcve2_vrf_interface #(
   end
 
   always_comb begin
-    // if it's the first write of a slideup operation it's possible we need a different byte-enable
     if (sel_slide_be) begin
       if (last_iteration_q) begin
         data_be_o = slide_offset_be & offset_be;
@@ -272,10 +271,12 @@ module vcve2_vrf_interface #(
         // NEXT STATE SELECTION
         first_iteration_d = 1'b1;
         slide_first_write_d = 1'b1;
+        
         if (memory_op_i == 0) begin                   // ARITHMETIC OPERATION
-          if (interleaved_i) begin
-            data_req_o = 1'b1;                          // read RS1         
-            agu_get_rs1_o = 1'b1;
+          if (mult_ops_i) begin
+            data_req_o = 1'b1;
+            if (sel_operation_i[0]) agu_get_rs1_o = 1'b1;
+            else agu_get_rs2_o = 1'b1;
             if (data_gnt_i) begin
               agu_incr_o = 1'b1;
               vrf_next_state = VRF_INT_READ1;
@@ -340,7 +341,10 @@ module vcve2_vrf_interface #(
       // In the following states the exit condition is the gnt signal since: gnt=1 => data_rvalid of the previous operation=1
       VRF_INT_READ1: begin
         // SAMPLE
-        if (data_rvalid_i && !last_iteration_q) rs1_en = 1;
+        if (data_rvalid_i && !last_iteration_q) begin
+          if (sel_operation_i[0]) rs1_en = 1;
+          else rs2_en = 1;
+        end
         // NEXT STATE SELECTION
         if (!first_iteration_q) begin
           data_we_o = 1'b1;
@@ -363,10 +367,13 @@ module vcve2_vrf_interface #(
 
       VRF_INT_READ2: begin
         // SAMPLE
-        if (data_rvalid_i) rs2_en = 1;
+        if (data_rvalid_i) begin
+          if (sel_operation_i[0]) rs2_en = 1;
+          else rs3_en = 1;
+        end
         // NEXT STATE SELECTION
-        // if next operation is READ RD
-        if (sel_operation_i[2]) begin
+        // thirs state used only form vmacc.vv
+        if (sel_operation_i[0] && sel_operation_i[2]) begin
           data_req_o = 1'b1;
           agu_get_rd_o = 1'b1;
           if (data_gnt_i) begin
@@ -381,7 +388,8 @@ module vcve2_vrf_interface #(
             vrf_next_state = VRF_INT_READ1;
           end else begin
             data_req_o = 1'b1;
-            agu_get_rs1_o = 1'b1;
+            if (sel_operation_i[0]) agu_get_rs1_o = 1'b1;
+            else agu_get_rs2_o = 1'b1;
             if (data_gnt_i) begin
               agu_incr_o = 1'b1;
               vrf_next_state = VRF_INT_READ1;
@@ -430,9 +438,12 @@ module vcve2_vrf_interface #(
           // if next operation is READ RS2
           if (sel_operation_i[1]) begin
             data_req_o = 1'b1;
-            agu_get_rs2_o = 1'b1;
+            if (sel_operation_i[0]) agu_get_rs2_o = 1'b1;
+            else agu_get_rd_o = 1'b1;
             if (data_gnt_i) begin
-              agu_incr_o = 1'b1;
+              if (sel_operation_i[0]) begin
+                agu_incr_o = 1'b1;
+              end
               if (num_iterations_q == (no_offset ? 1 : 0)) last_iteration_d = 1'b1;
               else num_iterations_d = num_iterations_q - 1;
               vrf_next_state = VRF_INT_READ2;
@@ -715,7 +726,7 @@ module vcve2_vrf_interface #(
   ///////////////////////////
 
   // Delayed write buffer
-  assign buffer_d = read_delayed ? rs1_d : rd_q;
+  assign buffer_d = read_delayed ? rs3_q : rd_q;
   always_ff @(posedge clk_i or negedge rst_ni) begin
     if (!rst_ni) begin
       curr_state_delay <= 2'b00;
@@ -794,9 +805,9 @@ module vcve2_vrf_interface #(
   // Outputs //
   /////////////
 
-  assign rdata_a_o = rdata_mux ? buffer_q : rs1_q;
+  assign rdata_a_o = rs1_q;
   assign rdata_b_o = rs2_q;
-  assign rdata_c_o = rs3_q;
+  assign rdata_c_o = rdata_mux ? buffer_q : rs3_q;
   // mux for the write data
   always_comb begin
     case (wdata_mux)

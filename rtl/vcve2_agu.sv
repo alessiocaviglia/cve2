@@ -30,7 +30,7 @@ module vcve2_agu #(
     import vcve2_pkg::*;
 
     // counter signals
-    logic [AddrWidth-3:0] addr_rs1_q, addr_rs2_q, addr_rd_q, addr_rs1_d, addr_rs2_d, addr_rd_d;
+    logic [4:0] addr_rs1_q, addr_rs2_q, addr_rd_q, addr_rs1_d, addr_rs2_d, addr_rd_d;
 
     //////////////
     // COUNTERS //
@@ -51,11 +51,11 @@ module vcve2_agu #(
 
     // Combinational logic for the counters
     always_comb begin
-        addr_rs1_d = load_i ? VREG_START_ADDR[rs1_i][31:2] : (get_rs1_i && incr_i) ? addr_rs1_q + 1 : addr_rs1_q;
-        addr_rs2_d = load_i ? VREG_START_ADDR[rs2_i][31:2] : (get_rs2_i && incr_i) ? addr_rs2_q + 1 : addr_rs2_q;
-        addr_rd_d = load_i ? VREG_START_ADDR[rd_i][31:2] : (get_rd_i && incr_i) ? addr_rd_q + 1 : addr_rd_q;
-        if (is_slide_i && !is_slide_up_i && load_i) addr_rs2_d = addr_i[31:2];      // in slide down the address is vs2 since we start reading it from OFFSET
-        else if (is_slide_i && is_slide_up_i && load_i) addr_rd_d = addr_i[31:2];   // in slide up the address is vd since we start writing it from OFFSET
+        addr_rs1_d = load_i ? {rs1_i[2:0], 2'b00} : (get_rs1_i && incr_i) ? addr_rs1_q + 1 : addr_rs1_q;
+        addr_rs2_d = load_i ? {rs2_i[2:0], 2'b00} : (get_rs2_i && incr_i) ? addr_rs2_q + 1 : addr_rs2_q;
+        addr_rd_d = load_i ? {rd_i[2:0], 2'b00} : (get_rd_i && incr_i) ? addr_rd_q + 1 : addr_rd_q;
+        if (is_slide_i && !is_slide_up_i && load_i) addr_rs2_d = addr_i[6:2];      // in slide down the address is vs2 since we start reading it from OFFSET
+        else if (is_slide_i && is_slide_up_i && load_i) addr_rd_d = addr_i[6:2];   // in slide up the address is vd since we start writing it from OFFSET
     end
 
     ////////////
@@ -66,11 +66,11 @@ module vcve2_agu #(
     always_comb begin
         // if the instruction is a slide we need to load the address incremented by offset, to do so the adder is exploted
         if (load_i && is_slide_i) begin
-            addr_o = {!is_slide_up_i ? VREG_START_ADDR[rs2_i][31:2] : VREG_START_ADDR[rd_i][31:2], 2'b00};
+            addr_o = {VRF_START_ADDR, !is_slide_up_i ? rs2_i : rd_i, 4'b0000};
         end else begin
-            addr_o = get_rs1_i ? {addr_rs1_q, 2'b00} :
-                     get_rs2_i ? {addr_rs2_q, 2'b00} :
-                     get_rd_i  ? {addr_rd_q, 2'b00}  : '0;
+            addr_o = get_rs1_i ? {VRF_START_ADDR, rs1_i[4:3], addr_rs1_q, 2'b00} :
+                     get_rs2_i ? {VRF_START_ADDR, rs2_i[4:3], addr_rs2_q, 2'b00} :
+                     get_rd_i  ? {VRF_START_ADDR, rd_i[4:3], addr_rd_q, 2'b00}  : '0;
         end
     end
 

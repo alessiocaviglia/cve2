@@ -148,7 +148,9 @@ compile_core:
 .PHONY: syn-core
 syn-core:
 	make clean-syn
+	mkdir -p $(SYN_NETLIST_DIR)
 	fusesoc --cores-root . run --build-root $(SYNTHESIS_DIR) --target=synth --tool=design_compiler --setup --build alessiocaviglia:thesis:vcve2_top 2>&1 | tee buildsim.log
+	cp $(SYNTHESIS_DIR)/synth-design_compiler/netlist.v $(SYN_NETLIST_DIR)/netlist.v
 
 #-------#
 # Utils #
@@ -161,6 +163,4 @@ clean-syn:
 
 .PHONY: prepare-syn-sim
 prepare-syn-sim:
-	mkdir -p $(SYN_NETLIST_DIR)
-	cp $(SYNTHESIS_DIR)/synth-design_compiler/netlist.v $(SYN_NETLIST_DIR)/netlist.v
 	cp -n /software/dk/tsmc65/digital/Front_End/verilog/tcbn65lp_200a/tcbn65lp.v $(SYN_NETLIST_DIR)/tcbn65lp.v

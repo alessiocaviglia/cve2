@@ -53,7 +53,7 @@ module vcve2_ex_block #(
 
   import vcve2_pkg::*;
 
-  logic [31:0] alu_result, multdiv_result, alu_vec_elem_result;
+  logic [31:0] alu_result, multdiv_result;
 
   logic [32:0] multdiv_alu_operand_b, multdiv_alu_operand_a;
   logic [33:0] alu_adder_result_ext;
@@ -68,7 +68,6 @@ module vcve2_ex_block #(
   // Additions for vector extensions
   logic [31:0] alu_operand_a, alu_operand_b;
   logic [31:0] multdiv_operand_b;
-  logic alu_vec_elem_sel;
 
   /*
     The multdiv_i output is never selected if RV32M=RV32MNone
@@ -88,7 +87,7 @@ module vcve2_ex_block #(
 
   assign alu_imd_val_q = '{imd_val_q_i[0][31:0], imd_val_q_i[1][31:0]};
 
-  assign result_ex_o  = multdiv_sel ? multdiv_result : alu_vec_elem_sel ? alu_vec_elem_result : alu_result;
+  assign result_ex_o  = multdiv_sel ? multdiv_result : (alu_operator_i == ALU_SLIDE) ? alu_operand_b_i : alu_result;
 
   // branch handling
   assign branch_decision_o  = alu_cmp_result;
@@ -107,7 +106,11 @@ module vcve2_ex_block #(
     alu_operand_a = alu_operand_a_i;
     alu_operand_b = alu_operand_b_i;
     multdiv_operand_b = multdiv_operand_b_i;
+
     case (alu_operator_i)
+      ALU_MOVE: begin
+        alu_operand_b = '0;
+      end
       ALU_MAC: begin
         alu_operand_a = alu_operand_c_i;
         alu_operand_b = multdiv_result;
@@ -128,27 +131,7 @@ module vcve2_ex_block #(
       end
       default: ;
     endcase
-  end
 
-  ///////////////////////////////
-  // Vector element operations //
-  ///////////////////////////////
-  /* Manage instructions where there are movements between vector elements and no ALU operation */
-
-  assign alu_vec_elem_sel = (alu_operator_i == ALU_MOVE || alu_operator_i == ALU_SLIDE) ? vec_instr_i : 1'b0;
-  // Build the vector move result depending on SEW
-  always_comb begin
-    if (alu_operator_i == ALU_MOVE) begin
-      case (vsew_i)
-        VSEW_8:   alu_vec_elem_result = {alu_operand_a_i[7:0], alu_operand_a_i[7:0], alu_operand_a_i[7:0], alu_operand_a_i[7:0]};
-        VSEW_16:  alu_vec_elem_result = {alu_operand_a_i[15:0], alu_operand_a_i[15:0]};
-        VSEW_32:  alu_vec_elem_result = alu_operand_a_i[31:0];
-        default:  alu_vec_elem_result = '0;
-      endcase
-    end
-    else if (alu_operator_i == ALU_SLIDE) begin
-      alu_vec_elem_result = alu_operand_b_i[31:0];
-    end
   end
 
   /////////

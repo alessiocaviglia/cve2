@@ -5,7 +5,6 @@ set CONSTRAINTS ${SCRIPT_DIR}/set_constraints.tcl
 remove_design -all
 
 source ${SET_LIBS}
-
 source ${READ_SOURCES}.tcl
 
 elaborate ${TOP_MODULE}
@@ -25,11 +24,13 @@ compile_ultra -no_autoungroup -no_boundary_optimization -timing -gate_clock
 write -f ddc -hierarchy -output ${REPORT_DIR}/compiled.ddc
 
 report_area -hier -nosplit > ${REPORT_DIR}/area.rpt
-
-change_names -rules verilog -hier
-
-write -format verilog -hier -o netlist.v
-
 report_timing -nosplit > ${REPORT_DIR}/timing.rpt
 report_resources -hierarchy > ${REPORT_DIR}/resources.rpt
 report_power > ${REPORT_DIR}/power.rpt
+
+ungroup -all -flatten
+
+change_names -rules verilog -hier
+write_sdf ${REPORT_DIR}/netlist.sdf
+write -format verilog -hier -o netlist.v
+write_sdc ${REPORT_DIR}/netlist.sdc
