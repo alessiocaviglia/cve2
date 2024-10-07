@@ -42,7 +42,7 @@ module vcve2_vrf_wrapper #(
     input  logic [3:0]                  sel_operation_i,
     input  logic                        memory_op_i,
     input  logic                        unit_stride_i,
-    input  logic                        interleaved_i,
+    input  logic                        mult_ops_i,
     output logic                        vector_done_o,
 
     // Slide signals
@@ -63,6 +63,7 @@ module vcve2_vrf_wrapper #(
     // Internal signals for connecting to instances
     logic [NumIfs-1:0] req;
     logic req_1_d, req_1_q;
+    logic [NumIfs-1:0] agu_load, agu_incr;
 
     logic [NumIfs-1:0] other_done, op_done;
 
@@ -111,15 +112,15 @@ module vcve2_vrf_wrapper #(
 
                 .data_load_addr_o(data_load_addr_o),
                 .lsu_gnt_i(lsu_gnt_i),
-                .agu_load_o(agu_load_o),
+                .agu_load_o(agu_load[i]),
                 .agu_get_rs1_o(agu_get_rs1_o),
                 .agu_get_rs2_o(agu_get_rs2_o),
                 .agu_get_rd_o(agu_get_rd_o),
-                .agu_incr_o(agu_incr_o),
+                .agu_incr_o(agu_incr[i]),
                 .sel_operation_i(sel_operation_i),
                 .memory_op_i(memory_op_i),
                 .unit_stride_i(unit_stride_i),
-                .interleaved_i(interleaved_i),
+                .mult_ops_i(mult_ops_i),
                 .vector_done_o(vector_done_o),
                 .slide_op_i(slide_op_i),
                 .slide_offset_i(slide_offset_i),
@@ -147,5 +148,9 @@ module vcve2_vrf_wrapper #(
             assign other_done[2] = op_done[0] & op_done[1];
         end
     endgenerate
+
+    // AGU control signals
+    assign agu_load_o = agu_load[0];
+    assign agu_incr_o = agu_incr[NumIfs-1];
 
 endmodule

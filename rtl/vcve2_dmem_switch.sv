@@ -147,18 +147,18 @@ always_comb begin
 end
 
 // different conditions to ensure that when there is no vector operation the data memory is controlled by the LSU
-assign vrf_data_rvalid_o = ((prev_op_q == MOD_A) && vector_op_i) && data_rvalid_i;
-assign lsu_data_rvalid_o = ((prev_op_q == MOD_B) || !vector_op_i) && data_rvalid_i;
-assign vrf_data_err_o = ((prev_op_q == MOD_A) && vector_op_i) && data_err_i;
-assign lsu_data_err_o = ((prev_op_q == MOD_B) || !vector_op_i) && data_err_i;
+assign data_rvalid_a = ((prev_op_q == MOD_A) && vector_op_i) && data_rvalid_i;
+assign data_rvalid_b = ((prev_op_q == MOD_B) || !vector_op_i) && data_rvalid_i;
+assign data_err_a = ((prev_op_q == MOD_A) && vector_op_i) && data_err_i;
+assign data_err_b = ((prev_op_q == MOD_B) || !vector_op_i) && data_err_i;
 
 // OUTPUTS
 
-assign data_req_o = a_is_master ? vrf_data_req_i : lsu_data_req_i;
-assign data_we_o = a_is_master ? vrf_data_we_i : lsu_data_we_i;
-assign data_be_o = a_is_master ? vrf_data_be_i : lsu_data_be_i;
-assign data_addr_o = a_is_master ? vrf_data_addr_i : lsu_data_addr_i;
-assign data_wdata_o = a_is_master ? vrf_data_wdata_i : lsu_data_wdata_i;
+assign data_req_o = a_is_master ? data_req_a : data_req_b;
+assign data_we_o = a_is_master ? data_we_a : data_we_b;
+assign data_be_o = a_is_master ? data_be_a : data_be_b;
+assign data_addr_o = a_is_master ? data_addr_a : data_addr_b;
+assign data_wdata_o = a_is_master ? data_wdata_a : data_wdata_b;
 
 ///////////////////////////
 // Ports 2/3 connections //

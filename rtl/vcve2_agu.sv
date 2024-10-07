@@ -7,24 +7,24 @@ module vcve2_agu #(
 
     // input logic [....] vrf_base_addr_i, // base address of the VRF
     // addresses of registers
-    input logic [4:0] rs1_i,
-    input logic [4:0] rs2_i,
-    input logic [4:0] rd_i,
+    input logic [4:0]                         rs1_i,
+    input logic [4:0]                         rs2_i,
+    input logic [4:0]                         rd_i,
 
     // control signals from VRF
-    input logic load_i,           // parallel load_i for the counters
-    input logic get_rs1_i,        // generate rs1
-    input logic get_rs2_i,        // generate rs2
-    input logic get_rd_i,         // generate rd
-    input logic incr_i,
+    input logic                               load_i,           // parallel load_i for the counters
+    input logic [NumIfs-1:0]                  get_rs1_i,        // generate rs1
+    input logic [NumIfs-1:0]                  get_rs2_i,        // generate rs2
+    input logic [NumIfs-1:0]                  get_rd_i,         // generate rd
+    input logic                               incr_i,
 
     // slide support signals
-    input logic is_slide_i,       // the current instruction is a slide
-    input logic is_slide_up_i,    // 1 - slide up, 0 - slide down
+    input logic                               is_slide_i,       // the current instruction is a slide
+    input logic                               is_slide_up_i,    // 1 - slide up, 0 - slide down
 
     // to/from pipeline
-    input  logic [AddrWidth-1:0] addr_i,   // address with OFFSET
-    output logic [AddrWidth-1:0] addr_o    // requested address
+    input  logic              [AddrWidth-1:0] addr_i,   // address with OFFSET
+    output logic [NumIfs-1:0] [AddrWidth-1:0] addr_o    // requested address
 );
 
     import vcve2_pkg::*;
@@ -51,9 +51,9 @@ module vcve2_agu #(
 
     // Combinational logic for the counters
     always_comb begin
-        addr_rs1_d = load_i ? {rs1_i[2:0], 2'b00} : (get_rs1_i && incr_i) ? addr_rs1_q + 1 : addr_rs1_q;
-        addr_rs2_d = load_i ? {rs2_i[2:0], 2'b00} : (get_rs2_i && incr_i) ? addr_rs2_q + 1 : addr_rs2_q;
-        addr_rd_d = load_i ? {rd_i[2:0], 2'b00} : (get_rd_i && incr_i) ? addr_rd_q + 1 : addr_rd_q;
+        addr_rs1_d = load_i ? {rs1_i[2:0], 2'b00} : (get_rs1_i[NumIfs-1] && incr_i) ? addr_rs1_q + NumIfs[4:0] : addr_rs1_q;
+        addr_rs2_d = load_i ? {rs2_i[2:0], 2'b00} : (get_rs2_i[NumIfs-1] && incr_i) ? addr_rs2_q + NumIfs[4:0] : addr_rs2_q;
+        addr_rd_d = load_i ? {rd_i[2:0], 2'b00} : (get_rd_i[NumIfs-1] && incr_i) ? addr_rd_q + NumIfs[4:0] : addr_rd_q;
         if (is_slide_i && !is_slide_up_i && load_i) addr_rs2_d = addr_i[6:2];      // in slide down the address is vs2 since we start reading it from OFFSET
         else if (is_slide_i && is_slide_up_i && load_i) addr_rd_d = addr_i[6:2];   // in slide up the address is vd since we start writing it from OFFSET
     end
@@ -63,16 +63,22 @@ module vcve2_agu #(
     ////////////
 
     // Multiplexer for the output address
-    always_comb begin
-        // if the instruction is a slide we need to load the address incremented by offset, to do so the adder is exploted
-        if (load_i && is_slide_i) begin
-            addr_o = {VRF_START_ADDR, !is_slide_up_i ? rs2_i : rd_i, 4'b0000};
-        end else begin
-            addr_o = get_rs1_i ? {VRF_START_ADDR, rs1_i[4:3], addr_rs1_q, 2'b00} :
-                     get_rs2_i ? {VRF_START_ADDR, rs2_i[4:3], addr_rs2_q, 2'b00} :
-                     get_rd_i  ? {VRF_START_ADDR, rd_i[4:3], addr_rd_q, 2'b00}  : '0;
+    genvar i;
+    generate
+        for (i = 0; i < NumIfs; i++) begin : gen_output_addr
+            always_comb begin
+                // if the instruction is a slide we need to load the address incremented by offset, to do so the adder is exploted
+                if (i==0) begin
+                    if (load_i && is_slide_i) begin
+                        addr_o[i] = {VRF_START_ADDR, !is_slide_up_i ? rs2_i : rd_i, 4'b0000};
+                    end
+                end
+                addr_o[i] = get_rs1_i[i] ? {VRF_START_ADDR, rs1_i[4:3], addr_rs1_q, 2'b00} + (i<<2) :
+                            get_rs2_i[i] ? {VRF_START_ADDR, rs2_i[4:3], addr_rs2_q, 2'b00} + (i<<2) :
+                            get_rd_i[i]  ? {VRF_START_ADDR, rd_i[4:3], addr_rd_q, 2'b00} + (i<<2)  : '0;
+            end
         end
-    end
+    endgenerate
 
     
 endmodule

@@ -192,7 +192,7 @@ module vcve2_vrf_interface #(
       last_iteration_q <= 1'b0;
       slide_offset_q <= '0;
       slide_first_write_q <= 1'b0;
-      next_state_waitsync = VRF_IDLE;
+      next_state_waitsync <= VRF_IDLE;
     end else begin
       vrf_state <= !op_done_o || (op_done_o && other_done_i) ? vrf_next_state : VRF_WAIT_SYNC;
       num_iterations_q <= num_iterations_d;
