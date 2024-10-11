@@ -26,6 +26,7 @@ echo $1
 # enter the build dir
 pushd $BUILD_DIR
 
-/bin/nice -n 5 innovus -common_ui -execute "set FLOW_ROOT $FLOW_ROOT; source setup.tcl; set_multi_cpu_usage -local_cpu $CPUS"
+#/bin/nice -n 5 innovus -common_ui -execute "set FLOW_ROOT $FLOW_ROOT; source scripts/setup.tcl; set_multi_cpu_usage -local_cpu $CPUS"
+/bin/nice -n 5 innovus -common_ui -execute "set FLOW_ROOT $FLOW_ROOT; set_multi_cpu_usage -local_cpu $CPUS"
 
 popd

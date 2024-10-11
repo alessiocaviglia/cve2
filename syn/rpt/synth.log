@@ -27,7 +27,7 @@ Initializing...
 #
 ############################################
 sh date
-Thu Sep 26 17:03:40 CEST 2024
+Thu Oct 10 14:49:25 CEST 2024
 set TOP_MODULE vcve2_top
 vcve2_top
 set DC_SCRIPT dc_script.tcl
@@ -1781,8 +1781,8 @@ End Combinational loops breaking ...
    ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
     TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
   --------- --------- --------- --------- --------- ------------------------- ---------
-    0:01:04   81448.2      1.67    1312.5       6.2                           31973.9707
-    0:01:05   81284.8      1.82    1343.9       6.2                           31918.6191
+    0:01:01   81065.9      1.87    1494.7       2.3                           31942.9277
+    0:01:02   80981.6      1.97    1514.6       2.3                           31917.7070
 
   Beginning Constant Register Removal
   -----------------------------------
@@ -1821,7 +1821,7 @@ End Combinational loops breaking ...
   Global Optimization (Phase 28)
   Global Optimization (Phase 29)
   Global Optimization (Phase 30)
-  Mapping 'vcve2_multdiv_fast_RV32M3_DW_mult_tc_8'
+  Global Optimization (Phase 31)
   Mapping 'vcve2_multdiv_fast_RV32M3_DP_OP_116J6_122_2826_8'
 
   Beginning Isolate Ports
@@ -1829,10 +1829,10 @@ End Combinational loops breaking ...
 
   Beginning Delay Optimization
   ----------------------------
-    0:01:12   56725.9      2.44    2359.5       9.7                           17759.7129
-    0:01:36   59758.9      0.98     818.3       9.7                           19568.0527
-    0:01:36   59758.9      0.98     818.3       9.7                           19568.0527
-    0:01:36   59775.8      0.98     817.3       9.7                           19581.6680
+    0:01:09   53880.8      2.76    2589.8      72.7                           15155.8037
+    0:01:34   56557.1      0.97     986.3     117.1                           16808.1855
+    0:01:34   56557.1      0.97     986.3     117.1                           16808.1855
+    0:01:34   56574.0      0.97     985.5     117.0                           16821.8906
 Begin Combinational loops breaking ...
 	Number of combinational loops found: 0
 End Combinational loops breaking ...
@@ -1860,34 +1860,34 @@ Information: The register 'u_cve2_core/vl_q_reg[11]' is a constant and will be r
 Information: The register 'u_cve2_core/vl_q_reg[10]' is a constant and will be removed. (OPT-1206)
 Information: The register 'u_cve2_core/vl_q_reg[9]' is a constant and will be removed. (OPT-1206)
 Information: The register 'u_cve2_core/vl_q_reg[8]' is a constant and will be removed. (OPT-1206)
-    0:01:37   59117.0      0.98     814.5       9.7                           19353.3926
-    0:01:38   59044.7      1.28     886.7      30.6                           19338.2461
+    0:01:36   55922.8      0.97     984.4     117.0                           16594.0742
+    0:01:36   55868.8      1.00     985.4     137.5                           16584.3535
 
   Beginning WLM Backend Optimization
   --------------------------------------
-    0:01:42   57834.4      1.26     903.9       9.7                           18320.1973
-    0:01:42   55900.4      1.26     920.1       9.7                           16448.5625
-    0:01:45   56007.7      1.04     840.4       9.7                           16552.8262
-    0:01:45   56007.7      1.04     840.4       9.7                           16552.8262
-    0:01:47   55827.0      1.04     796.0       0.0                           15248.7178
-    0:01:47   55827.0      1.04     796.0       0.0                           15248.7178
-    0:02:59   58623.5      0.71     565.4       1.2                           16168.0537
-    0:02:59   58623.5      0.71     565.4       1.2                           16168.0537
-    0:03:01   59078.5      0.65     509.5       4.3                           16435.8418
-    0:03:01   59078.5      0.65     509.5       4.3                           16435.8418
-    0:04:41   62062.9      0.52     374.6       8.8                           17595.5488
-    0:04:41   62062.9      0.52     374.6       8.8                           17595.5488
-    0:05:36   64610.3      0.27     139.4       7.5                           19125.6836
-    0:05:36   64610.3      0.27     139.4       7.5                           19125.6836
-    0:06:05   64763.6      0.26     134.5       7.5                           19118.5488
-    0:06:05   64763.6      0.26     134.5       7.5                           19118.5488
-    0:06:39   65792.5      0.21     102.7       9.2                           19700.8438
-    0:06:39   65792.5      0.21     102.7       9.2                           19700.8438
-    0:06:54   65837.9      0.22     113.7       9.2                           19674.3223
-    0:06:54   65837.9      0.22     113.7       9.2                           19674.3223
-    0:07:10   66176.3      0.20     104.5       9.2                           19878.8672
-    0:07:10   66176.3      0.20     104.5       9.2                           19878.8672
-    0:07:21   66182.4      0.20     101.5      35.0                           19847.7988
+    0:01:40   55352.2      0.99     980.3       6.5                           16283.9033
+    0:01:41   55217.5      0.99    1009.1       6.5                           16204.9805
+    0:01:43   55451.9      0.94     892.2       6.5                           16403.4473
+    0:01:43   55451.9      0.94     892.2       6.5                           16403.4473
+    0:01:45   55235.2      0.94     807.9       0.0                           15078.4717
+    0:01:45   55235.2      0.94     807.9       0.0                           15078.4717
+    0:02:57   58058.3      0.60     479.1       0.0                           16011.2939
+    0:02:57   58058.3      0.60     479.1       0.0                           16011.2939
+    0:02:59   58316.0      0.57     434.2       0.0                           16182.8516
+    0:02:59   58316.0      0.57     434.2       0.0                           16182.8516
+    0:05:20   60883.2      0.40     256.6       0.0                           17103.0645
+    0:05:20   60883.2      0.40     256.6       0.0                           17103.0645
+    0:06:08   62761.3      0.22     106.3       0.0                           18259.4570
+    0:06:08   62761.3      0.22     106.3       0.0                           18259.4570
+    0:07:15   63203.8      0.20     106.0       2.8                           18297.7070
+    0:07:15   63203.8      0.20     106.0       2.8                           18297.7070
+    0:07:47   64201.0      0.12      51.3       2.8                           18914.3027
+    0:07:47   64201.0      0.12      51.3       2.8                           18914.3027
+    0:08:49   64448.3      0.13      54.2       3.5                           18932.1699
+    0:08:49   64448.3      0.13      54.2       3.5                           18932.1699
+    0:09:19   65100.6      0.09      30.5       3.5                           19304.4609
+    0:09:19   65100.6      0.09      30.5       3.5                           19304.4609
+    0:10:08   65193.1      0.07      22.4       4.2                           19269.4531
 
 
   Beginning Design Rule Fixing  (max_transition)  (max_capacitance)
@@ -1897,12 +1897,12 @@ Information: The register 'u_cve2_core/vl_q_reg[8]' is a constant and will be re
    ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
     TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
   --------- --------- --------- --------- --------- ------------------------- ---------
-    0:07:21   66182.4      0.20     101.5      35.0                           19847.7988
-  Global Optimization (Phase 31)
+    0:10:08   65193.1      0.07      22.4       4.2                           19269.4531
   Global Optimization (Phase 32)
   Global Optimization (Phase 33)
-    0:07:23   66139.6      0.18      89.7       0.0                           19834.6055
-    0:07:46   66120.8      0.18      90.8      29.6                           19776.7441
+  Global Optimization (Phase 34)
+    0:10:11   65193.5      0.05      15.0       0.0                           19285.9160
+    0:10:57   65688.5      0.06      19.4       0.0                           19450.3223
 
 
   Beginning Leakage Power Optimization  (max_leakage_power 0)
@@ -1912,8 +1912,7 @@ Information: The register 'u_cve2_core/vl_q_reg[8]' is a constant and will be re
    ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
     TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
   --------- --------- --------- --------- --------- ------------------------- ---------
-    0:07:46   66120.8      0.18      90.8      29.6                           19776.7441
-  Global Optimization (Phase 34)
+    0:10:57   65688.5      0.06      19.4       0.0                           19450.3223
   Global Optimization (Phase 35)
   Global Optimization (Phase 36)
   Global Optimization (Phase 37)
@@ -1929,28 +1928,29 @@ Information: The register 'u_cve2_core/vl_q_reg[8]' is a constant and will be re
   Global Optimization (Phase 47)
   Global Optimization (Phase 48)
   Global Optimization (Phase 49)
-    0:07:54   64598.4      0.27     181.3       0.0                           19453.1875
-    0:09:04   65315.9      0.26     164.1       5.4                           19642.6523
-    0:09:04   65315.9      0.26     164.1       5.4                           19642.6523
-    0:09:05   63128.5      0.25     139.6       5.4                           17347.3145
-    0:09:05   63128.5      0.25     139.6       5.4                           17347.3145
-    0:09:10   63149.4      0.25     134.5       5.4                           17355.8770
-    0:09:10   63149.4      0.25     134.5       5.4                           17355.8770
-    0:09:11   63232.6      0.25     134.8       5.4                           17403.3242
-    0:09:11   63232.6      0.25     134.8       5.4                           17403.3242
-    0:09:23   63330.1      0.24     135.7      45.6                           17445.6934
-    0:09:23   63330.1      0.24     135.7      45.6                           17445.6934
-    0:09:54   64234.8      0.15      73.1      84.8                           18028.2441
-    0:09:54   64234.8      0.15      73.1      84.8                           18028.2441
-    0:10:05   64293.1      0.15      73.5      84.8                           18050.4609
-    0:10:05   64293.1      0.15      73.5      84.8                           18050.4609
-    0:10:22   64714.0      0.14      65.4      84.8                           18295.5020
-    0:10:22   64714.0      0.14      65.4      84.8                           18295.5020
-    0:10:38   64733.4      0.13      56.7      84.8                           18291.8672
-    0:10:38   64733.4      0.13      56.7      84.8                           18291.8672
-    0:10:55   65171.2      0.13      56.5      89.0                           18566.6953
-    0:10:55   65171.2      0.13      56.5      89.0                           18566.6953
-    0:11:04   65174.8      0.13      52.4      89.0                           18556.5332
+  Global Optimization (Phase 50)
+    0:11:06   63716.8      0.18     100.5       0.0                           18820.5488
+    0:11:38   64050.1      0.17      91.8      34.0                           18936.0059
+    0:11:38   64050.1      0.17      91.8      34.0                           18936.0059
+    0:11:40   61835.0      0.17      70.1       3.5                           16667.8242
+    0:11:40   61835.0      0.17      70.1       3.5                           16667.8242
+    0:12:47   62626.3      0.16      62.2       2.0                           16972.1387
+    0:12:47   62626.3      0.16      62.2       2.0                           16972.1387
+    0:12:47   62694.0      0.15      59.2       2.0                           17010.0781
+    0:12:47   62694.0      0.15      59.2       2.0                           17010.0781
+    0:13:26   63288.7      0.14      52.7       5.9                           17268.6250
+    0:13:26   63288.7      0.14      52.7       5.9                           17268.6250
+    0:13:58   64224.0      0.06      11.5      22.2                           17886.9238
+    0:13:58   64224.0      0.06      11.5      22.2                           17886.9238
+    0:14:56   64284.5      0.05      12.9      19.1                           17820.4473
+    0:14:56   64284.5      0.05      12.9      19.1                           17820.4473
+    0:15:22   64899.4      0.00       0.0      20.1                           18214.3027
+    0:15:22   64899.4      0.00       0.0      20.1                           18214.3027
+    0:15:22   64899.4      0.00       0.0      20.1                           18214.3027
+    0:15:22   64899.4      0.00       0.0      20.1                           18214.3027
+    0:15:22   64899.4      0.00       0.0      20.1                           18214.3027
+    0:15:22   64899.4      0.00       0.0      20.1                           18214.3027
+    0:15:22   64899.4      0.00       0.0      20.1                           18214.3027
 Begin Combinational loops breaking ...
 	Number of combinational loops found: 0
 End Combinational loops breaking ...
@@ -1959,27 +1959,19 @@ End Combinational loops breaking ...
    ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
     TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
   --------- --------- --------- --------- --------- ------------------------- ---------
-    0:11:05   65146.7      0.13      52.4      89.0                           18556.4824
-    0:11:09   61882.2      0.16      52.9      67.8                           16432.7578
-    0:11:13   62197.9      0.11      34.8      67.8 u_cve2_core/cs_registers_i/minstret_counter_i/counter_q_reg[32]/D 16618.2656
-    0:11:15   62251.9      0.11      30.1      67.8                           16653.8477
-    0:11:15   62208.0      0.11      29.7      67.8                           16638.9727
-    0:11:16   62154.4      0.10      28.1      53.3                           16625.5684
-    0:11:16   62152.9      0.10      28.1      53.3                           16625.4062
-    0:11:16   62152.9      0.10      28.1      53.3                           16625.4062
-    0:11:18   62061.8      0.10      27.4       8.6                           16579.0332
-    0:11:20   61837.9      0.10      27.0       8.6                           16463.4355
-    0:11:21   61812.7      0.10      26.6       8.6 u_cve2_core/cs_registers_i/mcycle_counter_i/counter_q_reg[3]/D 16438.0312
-    0:11:23   61907.4      0.10      26.1       8.6 u_cve2_core/cs_registers_i/u_mcause_csr/clk_gate_rdata_q_reg/latch/E 16491.2715
-    0:11:25   61972.2      0.10      27.4       0.0 u_cve2_core/cs_registers_i/minstret_counter_i/counter_q_reg[32]/D 16524.6777
-    0:11:27   62019.7      0.09      24.4       0.0 u_cve2_core/cs_registers_i/minstret_counter_i/counter_q_reg[32]/D 16559.5020
-    0:11:28   62046.0      0.09      23.5       0.0                           16574.1895
-    0:11:48   62822.5      0.08      20.3       0.0                           17072.2695
-    0:11:48   62822.5      0.08      20.3       0.0                           17072.2695
-    0:11:48   62810.3      0.08      19.1       0.0                           17065.9668
-    0:11:48   62810.3      0.08      19.1       0.0                           17065.9668
-    0:11:48   62863.6      0.08      18.9       0.0                           17099.4629
-    0:11:55   61798.7      0.07      17.0       0.0                           16412.1719
+    0:15:22   64870.2      0.00       0.0      20.1                           18213.9453
+    0:15:26   62292.2      0.03       4.6      14.1                           16532.1914
+    0:15:29   62397.4      0.00       0.0      15.0                           16584.0469
+    0:15:29   62397.4      0.00       0.0      15.0                           16584.0469
+    0:15:32   61891.2      0.00       0.0       4.7                           16141.8955
+    0:15:34   61569.0      0.00       0.0       4.7                           16004.0283
+    0:15:35   61489.8      0.00       0.0       0.0                           15950.9961
+    0:15:35   61489.8      0.00       0.0       0.0                           15950.9961
+    0:15:35   61489.8      0.00       0.0       0.0                           15950.9961
+    0:15:35   61489.8      0.00       0.0       0.0                           15950.9961
+    0:15:36   61489.8      0.00       0.0       0.0                           15950.9961
+    0:15:36   61489.8      0.00       0.0       0.0                           15950.9961
+    0:15:44   60241.7      0.00       0.0       0.0                           15225.3799
 Loading db file '/software/dk/tsmc65/digital/Front_End/timing_power_noise/NLDM/tcbn65lp_200a/tcbn65lpwc.db'
 
 
@@ -1989,265 +1981,13 @@ Note: Symbol # after min delay cost means estimated hold TNS across all active s
   Optimization Complete
   ---------------------
 Warning: Design 'vcve2_top' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
-     Net 'u_cve2_core/cs_registers_i/gen_trigger_regs.g_dbg_tmatch_reg[0].u_tmatch_control_csr/net122933': 2067 load(s), 1 driver(s)
+     Net 'u_cve2_core/cs_registers_i/gen_trigger_regs.g_dbg_tmatch_reg[0].u_tmatch_control_csr/net125615': 2033 load(s), 1 driver(s)
 Information: State dependent leakage is now switched from off to on.
 Information: Propagating switching activity (low effort zero delay simulation). (PWR-6)
 Writing ddc file '../../rpt/compiled.ddc'.
+Warning: Design 'vcve2_top' inherited license information from design 'vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808'. (DDB-74)
+Information: Added key list 'DesignWare' to design 'vcve2_top'. (DDB-72)
 Warning: In the design vcve2_top, net 'crash_dump_o[current_pc][0]' is connecting multiple ports. (UCN-1)
-Warning: The specified replacement character (_) is conflicting with the specified allowed or restricted character.   (UCN-4)
-Warning: In the design vcve2_id_stage_0_3_0, net 'vrf_rdata_c_i[31]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'vrf_rdata_c_i[30]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'vrf_rdata_c_i[29]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'vrf_rdata_c_i[28]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'vrf_rdata_c_i[27]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'vrf_rdata_c_i[26]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'vrf_rdata_c_i[25]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'vrf_rdata_c_i[24]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'vrf_rdata_c_i[23]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'vrf_rdata_c_i[22]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'vrf_rdata_c_i[21]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'vrf_rdata_c_i[20]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'vrf_rdata_c_i[19]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'vrf_rdata_c_i[18]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'vrf_rdata_c_i[17]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'vrf_rdata_c_i[16]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'vrf_rdata_c_i[15]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'vrf_rdata_c_i[14]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'vrf_rdata_c_i[13]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'vrf_rdata_c_i[12]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'vrf_rdata_c_i[11]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'vrf_rdata_c_i[10]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'vrf_rdata_c_i[9]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'vrf_rdata_c_i[8]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'vrf_rdata_c_i[7]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'vrf_rdata_c_i[6]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'vrf_rdata_c_i[5]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'vrf_rdata_c_i[4]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'vrf_rdata_c_i[3]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'vrf_rdata_c_i[2]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'vrf_rdata_c_i[1]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'vrf_rdata_c_i[0]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'rf_rdata_b_i[31]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'rf_rdata_b_i[30]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'rf_rdata_b_i[29]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'rf_rdata_b_i[28]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'rf_rdata_b_i[27]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'rf_rdata_b_i[26]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'rf_rdata_b_i[25]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'rf_rdata_b_i[24]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'rf_rdata_b_i[23]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'rf_rdata_b_i[22]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'rf_rdata_b_i[21]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'rf_rdata_b_i[20]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'rf_rdata_b_i[19]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'rf_rdata_b_i[18]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'rf_rdata_b_i[17]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'rf_rdata_b_i[16]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'rf_rdata_b_i[15]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'rf_rdata_b_i[14]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'rf_rdata_b_i[13]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'rf_rdata_b_i[12]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'rf_rdata_b_i[11]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'rf_rdata_b_i[10]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'rf_rdata_b_i[9]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'rf_rdata_b_i[8]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'rf_rdata_b_i[7]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'rf_rdata_b_i[6]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'rf_rdata_b_i[5]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'rf_rdata_b_i[4]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'rf_rdata_b_i[3]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'rf_rdata_b_i[2]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'rf_rdata_b_i[1]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'rf_rdata_b_i[0]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'result_ex_i[31]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'result_ex_i[30]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'result_ex_i[29]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'result_ex_i[28]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'result_ex_i[27]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'result_ex_i[26]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'result_ex_i[25]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'result_ex_i[24]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'result_ex_i[23]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'result_ex_i[22]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'result_ex_i[21]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'result_ex_i[20]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'result_ex_i[19]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'result_ex_i[18]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'result_ex_i[17]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'result_ex_i[16]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'result_ex_i[15]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'result_ex_i[14]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'result_ex_i[13]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'result_ex_i[12]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'result_ex_i[11]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'result_ex_i[10]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'result_ex_i[9]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'result_ex_i[8]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'result_ex_i[7]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'result_ex_i[6]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'result_ex_i[5]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'result_ex_i[4]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'result_ex_i[3]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'result_ex_i[2]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'result_ex_i[1]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'result_ex_i[0]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_id_stage_0_3_0, net 'instr_id_done_o' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[31]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[30]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[29]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[28]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[26]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[25]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[24]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'branch_target_o[20]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[19]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[16]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[15]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[14]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[13]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[12]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[11]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[10]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[9]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[8]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'branch_target_o[7]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[6]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[5]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[4]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'branch_target_o[3]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[2]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[1]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_ex_block_RV32M3_RV32B0, net 'alu_adder_result_ex_o[0]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_load_store_unit, net 'adder_result_ex_i[31]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_load_store_unit, net 'adder_result_ex_i[30]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_load_store_unit, net 'adder_result_ex_i[29]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_load_store_unit, net 'adder_result_ex_i[28]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_load_store_unit, net 'adder_result_ex_i[27]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_load_store_unit, net 'adder_result_ex_i[26]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_load_store_unit, net 'adder_result_ex_i[25]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_load_store_unit, net 'adder_result_ex_i[24]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_load_store_unit, net 'adder_result_ex_i[23]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_load_store_unit, net 'adder_result_ex_i[22]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_load_store_unit, net 'adder_result_ex_i[21]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_load_store_unit, net 'adder_result_ex_i[20]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_load_store_unit, net 'adder_result_ex_i[19]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_load_store_unit, net 'adder_result_ex_i[18]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_load_store_unit, net 'adder_result_ex_i[17]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_load_store_unit, net 'adder_result_ex_i[16]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_load_store_unit, net 'adder_result_ex_i[15]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_load_store_unit, net 'adder_result_ex_i[14]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_load_store_unit, net 'adder_result_ex_i[13]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_load_store_unit, net 'adder_result_ex_i[12]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_load_store_unit, net 'adder_result_ex_i[11]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_load_store_unit, net 'adder_result_ex_i[10]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_load_store_unit, net 'adder_result_ex_i[9]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_load_store_unit, net 'adder_result_ex_i[8]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_load_store_unit, net 'adder_result_ex_i[7]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_load_store_unit, net 'adder_result_ex_i[6]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_load_store_unit, net 'adder_result_ex_i[5]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_load_store_unit, net 'adder_result_ex_i[4]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_load_store_unit, net 'adder_result_ex_i[3]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_load_store_unit, net 'adder_result_ex_i[2]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_load_store_unit, net 'lsu_we_i' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[31]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[30]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[29]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[28]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[27]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[26]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[25]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[24]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[23]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[22]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[21]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[20]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[19]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[18]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[17]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[16]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[15]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[14]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[13]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[12]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[11]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[10]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[9]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[8]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[7]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[6]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[5]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[4]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[3]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[2]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[1]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_dmem_switch, net 'data_rdata_i[0]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_wb, net 'rf_waddr_id_i[4]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_wb, net 'rf_waddr_id_i[3]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_wb, net 'rf_waddr_id_i[2]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_wb, net 'rf_waddr_id_i[1]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_wb, net 'rf_waddr_id_i[0]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_wb, net 'vrf_we_id_i' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_agu_AddrWidth32, net 'addr_o[15]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[26]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[25]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[24]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[23]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[22]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[21]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[20]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[18]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[17]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[16]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[15]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[11]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[10]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[9]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[8]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'instr_rdata_i[7]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'imm_i_type_o[18]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'imm_u_type_o[30]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'imm_u_type_o[29]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'imm_u_type_o[28]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'imm_u_type_o[27]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'imm_u_type_o[20]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'imm_v_type_o[31]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'imm_j_type_o[18]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'imm_j_type_o[16]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'imm_u_type_o[15]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'imm_u_type_o[14]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'vmem_ops_eew_o[1]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'imm_j_type_o[12]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'imm_v_type_o[12]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_decoder_0_3_0, net 'vrf_we_o' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_controller, net 'csr_restore_dret_id_o' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[30]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[29]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[28]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[26]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[25]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_ext_o[25]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[23]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_ext_o[23]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_ext_o[21]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_ext_o[20]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[17]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[16]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[15]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[14]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[13]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_ext_o[13]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[11]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[10]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[9]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[8]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[6]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[5]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[4]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[3]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[2]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[1]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_alu_RV32B0, net 'adder_result_o[0]' is connecting multiple ports. (UCN-1)
-Warning: In the design vcve2_multdiv_fast_RV32M3, net 'div_en_i' is connecting multiple ports. (UCN-1)
 Information: Annotated 'cell' delays are assumed to include load delay. (UID-282)
 Information: Writing timing information to file '/home/thesis/alessio.caviglia/repo/thesis/hw/cve2/syn/rpt/netlist.sdf'. (WT-3)
 Writing verilog file '/home/thesis/alessio.caviglia/repo/thesis/hw/cve2/syn/build/synth-design_compiler/netlist.v'.
@@ -2258,13 +1998,13 @@ Warning: Verilog 'assign' or 'tran' statements are written out. (VO-4)
 #  all done -- exit
 #
 ############################################
-sh dateThu Sep 26 17:17:47 CEST 2024
-Thu Sep 26 17:17:47 CEST 2024
+sh dateThu Oct 10 15:07:12 CEST 2024
+Thu Oct 10 15:07:12 CEST 2024
 Warning: Cannot use command line editor for terminal type 'xterm-256color'.  (UI-74)
 dc_shell> 
-Memory usage for this session 591 Mbytes.
-Memory usage for this session including child processes 591 Mbytes.
-CPU usage for this session 761 seconds ( 0.21 hours ).
-Elapsed time for this session 908 seconds ( 0.25 hours ).
+Memory usage for this session 593 Mbytes.
+Memory usage for this session including child processes 593 Mbytes.
+CPU usage for this session 989 seconds ( 0.27 hours ).
+Elapsed time for this session 1118 seconds ( 0.31 hours ).
 
 Thank you...

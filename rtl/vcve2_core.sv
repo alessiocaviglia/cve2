@@ -1213,9 +1213,9 @@ module vcve2_core import vcve2_pkg::*; #(
       default: vlmul_mask = 3'b111;
     endcase
   end
-  assign masked_vs1 = rf_raddr_a & {2'b00, vlmul_mask};
-  assign masked_vs2 = rf_raddr_b & {2'b00, vlmul_mask};
-  assign masked_vd  = rf_waddr_wb & {2'b00, vlmul_mask};
+  assign masked_vs1 = rf_raddr_a & {2'b11, vlmul_mask};
+  assign masked_vs2 = rf_raddr_b & {2'b11, vlmul_mask};
+  assign masked_vd  = rf_waddr_wb & {2'b11, vlmul_mask};
   assign illegal_vrf_addr_lmul = ((masked_vs1 != rf_raddr_a) & vrf_sel_operation[0]) |
                                  ((masked_vs2 != rf_raddr_b) & vrf_sel_operation[1]) |
                                  ((masked_vd  != rf_waddr_wb) & (vrf_sel_operation[2] | vrf_sel_operation[3]));

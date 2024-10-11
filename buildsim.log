@@ -31,7 +31,7 @@ Abstract primitive written to /home/thesis/alessio.caviglia/repo/thesis/hw/cve2/
 Creating core file for primitive buf.
 Core file written to /home/thesis/alessio.caviglia/repo/thesis/hw/cve2/syn/build/synth-design_compiler/generated/lowrisc_prim_buf-impl_0/prim_buf.core
 INFO: Generating lowrisc:prim:clock_mux2-impl:0
-Implementations for primitive clock_mux2: generic, xilinx
+Implementations for primitive clock_mux2: xilinx, generic
 Inspecting generic module /home/thesis/alessio.caviglia/repo/thesis/hw/cve2/vendor/lowrisc_ip/ip/prim_generic/rtl/prim_generic_clock_mux2.sv
 No module named 'anytree'
 Verible parser failed, using regex fallback instead.
@@ -40,7 +40,7 @@ Abstract primitive written to /home/thesis/alessio.caviglia/repo/thesis/hw/cve2/
 Creating core file for primitive clock_mux2.
 Core file written to /home/thesis/alessio.caviglia/repo/thesis/hw/cve2/syn/build/synth-design_compiler/generated/lowrisc_prim_clock_mux2-impl_0/prim_clock_mux2.core
 INFO: Generating lowrisc:prim:flop-impl:0
-Implementations for primitive flop: generic, xilinx
+Implementations for primitive flop: xilinx, generic
 Inspecting generic module /home/thesis/alessio.caviglia/repo/thesis/hw/cve2/vendor/lowrisc_ip/ip/prim_generic/rtl/prim_generic_flop.sv
 No module named 'anytree'
 Verible parser failed, using regex fallback instead.
