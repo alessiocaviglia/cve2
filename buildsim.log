@@ -22,7 +22,7 @@ INFO: Generating lowrisc:prim:prim_pkg-impl:0.1
 Creating prim_pkg.sv
 Core file written to prim_pkg.core.
 INFO: Generating lowrisc:prim:buf-impl:0
-Implementations for primitive buf: generic, xilinx
+Implementations for primitive buf: xilinx, generic
 Inspecting generic module /home/thesis/alessio.caviglia/repo/thesis/hw/cve2/vendor/lowrisc_ip/ip/prim_generic/rtl/prim_generic_buf.sv
 No module named 'anytree'
 Verible parser failed, using regex fallback instead.

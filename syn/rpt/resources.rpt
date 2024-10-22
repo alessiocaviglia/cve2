@@ -3,7 +3,7 @@
 Report : resources
 Design : vcve2_top
 Version: R-2020.09-SP2
-Date   : Thu Oct 10 15:07:11 2024
+Date   : Wed Oct 16 11:35:45 2024
 ****************************************
 
 
@@ -304,15 +304,15 @@ Resource Report for this hierarchy in file
         |                |            | eq_510 (vcve2_vrf_interface.sv:510) |
         |                |            | eq_571 (vcve2_vrf_interface.sv:571) |
         |                |            | eq_606 (vcve2_vrf_interface.sv:606) |
-| DP_OP_261_134_4653              |            |                            |
-|                | DP_OP_261_134_4653 |        |                            |
+| DP_OP_261J4_122_3328            |            |                            |
+|                | DP_OP_261J4_122_3328 |      |                            |
 =============================================================================
 
-Datapath Report for DP_OP_261_134_4653
+Datapath Report for DP_OP_261J4_122_3328
 ==============================================================================
 | Cell                 | Contained Operations                                |
 ==============================================================================
-| DP_OP_261_134_4653   | sub_611_aco (vcve2_vrf_interface.sv:611)            |
+| DP_OP_261J4_122_3328 | sub_611_aco (vcve2_vrf_interface.sv:611)            |
 |                      | sub_576_aco (vcve2_vrf_interface.sv:576)            |
 |                      | sub_495_aco (vcve2_vrf_interface.sv:495)            |
 |                      | sub_511_aco (vcve2_vrf_interface.sv:511)            |
@@ -337,7 +337,8 @@ Implementation Report
 ===============================================================================
 | ash_17             | DW_leftsh        | astr (area)        |                |
 | eq_x_204           | DW_cmp           | apparch (area)     |                |
-| DP_OP_261_134_4653 | DP_OP_261_134_4653 | str (area,speed) |                |
+| DP_OP_261J4_122_3328                  |                    |                |
+|                    | DP_OP_261J4_122_3328 | str (area)     |                |
 ===============================================================================
 
 
