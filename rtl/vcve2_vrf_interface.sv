@@ -201,7 +201,7 @@ module vcve2_vrf_interface #(
       last_iteration_q <= last_iteration_d;
       if (slide_offset_en) slide_offset_q <= slide_offset_i[1:0];
       slide_first_write_q <= slide_first_write_d;
-      next_state_waitsync = op_done_o && !other_done_i ? vrf_next_state : next_state_waitsync;
+      next_state_waitsync <= op_done_o && !other_done_i ? vrf_next_state : next_state_waitsync;
     end
   end
 

@@ -121,8 +121,8 @@ endgenerate
 assign data_rdata_a = data_rdata_i[0];
 assign data_rdata_b = data_rdata_i[0];
 // FIRST CYCLE RESPONSES, the grant is given (or not) immediately
-assign data_gnt_a = a_is_master && data_gnt_i;
-assign data_gnt_b = !a_is_master && data_gnt_i;
+assign data_gnt_a = a_is_master && data_gnt_i[0];
+assign data_gnt_b = !a_is_master && data_gnt_i[0];
 
 // SECOND CYCLE RESPONSES, responses given on the next cycle, FSM needed to keep track of the previous unit
 always_ff @(posedge clk_i or negedge rst_ni) begin
@@ -147,18 +147,18 @@ always_comb begin
 end
 
 // different conditions to ensure that when there is no vector operation the data memory is controlled by the LSU
-assign data_rvalid_a = ((prev_op_q == MOD_A) && vector_op_i) && data_rvalid_i;
-assign data_rvalid_b = ((prev_op_q == MOD_B) || !vector_op_i) && data_rvalid_i;
-assign data_err_a = ((prev_op_q == MOD_A) && vector_op_i) && data_err_i;
-assign data_err_b = ((prev_op_q == MOD_B) || !vector_op_i) && data_err_i;
+assign data_rvalid_a = ((prev_op_q == MOD_A) && vector_op_i) && data_rvalid_i[0];
+assign data_rvalid_b = ((prev_op_q == MOD_B) || !vector_op_i) && data_rvalid_i[0];
+assign data_err_a = ((prev_op_q == MOD_A) && vector_op_i) && data_err_i[0];
+assign data_err_b = ((prev_op_q == MOD_B) || !vector_op_i) && data_err_i[0];
 
 // OUTPUTS
 
-assign data_req_o = a_is_master ? data_req_a : data_req_b;
-assign data_we_o = a_is_master ? data_we_a : data_we_b;
-assign data_be_o = a_is_master ? data_be_a : data_be_b;
-assign data_addr_o = a_is_master ? data_addr_a : data_addr_b;
-assign data_wdata_o = a_is_master ? data_wdata_a : data_wdata_b;
+assign data_req_o[0] = a_is_master ? data_req_a : data_req_b;
+assign data_we_o[0] = a_is_master ? data_we_a : data_we_b;
+assign data_be_o[0] = a_is_master ? data_be_a : data_be_b;
+assign data_addr_o[0] = a_is_master ? data_addr_a : data_addr_b;
+assign data_wdata_o[0] = a_is_master ? data_wdata_a : data_wdata_b;
 
 ///////////////////////////
 // Ports 2/3 connections //

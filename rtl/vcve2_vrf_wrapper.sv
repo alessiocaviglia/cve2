@@ -33,9 +33,9 @@ module vcve2_vrf_wrapper #(
 
     // AGU
     output logic                        agu_load_o,
-    output logic                        agu_get_rs1_o,
-    output logic                        agu_get_rs2_o,
-    output logic                        agu_get_rd_o,
+    output logic [NumIfs-1:0]           agu_get_rs1_o,
+    output logic [NumIfs-1:0]           agu_get_rs2_o,
+    output logic [NumIfs-1:0]           agu_get_rd_o,
     output logic                        agu_incr_o,
 
     // ID signals
@@ -113,9 +113,9 @@ module vcve2_vrf_wrapper #(
                 .data_load_addr_o(data_load_addr_o),
                 .lsu_gnt_i(lsu_gnt_i),
                 .agu_load_o(agu_load[i]),
-                .agu_get_rs1_o(agu_get_rs1_o),
-                .agu_get_rs2_o(agu_get_rs2_o),
-                .agu_get_rd_o(agu_get_rd_o),
+                .agu_get_rs1_o(agu_get_rs1_o[i]),
+                .agu_get_rs2_o(agu_get_rs2_o[i]),
+                .agu_get_rd_o(agu_get_rd_o[i]),
                 .agu_incr_o(agu_incr[i]),
                 .sel_operation_i(sel_operation_i),
                 .memory_op_i(memory_op_i),

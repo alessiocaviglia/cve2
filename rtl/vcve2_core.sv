@@ -229,11 +229,11 @@ module vcve2_core import vcve2_pkg::*; #(
   logic [31:0] csr_mepc, csr_depc;
 
   // PMP signals
-  logic [33:0]  csr_pmp_addr [PMPNumRegions];
-  pmp_cfg_t     csr_pmp_cfg  [PMPNumRegions];
-  pmp_mseccfg_t csr_pmp_mseccfg;
-  logic         pmp_req_err  [PMP_NUM_CHAN];
-  logic         data_req_out;
+  logic [33:0]          csr_pmp_addr [PMPNumRegions];
+  pmp_cfg_t             csr_pmp_cfg  [PMPNumRegions];
+  pmp_mseccfg_t         csr_pmp_mseccfg;
+  logic                 pmp_req_err  [PMP_NUM_CHAN];
+  logic [NumIfs-1:0]    data_req_out;
 
   logic        csr_save_if;
   logic        csr_save_id;
@@ -321,11 +321,11 @@ module vcve2_core import vcve2_pkg::*; #(
   logic [NumIfs-1:0] vrf_data_err;
   // AGU signals
   logic agu_load;
-  logic agu_get_rs1;
-  logic agu_get_rs2;
-  logic agu_get_rd;
+  logic [NumIfs-1:0] agu_get_rs1;
+  logic [NumIfs-1:0] agu_get_rs2;
+  logic [NumIfs-1:0] agu_get_rd;
   logic agu_incr;
-  logic [31:0] agu_addr_o;
+  logic [NumIfs-1:0] [31:0] agu_addr_o;
   // ID/WB
   logic vrf_we_id; // Write enable signal for the vector register file
   logic [31:0] vrf_wdata_id; // Write data for the vector register file
@@ -589,7 +589,7 @@ module vcve2_core import vcve2_pkg::*; #(
     .vmem_ops_eew_o(vmem_ops_eew),
     // Slide
     .slide_addr_req_i(agu_load && vrf_slide_op),
-    .slide_base_addr_i(agu_addr_o),
+    .slide_base_addr_i(agu_addr_o[0]),                  // TO-DO - check if this is correct with slides
     // CSR exceptions
     .illegal_vec_csr_insn_i(illegal_vec_csr_insn)
   );
@@ -645,11 +645,11 @@ module vcve2_core import vcve2_pkg::*; #(
   // Load/store unit //
   /////////////////////
 
-  assign data_req_o[0]   = data_req_out & ~pmp_req_err[PMP_D];
+  assign data_req_o[0]   = data_req_out[0] & ~pmp_req_err[PMP_D];
   generate
     genvar i;
     for (i=1; i<NumIfs; i=i+1) begin : data_req_o_gen
-      assign data_req_o[1] = vrf_data_req[i];
+      assign data_req_o[1] = data_req_out[i];
     end
   endgenerate
   assign lsu_resp_err = lsu_load_err | lsu_store_err;
