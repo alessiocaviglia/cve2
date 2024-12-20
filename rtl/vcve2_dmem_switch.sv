@@ -4,6 +4,7 @@ module vcve2_dmem_switch #(
 	input  logic                  clk_i,
 	input  logic                  rst_ni,
 	// Data memory interface
+  // Memory signal goind to the memory ports of the core
 	output logic [NumIfs-1:0]         data_req_o,
   input  logic [NumIfs-1:0]         data_gnt_i,
   input  logic [NumIfs-1:0]         data_rvalid_i,
@@ -14,6 +15,7 @@ module vcve2_dmem_switch #(
   input  logic [NumIfs-1:0] [31:0]  data_rdata_i,
   input  logic [NumIfs-1:0]         data_err_i,
 	// VRF signals
+  // Memory signals coming from the VRF interface
 	input  logic [NumIfs-1:0]         vrf_data_req_i,
   output logic [NumIfs-1:0]         vrf_data_gnt_o,
   output logic [NumIfs-1:0]         vrf_data_rvalid_o,
@@ -24,6 +26,7 @@ module vcve2_dmem_switch #(
   output logic [NumIfs-1:0] [31:0]  vrf_data_rdata_o,
   output logic [NumIfs-1:0]         vrf_data_err_o,
   // LSU signals
+  // Memory signals coming from the LSU, used during load/store
 	input  logic                      lsu_data_req_i,
   output logic                      lsu_data_gnt_o,
   output logic                      lsu_data_rvalid_o,
@@ -33,21 +36,25 @@ module vcve2_dmem_switch #(
   input  logic [31:0]               lsu_data_wdata_i,
   output logic [31:0]               lsu_data_rdata_o,
   output logic                      lsu_data_err_o,
-  input  logic                      lsu_resp_valid_i,
-  input  logic                      lsu_busy_i,
+  // LSU additional signal to control execution
+  input  logic                      lsu_resp_valid_i,     // 1 if the LSU memory request has been accepted correctly
+  input  logic                      lsu_busy_i,           // 1 if the LSU is stillexecuting a memory operation (useful mainly for misaligned accesses)
   // Control signals
-  input  logic                      vector_op_i,
-  input  logic                      vrf_lsu_req_i,
-  input  logic                      is_mem_op_i
+  input  logic                      vector_op_i,          // 1 if the current instruction is a vector operation
+  input  logic                      vrf_lsu_req_i,        // 1 if the VRF requested a memory operation
+  input  logic                      is_mem_op_i           // 1 if current instruction is a memory instruction
 );
+
+
 
 //////////////////////////////
 // First Port Sharing Logic //
 //////////////////////////////
+// The first port requires a special sharing logic because during load/store instructions is tightly shared between VRF and LSU
 
 typedef enum logic {MOD_B, MOD_A} dmem_op_t;
 dmem_op_t prev_op_q, prev_op_d;
-logic a_is_master;
+logic a_is_master;                            // Control signal used to manage transitions in VRF
 
 // intermediate signals used for port sharing logic
 logic data_req_a, data_req_b;
@@ -61,61 +68,6 @@ logic [31:0] data_rdata_a, data_rdata_b;
 logic data_err_a, data_err_b;
 logic b_resp_valid, b_busy;
 
-// Assign correct intermediate signals for sharing port logic, FSM-LSU if 1 port, FSM1-FSM2 if 2 ports
-assign data_req_a = vrf_data_req_i[0];
-assign vrf_data_gnt_o[0] = data_gnt_a;
-assign vrf_data_rvalid_o[0] = data_rvalid_a;
-assign data_we_a = vrf_data_we_i[0];
-assign data_be_a = vrf_data_be_i[0];
-assign data_addr_a = vrf_data_addr_i[0];
-assign data_wdata_a = vrf_data_wdata_i[0];
-assign vrf_data_rdata_o[0] = data_rdata_a;
-assign vrf_data_err_o[0] = data_err_a;
-generate
-  if (NumIfs==1) begin
-    assign data_req_b = lsu_data_req_i;
-    assign lsu_data_gnt_o = data_gnt_b;
-    assign lsu_data_rvalid_o = data_rvalid_b;
-    assign data_we_b = lsu_data_we_i;
-    assign data_be_b = lsu_data_be_i;
-    assign data_addr_b = lsu_data_addr_i;
-    assign data_wdata_b = lsu_data_wdata_i;
-    assign lsu_data_rdata_o = data_rdata_b;
-    assign lsu_data_err_o = data_err_b;
-    assign b_resp_valid = lsu_resp_valid_i;
-    assign b_busy = lsu_busy_i;
-  end
-  else begin
-    assign data_req_b = vrf_data_req_i[1];
-    assign vrf_data_gnt_o[1] = data_gnt_b;
-    assign vrf_data_rvalid_o[1] = data_rvalid_b;
-    assign data_we_b = vrf_data_we_i[1];
-    assign data_be_b = vrf_data_be_i[1];
-    assign data_addr_b = vrf_data_addr_i[1];
-    assign data_wdata_b = vrf_data_wdata_i[1];
-    assign vrf_data_rdata_o[1] = data_rdata_b;
-    assign vrf_data_err_o[1] = data_err_b;
-    assign b_resp_valid = 1'b1;
-    assign b_busy = 1'b0;
-  end
-endgenerate
-
-// Control signal used to manage transitions in FSM
-generate
-  if (NumIfs==1) begin
-    // signal is high when the VRF has control of the data memory, it can happen when the following conditions are met:
-    // - it's a vector operation
-    // - the VRF didn't request a memory operation
-    // - the LSU is not busy with a previously requested memory operation (needed especially for misaligned accesses)
-    assign a_is_master = vector_op_i && (!vrf_lsu_req_i && !b_busy);
-  end
-  else begin
-    // with more than one port the first one is shared between two FSMs only if it's a memory operation
-    // otherwise each FSM has its own port to work with
-    assign a_is_master = vector_op_i && (vrf_data_req_i[0] || !is_mem_op_i);
-  end
-endgenerate
-
 // INPUTS
 // rdata sent to both
 assign data_rdata_a = data_rdata_i[0];
@@ -124,7 +76,7 @@ assign data_rdata_b = data_rdata_i[0];
 assign data_gnt_a = a_is_master && data_gnt_i[0];
 assign data_gnt_b = !a_is_master && data_gnt_i[0];
 
-// SECOND CYCLE RESPONSES, responses given on the next cycle, FSM needed to keep track of the previous unit
+// SECOND CYCLE RESPONSES, responses given on the next cycle, VRF needed to keep track of the previous unit
 always_ff @(posedge clk_i or negedge rst_ni) begin
   if (!rst_ni) begin
     prev_op_q <= MOD_A;
@@ -138,7 +90,7 @@ always_ff @(posedge clk_i or negedge rst_ni) begin
 end
 always_comb begin
   case (prev_op_q)
-    // This state means that the previous master was A, if a keeps being it the FSM doesn't move
+    // This state means that the previous master was A, if a keeps being it the VRF doesn't move
     MOD_A: prev_op_d = a_is_master; // correspond to ... = a_is_master ? MOD_A : MOD_B;
     // This state means that the previous master was B.
     // Next state: if not a vector operation the data port keeps beign of the LSU (not optimal for multiple ports since the LSU will not use it)
@@ -153,49 +105,104 @@ assign data_err_a = ((prev_op_q == MOD_A) && vector_op_i) && data_err_i[0];
 assign data_err_b = ((prev_op_q == MOD_B) || !vector_op_i) && data_err_i[0];
 
 // OUTPUTS
-
 assign data_req_o[0] = a_is_master ? data_req_a : data_req_b;
 assign data_we_o[0] = a_is_master ? data_we_a : data_we_b;
 assign data_be_o[0] = a_is_master ? data_be_a : data_be_b;
 assign data_addr_o[0] = a_is_master ? data_addr_a : data_addr_b;
 assign data_wdata_o[0] = a_is_master ? data_wdata_a : data_wdata_b;
 
-///////////////////////////
-// Ports 2/3 connections //
-///////////////////////////
+
+
+////////////////////////////
+// MULTIPLE PORTS SUPPORT //
+////////////////////////////
+
+////////////// ANY PORTS //////////////
+// Assign correct intermediate signals for sharing port logic, VRF-LSU if 1 port, VRF1-VRF2 if 2 ports
+// The first of the two multiplexed memebers is always the first interface of the VRF
+assign data_req_a = vrf_data_req_i[0];
+assign data_we_a = vrf_data_we_i[0];
+assign data_be_a = vrf_data_be_i[0];
+assign data_addr_a = vrf_data_addr_i[0];
+assign data_wdata_a = vrf_data_wdata_i[0];
+assign vrf_data_gnt_o[0] = data_gnt_a;
+assign vrf_data_rvalid_o[0] = data_rvalid_a;
+assign vrf_data_rdata_o[0] = data_rdata_a;
+assign vrf_data_err_o[0] = data_err_a;
 
 generate
-  if (NumIfs==2) begin
-    // connect the second interface to: FSM if it's a vector op that is not load/store (each FSM will use a port), LSU if not vector op (scalar LSU use) or if vector load/store
-    // OUTPUTS
+  ////////////// ONE PORT //////////////
+  if (NumIfs==1) begin
+    // if there is only one port the second member is the LSU
+    assign data_req_b = lsu_data_req_i;
+    assign data_we_b = lsu_data_we_i;
+    assign data_be_b = lsu_data_be_i;
+    assign data_addr_b = lsu_data_addr_i;
+    assign data_wdata_b = lsu_data_wdata_i;
+    assign lsu_data_gnt_o = data_gnt_b;
+    assign lsu_data_rvalid_o = data_rvalid_b;
+    assign lsu_data_rdata_o = data_rdata_b;
+    assign lsu_data_err_o = data_err_b;
+
+    // signal is high when the VRF has control of the data memory, it can happen when the following conditions are met:
+    // - it's a vector operation
+    // - the VRF didn't request a memory operation
+    // - the LSU is not busy with a previously requested memory operation (needed especially for misaligned accesses)
+    assign a_is_master = vector_op_i && (!vrf_lsu_req_i && !b_busy);
+    assign b_resp_valid = lsu_resp_valid_i;
+    assign b_busy = lsu_busy_i;
+  end
+
+  ////////////// >ONE PORTS //////////////
+  else begin
+    // When there is more than one ports the first one is always shared between VRF1 and VRF2 but it effectively works only if it's a memory operation
+    // The second port is: used by VRF if normal OP, used by LSU if memory OP
+
+    // CONTROL SIGNALS
+    // with more than one port the first one is shared between two VRFs only if it's a memory operation
+    // otherwise each VRF has its own port to work with
+    assign a_is_master = vector_op_i && (vrf_data_req_i[0] || !is_mem_op_i);
+    assign b_resp_valid = 1'b1;                 // needed in FSM
+    assign b_busy = 1'b0;                       // not needed but assigned anyway
+
+    // VRF2
+    // Assign inputs to FSM second member
+    assign data_req_b = vrf_data_req_i[1];
+    assign data_we_b = vrf_data_we_i[1];
+    assign data_be_b = vrf_data_be_i[1];
+    assign data_addr_b = vrf_data_addr_i[1];
+    assign data_wdata_b = vrf_data_wdata_i[1];
+    // Multiplexed inputs between the one coming from first and second data interface
+    assign vrf_data_gnt_o[1] = (vector_op_i && !is_mem_op_i) ? data_gnt_i[1] : data_gnt_b;
+    assign vrf_data_rvalid_o[1] = (vector_op_i && !is_mem_op_i) ? data_rvalid_i[1] : data_rvalid_b;
+    assign vrf_data_rdata_o[1] = (vector_op_i && !is_mem_op_i) ? data_rdata_i[1] : data_rdata_b;
+    assign vrf_data_err_o[1] = (vector_op_i && !is_mem_op_i) ? data_err_i[1] : data_err_b;
+    // LSU - No need to multiplex, I keep these assigned (verify if it's a problem)
+    assign lsu_data_gnt_o = data_gnt_i[1];
+    assign lsu_data_rvalid_o = data_rvalid_i[1];
+    assign lsu_data_rdata_o = data_rdata_i[1];
+    assign lsu_data_err_o = data_err_i[1];
+    // Multiplexed OUTPUTS of the second data interface between VRF2 and LSU
     assign data_req_o[1] = (vector_op_i && !is_mem_op_i) ? vrf_data_req_i[1] : lsu_data_req_i;
     assign data_we_o[1] = (vector_op_i && !is_mem_op_i) ? vrf_data_we_i[1] : lsu_data_we_i;
     assign data_be_o[1] = (vector_op_i && !is_mem_op_i) ? vrf_data_be_i[1] : lsu_data_be_i;
     assign data_addr_o[1] = (vector_op_i && !is_mem_op_i) ? vrf_data_addr_i[1] : lsu_data_addr_i;
     assign data_wdata_o[1] = (vector_op_i && !is_mem_op_i) ? vrf_data_wdata_i[1] : lsu_data_wdata_i;
-    // INPUTS (assigned to both, can be changed later if needed)
-    assign vrf_data_gnt_o[1] = data_gnt_i[1];
-    assign vrf_data_rvalid_o[1] = data_rvalid_i[1];
-    assign vrf_data_rdata_o[1] = data_rdata_i[1];
-    assign vrf_data_err_o[1] = data_err_i[1];
-    assign lsu_data_gnt_o = data_gnt_i[1];
-    assign lsu_data_rvalid_o = data_rvalid_i[1];
-    assign lsu_data_rdata_o = data_rdata_i[1];
-    assign lsu_data_err_o = data_err_i[1];
-  end
-  if (NumIfs==3) begin
-    // with three ports the third FSM is always connected to the third port
-    // OUTPUTS
-    assign data_req_o[2] = vrf_data_req_i[2];
-    assign data_we_o[2] = vrf_data_we_i[2];
-    assign data_be_o[2] = vrf_data_be_i[2];
-    assign data_addr_o[2] = vrf_data_addr_i[2];
-    assign data_wdata_o[2] = vrf_data_wdata_i[2];
-    // INPUTS
-    assign vrf_data_gnt_o[2] = data_gnt_i[2];
-    assign vrf_data_rvalid_o[2] = data_rvalid_i[2];
-    assign vrf_data_rdata_o[2] = data_rdata_i[2];
-    assign vrf_data_err_o[2] = data_err_i[2];
+
+    ////////////// THREE PORTS //////////////
+    // With three ports the third VRF is always connected to the third port and it will be used or not depending on the instruction
+    if (NumIfs==3) begin
+      assign data_req_o[2] = vrf_data_req_i[2];
+      assign data_we_o[2] = vrf_data_we_i[2];
+      assign data_be_o[2] = vrf_data_be_i[2];
+      assign data_addr_o[2] = vrf_data_addr_i[2];
+      assign data_wdata_o[2] = vrf_data_wdata_i[2];
+      assign vrf_data_gnt_o[2] = data_gnt_i[2];
+      assign vrf_data_rvalid_o[2] = data_rvalid_i[2];
+      assign vrf_data_rdata_o[2] = data_rdata_i[2];
+      assign vrf_data_err_o[2] = data_err_i[2];
+    end
+    
   end
 endgenerate
 

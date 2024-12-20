@@ -75,7 +75,7 @@ module vcve2_agu #(
                 end
                 addr_o[i] = get_rs1_i[i] ? {VRF_START_ADDR, rs1_i[4:3], addr_rs1_q, 2'b00} + (i<<2) :
                             get_rs2_i[i] ? {VRF_START_ADDR, rs2_i[4:3], addr_rs2_q, 2'b00} + (i<<2) :
-                            get_rd_i[i]  ? {VRF_START_ADDR, rd_i[4:3], addr_rd_q, 2'b00} + (i<<2)  : '0;
+                            get_rd_i[i]  ? {VRF_START_ADDR, rd_i[4:3],  addr_rd_q,  2'b00} + (i<<2) : '0;
             end
         end
     endgenerate
