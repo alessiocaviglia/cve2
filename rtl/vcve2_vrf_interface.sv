@@ -2,62 +2,57 @@ module vcve2_vrf_interface #(
     parameter int unsigned VLEN = 128,
     parameter int unsigned PIPE_WIDTH = 32
 ) (
-    // Clock and Reset
+    ///////////////////// REGISTER FIlE SIGNALS /////////////////////
     input   logic                       clk_i,
     input   logic                       rst_ni,
-
-    // Read ports
     input   logic                       req_i,                              // request signal for VRF
-    output  logic [PIPE_WIDTH-1:0]      rdata_a_o, rdata_b_o, rdata_c_o,
+    output  logic [PIPE_WIDTH-1:0]      rdata_a_o, rdata_b_o, rdata_c_o,    // read data ports
+    input   logic [PIPE_WIDTH-1:0]      wdata_i,                            // write data port
 
-    // Write port
-    input   logic [PIPE_WIDTH-1:0]      wdata_i,
-
-    // Multiple data prots support
+    ///////////////////// MULTIPLE PORTS SUPPORT ////////////////////
     output  logic                       op_done_o,
     input   logic                       other_done_i,
 
-    // Data memory interface
-    output logic         data_req_o,
-    input  logic         data_gnt_i,
-    input  logic         data_rvalid_i,
-    input  logic         data_err_i,
-    input  logic         data_pmp_err_i,
-    output logic         data_we_o,
-    output logic [3:0]   data_be_o,
-    output logic [31:0]  data_wdata_o,
-    input  logic [31:0]  data_rdata_i,
-    // LSU control signals
-    output logic         data_load_addr_o,  // loads the address for the memory operation in a counter
-    input  logic         lsu_gnt_i,         // grant of LSU, if not immediately given for a write we sample the result/operand
+    ///////////////////// DATA MEMORY INTERFACE /////////////////////
+    output logic              data_req_o,
+    input  logic              data_gnt_i,
+    input  logic              data_rvalid_i,
+    input  logic              data_err_i,
+    input  logic              data_pmp_err_i,
+    output logic              data_we_o,
+    output logic [3:0]        data_be_o,
+    output logic [31:0]       data_wdata_o,
+    input  logic [31:0]       data_rdata_i,
 
-    // AGU
-    output logic         agu_load_o,
-    output logic         agu_get_rs1_o,
-    output logic         agu_get_rs2_o,
-    output logic         agu_get_rd_o,
-    output logic         agu_incr_o,
-
-    // ID signals
-    input  logic [3:0]            sel_operation_i,    // each bit enables a different operation, 0 - R RS1, 1 - R RS2, 2 - R RS3, 3 - W RD
-    input  logic                  memory_op_i,        // 0 - arithmetic operation, 1 - load/store operation
-    input  logic                  unit_stride_i,      // 0 - non-unit stride, 1 - unit stride
-    input  logic                  mult_ops_i,      // 0 - non-interleaved, 1 - interleaved
-    output logic                  vector_done_o,      // signals the pipeline that the vector operation is finished (most likely with a write to the VRF)
+    ///////////////////// LSU INTERFACE /////////////////////////////
+    output logic              data_load_addr_o,  // loads the address for the memory operation in a counter
+    input  logic              lsu_gnt_i,         // grant of LSU, if not immediately given for a write we sample the result/operand
+    output logic              lsu_req_o,         // signals the LSU that it can start the memory operation
+    input  logic              lsu_done_i,        // signals the VRF that the LSU operation is finished
     
+    ///////////////////// AGU INTERFACE /////////////////////////////
+    output logic              agu_load_o,
+    output logic              agu_get_rs1_o,
+    output logic              agu_get_rs2_o,
+    output logic              agu_get_rd_o,
+    output logic              agu_incr_o,
+
+    ///////////////////// CONTROL SIGNALS ///////////////////////////
+    // ID signals
+    input  logic [3:0]        sel_operation_i,    // each bit enables a different operation, 0 - R RS1, 1 - R RS2, 2 - R RS3, 3 - W RD
+    input  logic              memory_op_i,        // 0 - arithmetic operation, 1 - load/store operation
+    input  logic              unit_stride_i,      // 0 - non-unit stride, 1 - unit stride
+    input  logic              mult_ops_i,         // 0 - non-interleaved, 1 - interleaved
+    output logic              vector_done_o,      // signals the pipeline that the vector operation is finished (most likely with a write to the VRF)
     // Slide signals
-    input  logic                  slide_op_i,         // 0 - no slide, 1 - slide
-    input  logic [31:0]           slide_offset_i,     // offset for the slide operation
-    input  logic                  is_slide_up_i,      // 0 - slide down, 1 - slide up
+    input  logic              slide_op_i,         // 0 - no slide, 1 - slide
+    input  logic [31:0]       slide_offset_i,     // offset for the slide operation
+    input  logic              is_slide_up_i,      // 0 - slide down, 1 - slide up
 
-    // LSU signals
-    output logic                  lsu_req_o,          // signals the LSU that it can start the memory operation
-    input  logic                  lsu_done_i,
-
-    // CSR signals
-    input vcve2_pkg::vlmul_e      lmul_i,
-    input vcve2_pkg::vsew_e       sew_i,
-    input logic [31:0]            vl_i
+    ///////////////////// CSR ///////////////////////////////////////
+    input vcve2_pkg::vlmul_e  lmul_i,
+    input vcve2_pkg::vsew_e   sew_i,
+    input logic [31:0]        vl_i
 );
 
   import vcve2_pkg::*;
@@ -65,26 +60,26 @@ module vcve2_vrf_interface #(
   parameter NUM_BYTE_OPS = (VLEN >> ($clog2(PIPE_WIDTH))) << 2; // (VLEN/PIPE_WIDTH) / 8 
 
   // VRF FSM signals
-  vcve2_pkg::vrf_state_t vrf_state, vrf_next_state;
-  logic [PIPE_WIDTH-3:0] num_iterations_q, num_iterations_d;
-  logic [PIPE_WIDTH-1:0] num_bytes_elements;
-  logic [1:0] offset_q, offset_d;
-  logic first_iteration_d, first_iteration_q;
-  logic last_iteration_d, last_iteration_q;
-  logic [3:0] offset_be;
-  logic no_offset;
+  vcve2_pkg::vrf_state_t vrf_state, vrf_next_state;           // VRF FSM states
+  logic [PIPE_WIDTH-3:0] num_iterations_q, num_iterations_d;  // counter for the number of iterations
+  logic [PIPE_WIDTH-1:0] num_bytes_elements;                  // TO BE REMOVED
+  logic [1:0] offset_q, offset_d;                             // offset for misaligned load/store and slide
+  logic first_iteration_d, first_iteration_q;                 // flag, 1 when in first iteration
+  logic last_iteration_d, last_iteration_q;                   // flag, 1 when in last iteration
+  logic [3:0] offset_be;                                      // byte enable for the last write operation
+  logic no_offset;                                            // flag, 1 when offset is zero
 
-  // Internal registers signals
-  logic rs1_en, rs2_en, rs3_en, rd_en;    // rd is used only for load operations
+  // Internal registers signals (do I need all of them?)
+  logic rs1_en, rs2_en, rs3_en, rd_en;
   logic [PIPE_WIDTH-1:0] rs1_q, rs2_q, rs3_q, rd_q;
   logic [PIPE_WIDTH-1:0] rs1_d, rs2_d, rs3_d, rd_d;
 
   // Delayed grant for read operations in store
   logic read_delayed;
-  logic rdata_mux;
   logic write_delayed;
-  logic [1:0] curr_state_delay, next_state_delay;
+  logic rdata_mux;
   logic [1:0] wdata_mux;
+  logic [1:0] curr_state_delay, next_state_delay;
   logic buffer_en, rd_buf_en;
   logic [PIPE_WIDTH-1:0] buffer_q, buffer_d;
 

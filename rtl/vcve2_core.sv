@@ -892,7 +892,6 @@ module vcve2_core import vcve2_pkg::*; #(
   ) vrf_wrapper_i (
     .clk_i(clk_i),
     .rst_ni(rst_ni),
-
     .req_i(vrf_req),
     .rdata_a_o(vrf_rdata_a),
     .rdata_b_o(vrf_rdata_b),
@@ -909,9 +908,11 @@ module vcve2_core import vcve2_pkg::*; #(
     .data_wdata_o(vrf_data_wdata),
     .data_rdata_i(vrf_data_rdata),
 
-    // LSU control signals
+    // LSU signals
     .data_load_addr_o(lsu_if_load_addr),
     .lsu_gnt_i(vrf_lsu_gnt),
+    .lsu_req_o(vrf_lsu_req),
+    .lsu_done_i(lsu_resp_valid),
 
     // AGU signals
     .agu_load_o(agu_load),
@@ -930,9 +931,6 @@ module vcve2_core import vcve2_pkg::*; #(
     .slide_op_i(vrf_slide_op),
     .slide_offset_i(alu_operand_a_ex),
     .is_slide_up_i(is_slide_up),
-    // LSU
-    .lsu_req_o(vrf_lsu_req),
-    .lsu_done_i(lsu_resp_valid),
 
     // CSR
     .lmul_i(vrf_vlmul),

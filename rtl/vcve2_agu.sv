@@ -5,7 +5,6 @@ module vcve2_agu #(
     input logic clk_i,
     input logic rst_ni,
 
-    // input logic [....] vrf_base_addr_i, // base address of the VRF
     // addresses of registers
     input logic [4:0]                         rs1_i,
     input logic [4:0]                         rs2_i,
