@@ -10,8 +10,12 @@ module vcve2_vrf_interface #(
     input   logic [PIPE_WIDTH-1:0]      wdata_i,                            // write data port
 
     ///////////////////// MULTIPLE PORTS SUPPORT ////////////////////
+    
     output  logic                       op_done_o,
     input   logic                       other_done_i,
+    // signal relater to number of iterations
+    output  logic                       req_iter_o,
+    input   logic                       gnt_iter_i,
 
     ///////////////////// DATA MEMORY INTERFACE /////////////////////
     output logic              data_req_o,
@@ -238,6 +242,8 @@ module vcve2_vrf_interface #(
     case (vrf_state)
 
       VRF_IDLE: begin
+        // the vector done value is kept high during idle so that the wrapper can detect the end when using multiple FSMs
+        vector_done_o = 1'b1;
         last_iteration_d = 1'b0;
         // VRF stays idle until a request is made
         if (!req_i) begin
@@ -247,9 +253,9 @@ module vcve2_vrf_interface #(
         end else begin
           if (vl_i == 0) begin
             vrf_next_state = VRF_IDLE;
-            vector_done_o = 1'b1;
             num_iterations_d = '0;
           end else begin
+            vector_done_o = 1'b0;
             // AGU - load addresses in the AGU
             agu_load_o = 1'b1;
             // Data memory if - load the start address

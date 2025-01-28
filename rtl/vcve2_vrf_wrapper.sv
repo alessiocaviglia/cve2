@@ -54,30 +54,120 @@ module vcve2_vrf_wrapper #(
     input  logic [31:0]                 vl_i
 );
 
+    // Wrapper signals
+    logic wrapper_state_q, wrapper_state_d;                     // state machine for the wrapper
     // Internal signals for connecting to instances
     logic [NumIfs-1:0] req;
+    logic [NumIfs-1:0] fsm_done;
+    logic fsm_all_done;
     logic req_1_d, req_1_q;
     logic [NumIfs-1:0] agu_load, agu_incr;
-
     logic [NumIfs-1:0] other_done, op_done;
+    // number of iterations handling signals
+    logic init_num_iterations;                                  // control signal, when high it must sample the number of iterations.
+    logic [PIPE_WIDTH-1:0] num_bytes_elements;                  // number of bytes to be processed for the current instruction
+    logic [PIPE_WIDTH-3:0] num_iterations_q, num_iterations_d;  // counter for the number of iterations
+    logic [1:0] offset_q, offset_d;                             // offset for misaligned load/store and slide
+    logic [NumIfs-1:0] req_iter, gnt_iter;                      // signals between VRF interfaces and wrapper used to request an iteration
+
+    /////////////////
+    // Wrapper FSM //
+    /////////////////
+    always_ff @(posedge clk_i or negedge rst_ni) begin
+        if (!rst_ni) begin
+            wrapper_state_q <= 1'b0;
+        end
+        else begin
+            wrapper_state_q <= wrapper_state_d;
+        end
+    end
+    always_comb begin
+        wrapper_state_d = wrapper_state_q;
+        init_num_iterations = 1'b0;
+        case (wrapper_state_q)
+            1'b0: begin                      // IDLE STATE
+                if (req_i) begin
+                    wrapper_state_d = 1'b1;
+                    init_num_iterations = 1'b1;
+                end
+            end
+            1'b1: begin                      // RUNNING STATE - here in the first cycle req is high, used to initialize things
+                if (fsm_all_done) begin
+                    vector_done_o = 1'b1;
+                    wrapper_state_d = 1'b0;
+                end
+                wrapper_state_d = 1'b1;
+            end
+            default: begin
+                wrapper_state_d = 1'b0;
+            end
+        endcase
+    end
+
+    //////////////////////////////////
+    // Num of Iterations and Offset //
+    //////////////////////////////////
+
+    // Num of iterations and offset registers
+    always_ff @(posedge clk_i or negedge rst_ni) begin
+        if (!rst_ni) begin
+            num_iterations_q <= 0;
+            offset_q <= 0;
+        end
+        else begin
+            num_iterations_q <= num_iterations_d;
+            offset_q <= offset_d;
+        end
+    end
+
+    // Num of Iterations and offset initialization
+    always_comb begin
+        num_iterations_d = num_iterations_q;
+        offset_d = offset_q;
+        num_bytes_elements = '0;
+        for (int j=0; j<NumIfs; j++) gnt_iter[j] = 1'b0;
+        if (init_num_iterations) begin
+            num_bytes_elements = vl_i<<sew_i;
+            // In this line a use a subtractor and later I will need a comparator for num_iterations, would it be possible to reuse this?
+            // num_iterations_d = slide_op_i ? num_bytes_elements[31:2] - slide_offset_i[31:2] : num_bytes_elements[31:2];
+            num_iterations_d = num_bytes_elements[31:2];
+            offset_d = num_bytes_elements[1:0];
+        end else begin
+            for (int j=0; j<NumIfs; j++) begin
+                if (req_iter[j] && (num_iterations_q>0)) begin
+                    num_iterations_d = num_iterations_q-1;
+                    gnt_iter[j] = 1'b1;
+                end
+            end
+        end
+    end
+
 
     // Instantiate vcve2_vrf_interface modules
     generate
         genvar i;
-        for (i = 0; i < NumIfs; i++) begin : vcve2_instances
-            // request signals
-            if (i == 0) begin
-                assign req[i] = req_i;
+
+        // Generation of request signals for single instances of FSM, they are all the delayed version of the previous one
+        // Also the first one is delayed to leave one cycle to the wrapper for num_iterations and offset calculation
+        always_ff @(posedge clk_i or negedge rst_ni) begin
+            if (!rst_ni) begin
+                req[0] <= 1'b0;
+            end else begin
+                req[0] <= req_i;
             end
-            else begin
+        end
+        for (i = 1; i < NumIfs; i++) begin : req_regs
             always_ff @(posedge clk_i or negedge rst_ni) begin
                 if (!rst_ni)
-                    req[i] = 1'b0;
-                else
-                    req[i] = req[i-1];
+                    req[i] <= 1'b0;
+                else begin
+                    req[i] <= req[i-1];
                 end
             end
-            // FSMs
+        end
+
+        // FSMs
+        for (i = 0; i < NumIfs; i++) begin : vcve2_instances
             vcve2_vrf_interface #(
                 .VLEN(VLEN),
                 .PIPE_WIDTH(PIPE_WIDTH)
@@ -90,9 +180,13 @@ module vcve2_vrf_wrapper #(
                 .rdata_c_o(rdata_c_o),
                 .wdata_i(wdata_i),
 
+                // multiple ports support
                 .op_done_o(op_done[i]),
                 .other_done_i(other_done[i]),
+                .req_iter_o(req_iter[i]),
+                .gnt_iter_i(gnt_iter[i]),
 
+                // data memory interface
                 .data_req_o(data_req_o[i]),
                 .data_gnt_i(data_gnt_i[i]),
                 .data_rvalid_i(data_rvalid_i[i]),
@@ -117,7 +211,7 @@ module vcve2_vrf_wrapper #(
                 .memory_op_i(memory_op_i),
                 .unit_stride_i(unit_stride_i),
                 .mult_ops_i(mult_ops_i),
-                .vector_done_o(vector_done_o),
+                .vector_done_o(fsm_done[i]),
                 .slide_op_i(slide_op_i),
                 .slide_offset_i(slide_offset_i),
                 .is_slide_up_i(is_slide_up_i),
@@ -131,15 +225,18 @@ module vcve2_vrf_wrapper #(
         // signal to synchronize FSMs
         if (NumIfs == 1) begin : gen_done_1
             assign other_done[0] = 1'b1;
+            assign fsm_all_done = fsm_done[0];
         end
         else if (NumIfs == 2) begin : gen_done_2
             assign other_done[0] = op_done[1];
             assign other_done[1] = op_done[0];
+            assign fsm_all_done = fsm_done[0] & fsm_done[1];
         end
         else if (NumIfs == 3) begin : gen_done_3
             assign other_done[0] = op_done[1] & op_done[2];
             assign other_done[1] = op_done[0] & op_done[2];
             assign other_done[2] = op_done[0] & op_done[1];
+            assign fsm_all_done = fsm_done[0] & fsm_done[1] & fsm_done[2];
         end
     endgenerate
 
