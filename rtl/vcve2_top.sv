@@ -18,7 +18,8 @@ module vcve2_top import vcve2_pkg::*; #(
   parameter bit          RV32E            = 1'b0,
   parameter rv32m_e      RV32M            = RV32MSingleCycle,
   parameter int unsigned DmHaltAddr       = 32'h1A110800,
-  parameter int unsigned DmExceptionAddr  = 32'h1A110808
+  parameter int unsigned DmExceptionAddr  = 32'h1A110808,
+  parameter int unsigned VLEN             = 128
 ) (
   // Clock and Reset
   input  logic                         clk_i,
@@ -165,7 +166,8 @@ module vcve2_top import vcve2_pkg::*; #(
     .DbgTriggerEn     (DbgTriggerEn),
     .DbgHwBreakNum    (DbgHwBreakNum),
     .DmHaltAddr       (DmHaltAddr),
-    .DmExceptionAddr  (DmExceptionAddr)
+    .DmExceptionAddr  (DmExceptionAddr),
+    .VLEN             (VLEN)
   ) u_cve2_core (
     .clk_i(clk),
     .rst_ni,

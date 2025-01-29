@@ -12,8 +12,6 @@ package vcve2_pkg;
   // Vector Extension //
   //////////////////////
 
-  parameter int unsigned VLEN = 128; // Vector length
-
   parameter logic [22:0] VRF_START_ADDR = 23'h00_0064;
 
   // Vector register file states

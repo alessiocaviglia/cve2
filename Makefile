@@ -8,6 +8,8 @@ SYN_NETLIST_DIR			:= $(HOME)/repo/thesis/hw/cve2/syn/netlist
 SYN_LOG_DIR				:= $(SYNTHESIS_DIR)/logs
 SYN_SCRIPTS_DIR			:= $(HOME)/repo/thesis/hw/cve2/syn/scripts
 
+SYN_ARCHIVE_DIR			:= $(HOME)/repo/thesis/hw/cve2/syn/archive
+
 all: help
 
 .PHONY: help
@@ -42,6 +44,15 @@ syn-core:
 	mkdir -p $(SYN_NETLIST_DIR)
 	fusesoc --cores-root . run --build-root $(SYNTHESIS_DIR) --target=synth --tool=design_compiler --setup --build alessiocaviglia:thesis:vcve2_top 2>&1 | tee buildsim.log
 	cp $(SYNTHESIS_DIR)/synth-design_compiler/netlist.v $(SYN_NETLIST_DIR)/netlist.v
+
+# SAVE THE SYNTHESIS REPORTS
+# USAGE: make save-syn
+# Copy synthesis reports and netlist in a folder with the current date and time
+.PHONY: save-syn
+save-syn:
+	mkdir -p $(SYN_ARCHIVE_DIR)/$(shell date +'%Y-%m-%d_%H-%M-%S')
+	cp -r $(SYNTHESIS_DIR)/../rpt/* $(SYN_ARCHIVE_DIR)/$(shell date +'%Y-%m-%d_%H-%M-%S')
+	cp $(SYN_NETLIST_DIR)/netlist.v $(SYN_ARCHIVE_DIR)/$(shell date +'%Y-%m-%d_%H-%M-%S')
 
 #-------#
 # Utils #

@@ -17,9 +17,9 @@ source ${CONSTRAINTS}
 report_clocks > ${REPORT_DIR}/clocks.rpt
 report_timing -loop -max_paths 10 > ${REPORT_DIR}/timing_loop.rpt
 
-# compile_ultra -no_autoungroup -no_boundary_optimization -timing -gate_clock
+compile_ultra -no_autoungroup -no_boundary_optimization -timing -gate_clock
 # compile_ultra
-compile
+# compile
 
 write -f ddc -hierarchy -output ${REPORT_DIR}/compiled.ddc
 

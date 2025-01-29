@@ -24,7 +24,8 @@ module vcve2_core import vcve2_pkg::*; #(
   parameter bit          DbgTriggerEn      = 1'b0,
   parameter int unsigned DbgHwBreakNum     = 1,
   parameter int unsigned DmHaltAddr        = 32'h1A110800,
-  parameter int unsigned DmExceptionAddr   = 32'h1A110808
+  parameter int unsigned DmExceptionAddr   = 32'h1A110808,
+  parameter int unsigned VLEN             = 128
 ) (
   // Clock and Reset
   input  logic                         clk_i,
@@ -876,7 +877,7 @@ module vcve2_core import vcve2_pkg::*; #(
 
   // VRF interface, containing the logic for the vector register file
   vcve2_vrf_interface #(
-    .VLEN(128),
+    .VLEN(VLEN),
     .PIPE_WIDTH(32)
   ) vcve2_vrf_interface_inst (
     .clk_i(clk_i),
