@@ -27,7 +27,7 @@ Initializing...
 #
 ############################################
 sh date
-Wed Oct 16 11:18:11 CEST 2024
+Wed Jan 29 10:41:51 CET 2025
 set TOP_MODULE vcve2_top
 vcve2_top
 set DC_SCRIPT dc_script.tcl
@@ -1463,526 +1463,225 @@ Presto compilation completed successfully. (vcve2_fracturable_adder_PIPE_WIDTH32
   tcbn65lpbc (library)        /software/dk/tsmc65/digital/Front_End/timing_power_noise/NLDM/tcbn65lp_200a/tcbn65lpbc.db
 
 Writing ddc file '../../rpt/precompiled.ddc'.
-Warning: The value of variable 'compile_preserve_subdesign_interfaces' has been changed to true because '-no_boundary_optimization' is used. (OPT-133)
-Information: Starting from 2013.12 release, constant propagation is enabled even when boundary optimization is disabled. (OPT-1318)
-Loading db file '/eda/synopsys/2020-21/RHELx86/SYN_2020.09-SP2/libraries/syn/dw_foundation.sldb'
-Information: Failed to find dw_foundation.sldb in the user defined search_path, load it from 'Synopsys Root'. (UISN-70)
-Warning: DesignWare synthetic library dw_foundation.sldb is added to the synthetic_library in the current command. (UISN-40)
-Warning: The -timing_high_effort_script option is ignored.  (OPT-1342)
-Information: Performing power optimization. (PWR-850)
-Analyzing: "/software/dk/tsmc65/digital/Front_End/timing_power_noise/NLDM/tcbn65lp_200a/tcbn65lpbc.db"
-Library analysis succeeded.
-Information: Failed to find dw_foundation.sldb in the user defined search_path, load it from 'Synopsys Root'. (UISN-70)
-Warning: DesignWare synthetic library dw_foundation.sldb is added to the synthetic_library in the current command. (UISN-40)
 Information: Evaluating DesignWare library utilization. (UISN-27)
 
 ============================================================================
 | DesignWare Building Block Library  |         Version         | Available |
 ============================================================================
 | Basic DW Building Blocks           | R-2020.09-DWBB_202009.2 |     *     |
-| Licensed DW Building Blocks        | R-2020.09-DWBB_202009.2 |     *     |
+| Licensed DW Building Blocks        |                         |           |
 ============================================================================
 
-Information: Sequential output inversion is enabled.  SVF file must be used for formal verification. (OPT-1208)
 
 Information: There are 1877 potential problems in your design. Please run 'check_design' for more information. (LINT-99)
 
-Information: Uniquified 8 instances of design 'vcve2_csr_32_0_0'. (OPT-1056)
-Information: Uniquified 2 instances of design 'vcve2_csr_7_0_0'. (OPT-1056)
-Information: Uniquified 2 instances of design 'vcve2_csr_00000001_0_0'. (OPT-1056)
-  Simplifying Design 'vcve2_top'
-Information: Performing clock-gating with positive edge logic: 'integrated' and negative edge logic: 'integrated'. (PWR-1047)
 
-Loaded alib file './alib-52/tcbn65lpbc.db.alib'
-Information: State dependent leakage is now switched from on to off.
 
   Beginning Pass 1 Mapping
   ------------------------
-  Processing 'vcve2_register_file_ff_0_32_00000000'
-  Processing 'vcve2_cs_registers_1_00000001_00000000_00000028_0_00000000_00000004_0_3_0'
-Information: Added key list 'DesignWare' to design 'vcve2_cs_registers_1_00000001_00000000_00000028_0_00000000_00000004_0_3_0'. (DDB-72)
-Information: The register 'mcountinhibit_q_reg[1]' is a constant and will be removed. (OPT-1206)
-  Processing 'vcve2_decoder_0_3_0'
-  Processing 'vcve2_vrf_interface_VLEN128_PIPE_WIDTH32'
-Information: Added key list 'DesignWare' to design 'vcve2_vrf_interface_VLEN128_PIPE_WIDTH32'. (DDB-72)
- Implement Synthetic for 'vcve2_vrf_interface_VLEN128_PIPE_WIDTH32'.
-  Processing 'vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808'
-Information: Added key list 'DesignWare' to design 'vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808'. (DDB-72)
- Implement Synthetic for 'vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808'.
-  Processing 'vcve2_multdiv_fast_RV32M3'
- Implement Synthetic for 'vcve2_multdiv_fast_RV32M3'.
-Information: Added key list 'DesignWare' to design 'vcve2_multdiv_fast_RV32M3'. (DDB-72)
-  Processing 'vcve2_id_stage_0_3_0'
-Information: The register 'imd_val_q_reg[1][32]' is a constant and will be removed. (OPT-1206)
-Information: The register 'imd_val_q_reg[1][33]' is a constant and will be removed. (OPT-1206)
- Implement Synthetic for 'vcve2_id_stage_0_3_0'.
-Information: Added key list 'DesignWare' to design 'vcve2_id_stage_0_3_0'. (DDB-72)
-  Processing 'vcve2_fetch_fifo_00000002'
- Implement Synthetic for 'vcve2_fetch_fifo_00000002'.
-  Processing 'vcve2_compressed_decoder'
-  Processing 'vcve2_lsu_interface'
- Implement Synthetic for 'vcve2_lsu_interface'.
-  Processing 'vcve2_fracturable_adder_PIPE_WIDTH32'
- Implement Synthetic for 'vcve2_fracturable_adder_PIPE_WIDTH32'.
-  Processing 'vcve2_csr_3_0_4'
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_counter_CounterWidth64_ProvideValUpd1_0'
-  Mapping integrated clock gating circuitry
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_csr_3_0_4'
-  Mapping integrated clock gating circuitry
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_agu_AddrWidth32_0'
-  Mapping integrated clock gating circuitry
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_multdiv_fast_RV32M3_0'
-  Mapping integrated clock gating circuitry
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_fetch_fifo_00000002_0'
-  Mapping integrated clock gating circuitry
-  Processing 'vcve2_controller'
- Implement Synthetic for 'vcve2_controller'.
-  Processing 'vcve2_counter_CounterWidth64_ProvideValUpd1'
- Implement Synthetic for 'vcve2_counter_CounterWidth64_ProvideValUpd1'.
-  Processing 'vcve2_agu_AddrWidth32'
- Implement Synthetic for 'vcve2_agu_AddrWidth32'.
-  Processing 'vcve2_csr_19_0_0'
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_0'
-  Mapping integrated clock gating circuitry
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_cs_registers_1_00000001_00000000_00000028_0_00000000_00000004_0_3_0'
-  Mapping integrated clock gating circuitry
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_0'
-  Mapping integrated clock gating circuitry
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_counter_CounterWidth64_0'
-  Mapping integrated clock gating circuitry
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_csr_19_0_0'
-  Mapping integrated clock gating circuitry
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_lsu_interface'
-  Mapping integrated clock gating circuitry
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_if_stage_1a110800_1a110808'
-  Mapping integrated clock gating circuitry
-  Processing 'vcve2_alu_RV32B0'
- Implement Synthetic for 'vcve2_alu_RV32B0'.
-Information: Added key list 'DesignWare' to design 'vcve2_alu_RV32B0'. (DDB-72)
-  Processing 'vcve2_prefetch_buffer'
- Implement Synthetic for 'vcve2_prefetch_buffer'.
   Processing 'vcve2_csr_32_0_0_0'
-  Processing 'vcve2_csr_32_0_40000003'
-  Processing 'vcve2_csr_7_0_0_0'
-  Processing 'vcve2_csr_6_0c'
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_csr_7_0_0_0_0'
-  Mapping integrated clock gating circuitry
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_csr_6_0c'
-  Mapping integrated clock gating circuitry
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_load_store_unit_0'
-  Mapping integrated clock gating circuitry
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_prefetch_buffer_0'
-  Mapping integrated clock gating circuitry
-  Processing 'vcve2_load_store_unit'
-Information: The register 'pmp_err_q_reg' is a constant and will be removed. (OPT-1206)
-  Processing 'vcve2_top'
-  Processing 'vcve2_counter_CounterWidth64'
- Implement Synthetic for 'vcve2_counter_CounterWidth64'.
-  Processing 'vcve2_csr_32_00000001'
-Information: The register 'rdata_q_reg[0]' is a constant and will be removed. (OPT-1206)
-Information: The register 'rdata_q_reg[1]' is a constant and will be removed. (OPT-1206)
-Information: The register 'rdata_q_reg[2]' is a constant and will be removed. (OPT-1206)
-Information: The register 'rdata_q_reg[3]' is a constant and will be removed. (OPT-1206)
-Information: The register 'rdata_q_reg[4]' is a constant and will be removed. (OPT-1206)
-Information: The register 'rdata_q_reg[5]' is a constant and will be removed. (OPT-1206)
-Information: The register 'rdata_q_reg[6]' is a constant and will be removed. (OPT-1206)
-Information: The register 'rdata_q_reg[7]' is a constant and will be removed. (OPT-1206)
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_40000003'
-  Mapping integrated clock gating circuitry
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_0'
-  Mapping integrated clock gating circuitry
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_id_stage_0_3_0_0'
-  Mapping integrated clock gating circuitry
   Processing 'vcve2_csr_00000001_0_0_0'
-  Processing 'vcve2_if_stage_1a110800_1a110808'
-Information: The register 'pc_id_o_reg[0]' is a constant and will be removed. (OPT-1206)
-  Processing 'vcve2_ex_block_RV32M3_RV32B0'
+  Processing 'vcve2_counter_CounterWidth64_ProvideValUpd1'
+  Processing 'vcve2_counter_CounterWidth64'
+  Processing 'vcve2_csr_7_0_0_0'
+  Processing 'vcve2_csr_3_0_4'
+  Processing 'vcve2_csr_32_0_40000003'
+  Processing 'vcve2_csr_32_00000001'
+  Processing 'vcve2_csr_19_0_0'
+  Processing 'vcve2_csr_6_0c'
+  Processing 'vcve2_cs_registers_1_00000001_00000000_00000028_0_00000000_00000004_0_3_0'
+Information: The register 'mcountinhibit_q_reg[1]' is a constant and will be removed. (OPT-1206)
+  Processing 'vcve2_agu_AddrWidth32'
+  Processing 'vcve2_vrf_interface_VLEN128_PIPE_WIDTH32'
+  Processing 'vcve2_register_file_ff_0_32_00000000'
   Processing 'vcve2_wb'
   Processing 'vcve2_dmem_switch'
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_00000001'
-  Mapping integrated clock gating circuitry
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_0'
-  Mapping integrated clock gating circuitry
-  Processing 'SNPS_CLOCK_GATE_HIGH_vcve2_controller'
-  Mapping integrated clock gating circuitry
+  Processing 'vcve2_lsu_interface'
+  Processing 'vcve2_load_store_unit'
+  Processing 'vcve2_multdiv_fast_RV32M3'
+  Processing 'vcve2_fracturable_adder_PIPE_WIDTH32'
+  Processing 'vcve2_alu_RV32B0'
+  Processing 'vcve2_ex_block_RV32M3_RV32B0'
+  Processing 'vcve2_controller'
+  Processing 'vcve2_decoder_0_3_0'
+  Processing 'vcve2_id_stage_0_3_0'
+  Processing 'vcve2_compressed_decoder'
+  Processing 'vcve2_fetch_fifo_00000002'
+  Processing 'vcve2_prefetch_buffer'
+  Processing 'vcve2_if_stage_1a110800_1a110808'
+  Processing 'vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808'
+  Processing 'vcve2_top'
 
   Updating timing information
 Information: Updating design information... (UID-85)
-Information: The library cell 'TIEL' in the library 'tcbn65lpbc' is not characterized for internal power. (PWR-536)
-Information: The library cell 'TIEH' in the library 'tcbn65lpbc' is not characterized for internal power. (PWR-536)
-Information: The target library(s) contains cell(s), other than black boxes, that are not characterized for internal power. (PWR-24)
-Information: Skipping clock gating on design vcve2_ex_block_RV32M3_RV32B0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design vcve2_wb, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_DW01_inc_J5_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design vcve2_compressed_decoder, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_if_stage_1a110800_1a110808, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design vcve2_decoder_0_3_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_id_stage_0_3_0_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design vcve2_alu_RV32B0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_load_store_unit_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_lsu_interface, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design vcve2_lsu_interface_DW01_add_J8_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_RSOP_255, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_agu_AddrWidth32_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design vcve2_agu_AddrWidth32_DW01_inc_J9_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design vcve2_agu_AddrWidth32_DW01_inc_J9_1, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design vcve2_agu_AddrWidth32_DW01_inc_J9_2, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_cs_registers_1_00000001_00000000_00000028_0_00000000_00000004_0_3_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_prefetch_buffer_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design vcve2_prefetch_buffer_DW01_add_J10_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_controller, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design vcve2_controller_DW01_add_J9_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design vcve2_fracturable_adder_PIPE_WIDTH32, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_multdiv_fast_RV32M3_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design vcve2_multdiv_fast_RV32M3_DP_OP_116J6_122_2826_J6_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design vcve2_multdiv_fast_RV32M3_DW01_dec_J6_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design vcve2_multdiv_fast_RV32M3_DW02_mult_J6_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design vcve2_multdiv_fast_RV32M3_DW_mult_tc_J6_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_DP_OP_261J4_122_3328_J4_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_6_0c, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_7, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_19_0_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_7_0_0_0_1, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_00000001, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_40000003, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_3_0_4, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_counter_CounterWidth64_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design vcve2_counter_CounterWidth64_DW01_inc_J11_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_counter_CounterWidth64_ProvideValUpd1_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design vcve2_counter_CounterWidth64_ProvideValUpd1_DW01_inc_J9_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_fetch_fifo_00000002_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design vcve2_fetch_fifo_00000002_DW01_add_J8_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design vcve2_fracturable_adder_PIPE_WIDTH32_DP_OP_28J8_125_6171_J8_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design vcve2_fracturable_adder_PIPE_WIDTH32_DP_OP_27J8_124_6171_J8_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design vcve2_fracturable_adder_PIPE_WIDTH32_DP_OP_26J8_123_6171_J8_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design vcve2_fracturable_adder_PIPE_WIDTH32_DP_OP_25J8_122_6171_J8_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_counter_CounterWidth64_ProvideValUpd1_1, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_agu_AddrWidth32_1, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_agu_AddrWidth32_2, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_multdiv_fast_RV32M3_1, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_multdiv_fast_RV32M3_2, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_fetch_fifo_00000002_1, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_fetch_fifo_00000002_2, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_fetch_fifo_00000002_3, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_1, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_1, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_2, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_3, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_4, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_5, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_6, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_counter_CounterWidth64_1, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_csr_7_0_0_0_0, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_load_store_unit_1, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_load_store_unit_2, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_load_store_unit_3, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_prefetch_buffer_1, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_1, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_2, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_3, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_4, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_5, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_6, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_id_stage_0_3_0_1, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_1, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_2, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_3, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_4, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_5, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_6, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_7, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_8, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_9, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_10, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_11, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_12, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_13, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_14, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_15, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_16, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_17, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_18, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_19, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_20, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_21, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_22, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_23, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_24, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_25, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_26, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_27, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_28, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_29, since there are no registers. (PWR-806)
-Information: Skipping clock gating on design SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_30, since there are no registers. (PWR-806)
-Information: Performing clock-gating on design vcve2_vrf_interface_VLEN128_PIPE_WIDTH32. (PWR-730)
-Information: Performing clock-gating on design vcve2_prefetch_buffer. (PWR-730)
-Information: Performing clock-gating on design vcve2_controller. (PWR-730)
-Information: Performing clock-gating on design vcve2_id_stage_0_3_0. (PWR-730)
-Information: Performing clock-gating on design vcve2_csr_00000001_0_0_1. (PWR-730)
-Information: Performing clock-gating on design vcve2_fetch_fifo_00000002. (PWR-730)
-Information: Performing clock-gating on design vcve2_csr_00000001_0_0_0. (PWR-730)
-Information: Performing clock-gating on design vcve2_top. (PWR-730)
-Information: Performing clock-gating on design vcve2_lsu_interface. (PWR-730)
-Information: Performing clock-gating on design vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808. (PWR-730)
-Information: Performing clock-gating on design vcve2_load_store_unit. (PWR-730)
-Information: Performing clock-gating on design vcve2_register_file_ff_0_32_00000000. (PWR-730)
-Information: Performing clock-gating on design vcve2_agu_AddrWidth32. (PWR-730)
-Information: Performing clock-gating on design vcve2_csr_6_0c. (PWR-730)
-Information: Performing clock-gating on design vcve2_csr_32_0_0_7. (PWR-730)
-Information: Performing clock-gating on design vcve2_csr_19_0_0. (PWR-730)
-Information: Performing clock-gating on design vcve2_csr_7_0_0_1. (PWR-730)
-Information: Performing clock-gating on design vcve2_csr_32_00000001. (PWR-730)
-Information: Performing clock-gating on design vcve2_csr_32_0_40000003. (PWR-730)
-Information: Performing clock-gating on design vcve2_csr_3_0_4. (PWR-730)
-Information: Performing clock-gating on design vcve2_counter_CounterWidth64. (PWR-730)
-Information: Performing clock-gating on design vcve2_counter_CounterWidth64_ProvideValUpd1. (PWR-730)
-Information: Performing clock-gating on design vcve2_csr_32_0_0_0. (PWR-730)
-Information: Performing clock-gating on design vcve2_csr_32_0_0_1. (PWR-730)
-Information: Performing clock-gating on design vcve2_csr_32_0_0_2. (PWR-730)
-Information: Performing clock-gating on design vcve2_csr_32_0_0_3. (PWR-730)
-Information: Performing clock-gating on design vcve2_csr_32_0_0_4. (PWR-730)
-Information: Performing clock-gating on design vcve2_csr_32_0_0_5. (PWR-730)
-Information: Performing clock-gating on design vcve2_csr_32_0_0_6. (PWR-730)
-Information: Performing clock-gating on design vcve2_csr_7_0_0_0. (PWR-730)
-Information: Performing clock-gating on design vcve2_if_stage_1a110800_1a110808. (PWR-730)
-Information: Performing clock-gating on design vcve2_dmem_switch. (PWR-730)
-Information: Performing clock-gating on design vcve2_cs_registers_1_00000001_00000000_00000028_0_00000000_00000004_0_3_0. (PWR-730)
-Information: Performing clock-gating on design vcve2_multdiv_fast_RV32M3. (PWR-730)
-Information: The register 'u_cve2_core/cs_registers_i/u_depc_csr/rdata_q_reg[0]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/cs_registers_i/gen_trigger_regs.u_tselect_csr/rdata_q_reg[0]' is a constant and will be removed. (OPT-1206)
-Information: Removing unused design 'vcve2_csr_00000001_0_0_1'. (OPT-1055)
 
-  Beginning Mapping Optimizations  (Ultra High effort)
+  Beginning Implementation Selection
+  ----------------------------------
+  Processing 'vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_DW01_cmp6_0'
+  Processing 'vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_DW01_cmp6_1'
+  Processing 'vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_DW01_cmp6_2'
+  Processing 'vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_DW01_inc_0_DW01_inc_1'
+  Processing 'vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_DW01_cmp2_0_DW01_cmp2_2'
+  Processing 'vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_DW01_cmp2_1_DW01_cmp2_3'
+  Processing 'vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_DW_rash_0'
+  Processing 'vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_DW01_ash_0'
+  Processing 'vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_DW_rash_1'
+  Processing 'vcve2_cs_registers_1_00000001_00000000_00000028_0_00000000_00000004_0_3_0_DW01_cmp6_0_DW01_cmp6_3'
+  Processing 'vcve2_counter_CounterWidth64_ProvideValUpd1_DW01_inc_0_DW01_inc_2'
+  Processing 'vcve2_counter_CounterWidth64_DW01_inc_0_DW01_inc_3'
+  Processing 'vcve2_agu_AddrWidth32_DW01_inc_0_DW01_inc_4'
+  Processing 'vcve2_agu_AddrWidth32_DW01_inc_1_DW01_inc_5'
+  Processing 'vcve2_agu_AddrWidth32_DW01_inc_2_DW01_inc_6'
+  Processing 'vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_DW01_sub_0_DW01_sub_2'
+  Processing 'vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_DW01_sub_1_DW01_sub_3'
+  Processing 'vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_DW01_sub_2_DW01_sub_4'
+  Processing 'vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_DW01_sub_3_DW01_sub_5'
+  Processing 'vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_DW01_sub_4_DW01_sub_6'
+  Processing 'vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_DW01_sub_5_DW01_sub_7'
+  Processing 'vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_DW01_ash_0_DW01_ash_1'
+  Processing 'vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_DW01_cmp6_0_DW01_cmp6_4'
+  Processing 'vcve2_lsu_interface_DW01_add_0_DW01_add_1'
+  Processing 'vcve2_multdiv_fast_RV32M3_DW01_dec_0_DW01_dec_1'
+  Processing 'vcve2_multdiv_fast_RV32M3_DW01_ash_0_DW01_ash_2'
+  Processing 'vcve2_alu_RV32B0_DW_rash_0_DW_rash_2'
+  Processing 'vcve2_alu_RV32B0_DW01_sub_0_DW01_sub_8'
+  Processing 'vcve2_fracturable_adder_PIPE_WIDTH32_DW01_add_0_DW01_add_2'
+  Processing 'vcve2_fracturable_adder_PIPE_WIDTH32_DW01_add_1_DW01_add_3'
+  Processing 'vcve2_fracturable_adder_PIPE_WIDTH32_DW01_add_2_DW01_add_4'
+  Processing 'vcve2_fracturable_adder_PIPE_WIDTH32_DW01_add_3_DW01_add_5'
+  Processing 'vcve2_id_stage_0_3_0_DW01_ash_0_DW01_ash_3'
+  Processing 'vcve2_id_stage_0_3_0_DW01_ash_1_DW01_ash_4'
+  Processing 'vcve2_controller_DW01_add_0_DW01_add_6'
+  Processing 'vcve2_prefetch_buffer_DW01_add_0_DW01_add_7'
+  Processing 'vcve2_fetch_fifo_00000002_DW01_add_0_DW01_add_8'
+  Allocating blocks in 'DW02_mult_A_width8_B_width8'
+  Building model 'DW01_MUX'
+  Processing 'DW01_MUX'
+  Building model 'DW01_mmux_width2'
+  Processing 'DW01_mmux_width2'
+  Building model 'DW01_mmux_width3'
+  Processing 'DW01_mmux_width3'
+  Building model 'DW01_mmux_width4'
+  Processing 'DW01_mmux_width4'
+  Building model 'DW01_mmux_width5'
+  Processing 'DW01_mmux_width5'
+  Building model 'DW01_NAND2'
+  Processing 'DW01_NAND2'
+  Building model 'DW01_add_width14' (cla)
+  Processing 'DW01_add_width14'
+  Building model 'DW02_mult_A_width8_B_width8' (csa)
+  Processing 'DW02_mult_A_width8_B_width8'
+  Allocating blocks in 'DW02_mult_A_width17_B_width17'
+  Building model 'DW01_add_width32' (cla)
+  Processing 'DW01_add_width32'
+  Building model 'DW02_mult_A_width17_B_width17' (csa)
+  Processing 'DW02_mult_A_width17_B_width17'
+  Building model 'DW01_add_width32' (rpl)
+  Processing 'DW01_add_width32'
+  Processing 'vcve2_multdiv_fast_RV32M3_DW02_mult_0'
+  Processing 'vcve2_multdiv_fast_RV32M3_DW01_add_0_DW01_add_9'
+  Processing 'vcve2_multdiv_fast_RV32M3_DW02_mult_1'
+  Processing 'vcve2_multdiv_fast_RV32M3_DW01_add_1_DW01_add_10'
+  Processing 'vcve2_multdiv_fast_RV32M3_DW02_mult_2'
+  Processing 'vcve2_multdiv_fast_RV32M3_DW01_add_2_DW01_add_11'
+  Processing 'vcve2_multdiv_fast_RV32M3_DW02_mult_3'
+  Processing 'vcve2_multdiv_fast_RV32M3_DW01_add_3_DW01_add_12'
+  Processing 'vcve2_multdiv_fast_RV32M3_DW01_add_4_DW01_add_13'
+  Processing 'vcve2_multdiv_fast_RV32M3_DW01_add_5_DW01_add_14'
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:00:19   69949.4      0.00       0.0    4887.8                          
+    0:00:19   69949.4      0.00       0.0    4887.8                          
+
+  Beginning Mapping Optimizations  (Medium effort)
   -------------------------------
-Information: Added key list 'DesignWare' to design 'vcve2_agu_AddrWidth32'. (DDB-72)
-Information: Added key list 'DesignWare' to design 'vcve2_fracturable_adder_PIPE_WIDTH32'. (DDB-72)
   Mapping Optimization (Phase 1)
-Information: Added key list 'DesignWare' to design 'vcve2_prefetch_buffer'. (DDB-72)
-  Mapping Optimization (Phase 2)
-  Mapping Optimization (Phase 3)
-  Mapping Optimization (Phase 4)
-  Mapping Optimization (Phase 5)
-  Mapping Optimization (Phase 6)
-  Mapping Optimization (Phase 7)
-  Mapping Optimization (Phase 8)
-  Mapping Optimization (Phase 9)
-  Mapping Optimization (Phase 10)
-  Mapping Optimization (Phase 11)
-Information: Added key list 'DesignWare' to design 'vcve2_counter_CounterWidth64'. (DDB-72)
-Information: Added key list 'DesignWare' to design 'vcve2_counter_CounterWidth64_ProvideValUpd1'. (DDB-72)
-Begin Combinational loops breaking ...
-	Number of combinational loops found: 0
-End Combinational loops breaking ...
 
-                                  TOTAL                                                
-   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
-    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
-  --------- --------- --------- --------- --------- ------------------------- ---------
-    0:01:11   82829.2      3.05    4549.0       0.0                           39008.2070
-    0:01:11   82391.0      3.17    4675.5       0.0                           38826.6133
-
-  Beginning Constant Register Removal
-  -----------------------------------
-
-  Beginning Global Optimizations
-  ------------------------------
-  Numerical Synthesis (Phase 1)
-  Numerical Synthesis (Phase 2)
-  Global Optimization (Phase 1)
-  Global Optimization (Phase 2)
-  Global Optimization (Phase 3)
-  Global Optimization (Phase 4)
-  Global Optimization (Phase 5)
-  Global Optimization (Phase 6)
-  Global Optimization (Phase 7)
-  Global Optimization (Phase 8)
-  Global Optimization (Phase 9)
-  Global Optimization (Phase 10)
-  Global Optimization (Phase 11)
-  Global Optimization (Phase 12)
-  Global Optimization (Phase 13)
-  Global Optimization (Phase 14)
-  Global Optimization (Phase 15)
-  Global Optimization (Phase 16)
-  Global Optimization (Phase 17)
-  Global Optimization (Phase 18)
-  Global Optimization (Phase 19)
-  Global Optimization (Phase 20)
-  Global Optimization (Phase 21)
-  Global Optimization (Phase 22)
-  Global Optimization (Phase 23)
-  Global Optimization (Phase 24)
-  Global Optimization (Phase 25)
-  Global Optimization (Phase 26)
-  Global Optimization (Phase 27)
-  Global Optimization (Phase 28)
-  Global Optimization (Phase 29)
-  Global Optimization (Phase 30)
-  Global Optimization (Phase 31)
-  Mapping 'vcve2_multdiv_fast_RV32M3_DP_OP_116J6_122_2826_8'
-  Mapping 'vcve2_fracturable_adder_PIPE_WIDTH32_DP_OP_27J8_124_6171_7'
-Information: Added key list 'DesignWare' to design 'vcve2_lsu_interface'. (DDB-72)
-Information: Added key list 'DesignWare' to design 'vcve2_controller'. (DDB-72)
-Information: Added key list 'DesignWare' to design 'vcve2_fetch_fifo_00000002'. (DDB-72)
-
-  Beginning Isolate Ports
-  -----------------------
-
-  Beginning Delay Optimization
-  ----------------------------
-    0:01:19   56345.0      3.48    5394.5     158.2                           20769.5703
-    0:01:42   58904.3      2.43    4147.2     161.9                           22720.6133
-    0:01:42   58904.3      2.43    4147.2     161.9                           22720.6133
-    0:01:43   58918.7      2.43    4148.6     161.9                           22736.5840
-Begin Combinational loops breaking ...
-	Number of combinational loops found: 0
-End Combinational loops breaking ...
-Information: The register 'u_cve2_core/vl_q_reg[31]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/vl_q_reg[30]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/vl_q_reg[29]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/vl_q_reg[28]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/vl_q_reg[27]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/vl_q_reg[26]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/vl_q_reg[25]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/vl_q_reg[24]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/vl_q_reg[23]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/vl_q_reg[22]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/vl_q_reg[21]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/vl_q_reg[20]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/vl_q_reg[19]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/vl_q_reg[18]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/vl_q_reg[17]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/vl_q_reg[16]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/vl_q_reg[15]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/vl_q_reg[14]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/vl_q_reg[13]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/vl_q_reg[12]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/vl_q_reg[11]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/vl_q_reg[10]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/vl_q_reg[9]' is a constant and will be removed. (OPT-1206)
-Information: The register 'u_cve2_core/vl_q_reg[8]' is a constant and will be removed. (OPT-1206)
-    0:01:44   58243.3      2.43    4147.8     134.1                           22465.3477
-    0:01:45   58137.1      2.53    4177.3     134.1                           22428.9746
-
-  Beginning WLM Backend Optimization
-  --------------------------------------
-    0:01:49   55174.7      2.53    4177.3     132.2                           19001.3242
-    0:01:49   55076.0      2.52    4170.8     132.2                           18950.5391
-    0:01:51   55233.7      2.47    4085.6     132.0                           19138.2891
-    0:01:51   55233.7      2.47    4085.6     132.0                           19138.2891
-    0:01:52   55168.9      2.47    4021.5       7.0                           19060.0488
-    0:01:52   55168.9      2.47    4021.5       7.0                           19060.0488
-    0:02:44   57932.6      2.18    3806.2      93.9                           20335.4492
-    0:02:44   57932.6      2.18    3806.2      93.9                           20335.4492
-    0:02:46   58212.7      2.16    3766.0      95.5                           20635.2520
-    0:02:46   58212.7      2.16    3766.0      95.5                           20635.2520
-    0:03:57   60196.0      2.12    3708.8     129.7                           21523.2344
-    0:03:57   60196.0      2.12    3708.8     129.7                           21523.2344
-    0:04:25   61718.0      2.05    3615.5     172.2                           22793.8809
-    0:04:25   61718.0      2.05    3615.5     172.2                           22793.8809
-    0:05:30   62672.8      2.03    3595.4     219.7                           23136.0898
-    0:05:30   62672.8      2.03    3595.4     219.7                           23136.0898
-    0:06:04   63646.6      2.01    3555.5      69.5                           23941.5879
-    0:06:04   63646.6      2.01    3555.5      69.5                           23941.5879
-    0:06:33   63779.0      1.99    3547.8      69.5                           23978.7520
-    0:06:33   63779.0      1.99    3547.8      69.5                           23978.7520
-    0:06:55   64305.7      1.98    3521.7      70.1                           24360.7266
-    0:06:55   64305.7      1.98    3521.7      70.1                           24360.7266
-    0:08:05   64566.4      1.98    3521.2      70.1                           24386.6738
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:00:22   73632.2      0.00       0.0    3873.9                          
+    0:00:22   73632.2      0.00       0.0    3873.9                          
+    0:00:23   79848.0      0.00       0.0    1500.4                          
+Information: The register 'u_cve2_core/if_stage_i/pc_id_o_reg[0]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[4]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[10]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[27]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[17]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[18]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[19]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[20]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[21]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[22]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[23]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[24]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[25]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[3]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[11]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[9]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[28]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[29]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[31]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[5]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[14]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[16]' is a constant and will be removed. (OPT-1206)
+Information: The register 'u_cve2_core/cs_registers_i/u_dcsr_csr/rdata_q_reg[26]' is a constant and will be removed. (OPT-1206)
+    0:00:29   84061.8      0.00       0.0       0.0                          
+    0:00:29   84061.8      0.00       0.0       0.0                          
+    0:00:29   84061.8      0.00       0.0       0.0                          
+    0:00:30   84061.8      0.00       0.0       0.0                          
+    0:00:30   84061.8      0.00       0.0       0.0                          
+    0:00:34   60023.2      0.00       0.0       0.0                          
+    0:00:34   60017.8      0.00       0.0       0.0                          
+    0:00:36   60017.8      0.00       0.0       0.0                          
+    0:00:36   60017.8      0.00       0.0       0.0                          
+    0:00:36   60017.8      0.00       0.0       0.0                          
+    0:00:36   60017.8      0.00       0.0       0.0                          
+    0:00:36   60017.8      0.00       0.0       0.0                          
+    0:00:36   60017.8      0.00       0.0       0.0                          
+    0:00:36   60017.8      0.00       0.0       0.0                          
 
 
-  Beginning Design Rule Fixing  (max_transition)  (max_capacitance)
-  ----------------------------
 
-                                  TOTAL                                                
-   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
-    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
-  --------- --------- --------- --------- --------- ------------------------- ---------
-    0:08:05   64566.4      1.98    3521.2      70.1                           24386.6738
-  Global Optimization (Phase 32)
-  Global Optimization (Phase 33)
-  Global Optimization (Phase 34)
-    0:08:07   64603.1      1.97    3515.8       0.0                           24413.0137
-    0:09:20   65021.4      1.98    3520.4       0.0                           24568.4258
+  Beginning Delay Optimization Phase
+  ----------------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:00:36   60017.8      0.00       0.0       0.0                          
+    0:00:36   60017.8      0.00       0.0       0.0                          
+    0:00:36   60017.8      0.00       0.0       0.0                          
 
 
-  Beginning Leakage Power Optimization  (max_leakage_power 0)
-  ------------------------------------
+  Beginning Area-Recovery Phase  (cleanup)
+  -----------------------------
 
-                                  TOTAL                                                
-   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
-    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
-  --------- --------- --------- --------- --------- ------------------------- ---------
-    0:09:20   65021.4      1.98    3520.4       0.0                           24568.4258
-  Global Optimization (Phase 35)
-  Global Optimization (Phase 36)
-  Global Optimization (Phase 37)
-  Global Optimization (Phase 38)
-  Global Optimization (Phase 39)
-  Global Optimization (Phase 40)
-  Global Optimization (Phase 41)
-  Global Optimization (Phase 42)
-  Global Optimization (Phase 43)
-  Global Optimization (Phase 44)
-  Global Optimization (Phase 45)
-  Global Optimization (Phase 46)
-  Global Optimization (Phase 47)
-  Global Optimization (Phase 48)
-  Global Optimization (Phase 49)
-  Global Optimization (Phase 50)
-  Global Optimization (Phase 51)
-  Global Optimization (Phase 52)
-    0:09:29   64173.6      1.96    3473.3       0.0 u_cve2_core/if_stage_i/prefetch_buffer_i/fifo_i/clk_gate_err_q_reg/latch/E 25393.1113
-    0:09:29   64168.6      1.96    3474.3       0.0                           25393.3535
-    0:10:30   64820.9      1.96    3473.0       0.0                           25729.2793
-    0:10:30   64820.9      1.96    3473.0       0.0                           25729.2793
-    0:10:31   62789.4      1.96    3471.9       0.0                           22842.9102
-    0:10:31   62789.4      1.96    3471.9       0.0                           22842.9102
-    0:11:09   63249.5      1.95    3457.9       0.0                           23047.4688
-    0:11:09   63249.5      1.95    3457.9       0.0                           23047.4688
-    0:11:10   63261.7      1.95    3457.9       0.0                           23063.5840
-    0:11:10   63261.7      1.95    3457.9       0.0                           23063.5840
-    0:12:21   63405.0      1.95    3458.7       0.0                           23114.8301
-    0:12:21   63405.0      1.95    3458.7       0.0                           23114.8301
-    0:12:46   63939.2      1.94    3448.1       0.0                           23593.3809
-    0:12:46   63939.2      1.94    3448.1       0.0                           23593.3809
-    0:13:34   64055.9      1.94    3450.5       0.0                           23614.3828
-    0:13:34   64055.9      1.94    3450.5       0.0                           23614.3828
-    0:13:58   64558.4      1.93    3434.6       0.0                           24008.6055
-    0:13:58   64558.4      1.93    3434.6       0.0                           24008.6055
-    0:14:07   64558.4      1.93    3434.5       0.0                           24008.3418
-    0:14:07   64558.4      1.93    3434.5       0.0                           24008.3418
-    0:14:27   64791.7      1.93    3429.9       0.0                           24185.2832
-    0:14:27   64791.7      1.93    3429.9       0.0                           24185.2832
-    0:14:39   64802.5      1.93    3429.1       0.0                           24182.4570
-Begin Combinational loops breaking ...
-	Number of combinational loops found: 0
-End Combinational loops breaking ...
-
-                                  TOTAL                                                
-   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
-    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
-  --------- --------- --------- --------- --------- ------------------------- ---------
-    0:14:39   64774.1      1.93    3429.1       0.0                           24180.9453
-    0:14:42   62763.1      1.94    3308.2       0.0                           22583.0957
-    0:14:45   62778.6      1.93    3295.9       0.0                           22604.7578
-    0:14:46   62734.7      1.93    3295.9       0.0                           22587.5762
-    0:14:46   62649.4      1.93    3295.1       0.0                           22538.2617
-    0:14:46   62639.3      1.93    3295.0       0.0                           22533.6816
-    0:14:46   62639.3      1.93    3295.0       0.0                           22533.6816
-    0:14:47   62636.0      1.93    3294.7       0.0                           22532.1875
-    0:14:50   62199.7      1.93    3291.7       0.0                           22287.0039
-    0:14:50   62158.7      1.93    3291.2       0.0                           22258.2012
-    0:15:21   62586.0      1.94    3300.9       0.0                           22588.7246
-    0:15:21   62586.0      1.94    3300.9       0.0                           22588.7246
-    0:15:24   62686.1      1.93    3279.5       0.0                           22676.4727
-    0:15:24   62686.1      1.93    3279.5       0.0                           22676.4727
-    0:15:24   62703.4      1.93    3279.1       0.0                           22685.8926
-    0:15:33   61433.6      1.93    3267.5       0.0                           21688.1328
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:00:36   60017.8      0.00       0.0       0.0                          
+    0:00:36   60017.8      0.00       0.0       0.0                          
+    0:00:38   59849.3      0.00       0.0       0.0                          
+    0:00:38   59751.4      0.00       0.0       0.0                          
+    0:00:38   59682.2      0.00       0.0       0.0                          
+    0:00:39   59663.9      0.00       0.0       0.0                          
+    0:00:39   59652.7      0.00       0.0       0.0                          
+    0:00:39   59652.7      0.00       0.0       0.0                          
+    0:00:39   59650.6      0.00       0.0       0.0                          
+    0:00:39   59589.4      0.00       0.0       0.0                          
+    0:00:39   59589.4      0.00       0.0       0.0                          
+    0:00:39   59589.4      0.00       0.0       0.0                          
+    0:00:39   59589.4      0.00       0.0       0.0                          
+    0:00:39   59589.4      0.00       0.0       0.0                          
+    0:00:39   59589.4      0.00       0.0       0.0                          
+    0:00:40   59479.2      0.00       0.0       0.0                          
 Loading db file '/software/dk/tsmc65/digital/Front_End/timing_power_noise/NLDM/tcbn65lp_200a/tcbn65lpbc.db'
 
 
@@ -1992,14 +1691,9 @@ Note: Symbol # after min delay cost means estimated hold TNS across all active s
   Optimization Complete
   ---------------------
 Warning: Design 'vcve2_top' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
-     Net 'u_cve2_core/if_stage_i/prefetch_buffer_i/net133637': 1969 load(s), 1 driver(s)
-Information: State dependent leakage is now switched from off to on.
-Information: Propagating switching activity (low effort zero delay simulation). (PWR-6)
-Warning: There is no defined clock in the design. (PWR-80)
+     Net 'u_cve2_core/cs_registers_i/gen_trigger_regs.g_dbg_tmatch_reg[0].u_tmatch_control_csr/clk_i': 2323 load(s), 1 driver(s)
 Writing ddc file '../../rpt/compiled.ddc'.
-Warning: Design 'vcve2_top' inherited license information from design 'vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808'. (DDB-74)
-Information: Added key list 'DesignWare' to design 'vcve2_top'. (DDB-72)
-Warning: In the design vcve2_top, net 'crash_dump_o[current_pc][0]' is connecting multiple ports. (UCN-1)
+Warning: In the design vcve2_top, net 'instr_addr_o[0]' is connecting multiple ports. (UCN-1)
 Information: Annotated 'cell' delays are assumed to include load delay. (UID-282)
 Information: Writing timing information to file '/home/thesis/alessio.caviglia/repo/thesis/hw/cve2/syn/rpt/netlist.sdf'. (WT-3)
 Writing verilog file '/home/thesis/alessio.caviglia/repo/thesis/hw/cve2/syn/build/synth-design_compiler/netlist.v'.
@@ -2010,13 +1704,13 @@ Warning: Verilog 'assign' or 'tran' statements are written out. (VO-4)
 #  all done -- exit
 #
 ############################################
-sh dateWed Oct 16 11:35:46 CEST 2024
-Wed Oct 16 11:35:46 CEST 2024
+sh dateWed Jan 29 10:43:27 CET 2025
+Wed Jan 29 10:43:27 CET 2025
 Warning: Cannot use command line editor for terminal type 'xterm-256color'.  (UI-74)
 dc_shell> 
-Memory usage for this session 1084 Mbytes.
-Memory usage for this session including child processes 1084 Mbytes.
-CPU usage for this session 979 seconds ( 0.27 hours ).
-Elapsed time for this session 1107 seconds ( 0.31 hours ).
+Memory usage for this session 528 Mbytes.
+Memory usage for this session including child processes 528 Mbytes.
+CPU usage for this session 53 seconds ( 0.01 hours ).
+Elapsed time for this session 148 seconds ( 0.04 hours ).
 
 Thank you...

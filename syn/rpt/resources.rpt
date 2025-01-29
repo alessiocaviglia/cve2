@@ -3,7 +3,7 @@
 Report : resources
 Design : vcve2_top
 Version: R-2020.09-SP2
-Date   : Wed Oct 16 11:35:45 2024
+Date   : Wed Jan 29 10:43:02 2025
 ****************************************
 
 
@@ -14,33 +14,33 @@ No implementations to report
 ****************************************
 Design : vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808
 ****************************************
+Resource Sharing Report for design
+        vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808
+        in file ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_core.sv
 
-Resource Report for this hierarchy in file
-        ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_core.sv
-=============================================================================
-| Cell           | Module         | Parameters | Contained Operations       |
-=============================================================================
-| gt_x_4         | DW_cmp         | width=3    | gt_1104 (vcve2_core.sv:1104) |
-| ash_6          | DW_leftsh      | A_width=12 | sll_1104 (vcve2_core.sv:1104) |
-              |                | SH_width=3 |                            |
-| sub_x_7        | DW01_sub       | width=3    | sub_1104 (vcve2_core.sv:1104) |
-| ashr_8         | DW_rightsh     | A_width=5  | srl_1104_3 (vcve2_core.sv:1104) |
-            |                | SH_width=3 |                            |
-| lte_x_9        | DW_cmp         | width=32   | lte_1109 (vcve2_core.sv:1109) |
-| lte_x_10       | DW_cmp         | width=32   | lte_1110 (vcve2_core.sv:1110) |
-| add_x_11       | DW01_inc       | width=33   | add_1193_round (vcve2_core.sv:1193) |
-| ne_x_19        | DW_cmp         | width=5    | ne_1219 (vcve2_core.sv:1219) |
-| ne_x_20        | DW_cmp         | width=5    | ne_1219_2 (vcve2_core.sv:1219) |
-| ne_x_21        | DW_cmp         | width=5    | ne_1219_3 (vcve2_core.sv:1219) |
-| sub_x_23       | DW01_sub       | width=3    | sub_1238 (vcve2_core.sv:1238) |
-| add_x_25       | DW01_add       | width=3    | add_1258 (vcve2_core.sv:1258) |
-| ashr_5         | DW_rightsh     | A_width=5  | srl_1104 (vcve2_core.sv:1104) |
-              |                | SH_width=3 | srl_1104_2 (vcve2_core.sv:1104) |
-| sub_x_22       | DW01_dec       | width=3    | sub_1237 (vcve2_core.sv:1237) |
-              |                |            | sub_1249 (vcve2_core.sv:1249) |
-| add_x_24       | DW01_inc       | width=3    | add_1247 (vcve2_core.sv:1247) |
-              |                |            | add_1259 (vcve2_core.sv:1259) |
-=============================================================================
+===============================================================================
+|          |              |            | Contained     |                      |
+| Resource | Module       | Parameters | Resources     | Contained Operations |
+===============================================================================
+| r116     | DW_rash      | A_width=5  |               | srl_1104 srl_1104_2  |
+|          |              | SH_width=3 |               |                      |
+| r126     | DW01_dec     | width=3    |               | sub_1237 sub_1249    |
+| r128     | DW01_inc     | width=3    |               | add_1247 add_1259    |
+| r143     | DW01_cmp2    | width=3    |               | gt_1104              |
+| r145     | DW01_ash     | A_width=12 |               | sll_1104             |
+|          |              | SH_width=3 |               |                      |
+| r147     | DW01_sub     | width=3    |               | sub_1104             |
+| r149     | DW_rash      | A_width=5  |               | srl_1104_3           |
+|          |              | SH_width=3 |               |                      |
+| r151     | DW01_cmp2    | width=32   |               | lte_1109             |
+| r153     | DW01_cmp2    | width=32   |               | lte_1110             |
+| r155     | DW01_inc     | width=33   |               | add_1193_round       |
+| r157     | DW01_cmp6    | width=5    |               | ne_1219              |
+| r159     | DW01_cmp6    | width=5    |               | ne_1219_2            |
+| r161     | DW01_cmp6    | width=5    |               | ne_1219_3            |
+| r163     | DW01_sub     | width=3    |               | sub_1238             |
+| r165     | DW01_add     | width=3    |               | add_1258             |
+===============================================================================
 
 
 Implementation Report
@@ -48,36 +48,25 @@ Implementation Report
 |                    |                  | Current            | Set            |
 | Cell               | Module           | Implementation     | Implementation |
 ===============================================================================
-| gt_x_4             | DW_cmp           | apparch (area)     |                |
-| ash_6              | DW_leftsh        | astr (area)        |                |
-| sub_x_7            | DW01_sub         | apparch (area)     |                |
-| ashr_8             | DW_rightsh       | astr (area)        |                |
-| lte_x_9            | DW_cmp           | apparch (area)     |                |
-| lte_x_10           | DW_cmp           | apparch (area)     |                |
-| add_x_11           | DW01_inc         | apparch (area)     |                |
-| ne_x_19            | DW_cmp           | apparch (area)     |                |
-| ne_x_20            | DW_cmp           | apparch (area)     |                |
-| ne_x_21            | DW_cmp           | apparch (area)     |                |
-| sub_x_23           | DW01_sub         | apparch (area)     |                |
-| add_x_25           | DW01_add         | apparch (area)     |                |
-| ashr_5             | DW_rightsh       | astr (area)        |                |
-| sub_x_22           | DW01_dec         | apparch (area)     |                |
-| add_x_24           | DW01_inc         | apparch (area)     |                |
+| add_1193_round     | DW01_inc         | rpl                |                |
 ===============================================================================
 
  
 ****************************************
 Design : vcve2_cs_registers_1_00000001_00000000_00000028_0_00000000_00000004_0_3_0
 ****************************************
-
-Resource Report for this hierarchy in file
+Resource Sharing Report for design
+        vcve2_cs_registers_1_00000001_00000000_00000028_0_00000000_00000004_0_3_0
+        in file
         ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_cs_registers.sv
-=============================================================================
-| Cell           | Module         | Parameters | Contained Operations       |
-=============================================================================
-| gt_x_1         | DW_cmp         | width=2    | gt_251 (vcve2_cs_registers.sv:251) |
-| eq_x_105       | DW_cmp         | width=32   | eq_1432 (vcve2_cs_registers.sv:1432) |
-=============================================================================
+
+===============================================================================
+|          |              |            | Contained     |                      |
+| Resource | Module       | Parameters | Resources     | Contained Operations |
+===============================================================================
+| r134     | DW01_cmp2    | width=2    |               | gt_251               |
+| r136     | DW01_cmp6    | width=32   |               | eq_1432              |
+===============================================================================
 
 
 Implementation Report
@@ -85,15 +74,22 @@ Implementation Report
 |                    |                  | Current            | Set            |
 | Cell               | Module           | Implementation     | Implementation |
 ===============================================================================
-| gt_x_1             | DW_cmp           | apparch (area)     |                |
-| eq_x_105           | DW_cmp           | apparch (area)     |                |
+| eq_1432            | DW01_cmp6        | rpl                |                |
 ===============================================================================
 
 
 No resource sharing information to report.
  
 ****************************************
-Design : vcve2_csr_32_0_0_0
+Design : vcve2_csr_32_0_0_1
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : vcve2_csr_00000001_0_0_1
 ****************************************
 
 No implementations to report
@@ -109,14 +105,16 @@ No implementations to report
 ****************************************
 Design : vcve2_counter_CounterWidth64_ProvideValUpd1
 ****************************************
-
-Resource Report for this hierarchy in file
+Resource Sharing Report for design vcve2_counter_CounterWidth64_ProvideValUpd1
+        in file
         ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_counter.sv
-=============================================================================
-| Cell           | Module         | Parameters | Contained Operations       |
-=============================================================================
-| add_x_1        | DW01_inc       | width=64   | add_26 (vcve2_counter.sv:26) |
-=============================================================================
+
+===============================================================================
+|          |              |            | Contained     |                      |
+| Resource | Module       | Parameters | Resources     | Contained Operations |
+===============================================================================
+| r54      | DW01_inc     | width=64   |               | add_26               |
+===============================================================================
 
 
 Implementation Report
@@ -124,21 +122,22 @@ Implementation Report
 |                    |                  | Current            | Set            |
 | Cell               | Module           | Implementation     | Implementation |
 ===============================================================================
-| add_x_1            | DW01_inc         | pparch (area,speed)                 |
+| add_26             | DW01_inc         | rpl                |                |
 ===============================================================================
 
  
 ****************************************
 Design : vcve2_counter_CounterWidth64
 ****************************************
-
-Resource Report for this hierarchy in file
+Resource Sharing Report for design vcve2_counter_CounterWidth64 in file
         ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_counter.sv
-=============================================================================
-| Cell           | Module         | Parameters | Contained Operations       |
-=============================================================================
-| add_x_1        | DW01_inc       | width=64   | add_26 (vcve2_counter.sv:26) |
-=============================================================================
+
+===============================================================================
+|          |              |            | Contained     |                      |
+| Resource | Module       | Parameters | Resources     | Contained Operations |
+===============================================================================
+| r54      | DW01_inc     | width=64   |               | add_26               |
+===============================================================================
 
 
 Implementation Report
@@ -146,30 +145,14 @@ Implementation Report
 |                    |                  | Current            | Set            |
 | Cell               | Module           | Implementation     | Implementation |
 ===============================================================================
-| add_x_1            | DW01_inc         | pparch (area,speed)                 |
+| add_26             | DW01_inc         | rpl                |                |
 ===============================================================================
 
 
 No resource sharing information to report.
  
 ****************************************
-Design : vcve2_csr_7_0_0_0
-****************************************
-
-No implementations to report
-
-No resource sharing information to report.
- 
-****************************************
-Design : vcve2_csr_32_0_0_1
-****************************************
-
-No implementations to report
-
-No resource sharing information to report.
- 
-****************************************
-Design : vcve2_csr_3_0_4
+Design : vcve2_csr_7_0_0_1
 ****************************************
 
 No implementations to report
@@ -178,6 +161,14 @@ No resource sharing information to report.
  
 ****************************************
 Design : vcve2_csr_32_0_0_2
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : vcve2_csr_3_0_4
 ****************************************
 
 No implementations to report
@@ -201,6 +192,14 @@ No implementations to report
 No resource sharing information to report.
  
 ****************************************
+Design : vcve2_csr_32_0_0_5
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
 Design : vcve2_csr_32_0_40000003
 ****************************************
 
@@ -217,22 +216,6 @@ No implementations to report
 No resource sharing information to report.
  
 ****************************************
-Design : vcve2_csr_32_0_0_5
-****************************************
-
-No implementations to report
-
-No resource sharing information to report.
- 
-****************************************
-Design : vcve2_csr_7_0_0_1
-****************************************
-
-No implementations to report
-
-No resource sharing information to report.
- 
-****************************************
 Design : vcve2_csr_32_0_0_6
 ****************************************
 
@@ -241,7 +224,7 @@ No implementations to report
 No resource sharing information to report.
  
 ****************************************
-Design : vcve2_csr_19_0_0
+Design : vcve2_csr_7_0_0_0
 ****************************************
 
 No implementations to report
@@ -257,6 +240,22 @@ No implementations to report
 No resource sharing information to report.
  
 ****************************************
+Design : vcve2_csr_19_0_0
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
+Design : vcve2_csr_32_0_0_0
+****************************************
+
+No implementations to report
+
+No resource sharing information to report.
+ 
+****************************************
 Design : vcve2_csr_6_0c
 ****************************************
 
@@ -265,69 +264,43 @@ No implementations to report
 ****************************************
 Design : vcve2_agu_AddrWidth32
 ****************************************
-
-Resource Report for this hierarchy in file
+Resource Sharing Report for design vcve2_agu_AddrWidth32 in file
         ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_agu.sv
-=============================================================================
-| Cell           | Module         | Parameters | Contained Operations       |
-=============================================================================
-| add_x_1        | DW01_inc       | width=5    | add_53 (vcve2_agu.sv:53)   |
-| add_x_2        | DW01_inc       | width=5    | add_54 (vcve2_agu.sv:54)   |
-| add_x_3        | DW01_inc       | width=5    | add_55 (vcve2_agu.sv:55)   |
-=============================================================================
 
-
-Implementation Report
 ===============================================================================
-|                    |                  | Current            | Set            |
-| Cell               | Module           | Implementation     | Implementation |
+|          |              |            | Contained     |                      |
+| Resource | Module       | Parameters | Resources     | Contained Operations |
 ===============================================================================
-| add_x_1            | DW01_inc         | apparch (area)     |                |
-| add_x_2            | DW01_inc         | apparch (area)     |                |
-| add_x_3            | DW01_inc         | apparch (area)     |                |
+| r66      | DW01_inc     | width=5    |               | add_53               |
+| r68      | DW01_inc     | width=5    |               | add_54               |
+| r70      | DW01_inc     | width=5    |               | add_55               |
 ===============================================================================
 
+
+No implementations to report
  
 ****************************************
 Design : vcve2_vrf_interface_VLEN128_PIPE_WIDTH32
 ****************************************
-
-Resource Report for this hierarchy in file
+Resource Sharing Report for design vcve2_vrf_interface_VLEN128_PIPE_WIDTH32 in
+        file
         ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_vrf_interface.sv
-=============================================================================
-| Cell           | Module         | Parameters | Contained Operations       |
-=============================================================================
-| ash_17         | DW_leftsh      | A_width=32 | sll_199 (vcve2_vrf_interface.sv:199) |
-       |                | SH_width=3 |                            |
-| eq_x_204       | DW_cmp         | width=30   | eq_415 (vcve2_vrf_interface.sv:415) |
-        |                |            | eq_484 (vcve2_vrf_interface.sv:484) |
-        |                |            | eq_510 (vcve2_vrf_interface.sv:510) |
-        |                |            | eq_571 (vcve2_vrf_interface.sv:571) |
-        |                |            | eq_606 (vcve2_vrf_interface.sv:606) |
-| DP_OP_261J4_122_3328            |            |                            |
-|                | DP_OP_261J4_122_3328 |      |                            |
-=============================================================================
 
-Datapath Report for DP_OP_261J4_122_3328
-==============================================================================
-| Cell                 | Contained Operations                                |
-==============================================================================
-| DP_OP_261J4_122_3328 | sub_611_aco (vcve2_vrf_interface.sv:611)            |
-|                      | sub_576_aco (vcve2_vrf_interface.sv:576)            |
-|                      | sub_495_aco (vcve2_vrf_interface.sv:495)            |
-|                      | sub_511_aco (vcve2_vrf_interface.sv:511)            |
-|                      | sub_416_aco (vcve2_vrf_interface.sv:416)            |
-|                      | sub_251 (vcve2_vrf_interface.sv:251)                |
-==============================================================================
-
-==============================================================================
-|       |      | Data     |       |                                          |
-| Var   | Type | Class    | Width | Expression                               |
-==============================================================================
-| I1    | PI   | Signed   | 30    |                                          |
-| I2    | PI   | Signed   | 30    |                                          |
-| O1    | PO   | Signed   | 30    | I1 - I2 ( vcve2_vrf_interface.sv:251 vcve2_vrf_interface.sv:416 vcve2_vrf_interface.sv:495 vcve2_vrf_interface.sv:511 vcve2_vrf_interface.sv:576 vcve2_vrf_interface.sv:611 ) |
-==============================================================================
+===============================================================================
+|          |              |            | Contained     |                      |
+| Resource | Module       | Parameters | Resources     | Contained Operations |
+===============================================================================
+| r224     | DW01_cmp6    | width=30   |               | eq_415 eq_484 eq_510 |
+|          |              |            |               | eq_571 eq_606        |
+| r238     | DW01_ash     | A_width=32 |               | sll_199              |
+|          |              | SH_width=3 |               |                      |
+| r240     | DW01_sub     | width=30   |               | sub_251              |
+| r242     | DW01_sub     | width=30   |               | sub_416_aco          |
+| r244     | DW01_sub     | width=30   |               | sub_495_aco          |
+| r246     | DW01_sub     | width=30   |               | sub_511_aco          |
+| r248     | DW01_sub     | width=30   |               | sub_576_aco          |
+| r250     | DW01_sub     | width=30   |               | sub_611_aco          |
+===============================================================================
 
 
 Implementation Report
@@ -335,10 +308,12 @@ Implementation Report
 |                    |                  | Current            | Set            |
 | Cell               | Module           | Implementation     | Implementation |
 ===============================================================================
-| ash_17             | DW_leftsh        | astr (area)        |                |
-| eq_x_204           | DW_cmp           | apparch (area)     |                |
-| DP_OP_261J4_122_3328                  |                    |                |
-|                    | DP_OP_261J4_122_3328 | str (area)     |                |
+| sub_251            | DW01_sub         | rpl                |                |
+| sub_416_aco        | DW01_sub         | rpl                |                |
+| sub_495_aco        | DW01_sub         | rpl                |                |
+| sub_511_aco        | DW01_sub         | rpl                |                |
+| sub_576_aco        | DW01_sub         | rpl                |                |
+| sub_611_aco        | DW01_sub         | rpl                |                |
 ===============================================================================
 
 
@@ -369,14 +344,15 @@ No implementations to report
 ****************************************
 Design : vcve2_lsu_interface
 ****************************************
-
-Resource Report for this hierarchy in file
+Resource Sharing Report for design vcve2_lsu_interface in file
         ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_lsu_interface.sv
-=============================================================================
-| Cell           | Module         | Parameters | Contained Operations       |
-=============================================================================
-| add_x_2        | DW01_add       | width=32   | add_73 (vcve2_lsu_interface.sv:73) |
-=============================================================================
+
+===============================================================================
+|          |              |            | Contained     |                      |
+| Resource | Module       | Parameters | Resources     | Contained Operations |
+===============================================================================
+| r60      | DW01_add     | width=32   |               | add_73               |
+===============================================================================
 
 
 Implementation Report
@@ -384,7 +360,7 @@ Implementation Report
 |                    |                  | Current            | Set            |
 | Cell               | Module           | Implementation     | Implementation |
 ===============================================================================
-| add_x_2            | DW01_add         | apparch (area)     |                |
+| add_73             | DW01_add         | rpl                |                |
 ===============================================================================
 
 
@@ -407,56 +383,27 @@ No implementations to report
 ****************************************
 Design : vcve2_multdiv_fast_RV32M3
 ****************************************
-
-Resource Report for this hierarchy in file
+Resource Sharing Report for design vcve2_multdiv_fast_RV32M3 in file
         ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_multdiv_fast.sv
-=============================================================================
-| Cell           | Module         | Parameters | Contained Operations       |
-=============================================================================
-| mult_x_27      | DW_mult_tc     | a_width=17 | mult_263 (vcve2_multdiv_fast.sv:263) |
-       |                | b_width=17 |                            |
-| mult_x_28      | DW02_mult      | A_width=8  | mult_267 (vcve2_multdiv_fast.sv:267) |
-       |                | B_width=8  |                            |
-| ash_41         | DW_leftsh      | A_width=32 | sll_516 (vcve2_multdiv_fast.sv:516) |
-        |                | SH_width=5 |                            |
-| sub_x_43       | DW01_dec       | width=5    | sub_536 (vcve2_multdiv_fast.sv:536) |
-| DP_OP_116J6_122_2826            |            |                            |
-|                | DP_OP_116J6_122_2826 |      |                            |
-=============================================================================
 
-Datapath Report for DP_OP_116J6_122_2826
-==============================================================================
-| Cell                 | Contained Operations                                |
-==============================================================================
-| DP_OP_116J6_122_2826 | mult_265 (vcve2_multdiv_fast.sv:265)                |
-|                      | add_270 (vcve2_multdiv_fast.sv:270)                 |
-|                      | add_270_2 (vcve2_multdiv_fast.sv:270)               |
-|                      | C2764 (vcve2_multdiv_fast.sv:335)                   |
-|                      | mult_264 (vcve2_multdiv_fast.sv:264)                |
-==============================================================================
-
-==============================================================================
-|       |      | Data     |       |                                          |
-| Var   | Type | Class    | Width | Expression                               |
-==============================================================================
-| I1    | PI   | Signed   | 17    |                                          |
-| I2    | PI   | Signed   | 17    |                                          |
-| I3    | PI   | Unsigned | 16    |                                          |
-| I4    | PI   | Unsigned | 1     |                                          |
-| I5    | PI   | Unsigned | 32    |                                          |
-| I6    | PI   | Unsigned | 1     |                                          |
-| I7    | PI   | Signed   | 17    |                                          |
-| I8    | PI   | Signed   | 17    |                                          |
-| T42   | IFO  | Unsigned | 32    | { I4, I6 } ? O3 : I5 (vcve2_multdiv_fast.sv:335) |
-| O1    | PO   | Signed   | 32    | I1 * I2 (vcve2_multdiv_fast.sv:265)      |
-| O2    | PO   | Unsigned | 32    | I3 + T42 + O1 (vcve2_multdiv_fast.sv:270) |
-| O3    | PO   | Signed   | 32    | I7 * I8 (vcve2_multdiv_fast.sv:264)      |
-==============================================================================
-
-
-Datapath Extraction Report
-
-Information: Operator associated with resources 'add_270 (vcve2_multdiv_fast.sv:270) add_270_2 (vcve2_multdiv_fast.sv:270)' in design 'vcve2_multdiv_fast_RV32M3' breaks the datapath extraction because there is leakage due to truncation on its fanout to operator of resources 'C2756 (vcve2_multdiv_fast.sv:338)'.  (HDL-120)
+===============================================================================
+|          |              |            | Contained     |                      |
+| Resource | Module       | Parameters | Resources     | Contained Operations |
+===============================================================================
+| r155     | DW01_ash     | A_width=32 |               | sll_516              |
+|          |              | SH_width=5 |               |                      |
+| r157     | DW01_dec     | width=5    |               | sub_536              |
+| r259     | DW02_mult    | A_width=8  |               | mult_267             |
+|          |              | B_width=8  |               |                      |
+| r361     | DW02_mult    | A_width=17 |               | mult_265             |
+|          |              | B_width=17 |               |                      |
+| r463     | DW02_mult    | A_width=17 |               | mult_264             |
+|          |              | B_width=17 |               |                      |
+| r565     | DW02_mult    | A_width=17 |               | mult_263             |
+|          |              | B_width=17 |               |                      |
+| r674     | DW01_add     | width=32   |               | add_1_root_add_0_root_add_270_2 |
+| r676     | DW01_add     | width=32   |               | add_0_root_add_0_root_add_270_2 |
+===============================================================================
 
 
 Implementation Report
@@ -464,32 +411,115 @@ Implementation Report
 |                    |                  | Current            | Set            |
 | Cell               | Module           | Implementation     | Implementation |
 ===============================================================================
-| mult_x_27          | DW_mult_tc       | pparch (area,speed)                 |
-|                    |                  | mult_arch: benc_radix4              |
-| mult_x_28          | DW02_mult        | apparch (area)     |                |
-|                    |                  | mult_arch: and     |                |
-| ash_41             | DW_leftsh        | astr (area)        |                |
-| sub_x_43           | DW01_dec         | apparch (area)     |                |
-| DP_OP_116J6_122_2826                  |                    |                |
-|                    | DP_OP_116J6_122_2826 | str (area,speed)                |
-|                    |                  | mult_arch: benc_radix4              |
-|                    |                  | mult_arch: benc_radix4              |
+| mult_267           | DW02_mult        | csa                |                |
+| mult_265           | DW02_mult        | csa                |                |
+| mult_264           | DW02_mult        | csa                |                |
+| mult_263           | DW02_mult        | csa                |                |
+| add_0_root_add_0_root_add_270_2       |                    |                |
+|                    | DW01_add         | rpl                |                |
+| add_1_root_add_0_root_add_270_2       |                    |                |
+|                    | DW01_add         | rpl                |                |
+| sll_516            | DW01_ash         | mx2                |                |
+===============================================================================
+
+ 
+****************************************
+Design : vcve2_multdiv_fast_RV32M3_DW02_mult_0
+****************************************
+
+Resource Sharing Report for design DW02_mult_A_width8_B_width8
+
+===============================================================================
+|          |              |            | Contained     |                      |
+| Resource | Module       | Parameters | Resources     | Contained Operations |
+===============================================================================
+| r58      | DW01_add     | width=14   |               | FS_1                 |
+===============================================================================
+
+ 
+****************************************
+Design : vcve2_multdiv_fast_RV32M3_DW02_mult_1
+****************************************
+
+Resource Sharing Report for design DW02_mult_A_width17_B_width17
+
+===============================================================================
+|          |              |            | Contained     |                      |
+| Resource | Module       | Parameters | Resources     | Contained Operations |
+===============================================================================
+| r58      | DW01_add     | width=32   |               | FS_1                 |
+===============================================================================
+
+
+Implementation Report
+===============================================================================
+|                    |                  | Current            | Set            |
+| Cell               | Module           | Implementation     | Implementation |
+===============================================================================
+| FS_1               | DW01_add         | cla                | cla            |
+===============================================================================
+
+ 
+****************************************
+Design : vcve2_multdiv_fast_RV32M3_DW02_mult_2
+****************************************
+
+Resource Sharing Report for design DW02_mult_A_width17_B_width17
+
+===============================================================================
+|          |              |            | Contained     |                      |
+| Resource | Module       | Parameters | Resources     | Contained Operations |
+===============================================================================
+| r58      | DW01_add     | width=32   |               | FS_1                 |
+===============================================================================
+
+
+Implementation Report
+===============================================================================
+|                    |                  | Current            | Set            |
+| Cell               | Module           | Implementation     | Implementation |
+===============================================================================
+| FS_1               | DW01_add         | cla                | cla            |
+===============================================================================
+
+ 
+****************************************
+Design : vcve2_multdiv_fast_RV32M3_DW02_mult_3
+****************************************
+
+Resource Sharing Report for design DW02_mult_A_width17_B_width17
+
+===============================================================================
+|          |              |            | Contained     |                      |
+| Resource | Module       | Parameters | Resources     | Contained Operations |
+===============================================================================
+| r58      | DW01_add     | width=32   |               | FS_1                 |
+===============================================================================
+
+
+Implementation Report
+===============================================================================
+|                    |                  | Current            | Set            |
+| Cell               | Module           | Implementation     | Implementation |
+===============================================================================
+| FS_1               | DW01_add         | cla                | cla            |
 ===============================================================================
 
  
 ****************************************
 Design : vcve2_alu_RV32B0
 ****************************************
-
-Resource Report for this hierarchy in file
+Resource Sharing Report for design vcve2_alu_RV32B0 in file
         ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_alu.sv
-=============================================================================
-| Cell           | Module         | Parameters | Contained Operations       |
-=============================================================================
-| sub_x_9        | DW01_sub       | width=5    | sub_295 (vcve2_alu.sv:295) |
-| ashr_16        | DW_rightsh     | A_width=33 | sra_357 (vcve2_alu.sv:357) |
-|                |                | SH_width=5 |                            |
-=============================================================================
+
+===============================================================================
+|          |              |            | Contained     |                      |
+| Resource | Module       | Parameters | Resources     | Contained Operations |
+===============================================================================
+| r75      | DW01_sub     | width=5    |               | sub_295              |
+| r77      | DW_rash      | A_width=33 |               | sra_357              |
+|          |              | SH_width=5 |               |                      |
+===============================================================================
 
 
 Implementation Report
@@ -497,101 +527,25 @@ Implementation Report
 |                    |                  | Current            | Set            |
 | Cell               | Module           | Implementation     | Implementation |
 ===============================================================================
-| sub_x_9            | DW01_sub         | apparch (area)     |                |
-| ashr_16            | DW_rightsh       | astr (area)        |                |
+| sra_357            | DW_rash          | mx2                |                |
 ===============================================================================
 
  
 ****************************************
 Design : vcve2_fracturable_adder_PIPE_WIDTH32
 ****************************************
-
-Resource Report for this hierarchy in file
+Resource Sharing Report for design vcve2_fracturable_adder_PIPE_WIDTH32 in file
         ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_fracturable_adder.sv
-=============================================================================
-| Cell           | Module         | Parameters | Contained Operations       |
-=============================================================================
-| DP_OP_25J8_122_6171             |            |                            |
-|                | DP_OP_25J8_122_6171 |       |                            |
-| DP_OP_26J8_123_6171             |            |                            |
-|                | DP_OP_26J8_123_6171 |       |                            |
-| DP_OP_27J8_124_6171             |            |                            |
-|                | DP_OP_27J8_124_6171 |       |                            |
-| DP_OP_28J8_125_6171             |            |                            |
-|                | DP_OP_28J8_125_6171 |       |                            |
-=============================================================================
 
-Datapath Report for DP_OP_25J8_122_6171
-==============================================================================
-| Cell                 | Contained Operations                                |
-==============================================================================
-| DP_OP_25J8_122_6171  | add_23 (vcve2_fracturable_adder.sv:23)              |
-|                      | add_23_2 (vcve2_fracturable_adder.sv:23)            |
-==============================================================================
-
-==============================================================================
-|       |      | Data     |       |                                          |
-| Var   | Type | Class    | Width | Expression                               |
-==============================================================================
-| I1    | PI   | Unsigned | 8     |                                          |
-| I2    | PI   | Unsigned | 8     |                                          |
-| I3    | PI   | Unsigned | 1     |                                          |
-| O1    | PO   | Unsigned | 9     | I1 + I2 + I3 (vcve2_fracturable_adder.sv:23) |
-==============================================================================
-
-Datapath Report for DP_OP_26J8_123_6171
-==============================================================================
-| Cell                 | Contained Operations                                |
-==============================================================================
-| DP_OP_26J8_123_6171  | add_24 (vcve2_fracturable_adder.sv:24)              |
-|                      | add_24_2 (vcve2_fracturable_adder.sv:24)            |
-==============================================================================
-
-==============================================================================
-|       |      | Data     |       |                                          |
-| Var   | Type | Class    | Width | Expression                               |
-==============================================================================
-| I1    | PI   | Unsigned | 8     |                                          |
-| I2    | PI   | Unsigned | 8     |                                          |
-| I3    | PI   | Unsigned | 1     |                                          |
-| O1    | PO   | Unsigned | 9     | I1 + I2 + I3 (vcve2_fracturable_adder.sv:24) |
-==============================================================================
-
-Datapath Report for DP_OP_27J8_124_6171
-==============================================================================
-| Cell                 | Contained Operations                                |
-==============================================================================
-| DP_OP_27J8_124_6171  | add_25 (vcve2_fracturable_adder.sv:25)              |
-|                      | add_25_2 (vcve2_fracturable_adder.sv:25)            |
-==============================================================================
-
-==============================================================================
-|       |      | Data     |       |                                          |
-| Var   | Type | Class    | Width | Expression                               |
-==============================================================================
-| I1    | PI   | Unsigned | 8     |                                          |
-| I2    | PI   | Unsigned | 8     |                                          |
-| I3    | PI   | Unsigned | 1     |                                          |
-| O1    | PO   | Unsigned | 9     | I1 + I2 + I3 (vcve2_fracturable_adder.sv:25) |
-==============================================================================
-
-Datapath Report for DP_OP_28J8_125_6171
-==============================================================================
-| Cell                 | Contained Operations                                |
-==============================================================================
-| DP_OP_28J8_125_6171  | add_26 (vcve2_fracturable_adder.sv:26)              |
-|                      | add_26_2 (vcve2_fracturable_adder.sv:26)            |
-==============================================================================
-
-==============================================================================
-|       |      | Data     |       |                                          |
-| Var   | Type | Class    | Width | Expression                               |
-==============================================================================
-| I1    | PI   | Unsigned | 8     |                                          |
-| I2    | PI   | Unsigned | 8     |                                          |
-| I3    | PI   | Unsigned | 1     |                                          |
-| O1    | PO   | Unsigned | 9     | I1 + I2 + I3 (vcve2_fracturable_adder.sv:26) |
-==============================================================================
+===============================================================================
+|          |              |            | Contained     |                      |
+| Resource | Module       | Parameters | Resources     | Contained Operations |
+===============================================================================
+| r78      | DW01_add     | width=9    |               | add_1_root_add_23_2  |
+| r80      | DW01_add     | width=9    |               | add_1_root_add_24_2  |
+| r82      | DW01_add     | width=9    |               | add_1_root_add_25_2  |
+| r84      | DW01_add     | width=9    |               | add_1_root_add_26_2  |
+===============================================================================
 
 
 Implementation Report
@@ -599,54 +553,48 @@ Implementation Report
 |                    |                  | Current            | Set            |
 | Cell               | Module           | Implementation     | Implementation |
 ===============================================================================
-| DP_OP_25J8_122_6171                   |                    |                |
-|                    | DP_OP_25J8_122_6171 | str (area,speed)                 |
-| DP_OP_26J8_123_6171                   |                    |                |
-|                    | DP_OP_26J8_123_6171 | str (area,speed)                 |
-| DP_OP_27J8_124_6171                   |                    |                |
-|                    | DP_OP_27J8_124_6171 | str (area,speed)                 |
-| DP_OP_28J8_125_6171                   |                    |                |
-|                    | DP_OP_28J8_125_6171 | str (area,speed)                 |
+| add_1_root_add_23_2                   |                    |                |
+|                    | DW01_add         | rpl                |                |
+| add_1_root_add_24_2                   |                    |                |
+|                    | DW01_add         | rpl                |                |
+| add_1_root_add_25_2                   |                    |                |
+|                    | DW01_add         | rpl                |                |
+| add_1_root_add_26_2                   |                    |                |
+|                    | DW01_add         | rpl                |                |
 ===============================================================================
 
  
 ****************************************
 Design : vcve2_id_stage_0_3_0
 ****************************************
-
-Resource Report for this hierarchy in file
+Resource Sharing Report for design vcve2_id_stage_0_3_0 in file
         ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_id_stage.sv
-=============================================================================
-| Cell           | Module         | Parameters | Contained Operations       |
-=============================================================================
-| ash_5          | DW_leftsh      | A_width=32 | sll_324 (vcve2_id_stage.sv:324) |
-            |                | SH_width=3 |                            |
-| ash_6          | DW_leftsh      | A_width=32 | sll_341 (vcve2_id_stage.sv:341) |
-            |                | SH_width=3 |                            |
-=============================================================================
 
-
-Implementation Report
 ===============================================================================
-|                    |                  | Current            | Set            |
-| Cell               | Module           | Implementation     | Implementation |
+|          |              |            | Contained     |                      |
+| Resource | Module       | Parameters | Resources     | Contained Operations |
 ===============================================================================
-| ash_5              | DW_leftsh        | astr (area)        |                |
-| ash_6              | DW_leftsh        | astr (area)        |                |
+| r122     | DW01_ash     | A_width=32 |               | sll_324              |
+|          |              | SH_width=3 |               |                      |
+| r124     | DW01_ash     | A_width=32 |               | sll_341              |
+|          |              | SH_width=3 |               |                      |
 ===============================================================================
 
+
+No implementations to report
  
 ****************************************
 Design : vcve2_controller
 ****************************************
-
-Resource Report for this hierarchy in file
+Resource Sharing Report for design vcve2_controller in file
         ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_controller.sv
-=============================================================================
-| Cell           | Module         | Parameters | Contained Operations       |
-=============================================================================
-| add_x_24       | DW01_add       | width=32   | add_604_aco (vcve2_controller.sv:604) |
-=============================================================================
+
+===============================================================================
+|          |              |            | Contained     |                      |
+| Resource | Module       | Parameters | Resources     | Contained Operations |
+===============================================================================
+| r135     | DW01_add     | width=32   |               | add_604_aco          |
+===============================================================================
 
 
 Implementation Report
@@ -654,7 +602,7 @@ Implementation Report
 |                    |                  | Current            | Set            |
 | Cell               | Module           | Implementation     | Implementation |
 ===============================================================================
-| add_x_24           | DW01_add         | apparch (area)     |                |
+| add_604_aco        | DW01_add         | rpl                |                |
 ===============================================================================
 
 
@@ -685,14 +633,15 @@ No implementations to report
 ****************************************
 Design : vcve2_prefetch_buffer
 ****************************************
-
-Resource Report for this hierarchy in file
+Resource Sharing Report for design vcve2_prefetch_buffer in file
         ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_prefetch_buffer.sv
-=============================================================================
-| Cell           | Module         | Parameters | Contained Operations       |
-=============================================================================
-| add_x_1        | DW01_add       | width=32   | add_163 (vcve2_prefetch_buffer.sv:163) |
-=============================================================================
+
+===============================================================================
+|          |              |            | Contained     |                      |
+| Resource | Module       | Parameters | Resources     | Contained Operations |
+===============================================================================
+| r57      | DW01_add     | width=32   |               | add_163              |
+===============================================================================
 
 
 Implementation Report
@@ -700,21 +649,22 @@ Implementation Report
 |                    |                  | Current            | Set            |
 | Cell               | Module           | Implementation     | Implementation |
 ===============================================================================
-| add_x_1            | DW01_add         | pparch (area,speed)                 |
+| add_163            | DW01_add         | rpl                |                |
 ===============================================================================
 
  
 ****************************************
 Design : vcve2_fetch_fifo_00000002
 ****************************************
-
-Resource Report for this hierarchy in file
+Resource Sharing Report for design vcve2_fetch_fifo_00000002 in file
         ../src/alessiocaviglia_thesis_vcve2_core_0.1/rtl/vcve2_fetch_fifo.sv
-=============================================================================
-| Cell           | Module         | Parameters | Contained Operations       |
-=============================================================================
-| add_x_13       | DW01_add       | width=31   | add_144 (vcve2_fetch_fifo.sv:144) |
-=============================================================================
+
+===============================================================================
+|          |              |            | Contained     |                      |
+| Resource | Module       | Parameters | Resources     | Contained Operations |
+===============================================================================
+| r73      | DW01_add     | width=31   |               | add_144              |
+===============================================================================
 
 
 Implementation Report
@@ -722,7 +672,7 @@ Implementation Report
 |                    |                  | Current            | Set            |
 | Cell               | Module           | Implementation     | Implementation |
 ===============================================================================
-| add_x_13           | DW01_add         | apparch (area)     |                |
+| add_144            | DW01_add         | rpl                |                |
 ===============================================================================
 
 1
