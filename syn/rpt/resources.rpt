@@ -3,7 +3,7 @@
 Report : resources
 Design : vcve2_top
 Version: R-2020.09-SP2
-Date   : Wed Jan 29 11:21:52 2025
+Date   : Thu Feb  6 12:31:32 2025
 ****************************************
 
 
@@ -12,7 +12,7 @@ No resource sharing information to report.
 No implementations to report
  
 ****************************************
-Design : vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808
+Design : vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_00000080
 ****************************************
 
 Resource Report for this hierarchy in file
@@ -20,26 +20,26 @@ Resource Report for this hierarchy in file
 =============================================================================
 | Cell           | Module         | Parameters | Contained Operations       |
 =============================================================================
-| gt_x_4         | DW_cmp         | width=3    | gt_1104 (vcve2_core.sv:1104) |
-| ash_6          | DW_leftsh      | A_width=12 | sll_1104 (vcve2_core.sv:1104) |
+| gt_x_4         | DW_cmp         | width=3    | gt_1105 (vcve2_core.sv:1105) |
+| ash_6          | DW_leftsh      | A_width=12 | sll_1105 (vcve2_core.sv:1105) |
               |                | SH_width=3 |                            |
-| sub_x_7        | DW01_sub       | width=3    | sub_1104 (vcve2_core.sv:1104) |
-| ashr_8         | DW_rightsh     | A_width=5  | srl_1104_3 (vcve2_core.sv:1104) |
+| sub_x_7        | DW01_sub       | width=3    | sub_1105 (vcve2_core.sv:1105) |
+| ashr_8         | DW_rightsh     | A_width=5  | srl_1105_3 (vcve2_core.sv:1105) |
             |                | SH_width=3 |                            |
-| lte_x_9        | DW_cmp         | width=32   | lte_1109 (vcve2_core.sv:1109) |
-| lte_x_10       | DW_cmp         | width=32   | lte_1110 (vcve2_core.sv:1110) |
-| add_x_11       | DW01_inc       | width=33   | add_1193_round (vcve2_core.sv:1193) |
-| ne_x_19        | DW_cmp         | width=5    | ne_1219 (vcve2_core.sv:1219) |
-| ne_x_20        | DW_cmp         | width=5    | ne_1219_2 (vcve2_core.sv:1219) |
-| ne_x_21        | DW_cmp         | width=5    | ne_1219_3 (vcve2_core.sv:1219) |
-| sub_x_23       | DW01_sub       | width=3    | sub_1238 (vcve2_core.sv:1238) |
-| add_x_25       | DW01_add       | width=3    | add_1258 (vcve2_core.sv:1258) |
-| ashr_5         | DW_rightsh     | A_width=5  | srl_1104 (vcve2_core.sv:1104) |
-              |                | SH_width=3 | srl_1104_2 (vcve2_core.sv:1104) |
-| sub_x_22       | DW01_dec       | width=3    | sub_1237 (vcve2_core.sv:1237) |
-              |                |            | sub_1249 (vcve2_core.sv:1249) |
-| add_x_24       | DW01_inc       | width=3    | add_1247 (vcve2_core.sv:1247) |
-              |                |            | add_1259 (vcve2_core.sv:1259) |
+| lte_x_9        | DW_cmp         | width=32   | lte_1110 (vcve2_core.sv:1110) |
+| lte_x_10       | DW_cmp         | width=32   | lte_1111 (vcve2_core.sv:1111) |
+| add_x_11       | DW01_inc       | width=33   | add_1194_round (vcve2_core.sv:1194) |
+| ne_x_19        | DW_cmp         | width=5    | ne_1220 (vcve2_core.sv:1220) |
+| ne_x_20        | DW_cmp         | width=5    | ne_1220_2 (vcve2_core.sv:1220) |
+| ne_x_21        | DW_cmp         | width=5    | ne_1220_3 (vcve2_core.sv:1220) |
+| sub_x_23       | DW01_sub       | width=3    | sub_1239 (vcve2_core.sv:1239) |
+| add_x_25       | DW01_add       | width=3    | add_1259 (vcve2_core.sv:1259) |
+| ashr_5         | DW_rightsh     | A_width=5  | srl_1105 (vcve2_core.sv:1105) |
+              |                | SH_width=3 | srl_1105_2 (vcve2_core.sv:1105) |
+| sub_x_22       | DW01_dec       | width=3    | sub_1238 (vcve2_core.sv:1238) |
+              |                |            | sub_1250 (vcve2_core.sv:1250) |
+| add_x_24       | DW01_inc       | width=3    | add_1248 (vcve2_core.sv:1248) |
+              |                |            | add_1260 (vcve2_core.sv:1260) |
 =============================================================================
 
 
@@ -289,7 +289,7 @@ Implementation Report
 
  
 ****************************************
-Design : vcve2_vrf_interface_VLEN128_PIPE_WIDTH32
+Design : vcve2_vrf_interface_00000080_32
 ****************************************
 
 Resource Report for this hierarchy in file

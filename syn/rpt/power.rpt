@@ -4,7 +4,7 @@ Report : power
         -analysis_effort low
 Design : vcve2_top
 Version: R-2020.09-SP2
-Date   : Wed Jan 29 11:21:52 2025
+Date   : Thu Feb  6 12:31:32 2025
 ****************************************
 
 
@@ -19,7 +19,7 @@ Wire Load Model Mode: segmented
 Design        Wire Load Model            Library
 ------------------------------------------------
 vcve2_top              ZeroWireload      tcbn65lpbc
-vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808
+vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_00000080
                        ZeroWireload      tcbn65lpbc
 vcve2_if_stage_1a110800_1a110808
                        ZeroWireload      tcbn65lpbc
@@ -32,14 +32,14 @@ vcve2_dmem_switch      ZeroWireload      tcbn65lpbc
 vcve2_wb               ZeroWireload      tcbn65lpbc
 vcve2_register_file_ff_0_32_00000000
                        ZeroWireload      tcbn65lpbc
-vcve2_vrf_interface_VLEN128_PIPE_WIDTH32
+vcve2_vrf_interface_00000080_32
                        ZeroWireload      tcbn65lpbc
 vcve2_agu_AddrWidth32  ZeroWireload      tcbn65lpbc
 vcve2_cs_registers_1_00000001_00000000_00000028_0_00000000_00000004_0_3_0
                        ZeroWireload      tcbn65lpbc
-SNPS_CLOCK_GATE_HIGH_vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_0
+SNPS_CLOCK_GATE_HIGH_vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_00000080_0
                        ZeroWireload      tcbn65lpbc
-SNPS_CLOCK_GATE_HIGH_vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_1
+SNPS_CLOCK_GATE_HIGH_vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_00000080_1
                        ZeroWireload      tcbn65lpbc
 vcve2_prefetch_buffer  ZeroWireload      tcbn65lpbc
 vcve2_compressed_decoder
@@ -127,19 +127,19 @@ SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_2
                        ZeroWireload      tcbn65lpbc
 SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_1
                        ZeroWireload      tcbn65lpbc
-SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_0
+SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_00000080_32_0
                        ZeroWireload      tcbn65lpbc
-SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_6
+SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_00000080_32_6
                        ZeroWireload      tcbn65lpbc
-SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_5
+SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_00000080_32_5
                        ZeroWireload      tcbn65lpbc
-SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_4
+SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_00000080_32_4
                        ZeroWireload      tcbn65lpbc
-SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_3
+SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_00000080_32_3
                        ZeroWireload      tcbn65lpbc
-SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_2
+SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_00000080_32_2
                        ZeroWireload      tcbn65lpbc
-SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_VLEN128_PIPE_WIDTH32_1
+SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_00000080_32_1
                        ZeroWireload      tcbn65lpbc
 SNPS_CLOCK_GATE_HIGH_vcve2_agu_AddrWidth32_0
                        ZeroWireload      tcbn65lpbc
@@ -242,12 +242,12 @@ Power-specific unit information :
     Leakage Power Units = 1nW
 
 
-  Cell Internal Power  = 656.7942 uW   (73%)
-  Net Switching Power  = 247.4114 uW   (27%)
+  Cell Internal Power  =   2.9299 mW   (85%)
+  Net Switching Power  = 508.3579 uW   (15%)
                          ---------
-Total Dynamic Power    = 904.2056 uW  (100%)
+Total Dynamic Power    =   3.4382 mW  (100%)
 
-Cell Leakage Power     =  21.0913 uW
+Cell Leakage Power     =  17.8637 uW
 
 
                  Internal         Switching           Leakage            Total
@@ -256,10 +256,10 @@ Power Group      Power            Power               Power              Power  
 io_pad             0.0000            0.0000            0.0000            0.0000  (   0.00%)
 memory             0.0000            0.0000            0.0000            0.0000  (   0.00%)
 black_box          0.0000            0.0000            0.0000            0.0000  (   0.00%)
-clock_network  1.6994e-03            0.0000          146.5675        1.8460e-03  (   0.20%)
-register           0.4450        2.9232e-05        5.3269e+03            0.4503  (  48.67%)
+clock_network      0.4423            0.1640          147.3338            0.6064  (  17.55%)
+register           2.1446        2.8665e-02        5.2573e+03            2.1786  (  63.03%)
 sequential         0.0000            0.0000            0.0000            0.0000  (   0.00%)
-combinational      0.2101            0.2474        1.5617e+04            0.4731  (  51.13%)
+combinational      0.3430            0.3156        1.2458e+04            0.6711  (  19.42%)
 --------------------------------------------------------------------------------------------------
-Total              0.6568 mW         0.2474 mW     2.1090e+04 nW         0.9253 mW
+Total              2.9299 mW         0.5084 mW     1.7863e+04 nW         3.4561 mW
 1

@@ -1,0 +1,265 @@
+ 
+****************************************
+Report : power
+        -analysis_effort low
+Design : vcve2_top
+Version: R-2020.09-SP2
+Date   : Thu Feb  6 09:06:47 2025
+****************************************
+
+
+Library(s) Used:
+
+    tcbn65lpbc (File: /software/dk/tsmc65/digital/Front_End/timing_power_noise/NLDM/tcbn65lp_200a/tcbn65lpbc.db)
+
+
+Operating Conditions: BCCOM   Library: tcbn65lpbc
+Wire Load Model Mode: segmented
+
+Design        Wire Load Model            Library
+------------------------------------------------
+vcve2_top              ZeroWireload      tcbn65lpbc
+vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_00000080
+                       ZeroWireload      tcbn65lpbc
+vcve2_if_stage_1a110800_1a110808
+                       ZeroWireload      tcbn65lpbc
+vcve2_id_stage_0_3_0   ZeroWireload      tcbn65lpbc
+vcve2_ex_block_RV32M3_RV32B0
+                       ZeroWireload      tcbn65lpbc
+vcve2_load_store_unit  ZeroWireload      tcbn65lpbc
+vcve2_lsu_interface    ZeroWireload      tcbn65lpbc
+vcve2_dmem_switch      ZeroWireload      tcbn65lpbc
+vcve2_wb               ZeroWireload      tcbn65lpbc
+vcve2_register_file_ff_0_32_00000000
+                       ZeroWireload      tcbn65lpbc
+vcve2_vrf_interface_00000080_32
+                       ZeroWireload      tcbn65lpbc
+vcve2_agu_AddrWidth32  ZeroWireload      tcbn65lpbc
+vcve2_cs_registers_1_00000001_00000000_00000028_0_00000000_00000004_0_3_0
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_00000080_0
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_00000080_1
+                       ZeroWireload      tcbn65lpbc
+vcve2_prefetch_buffer  ZeroWireload      tcbn65lpbc
+vcve2_compressed_decoder
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_if_stage_1a110800_1a110808
+                       ZeroWireload      tcbn65lpbc
+vcve2_decoder_0_3_0    ZeroWireload      tcbn65lpbc
+vcve2_controller       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_id_stage_0_3_0_0
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_id_stage_0_3_0_1
+                       ZeroWireload      tcbn65lpbc
+vcve2_alu_RV32B0       ZeroWireload      tcbn65lpbc
+vcve2_multdiv_fast_RV32M3
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_load_store_unit_0
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_load_store_unit_3
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_load_store_unit_2
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_load_store_unit_1
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_lsu_interface
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_0
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_30
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_29
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_28
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_27
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_26
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_25
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_24
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_23
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_22
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_21
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_20
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_19
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_18
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_17
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_16
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_15
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_14
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_13
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_12
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_11
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_10
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_9
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_8
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_7
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_6
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_5
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_4
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_3
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_2
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_register_file_ff_0_32_00000000_1
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_00000080_32_0
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_00000080_32_6
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_00000080_32_5
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_00000080_32_4
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_00000080_32_3
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_00000080_32_2
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_vrf_interface_00000080_32_1
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_agu_AddrWidth32_0
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_agu_AddrWidth32_2
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_agu_AddrWidth32_1
+                       ZeroWireload      tcbn65lpbc
+vcve2_csr_6_0c         ZeroWireload      tcbn65lpbc
+vcve2_csr_32_0_0_7     ZeroWireload      tcbn65lpbc
+vcve2_csr_19_0_0       ZeroWireload      tcbn65lpbc
+vcve2_csr_32_0_0_6     ZeroWireload      tcbn65lpbc
+vcve2_csr_7_0_0_1      ZeroWireload      tcbn65lpbc
+vcve2_csr_32_0_0_5     ZeroWireload      tcbn65lpbc
+vcve2_csr_32_00000001  ZeroWireload      tcbn65lpbc
+vcve2_csr_32_0_40000003
+                       ZeroWireload      tcbn65lpbc
+vcve2_csr_32_0_0_4     ZeroWireload      tcbn65lpbc
+vcve2_csr_32_0_0_3     ZeroWireload      tcbn65lpbc
+vcve2_csr_32_0_0_2     ZeroWireload      tcbn65lpbc
+vcve2_csr_3_0_4        ZeroWireload      tcbn65lpbc
+vcve2_csr_32_0_0_1     ZeroWireload      tcbn65lpbc
+vcve2_csr_7_0_0_0      ZeroWireload      tcbn65lpbc
+vcve2_counter_CounterWidth64
+                       ZeroWireload      tcbn65lpbc
+vcve2_counter_CounterWidth64_ProvideValUpd1
+                       ZeroWireload      tcbn65lpbc
+vcve2_csr_00000001_0_0_0
+                       ZeroWireload      tcbn65lpbc
+vcve2_csr_32_0_0_0     ZeroWireload      tcbn65lpbc
+vcve2_fetch_fifo_00000002
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_prefetch_buffer_0
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_prefetch_buffer_1
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_controller
+                       ZeroWireload      tcbn65lpbc
+vcve2_fracturable_adder_PIPE_WIDTH32
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_multdiv_fast_RV32M3_0
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_multdiv_fast_RV32M3_2
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_multdiv_fast_RV32M3_1
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_csr_6_0c
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_7
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_csr_19_0_0
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_6
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_csr_7_0_0_0_1
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_5
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_00000001
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_40000003
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_4
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_3
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_2
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_csr_3_0_4
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_1
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_csr_7_0_0_0_0
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_counter_CounterWidth64_0
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_counter_CounterWidth64_1
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_counter_CounterWidth64_ProvideValUpd1_0
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_counter_CounterWidth64_ProvideValUpd1_1
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_csr_32_0_0_0_0
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_fetch_fifo_00000002_0
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_fetch_fifo_00000002_3
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_fetch_fifo_00000002_2
+                       ZeroWireload      tcbn65lpbc
+SNPS_CLOCK_GATE_HIGH_vcve2_fetch_fifo_00000002_1
+                       ZeroWireload      tcbn65lpbc
+
+
+Global Operating Voltage = 1.32 
+Power-specific unit information :
+    Voltage Units = 1V
+    Capacitance Units = 1.000000pf
+    Time Units = 1ns
+    Dynamic Power Units = 1mW    (derived from V,C,T units)
+    Leakage Power Units = 1nW
+
+
+  Cell Internal Power  =   2.9438 mW   (85%)
+  Net Switching Power  = 519.6833 uW   (15%)
+                         ---------
+Total Dynamic Power    =   3.4635 mW  (100%)
+
+Cell Leakage Power     =  18.0162 uW
+
+
+                 Internal         Switching           Leakage            Total
+Power Group      Power            Power               Power              Power   (   %    )  Attrs
+--------------------------------------------------------------------------------------------------
+io_pad             0.0000            0.0000            0.0000            0.0000  (   0.00%)
+memory             0.0000            0.0000            0.0000            0.0000  (   0.00%)
+black_box          0.0000            0.0000            0.0000            0.0000  (   0.00%)
+clock_network      0.4423            0.1664          147.3337            0.6089  (  17.49%)
+register           2.1523        3.0682e-02        5.2784e+03            2.1883  (  62.85%)
+sequential         0.0000            0.0000            0.0000            0.0000  (   0.00%)
+combinational      0.3493            0.3226        1.2590e+04            0.6844  (  19.66%)
+--------------------------------------------------------------------------------------------------
+Total              2.9438 mW         0.5197 mW     1.8015e+04 nW         3.4815 mW
+1

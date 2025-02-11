@@ -1098,8 +1098,8 @@ module vcve2_core import vcve2_pkg::*; #(
     avl_lt_double = 1'b0;
     if (vcfg_write==1'b1) begin
       // sample the values coming from the instruction
-      vsew_d     = alu_operand_b_ex[5:3];
-      vlmul_d    = alu_operand_b_ex[2:0];
+      vsew_d     = vsew_e'(alu_operand_b_ex[5:3]);
+      vlmul_d    = vlmul_e'(alu_operand_b_ex[2:0]);
       vma_vta_d  = alu_operand_b_ex[7:6];
       // VLMAX = ( (VLEN/8) /SEW)*LMUL
       new_vlmax = ($signed(vlmul_d)>0) ? ((VLEN>>3)>>$unsigned(vsew_d)) << $signed(vlmul_d) :
@@ -1226,8 +1226,8 @@ module vcve2_core import vcve2_pkg::*; #(
 
   // Logic for EEW/EMUL for vector memory operations
   always_comb begin
-    mem_eew = '0;
-    mem_lmul = '0;
+    mem_eew = VSEW_32;
+    mem_lmul = VLMUL_1;
     illegal_mem_eew = 1'b0;
     if (vrf_memory_op) begin
       unique case (vmem_ops_eew)

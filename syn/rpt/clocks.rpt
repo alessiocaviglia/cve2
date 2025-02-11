@@ -19,7 +19,7 @@ Information: Changed wire load model for 'vcve2_csr_32_0_0' from '(none)' to 'Ze
 Information: Changed wire load model for 'vcve2_csr_6_0c' from '(none)' to 'ZeroWireload'. (OPT-170)
 Information: Changed wire load model for 'vcve2_cs_registers_1_00000001_00000000_00000028_0_00000000_00000004_0_3_0' from '(none)' to 'ZeroWireload'. (OPT-170)
 Information: Changed wire load model for 'vcve2_agu_AddrWidth32' from '(none)' to 'ZeroWireload'. (OPT-170)
-Information: Changed wire load model for 'vcve2_vrf_interface_VLEN128_PIPE_WIDTH32' from '(none)' to 'ZeroWireload'. (OPT-170)
+Information: Changed wire load model for 'vcve2_vrf_interface_00000080_32' from '(none)' to 'ZeroWireload'. (OPT-170)
 Information: Changed wire load model for 'vcve2_register_file_ff_0_32_00000000' from '(none)' to 'ZeroWireload'. (OPT-170)
 Information: Changed wire load model for 'vcve2_wb' from '(none)' to 'ZeroWireload'. (OPT-170)
 Information: Changed wire load model for 'vcve2_dmem_switch' from '(none)' to 'ZeroWireload'. (OPT-170)
@@ -36,7 +36,7 @@ Information: Changed wire load model for 'vcve2_compressed_decoder' from '(none)
 Information: Changed wire load model for 'vcve2_fetch_fifo_00000002' from '(none)' to 'ZeroWireload'. (OPT-170)
 Information: Changed wire load model for 'vcve2_prefetch_buffer' from '(none)' to 'ZeroWireload'. (OPT-170)
 Information: Changed wire load model for 'vcve2_if_stage_1a110800_1a110808' from '(none)' to 'ZeroWireload'. (OPT-170)
-Information: Changed wire load model for 'vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808' from '(none)' to 'ZeroWireload'. (OPT-170)
+Information: Changed wire load model for 'vcve2_core_0_00000000_00000004_00000000_00000028_0_3_0_1_00000001_1a110800_1a110808_00000080' from '(none)' to 'ZeroWireload'. (OPT-170)
   Allocating blocks in 'DW02_mult_A_width17_B_width17'
   Allocating blocks in 'DW02_mult_A_width8_B_width8'
 Information: Updating graph... (UID-83)
@@ -46,7 +46,7 @@ Warning: Design 'vcve2_top' contains 7 high-fanout nets. A fanout number of 1000
 Report : clocks
 Design : vcve2_top
 Version: R-2020.09-SP2
-Date   : Wed Jan 29 10:59:14 2025
+Date   : Thu Feb  6 12:20:02 2025
 ****************************************
 
 Attributes:
@@ -58,6 +58,6 @@ Attributes:
 
 Clock          Period   Waveform            Attrs     Sources
 --------------------------------------------------------------------------------
-INPUT_CLK        0.00   {0 0}                         {clk_i}
+INPUT_CLK        2.00   {0 1}                         {clk_i}
 --------------------------------------------------------------------------------
 1
